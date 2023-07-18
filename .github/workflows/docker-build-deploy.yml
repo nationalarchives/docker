@@ -18,6 +18,7 @@ jobs:
     permissions:
       packages: write
       contents: read
+      security-events: write
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -42,16 +43,24 @@ jobs:
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
         echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
         echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+        echo "- `IMAGE_ID` = $IMAGE_ID" >> $GITHUB_STEP_SUMMARY
+        echo "- `VERSION` = $VERSION" >> $GITHUB_STEP_SUMMARY
     - name: Push image
       run: |
         docker tag ${{ inputs.image-name }} ${{ env.IMAGE_ID }}:${{ env.VERSION }}
         docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
     - name: Scan for vulnerabilities
+      id: scan
       uses: crazy-max/ghaction-container-scan@v2
       with:
         image: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
         annotations: true
+    - name: Upload SARIF file
+      if: ${{ steps.scan.outputs.sarif != '' }}
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: ${{ steps.scan.outputs.sarif }}
     - name: Push latest image
       run: |
         docker tag ${{ inputs.image-name }} $IMAGE_ID:latest
