@@ -1,5 +1,4 @@
-# FROM ghcr.io/nationalarchives/tna-python:latest
-FROM tna-python
+FROM ghcr.io/nationalarchives/tna-python:latest
 
 ENV POETRY_HOME=/home/app/.local \
     POETRY_VERSION=1.4.2 \
@@ -7,7 +6,9 @@ ENV POETRY_HOME=/home/app/.local \
     POETRY_VIRTUALENVS_CREATE=true \
     POETRY_VIRTUALENVS_IN_PROJECT=true
 
-COPY --chown=app:app bin/tna-build .local/bin/
+WORKDIR /home/app
+
+COPY --chown=app bin/tna-build .local/bin/
 RUN chmod +x .local/bin/tna-build
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]

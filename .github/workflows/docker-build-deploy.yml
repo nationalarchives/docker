@@ -24,6 +24,7 @@ jobs:
     - uses: hadolint/hadolint-action@v3.1.0
       with:
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+        ignore: DL3007
     - name: Checkout
       uses: actions/checkout@v3
     - name: Build image
@@ -39,9 +40,9 @@ jobs:
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         # Strip "v" prefix from tag name
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-        # Use Docker `latest` tag convention
-        [ "$VERSION" == "main" ] && VERSION=latest
         echo IMAGE_ID=$IMAGE_ID
         echo VERSION=$VERSION
         docker tag ${{ inputs.image-name }} $IMAGE_ID:$VERSION
         docker push $IMAGE_ID:$VERSION
+        docker tag ${{ inputs.image-name }} $IMAGE_ID:latest
+        docker push $IMAGE_ID:latest
