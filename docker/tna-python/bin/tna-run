@@ -1,3 +1,14 @@
 #!/bin/bash
 
-exec gunicorn ${TNA_APPLICATION_ENTRYPOINT} --workers 3 --threads 3 --log-level=WARN -b 0.0.0.0:8080
+if [ $ENVIRONMENT == 'production' ]
+then
+  LOG_LEVEL=WARN
+  WORKERS=3
+  THREADS=3
+else
+  LOG_LEVEL=DEBUG
+  WORKERS=1
+  THREADS=1
+fi
+
+exec gunicorn ${TNA_APPLICATION_ENTRYPOINT} --workers ${WORKERS} --threads ${THREADS} --log-level=${LOG_LEVEL} -b 0.0.0.0:8080
