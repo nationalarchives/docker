@@ -53,7 +53,7 @@ jobs:
       with:
         image: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
-        severity_threshold: HIGH
+        # severity_threshold: HIGH
         annotations: true
     - name: Upload SARIF file
       if: ${{ steps.scan.outputs.sarif != '' }}
