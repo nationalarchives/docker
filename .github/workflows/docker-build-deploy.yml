@@ -31,7 +31,7 @@ jobs:
       run: docker build --tag ${{ inputs.image-name }} --label "runnumber=${GITHUB_RUN_ID}" --platform=linux/amd64 ${{ inputs.docker-context }}
     - name: Log in to registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
-    - name: Push image
+    - name: Prepare image tag
       run: |
         IMAGE_ID=ghcr.io/${{ github.repository }}/${{ inputs.image-name }}
         # Change all uppercase to lowercase
@@ -40,24 +40,16 @@ jobs:
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         # Strip "v" prefix from tag name
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-        echo IMAGE_ID=$IMAGE_ID
-        echo VERSION=$VERSION
-        docker tag ${{ inputs.image-name }} $IMAGE_ID:$VERSION
-        docker push $IMAGE_ID:$VERSION
-    - name: Sanitise Docker image name
-      uses: actions/github-script@v6
-      id: docker_image
-      env:
-        IMAGE_ID: $IMAGE_ID
-        VERSION: $VERSION
-      with:
-        script: |
-          const { IMAGE_ID, VERSION } = process.env
-          return `${IMAGE_ID}:${VERSION}`
+        echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
+        echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+    - name: Push image
+      run: |
+        docker tag ${{ inputs.image-name }} ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+        docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
     - name: Scan for vulnerabilities
       uses: crazy-max/ghaction-container-scan@v2
       with:
-        image: ${{ steps.docker_image.outputs.result }}
+        image: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
         annotations: true
     - name: Push latest image
