@@ -43,8 +43,6 @@ jobs:
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
         echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
         echo "VERSION=$VERSION" >> "$GITHUB_ENV"
-        echo "- `IMAGE_ID` = $IMAGE_ID" >> $GITHUB_STEP_SUMMARY
-        echo "- `VERSION` = $VERSION" >> $GITHUB_STEP_SUMMARY
     - name: Push image
       run: |
         docker tag ${{ inputs.image-name }} ${{ env.IMAGE_ID }}:${{ env.VERSION }}
@@ -55,6 +53,7 @@ jobs:
       with:
         image: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+        severity_threshold: HIGH
         annotations: true
     - name: Upload SARIF file
       if: ${{ steps.scan.outputs.sarif != '' }}

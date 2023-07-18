@@ -1,3 +1,5 @@
+# https://hub.docker.com/_/debian/tags?page=1&name=bookworm-slim
+# https://hub.docker.com/_/python/tags?page=1&name=3.11-slim
 FROM python:3.11-slim
 
 ENV PYTHONFAULTHANDLER=1 \
@@ -10,6 +12,7 @@ ENV PYTHONFAULTHANDLER=1 \
     ENVIRONMENT=production
 
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get install -y --no-install-recommends gettext=0.21-12 curl=7.88.1-10 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
