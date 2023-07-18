@@ -11,11 +11,11 @@ ENV PYTHONFAULTHANDLER=1 \
     PIP_DEFAULT_TIMEOUT=100 \
     ENVIRONMENT=production
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends gettext=0.21-12 curl=7.88.1-10 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && \
+#     apt-get upgrade -y && \
+#     apt-get install -y --no-install-recommends gettext=0.21-12 curl=7.88.1-10 && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
 
 ENV VIRTUAL_ENV=/opt/env
 RUN python -m venv $VIRTUAL_ENV && \
