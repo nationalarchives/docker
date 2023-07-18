@@ -48,8 +48,9 @@ jobs:
       uses: actions/github-script@v6
       id: docker_image
       with:
-        result-encoding: string
-        script: return `${$IMAGE_ID}:${$VERSION}`
+        script: |
+          const { IMAGE_ID, VERSION } = process.env
+          return `${IMAGE_ID}:${VERSION}`
     - name: Scan for vulnerabilities
       uses: crazy-max/ghaction-container-scan@v2
       with:
