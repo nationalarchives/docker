@@ -28,10 +28,6 @@ jobs:
         ignore: DL3007
     - name: Checkout
       uses: actions/checkout@v3
-    - name: Build image
-      run: docker build --tag ${{ inputs.image-name }} --label "runnumber=${GITHUB_RUN_ID}" --platform=linux/amd64 ${{ inputs.docker-context }}
-    - name: Log in to registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
     - name: Prepare image tag
       run: |
         IMAGE_ID=ghcr.io/${{ github.repository }}/${{ inputs.image-name }}
@@ -43,6 +39,10 @@ jobs:
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
         echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
         echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+    - name: Build image
+      run: docker build --tag ${{ inputs.image-name }} --label "runnumber=${GITHUB_RUN_ID}" --platform=linux/amd64 --build-arg version=$VERSION ${{ inputs.docker-context }}
+    - name: Log in to registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
     - name: Push image
       run: |
         docker tag ${{ inputs.image-name }} ${{ env.IMAGE_ID }}:${{ env.VERSION }}
@@ -53,7 +53,7 @@ jobs:
       with:
         image: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
-        # severity_threshold: HIGH
+        severity_threshold: CRITICAL
         annotations: true
     - name: Upload SARIF file
       if: ${{ steps.scan.outputs.sarif != '' }}

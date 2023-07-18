@@ -2,6 +2,8 @@
 # https://hub.docker.com/_/python/tags?page=1&name=3.11-slim
 FROM python:3.11-slim
 
+ARG version
+
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONHASHSEED=random \
@@ -29,5 +31,6 @@ COPY --chown=app bin/tna-build bin/tna-run .local/bin/
 RUN chmod +x .local/bin/tna-build .local/bin/tna-run
 ENV PATH="$VIRTUAL_ENV/bin:/home/app/.local/bin:$PATH"
 
-LABEL version="0.1.0"
-EXPOSE 8080
+LABEL version="${version}" \
+    org.opencontainers.image.description="National Archives base Docker image"
+EXPOSE 8080/tcp
