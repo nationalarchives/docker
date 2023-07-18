@@ -1,0 +1,9 @@
+#!/bin/bash
+
+PYPROJECT_FILE=./pyproject.toml
+if [ ! -f "$PYPROJECT_FILE" ]; then
+    echo "pyproject.toml does not exist";
+    exit 2
+fi
+
+poetry install --sync --no-root

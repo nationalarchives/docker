@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# if [ -z "$TNA_APPLICATION_NAME" ]; then
+#     echo "\$TNA_APPLICATION_NAME is not set";
+#     exit 1
+# fi
+
+# if [ -z "$TNA_APPLICATION_VERSION" ]; then
+#     echo "\$TNA_APPLICATION_VERSION is not set";
+#     exit 1
+# fi
+
+REQUIREMENTS_FILE=./requirements.txt
+if [ ! -f "$REQUIREMENTS_FILE" ]; then
+    echo "requirements.txt does not exist";
+    exit 2
+fi
+
+pip install -r requirements.txt
+
+# cp /home/app/pyproject.toml.template /home/app/pyproject.toml
+# cat /home/app/pyproject.toml.template | envsubst > /home/app/pyproject.toml
+
+# poetry install --sync --no-root
