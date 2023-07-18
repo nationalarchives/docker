@@ -47,6 +47,9 @@ jobs:
     - name: Sanitise Docker image name
       uses: actions/github-script@v6
       id: docker_image
+      env:
+        IMAGE_ID: $IMAGE_ID
+        VERSION: $VERSION
       with:
         script: |
           const { IMAGE_ID, VERSION } = process.env
