@@ -49,7 +49,7 @@ jobs:
       id: docker_image
       with:
         result-encoding: string
-        script: return $IMAGE_ID:$VERSION
+        script: return `${$IMAGE_ID}:${$VERSION}`
     - name: Scan for vulnerabilities
       uses: crazy-max/ghaction-container-scan@v2
       with:
