@@ -13,15 +13,14 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENV VIRTUAL_ENV=/opt/env
-RUN python -m venv $VIRTUAL_ENV
-
 RUN useradd --create-home app
 USER app
 WORKDIR /home/app
 
-RUN pip install --upgrade pip && \
-    pip install gunicorn
+ENV VIRTUAL_ENV=/opt/env
+RUN python -m venv $VIRTUAL_ENV && \
+    pip install --upgrade pip && \
+    pip install --no-cache-dir gunicorn=21.1.0
 
 COPY --chown=app bin/tna-build bin/tna-run .local/bin/
 RUN chmod +x .local/bin/tna-build .local/bin/tna-run
