@@ -19,7 +19,7 @@ WORKDIR /home/app
 
 ENV VIRTUAL_ENV=/opt/env
 RUN python -m venv $VIRTUAL_ENV && \
-    pip install --upgrade --no-cache-dir pip=23.1.2 gunicorn=21.1.0
+    pip install --upgrade --no-cache-dir pip==23.1.2 gunicorn==21.1.0
 
 COPY --chown=app bin/tna-build bin/tna-run .local/bin/
 RUN chmod +x .local/bin/tna-build .local/bin/tna-run
