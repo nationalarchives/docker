@@ -1,4 +1,4 @@
-FROM ghcr.io/nationalarchives/tna-python:latest
+FROM ghcr.io/nationalarchives/docker/tna-python:latest
 
 ENV POETRY_HOME=/home/app/.local \
     POETRY_VERSION=1.4.2 \

@@ -1,4 +1,4 @@
-FROM ghcr.io/nationalarchives/tna-python:latest
+FROM ghcr.io/nationalarchives/docker/tna-python:latest
 
 WORKDIR /home/app
 
