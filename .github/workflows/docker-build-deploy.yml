@@ -44,10 +44,16 @@ jobs:
         echo VERSION=$VERSION
         docker tag ${{ inputs.image-name }} $IMAGE_ID:$VERSION
         docker push $IMAGE_ID:$VERSION
+    - name: Sanitise Docker image name
+      uses: actions/github-script@v6
+      id: docker_image
+      with:
+        result-encoding: string
+        script: return $IMAGE_ID:$VERSION
     - name: Scan for vulnerabilities
       uses: crazy-max/ghaction-container-scan@v2
       with:
-        image: $IMAGE_ID:$VERSION
+        image: ${{ steps.docker_image.outputs.result }}
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
         annotations: true
     - name: Push latest image
