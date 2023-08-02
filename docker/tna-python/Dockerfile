@@ -11,7 +11,12 @@ ENV PYTHONFAULTHANDLER=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
-    ENVIRONMENT=production
+    ENVIRONMENT=production \
+    POETRY_HOME=/home/app/.local \
+    POETRY_VERSION=1.5.1 \
+    POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_CREATE=true \
+    POETRY_VIRTUALENVS_IN_PROJECT=true
 
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -19,9 +24,8 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENV VIRTUAL_ENV=/opt/env
-RUN python -m venv $VIRTUAL_ENV && \
-    pip install --upgrade --no-cache-dir pip==23.1.2 gunicorn==21.1.0
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+RUN curl -sSL "https://install.python-poetry.org" | python -
 
 RUN useradd --create-home app
 USER app
@@ -29,8 +33,9 @@ WORKDIR /home/app
 
 COPY --chown=app bin/tna-build bin/tna-run .local/bin/
 RUN chmod +x .local/bin/tna-build .local/bin/tna-run
-ENV PATH="$VIRTUAL_ENV/bin:/home/app/.local/bin:$PATH"
+ENV PATH="/home/app/.local/bin:$PATH"
 
 LABEL version="${version}" \
     org.opencontainers.image.description="National Archives base Docker image"
 EXPOSE 8080/tcp
+# HEALTHCHECK CMD curl --fail http://localhost:8000/healthcheck/ || exit 1

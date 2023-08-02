@@ -25,12 +25,3 @@ jobs:
       image-name: tna-python-django
       docker-context: docker/tna-python-django
       dockerfile: Dockerfile
-
-  python-poetry:
-    name: Python Poetry
-    needs: python
-    uses: ./.github/workflows/docker-build-deploy.yml
-    with:
-      image-name: tna-python-poetry
-      docker-context: docker/tna-python-poetry
-      dockerfile: Dockerfile
