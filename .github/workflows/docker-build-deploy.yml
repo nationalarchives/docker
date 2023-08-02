@@ -28,6 +28,8 @@ jobs:
         ignore: DL3007
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Log in to registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
     - name: Prepare image tag
       run: |
         IMAGE_ID=ghcr.io/${{ github.repository }}/${{ inputs.image-name }}
@@ -40,13 +42,11 @@ jobs:
         echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
         echo "VERSION=$VERSION" >> "$GITHUB_ENV"
     - name: Build image
-      run: docker build --tag ${{ inputs.image-name }} --label "runnumber=${GITHUB_RUN_ID}" --platform=linux/amd64 --build-arg version=$VERSION ${{ inputs.docker-context }}
-    - name: Log in to registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      run: docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} --label "runnumber=${GITHUB_RUN_ID}" --platform=linux/amd64 --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" ${{ inputs.docker-context }}
     - name: Push image
-      run: |
-        docker tag ${{ inputs.image-name }} ${{ env.IMAGE_ID }}:${{ env.VERSION }}
-        docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+      run: docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+    - name: Docker Scout
+      run: docker scout quickview
     - name: Scan for vulnerabilities
       id: scan
       uses: crazy-max/ghaction-container-scan@v2

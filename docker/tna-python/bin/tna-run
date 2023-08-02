@@ -11,4 +11,4 @@ else
   THREADS=1
 fi
 
-exec gunicorn ${TNA_APPLICATION_ENTRYPOINT} --workers ${WORKERS} --threads ${THREADS} --log-level=${LOG_LEVEL} -b 0.0.0.0:8080
+poetry run gunicorn ${TNA_APPLICATION_ENTRYPOINT} --workers ${WORKERS} --threads ${THREADS} --log-level=${LOG_LEVEL} -b 0.0.0.0:8080

@@ -1,4 +1,16 @@
 #!/bin/bash
 
-python manage.py migrate
-python manage.py runserver 0.0.0.0:8080
+if [ $ENVIRONMENT == 'production' ]
+then
+  LOG_LEVEL=WARN
+  WORKERS=3
+  THREADS=3
+else
+  LOG_LEVEL=DEBUG
+  WORKERS=1
+  THREADS=1
+fi
+
+poetry run python manage.py collectstatic --no-input
+poetry run python manage.py migrate
+poetry run gunicorn config.wsgi:application --capture-output --workers ${WORKERS} --threads ${THREADS} --log-level=${LOG_LEVEL} -b 0.0.0.0:8000
