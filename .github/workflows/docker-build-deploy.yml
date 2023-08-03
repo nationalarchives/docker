@@ -62,5 +62,5 @@ jobs:
         sarif_file: ${{ steps.scan.outputs.sarif }}
     - name: Push latest image
       run: |
-        docker tag ${{ inputs.image-name }} $IMAGE_ID:latest
-        docker push $IMAGE_ID:latest
+        docker tag ${{ env.IMAGE_ID }} ${{ env.IMAGE_ID }}:latest
+        docker push ${{ env.IMAGE_ID }}:latest
