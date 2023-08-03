@@ -3,11 +3,11 @@ name = "Test application"
 version = "0.1.0"
 description = ""
 authors = ["Andrew Hosgood <andrew.hosgood@nationalarchives.gov.uk>"]
-packages = [{include = "test-app"}]
+packages = [{include = "my-tna-app"}]
 
 [tool.poetry.dependencies]
 python = "~3.11"
-pendulum = "^2.1"
+pendulum = "2.1"
 
 [build-system]
 requires = ["poetry-core"]

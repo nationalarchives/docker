@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+
+  app:
+    container_name: my-tna-application
+    build: .
+    environment:
+      - ENVIRONMENT=develop
+      - WORKERS=3
+    ports:
+      - "65000:8080"
+    volumes:
+      - ./my-tna-app:/app/my-tna-app

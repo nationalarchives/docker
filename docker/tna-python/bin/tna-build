@@ -1,12 +1,17 @@
 #!/bin/bash
 
 PYPROJECT_FILE=/app/pyproject.toml
-if [ ! -f "$PYPROJECT_FILE" ]; then
-    echo "pyproject.toml does not exist";
-    exit 2
+if [ ! -f "$PYPROJECT_FILE" ]
+then
+  echo "pyproject.toml does not exist";
+  exit 1
 fi
 
-poetry add gunicorn@~21.1.0
+# TODO
+# if [ "$ENVIRONMENT" != "production" ]
+# then
+#   poetry add inotify@0.2.10
+# fi
 
+poetry add gunicorn@21.1.0
 poetry install --sync --no-root
-

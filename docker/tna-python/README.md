@@ -14,7 +14,7 @@ The dependencies declared are minimal and easy to maintain:
 
 ## Environment variables
 
-- `TNA_APPLICATION_ENTRYPOINT` - the entrypoint for gunicorn
+- `ENVIRONMENT` (default: `production`)
 
 ## Future
 
