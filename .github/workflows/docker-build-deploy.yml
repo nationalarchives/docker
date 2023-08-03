@@ -45,8 +45,8 @@ jobs:
       run: docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} --label "runnumber=${GITHUB_RUN_ID}" --platform=linux/amd64 --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" ${{ inputs.docker-context }}
     - name: Push image
       run: docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
-    - name: Docker Scout
-      run: docker scout quickview
+    # - name: Docker Scout
+    #   run: docker scout quickview
     - name: Scan for vulnerabilities
       id: scan
       uses: crazy-max/ghaction-container-scan@v2
