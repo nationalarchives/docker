@@ -46,9 +46,6 @@ jobs:
         echo "VERSION=$VERSION" >> "$GITHUB_ENV"
     - name: Build image
       run: docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} --tag ${{ env.IMAGE_ID }}:latest --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" --build-arg="TNA_DOCKER_IMAGE_SOURCE=${{ github.repositoryUrl	}}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}" ${{ inputs.docker-context }}
-    - name: Push image
-      if: inputs.publish
-      run: docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
     - name: Scan for vulnerabilities
       id: scan
       uses: crazy-max/ghaction-container-scan@v2
@@ -57,6 +54,9 @@ jobs:
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
         severity_threshold: CRITICAL
         annotations: true
+    - name: Push image
+      if: inputs.publish
+      run: docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
     - name: Upload SARIF file
       if: steps.scan.outputs.sarif != '' && inputs.publish
       uses: github/codeql-action/upload-sarif@v2
