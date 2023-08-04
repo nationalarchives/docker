@@ -12,8 +12,8 @@ This image comes with:
 | Variable              | Description                                       | Default                                                        |
 | --------------------- | ------------------------------------------------- | -------------------------------------------------------------- |
 | `ENVIRONMENT`         | The current environment[^1]                       | `production`                                                   |
-| `WORKERS`             | Number of worker processes[^2]                    | `1` on `develop`, `(cpu * 2) + 1` elsewhere                    |
-| `THREADS`             | Number of threads[^3]                             | `1` on `develop`, `(cpu * 2) + 1` elsewhere                    |
+| `WORKERS`             | Number of worker processes[^2]                    | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
+| `THREADS`             | Number of threads[^3]                             | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
 | `LOG_LEVEL`           | The log level to stream to the console[^4]        | `WARN` on `production`, `DEBUG` on `develop`, `INFO` elsewhere |
 | `NODE_ENV`            | The node environment which could affect the build | Copied from `ENVIRONMENT`                                      |
 | `NPM_BUILD_COMMAND`   | The npm script to run to build static assets      | `build`                                                        |
