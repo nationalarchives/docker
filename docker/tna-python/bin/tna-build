@@ -12,7 +12,7 @@ then
   exit 2
 fi
 
-if [ -f "/app/package.json" ]
+if [ -f "/app/package.json" ] && [ -z $NPM_BUILD_COMMAND ]
 then
   if [ ! -f "/app/package-lock.json" ]
   then
@@ -32,7 +32,6 @@ then
   nvm install $NODE_VERSION
   nvm use $NODE_VERSION
   npm install --omit=dev
-  [[ -z $NPM_BUILD_COMMAND ]] && NPM_BUILD_COMMAND=build
   npm run $NPM_BUILD_COMMAND
   rm -fR node_modules
 fi
