@@ -2,6 +2,8 @@ name: Test
 
 on:
   push:
+    branches: # TODO: Remove branches filter once released
+      main    # TODO: Remove branches filter once released
 
 jobs:
   python:
@@ -11,7 +13,7 @@ jobs:
       image-name: tna-python
       docker-context: docker/tna-python
       dockerfile: Dockerfile
-      publish: false
+      publish: true # TODO: Disable once released
 
   # python-django:
   #   name: Python Django
