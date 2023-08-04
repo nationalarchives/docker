@@ -7,6 +7,13 @@ then
   exit 1
 fi
 
+POETRY_LOCK_FILE=/app/poetry.lock
+if [ ! -f "$POETRY_LOCK_FILE" ]
+then
+  echo "poetry.lock does not exist";
+  exit 1
+fi
+
 # TODO
 # if [ "$ENVIRONMENT" != "production" ]
 # then
