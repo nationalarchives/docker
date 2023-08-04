@@ -7,13 +7,12 @@ then
   exit 1
 fi
 
-if [ $ENVIRONMENT == 'develop' ] && [ -f "/app/package.json" ]
+if [ $ENVIRONMENT == 'develop' ] && [ -f "/app/package.json" ] && [ -z $NPM_DEVELOP_COMMAND ]
 then
   . "$HOME/.nvm/nvm.sh"
   NODE_VERSION=$(cat /app/.nvmrc)
   nvm use $NODE_VERSION
   npm install
-  [[ -z $NPM_DEVELOP_COMMAND ]] && NPM_DEVELOP_COMMAND=dev
   npm run $NPM_DEVELOP_COMMAND &
 fi
 
