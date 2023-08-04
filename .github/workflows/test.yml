@@ -13,7 +13,7 @@ jobs:
       image-name: tna-python
       docker-context: docker/tna-python
       dockerfile: Dockerfile
-      publish: false
+      publish: true
 
   # python-django:
   #   name: Python Django
