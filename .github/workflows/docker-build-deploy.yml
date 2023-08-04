@@ -42,11 +42,9 @@ jobs:
         echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
         echo "VERSION=$VERSION" >> "$GITHUB_ENV"
     - name: Build image
-      run: docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} --label "runnumber=${GITHUB_RUN_ID}" --platform=linux/amd64 --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" ${{ inputs.docker-context }}
+      run: docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} --tag ${{ env.IMAGE_ID }}:latest --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" ${{ inputs.docker-context }}
     - name: Push image
       run: docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
-    # - name: Docker Scout
-    #   run: docker scout quickview
     - name: Scan for vulnerabilities
       id: scan
       uses: crazy-max/ghaction-container-scan@v2
@@ -60,7 +58,3 @@ jobs:
       uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: ${{ steps.scan.outputs.sarif }}
-    - name: Push latest image
-      run: |
-        docker tag ${{ env.IMAGE_ID }} ${{ env.IMAGE_ID }}:latest
-        docker push ${{ env.IMAGE_ID }}:latest
