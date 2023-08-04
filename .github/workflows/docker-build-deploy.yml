@@ -45,7 +45,7 @@ jobs:
         echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
         echo "VERSION=$VERSION" >> "$GITHUB_ENV"
     - name: Build image
-      run: docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} --tag ${{ env.IMAGE_ID }}:latest --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" --build-arg="TNA_DOCKER_IMAGE_SOURCE=${{ github.repositoryUrl	}}" ${{ inputs.docker-context }}
+      run: docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} --tag ${{ env.IMAGE_ID }}:latest --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" --build-arg="TNA_DOCKER_IMAGE_SOURCE=${{ github.repositoryUrl	}}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}" ${{ inputs.docker-context }}
     - name: Push image
       if: inputs.publish
       run: docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
