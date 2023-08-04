@@ -6,7 +6,7 @@ services:
     build: .
     environment:
       - ENVIRONMENT=develop
-      - WORKERS=3
+      - THREADS=5
       - LOG_LEVEL=INFO
     ports:
       - 65535:8080
