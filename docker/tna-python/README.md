@@ -24,8 +24,6 @@ This image requires you have the following files in the root of your project:
 | `NPM_BUILD_COMMAND`    | The npm script to run to build static assets      | [None] - don't build anything by default                       |
 | `NPM_DEVELOP_COMMAND`  | The npm script to run in development environments | [None] - don't build and watch anything by default             |
 
-### Sources
-
 [^1]: Predefined values are `production` and `develop` but any alphanumeric string is valid
 [^2]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 [^3]: [Gunicorn docs - How Many Threads?](https://docs.gunicorn.org/en/latest/design.html#how-many-threads)
