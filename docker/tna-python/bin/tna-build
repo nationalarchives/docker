@@ -1,24 +1,41 @@
 #!/bin/bash
 
-PYPROJECT_FILE=/app/pyproject.toml
-if [ ! -f "$PYPROJECT_FILE" ]
+if [ ! -f "/app/pyproject.toml" ]
 then
   echo "pyproject.toml does not exist";
   exit 1
 fi
 
-POETRY_LOCK_FILE=/app/poetry.lock
-if [ ! -f "$POETRY_LOCK_FILE" ]
+if [ ! -f "/app/poetry.lock" ]
 then
   echo "poetry.lock does not exist";
-  exit 1
+  exit 2
 fi
 
-# TODO
-# if [ "$ENVIRONMENT" != "production" ]
-# then
-#   poetry add inotify@0.2.10
-# fi
+if [ -f "/app/package.json" ]
+then
+  if [ ! -f "/app/package-lock.json" ]
+  then
+    echo "package-lock.json does not exist";
+    exit 3
+  fi
+
+  if [ ! -f "/app/.nvmrc" ]
+  then
+    echo ".nvmrc does not exist";
+    exit 4
+  fi
+
+  [[ -z $NODE_ENV ]] && NODE_ENV=$ENVIRONMENT
+  . "$HOME/.nvm/nvm.sh"
+  NODE_VERSION=$(cat /app/.nvmrc)
+  nvm install $NODE_VERSION
+  nvm use $NODE_VERSION
+  npm install --omit=dev
+  [[ -z $NPM_BUILD_COMMAND ]] && NPM_BUILD_COMMAND=build
+  npm run $NPM_BUILD_COMMAND
+  rm -fR node_modules
+fi
 
 poetry add gunicorn@21.1.0
 poetry install --sync --no-root

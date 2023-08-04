@@ -114,16 +114,22 @@ RUN set -eux; \
     chmod 700 /app
 
 # ==========================================
+# Set $HOME env var to be the home directory
+# of our new app user so we can install libs
+# to that location
+# ==========================================
+ENV HOME=/home/app
+
+# ==========================================
 # Install Poetry in the suggested manner and
-# immediately remove the curl package, since
-# we will no longer require it and retaining
-# it could provide an unnecessary additional
-# attack vector
+# nvm so we can build static assets like CSS
+# and JavaScript
 # ==========================================
 RUN set -eux; \
     \
     curl -sSL "https://install.python-poetry.org" | python -; \
-    apt-get remove --purge -y curl;
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash; \
+    chown app:app -R $POETRY_HOME /home/app/.nvm
 
 # ==========================================
 # Change the image current working directory

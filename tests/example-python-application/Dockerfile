@@ -1,7 +1,9 @@
 FROM tna-python
 
-# Copy in the pyproject.toml poetry.lock files
+# Copy in the project Python dependency files
 COPY --chown=app pyproject.toml poetry.lock ./
+# Copy in the project Node dependency files
+COPY --chown=app package.json package-lock.json .nvmrc ./
 
 # Install the dependencies
 RUN tna-build
