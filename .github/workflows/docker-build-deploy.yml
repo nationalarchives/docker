@@ -11,6 +11,9 @@ on:
       dockerfile:
         required: true
         type: string
+      publish:
+        required: true
+        type: boolean
 jobs:
   build:
     name: Build and deploy
@@ -32,7 +35,7 @@ jobs:
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
     - name: Prepare image tag
       run: |
-        IMAGE_ID=ghcr.io/${{ github.repository }}/${{ inputs.image-name }}
+        IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${{ inputs.image-name }}
         # Change all uppercase to lowercase
         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
         # Strip git ref prefix from version
@@ -42,8 +45,9 @@ jobs:
         echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
         echo "VERSION=$VERSION" >> "$GITHUB_ENV"
     - name: Build image
-      run: docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} --tag ${{ env.IMAGE_ID }}:latest --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" ${{ inputs.docker-context }}
+      run: docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} --tag ${{ env.IMAGE_ID }}:latest --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" --build-arg="TNA_DOCKER_IMAGE_SOURCE=${{ github.repositoryUrl	}}" ${{ inputs.docker-context }}
     - name: Push image
+      if: inputs.publish
       run: docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
     - name: Scan for vulnerabilities
       id: scan
@@ -54,7 +58,7 @@ jobs:
         severity_threshold: CRITICAL
         annotations: true
     - name: Upload SARIF file
-      if: ${{ steps.scan.outputs.sarif != '' }}
+      if: steps.scan.outputs.sarif != '' && inputs.publish
       uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: ${{ steps.scan.outputs.sarif }}
