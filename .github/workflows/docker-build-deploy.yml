@@ -34,12 +34,9 @@ jobs:
         ignore: DL3007
     - name: Shellcheck tna-python
       run: |
-        cd docker/tna-python
-        shellcheck --external-sources --exclude=SC1091 ./*
-    - name: Shellcheck tna-python-django
-      run: |
-        cd docker/tna-python-django
-        shellcheck --external-sources --exclude=SC1091 ./*
+        cd docker
+        shellcheck --external-sources --exclude=SC1091 ./**/bin/*
+        shellcheck --external-sources --exclude=SC1091 ./**/Dockerfile
 
   build:
     name: Build and deploy
