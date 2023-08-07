@@ -57,7 +57,7 @@ jobs:
     - name: List images
       run: docker images
     - name: Tag latest
-      if: ${{ env.VERSION }} != feature/* && inputs.publish
+      if: inputs.publish && contains(github.ref, 'feature/*')
       run: docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:latest
     - name: List images
       if: inputs.publish
