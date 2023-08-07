@@ -6,7 +6,7 @@ on:
       - published
   push:
     branches:
-      - feature/*
+      - feature/**
 
 jobs:
   python:
