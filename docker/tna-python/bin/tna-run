@@ -23,14 +23,14 @@ then
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=WARN
   [[ -z $WORKERS ]] && WORKERS=$DEFAULT_THREADS_AND_WORKERS
   [[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS_AND_WORKERS
-  poetry run gunicorn $1 --workers $WORKERS --threads $THREADS --log-level $LOG_LEVEL --access-logfile - --bind=0.0.0.0:8080
+  poetry run gunicorn $1 --workers $WORKERS --threads $THREADS --log-level $LOG_LEVEL --access-logfile - --bind 0.0.0.0:8080
 elif [ $ENVIRONMENT == 'develop' ]
 then
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=DEBUG
-  poetry run gunicorn $1 --workers 3 --threads 3 --log-level $LOG_LEVEL --reload --bind=0.0.0.0:8080
+  poetry run gunicorn $1 --workers 3 --threads 3 --log-level $LOG_LEVEL --reload --bind 0.0.0.0:8080
 else
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=INFO
   [[ -z $WORKERS ]] && WORKERS=$DEFAULT_THREADS_AND_WORKERS
   [[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS_AND_WORKERS
-  poetry run gunicorn $1 --workers $WORKERS --threads $THREADS --log-level $LOG_LEVEL --access-logfile - --bind=0.0.0.0:8080
+  poetry run gunicorn $1 --workers $WORKERS --threads $THREADS --log-level $LOG_LEVEL --access-logfile - --bind 0.0.0.0:8080
 fi

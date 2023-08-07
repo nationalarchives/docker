@@ -50,6 +50,14 @@ There are two commands to use within your `Dockerfile`:
 
 ### `tna-run`
 
+`tna-run` takes one positional parameter which is the application module to be run, for example:
+
+```sh
+tna-run my_app:app
+```
+
+#### Process
+
 1. If `$ENVIRONMENT` is set to `develop`, there is a `package.json` file and `$NPM_DEVELOP_COMMAND` has been defined:
     1. Use the version of Node defined in `.nvmrc` as was installed by `tna-build`
     1. Install all the Node dependencies
