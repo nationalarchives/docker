@@ -57,9 +57,10 @@ jobs:
     - name: List images
       run: docker images
     - name: Tag latest
-      if: ${{ env.VERSION }} != feature/*
+      if: ${{ env.VERSION }} != feature/* && inputs.publish
       run: docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:latest
     - name: List images
+      if: inputs.publish
       run: docker images
     - name: Push image
       if: inputs.publish
