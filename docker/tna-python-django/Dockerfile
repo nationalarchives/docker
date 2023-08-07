@@ -9,7 +9,7 @@ FROM ghcr.io/nationalarchives/tna-python:0.1.2
 # that are specific to Django
 # ==========================================
 COPY --chown=app bin/tna-build-django bin/tna-run-django $HOME/.local/bin/
-RUN chmod +x $HOME/.local/bin/tna-build-django $HOME/.local/bin/tna-run-django
+RUN chmod +x /home/app/.local/bin/tna-build-django /home/app/.local/bin/tna-run-django
 
 # ==========================================
 # manage.py is the recommended Django way of
@@ -19,5 +19,5 @@ RUN chmod +x $HOME/.local/bin/tna-build-django $HOME/.local/bin/tna-run-django
 # should still still work albeit not with no
 # output
 # ==========================================
-COPY --chown=app lib/manage.py .
+COPY --chown=app lib/manage.py /app
 RUN chmod +x manage.py
