@@ -32,8 +32,14 @@ jobs:
       with:
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
         ignore: DL3007
-    - name: Shellcheck
-      run: shellcheck --source-path=./docker --external-sources --exclude=SC1091 **/bin/*
+    - name: Shellcheck tna-python
+      run: |
+        cd docker/tna-python
+        shellcheck --external-sources --exclude=SC1091 ./*
+    - name: Shellcheck tna-python-django
+      run: |
+        cd docker/tna-python-django
+        shellcheck --external-sources --exclude=SC1091 ./*
 
   build:
     name: Build and deploy
