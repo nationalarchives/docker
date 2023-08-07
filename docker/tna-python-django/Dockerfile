@@ -1,5 +1,5 @@
-# FROM ghcr.io/nationalarchives/tna-python:0.1.2
-FROM tna-python
+# TODO: Change to latest
+FROM ghcr.io/nationalarchives/tna-python:0.1.2
 
 # ==========================================
 # These "-django" suffixed commands are just
