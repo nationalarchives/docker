@@ -21,22 +21,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
   lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - uses: hadolint/hadolint-action@v3.1.0
-      with:
-        dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
-        ignore: DL3007
-    - name: Shellcheck tna-python
-      run: |
-        cd docker
-        shellcheck --external-sources --exclude=SC1091 ./**/bin/*
-        shellcheck --external-sources --exclude=SC1091 ./**/Dockerfile
+    uses: ./.github/workflows/lint.yml
+    with:
+      image-name: ${{ inputs.image-name }}
+      docker-context: ${{ inputs.docker-context }}
+      dockerfile: ${{ inputs.dockerfile }}
 
   build:
     name: Build and deploy
