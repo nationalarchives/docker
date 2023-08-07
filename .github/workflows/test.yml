@@ -13,12 +13,12 @@ jobs:
       dockerfile: Dockerfile
       publish: false
 
-  # python-django:
-  #   name: Python Django
-  #   needs: python
-  #   uses: ./.github/workflows/docker-build-deploy.yml
-  #   with:
-  #     image-name: tna-python-django
-  #     docker-context: docker/tna-python-django
-  #     dockerfile: Dockerfile
-  #     publish: false
+  python-django:
+    name: Python Django
+    needs: python
+    uses: ./.github/workflows/docker-build-deploy.yml
+    with:
+      image-name: tna-python-django
+      docker-context: docker/tna-python-django
+      dockerfile: Dockerfile
+      publish: false
