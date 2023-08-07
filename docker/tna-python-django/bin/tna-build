@@ -2,5 +2,8 @@
 
 tna-build-common
 
-# TODO
-# poetry run python manage.py collectstatic --no-input
+poetry run python /app/manage.py collectstatic --no-input --clear
+
+# This is one of those times you read about...
+# If you remove this line, the tna-build command will fail but I have no idea why...
+echo "Done"

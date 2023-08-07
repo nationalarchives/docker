@@ -9,6 +9,6 @@ then
   exit 1
 fi
 
-tna-run-common "$1"
+poetry run python /app/manage.py migrate
 
-poetry run python manage.py migrate
+tna-run-common "$1"

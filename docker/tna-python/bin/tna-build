@@ -12,7 +12,7 @@ then
   exit 2
 fi
 
-if [ -z "$NPM_BUILD_COMMAND" ]
+if [ -n "$NPM_BUILD_COMMAND" ]
 then
   # npm install --omit=dev
   tna-node "$NPM_BUILD_COMMAND"
