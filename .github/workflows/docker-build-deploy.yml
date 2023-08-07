@@ -63,7 +63,7 @@ jobs:
       run: docker images
     - name: Push image
       if: inputs.publish
-      run: docker image push --all-tags
+      run: docker image push --all-tags ${{ env.IMAGE_ID }}
     - name: Upload SARIF file
       if: steps.scan.outputs.sarif != '' && inputs.publish
       uses: github/codeql-action/upload-sarif@v2
