@@ -41,7 +41,7 @@ jobs:
         # Strip git ref prefix from version
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         # Strip "v" prefix from tag name and add the commit count as a build number
-        [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//').$(git rev-list HEAD --count)
+        [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
         echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
         echo "VERSION=$VERSION" >> "$GITHUB_ENV"
     - name: Build image
