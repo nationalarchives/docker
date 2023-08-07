@@ -163,8 +163,8 @@ USER app
 # bash scripts we need in order to build and
 # run our application in a consistent manner
 # ==========================================
-COPY --chown=app bin/tna-build bin/tna-run /home/app/.local/bin/
-RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run
+COPY --chown=app bin/tna-build bin/tna-node bin/tna-run /home/app/.local/bin/
+RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-node /home/app/.local/bin/tna-run
 
 # ==========================================
 # This does nothing but will act as a way to

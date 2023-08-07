@@ -1,15 +1,23 @@
 # TODO: Change to latest
 FROM ghcr.io/nationalarchives/tna-python:0.1.2
+# FROM tna-python
 
 # ==========================================
-# These "-django" suffixed commands are just
-# proxies to the inherited tna-build/tna-run
-# scripts that were copied in the tna-python
-# Docker image, but with some extra commands
-# that are specific to Django
+# Move the existing build and run scripts to
+# a -common suffix so that we can keep using
+# the base tna-build and tna-run commands
 # ==========================================
-COPY --chown=app bin/tna-build-django bin/tna-run-django $HOME/.local/bin/
-RUN chmod +x /home/app/.local/bin/tna-build-django /home/app/.local/bin/tna-run-django
+RUN mv /home/app/.local/bin/tna-build /home/app/.local/bin/tna-build-common
+RUN mv /home/app/.local/bin/tna-run /home/app/.local/bin/tna-run-common
+
+# ==========================================
+# These new commands are just proxies to the
+# renamed tna-build/tna-run scripts included
+# in the parent Docker image, but with extra
+# Django-specific commands
+# ==========================================
+COPY --chown=app bin/tna-build bin/tna-run /home/app/.local/bin/
+RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run
 
 # ==========================================
 # manage.py is the recommended Django way of

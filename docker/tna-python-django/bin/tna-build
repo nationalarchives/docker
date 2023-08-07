@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tna-build
+tna-build-common
 
 # TODO
 # poetry run python manage.py collectstatic --no-input

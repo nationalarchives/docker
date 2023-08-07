@@ -1,36 +1,36 @@
 #!/bin/bash
 
-if [ -z $1 ]
+if [ -z "$1" ]
 then
-  echo "Usage: $0 my-app";
-  echo -e "\tmy-app is the Python package you want to run"
+  echo -e "Error: application not specified in tna-run\n";
+  echo "PARAMETERS"
+  echo "  application          the Python package you want to run"
+  echo "                       Example: tna-run my_app:app";
   exit 1
 fi
 
-if [ $ENVIRONMENT == 'develop' ] && [ -f "/app/package.json" ] && [ -z $NPM_DEVELOP_COMMAND ]
+if [ "$ENVIRONMENT" == 'develop' ] && [ -n "$NPM_DEVELOP_COMMAND" ]
 then
-  . "$HOME/.nvm/nvm.sh"
-  NODE_VERSION=$(cat /app/.nvmrc)
-  nvm use $NODE_VERSION
-  npm install
-  npm run $NPM_DEVELOP_COMMAND &
+  # npm install --omit=dev
+  tna-node "$NPM_DEVELOP_COMMAND"
+  # rm -fR node_modules
 fi
 
 DEFAULT_THREADS_AND_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
 
-if [ $ENVIRONMENT == 'production' ]
+if [ "$ENVIRONMENT" == 'production' ]
 then
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=WARN
   [[ -z $WORKERS ]] && WORKERS=$DEFAULT_THREADS_AND_WORKERS
   [[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS_AND_WORKERS
-  poetry run gunicorn $1 --workers $WORKERS --threads $THREADS --log-level $LOG_LEVEL --access-logfile - --bind 0.0.0.0:8080
-elif [ $ENVIRONMENT == 'develop' ]
+  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --access-logfile - --bind 0.0.0.0:8080
+elif [ "$ENVIRONMENT" == 'develop' ]
 then
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=DEBUG
-  poetry run gunicorn $1 --workers 3 --threads 3 --log-level $LOG_LEVEL --reload --bind 0.0.0.0:8080
+  poetry run gunicorn "$1" --workers 3 --threads 3 --log-level "$LOG_LEVEL" --reload --bind 0.0.0.0:8080
 else
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=INFO
   [[ -z $WORKERS ]] && WORKERS=$DEFAULT_THREADS_AND_WORKERS
   [[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS_AND_WORKERS
-  poetry run gunicorn $1 --workers $WORKERS --threads $THREADS --log-level $LOG_LEVEL --access-logfile - --bind 0.0.0.0:8080
+  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --access-logfile - --bind 0.0.0.0:8080
 fi

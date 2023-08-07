@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+then
+  echo -e "Error: wsgi_application not specified in tna-run\n";
+  echo "PARAMETERS"
+  echo "  wsgi_application     the WSGI application from Django you want to run"
+  echo "                       Example: tna-run my_app.wsgi:application";
+  exit 1
+fi
+
+tna-run-common "$1"
+
+poetry run python manage.py migrate

@@ -6,6 +6,7 @@ services:
     build: .
     environment:
       - ENVIRONMENT=develop
+      - NPM_DEVELOP_COMMAND=dev
       - DJANGO_SETTINGS_MODULE=my_tna_app.settings
     ports:
       - 65534:8080
