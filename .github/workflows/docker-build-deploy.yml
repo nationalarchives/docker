@@ -33,7 +33,7 @@ jobs:
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
         ignore: DL3007
     - name: Shellcheck
-      run: shellcheck ./**/bin/* --exclude=SC1091
+      run: shellcheck --source-path=./docker --external-sources --exclude=SC1091 **/bin/*
 
   build:
     name: Build and deploy
