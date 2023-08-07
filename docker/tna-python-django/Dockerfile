@@ -1,5 +1,6 @@
 # TODO: Change to latest
-FROM ghcr.io/nationalarchives/tna-python:0.1.2
+# FROM ghcr.io/nationalarchives/tna-python:0.1.2
+FROM ghcr.io/nationalarchives/tna-python:django-base-image
 # FROM tna-python
 
 # ==========================================
@@ -7,8 +8,10 @@ FROM ghcr.io/nationalarchives/tna-python:0.1.2
 # a -common suffix so that we can keep using
 # the base tna-build and tna-run commands
 # ==========================================
-RUN mv /home/app/.local/bin/tna-build /home/app/.local/bin/tna-build-common
-RUN mv /home/app/.local/bin/tna-run /home/app/.local/bin/tna-run-common
+RUN set -eux; \
+    \
+    mv /home/app/.local/bin/tna-build /home/app/.local/bin/tna-build-common; \
+    mv /home/app/.local/bin/tna-run /home/app/.local/bin/tna-run-common
 
 # ==========================================
 # These new commands are just proxies to the
@@ -17,7 +20,6 @@ RUN mv /home/app/.local/bin/tna-run /home/app/.local/bin/tna-run-common
 # Django-specific commands
 # ==========================================
 COPY --chown=app bin/tna-build bin/tna-run /home/app/.local/bin/
-RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run
 
 # ==========================================
 # manage.py is the recommended Django way of
@@ -28,4 +30,8 @@ RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run
 # output
 # ==========================================
 COPY --chown=app lib/manage.py /app
-RUN chmod +x manage.py
+
+# ==========================================
+# Allow all our scripts to be executable
+# ==========================================
+RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run manage.py
