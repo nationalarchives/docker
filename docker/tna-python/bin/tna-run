@@ -11,9 +11,7 @@ fi
 
 if [ "$ENVIRONMENT" == 'develop' ] && [ -n "$NPM_DEVELOP_COMMAND" ]
 then
-  # npm install --omit=dev
   tna-node "$NPM_DEVELOP_COMMAND"
-  # rm -fR node_modules
 fi
 
 DEFAULT_THREADS_AND_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
@@ -27,7 +25,10 @@ then
 elif [ "$ENVIRONMENT" == 'develop' ]
 then
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=DEBUG
-  poetry run gunicorn "$1" --workers 3 --threads 3 --log-level "$LOG_LEVEL" --reload --bind 0.0.0.0:8080
+  [[ -z $WORKERS ]] && WORKERS=3
+  [[ -z $THREADS ]] && THREADS=3
+  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --reload --bind 0.0.0.0:8080
+  # poetry run python manage.py runserver 0.0.0.0:8080
 else
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=INFO
   [[ -z $WORKERS ]] && WORKERS=$DEFAULT_THREADS_AND_WORKERS
