@@ -2,7 +2,7 @@
 
 This image extends `tna-python` but adds:
 
-- ???
+- `manage.py` - a generic entrypoint for Django applications
 
 This image assumes you have a version of Django added to you project's `pyproject.toml` file.
 
