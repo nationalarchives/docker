@@ -18,20 +18,26 @@ DEFAULT_THREADS_AND_WORKERS=$(python -c "import multiprocessing; print(multiproc
 
 if [ "$ENVIRONMENT" == 'production' ]
 then
-  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=WARN
+  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warn
   [[ -z $WORKERS ]] && WORKERS=$DEFAULT_THREADS_AND_WORKERS
   [[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS_AND_WORKERS
-  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --access-logfile - --bind 0.0.0.0:8080
+  [[ -z $TIMEOUT ]] && TIMEOUT=30
+  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
+  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout $TIMEOUT --keep-alive $KEEP_ALIVE --access-logfile - --bind 0.0.0.0:8080
 elif [ "$ENVIRONMENT" == 'develop' ]
 then
-  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=DEBUG
+  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
   [[ -z $WORKERS ]] && WORKERS=3
   [[ -z $THREADS ]] && THREADS=3
-  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --reload --bind 0.0.0.0:8080
+  [[ -z $TIMEOUT ]] && TIMEOUT=600
+  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=5
+  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout $TIMEOUT --keep-alive $KEEP_ALIVE --reload --bind 0.0.0.0:8080
   # poetry run python manage.py runserver 0.0.0.0:8080
 else
-  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=INFO
+  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=info
   [[ -z $WORKERS ]] && WORKERS=$DEFAULT_THREADS_AND_WORKERS
   [[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS_AND_WORKERS
-  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --access-logfile - --bind 0.0.0.0:8080
+  [[ -z $TIMEOUT ]] && TIMEOUT=30
+  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=5
+  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout $TIMEOUT --keep-alive $KEEP_ALIVE --access-logfile - --bind 0.0.0.0:8080
 fi
