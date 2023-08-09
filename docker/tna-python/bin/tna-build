@@ -12,28 +12,11 @@ then
   exit 2
 fi
 
-if [ -f "/app/package.json" ] && [ -z $NPM_BUILD_COMMAND ]
+if [ -n "$NPM_BUILD_COMMAND" ]
 then
-  if [ ! -f "/app/package-lock.json" ]
-  then
-    echo "package-lock.json does not exist";
-    exit 3
-  fi
-
-  if [ ! -f "/app/.nvmrc" ]
-  then
-    echo ".nvmrc does not exist";
-    exit 4
-  fi
-
-  [[ -z $NODE_ENV ]] && NODE_ENV=$ENVIRONMENT
-  . "$HOME/.nvm/nvm.sh"
-  NODE_VERSION=$(cat /app/.nvmrc)
-  nvm install $NODE_VERSION
-  nvm use $NODE_VERSION
-  npm install --omit=dev
-  npm run $NPM_BUILD_COMMAND
-  rm -fR node_modules
+  # npm install --omit=dev
+  tna-node "$NPM_BUILD_COMMAND"
+  # rm -fR node_modules
 fi
 
 poetry add gunicorn@21.1.0

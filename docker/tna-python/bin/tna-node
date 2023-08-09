@@ -1,0 +1,38 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+then
+  echo -e "Error: script not specified in tna-node\n";
+  echo "PARAMETERS"
+  echo "  script               the Node script you want to run"
+  echo "                       Example: tna-node dev";
+  exit 1
+fi
+
+if [ ! -f "/app/package.json" ]
+then
+  echo "package.json does not exist";
+  exit 2
+fi
+
+if [ ! -f "/app/package-lock.json" ]
+then
+  echo "package-lock.json does not exist";
+  exit 3
+fi
+
+if [ ! -f "/app/.nvmrc" ]
+then
+  echo ".nvmrc does not exist";
+  exit 4
+fi
+
+[[ -z $NODE_ENV ]] && NODE_ENV=$ENVIRONMENT
+. "$HOME/.nvm/nvm.sh"
+NODE_VERSION=$(cat /app/.nvmrc)
+nvm install "$NODE_VERSION"
+nvm use "$NODE_VERSION"
+# npm install --omit=dev
+npm install
+npm run "$1"
+# rm -fR node_modules

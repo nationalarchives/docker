@@ -2,14 +2,13 @@ version: '3'
 
 services:
   app:
-    container_name: my-tna-application
+    container_name: my-tna-django-application
     build: .
     environment:
       - ENVIRONMENT=develop
-      - THREADS=5
-      - LOG_LEVEL=INFO
-      - NPM_BUILD_COMMAND=custom
+      - NPM_DEVELOP_COMMAND=dev
+      - DJANGO_SETTINGS_MODULE=my_tna_app.settings
     ports:
-      - 65535:8080
+      - 65534:8080
     volumes:
       - ./my_tna_app:/app/my_tna_app

@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "dev": "echo 'DEV SCRIPT'",
+    "build": "echo 'BUILT THE ASSETS'",
+    "custom": "echo 'CUSTOM SCRIPT'"
+  }
+}

@@ -1,5 +1,0 @@
-#!/bin/bash
-
-tna-build
-
-poetry run python manage.py collectstatic --no-input

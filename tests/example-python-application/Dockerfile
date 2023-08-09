@@ -12,4 +12,4 @@ RUN tna-build
 COPY --chown=app . .
 
 # Run the application
-CMD ["tna-run", "my-tna-app:app"]
+CMD ["tna-run", "my_tna_app:app"]

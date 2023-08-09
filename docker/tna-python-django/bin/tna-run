@@ -1,16 +1,14 @@
 #!/bin/bash
 
-if [ $ENVIRONMENT == 'production' ]
+if [ -z "$1" ]
 then
-  LOG_LEVEL=WARN
-  WORKERS=3
-  THREADS=3
-else
-  LOG_LEVEL=DEBUG
-  WORKERS=1
-  THREADS=1
+  echo -e "Error: wsgi_application not specified in tna-run\n";
+  echo "PARAMETERS"
+  echo "  wsgi_application     the WSGI application from Django you want to run"
+  echo "                       Example: tna-run my_app.wsgi:application";
+  exit 1
 fi
 
-poetry run python manage.py collectstatic --no-input
-poetry run python manage.py migrate
-poetry run gunicorn config.wsgi:application --capture-output --workers ${WORKERS} --threads ${THREADS} --log-level=${LOG_LEVEL} -b 0.0.0.0:8000
+poetry run python /app/manage.py migrate
+
+tna-run-common "$1"

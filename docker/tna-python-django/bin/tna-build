@@ -1,0 +1,9 @@
+#!/bin/bash
+
+tna-build-common
+
+poetry run python /app/manage.py collectstatic --no-input --clear
+
+# This is one of those times you read about...
+# If you remove this line, the tna-build command will fail but I have no idea why...
+echo "Done"

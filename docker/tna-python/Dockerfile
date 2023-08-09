@@ -13,7 +13,7 @@ LABEL version="${TNA_DOCKER_IMAGE_VERSION}"
 # ==========================================
 ARG TNA_DOCKER_IMAGE_SOURCE
 LABEL org.opencontainers.image.description="National Archives base Docker image" \
-    org.opencontainers.image.source=$TNA_DOCKER_IMAGE_SOURCE \
+    org.opencontainers.image.source="$TNA_DOCKER_IMAGE_SOURCE" \
     org.opencontainers.image.licenses=MIT
 
 # ==========================================
@@ -129,7 +129,7 @@ RUN set -eux; \
     \
     curl -sSL "https://install.python-poetry.org" | python -; \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash; \
-    chown app:app -R $POETRY_HOME /home/app/.nvm
+    chown app:app -R "$POETRY_HOME" /home/app/.nvm
 
 # ==========================================
 # Change the image current working directory
@@ -147,7 +147,7 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 # This is a temporary fix for CVE-2022-40897
 # https://access.redhat.com/security/cve/cve-2022-40897
 # ==========================================
-RUN rm -fR $POETRY_HOME/venv/lib/python3.11/site-packages/setuptools-65.5.0.dist-info
+RUN rm -fR "$POETRY_HOME/venv/lib/python3.11/site-packages/setuptools-65.5.0.dist-info"
 
 # ==========================================
 # Now we have finished installing everything
@@ -163,8 +163,8 @@ USER app
 # bash scripts we need in order to build and
 # run our application in a consistent manner
 # ==========================================
-COPY --chown=app bin/tna-build bin/tna-run /home/app/.local/bin/
-RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run
+COPY --chown=app bin/tna-build bin/tna-node bin/tna-run /home/app/.local/bin/
+RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-node /home/app/.local/bin/tna-run
 
 # ==========================================
 # This does nothing but will act as a way to
