@@ -5,13 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.1.3...HEAD)
 
-## [0.1.2] - 2023-08-07
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.1.2](https://github.com/nationalarchives/docker/compare/v0.1.2...v0.1.3) - 2023-08-09
+
+### Added
+
+- Initial release of `tna-python-django` Docker image, ready for testing with services in beta
+- Added support for `TIMEOUT` and `KEEP_ALIVE`
+
+## Changed
+
+- Node scripts are now run through `tna-node`
+- Updated default number of workers and threads
+
+## Fixed
+
+- More stable build and run scripts in `tna-build` and `tna-run` with quotes around environment variables, tested with [ShellCheck](https://www.shellcheck.net/)
+
+## [0.1.2](https://github.com/nationalarchives/docker/releases/tag/v0.1.2) - 2023-08-07
 
 ### Added
 
 - Initial release of `tna-python` Docker image, ready for testing with services in beta
-
-[unreleased]: https://github.com/nationalarchives/docker/compare/v0.1.2...HEAD
-[0.1.2]: https://github.com/nationalarchives/docker/releases/tag/v0.1.2
