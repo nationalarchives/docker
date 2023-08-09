@@ -1,7 +1,4 @@
-# TODO: Change to latest
-# FROM ghcr.io/nationalarchives/tna-python:0.1.2
-FROM ghcr.io/nationalarchives/tna-python:django-base-image
-# FROM tna-python
+FROM ghcr.io/nationalarchives/tna-python:latest
 
 # ==========================================
 # Move the existing build and run scripts to
