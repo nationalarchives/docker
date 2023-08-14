@@ -63,22 +63,27 @@ jobs:
       with:
         context: ${{ inputs.docker-context }}
         platforms: linux/amd64,linux/arm64
-        labels: runnumber=${GITHUB_RUN_ID}
-        build-args: TNA_DOCKER_IMAGE_VERSION=$VERSION,TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+        labels: |
+          runnumber=${{ github.run_id }}
+        build-args: |
+          TNA_DOCKER_IMAGE_VERSION=${{ env.VERSION }}
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
         push: ${{ inputs.publish }}
         tags: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
         provenance: false
-    # - name: Tag latest
-    #   if: inputs.publish && startsWith(github.ref, 'refs/tags/')
-    #   run: docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:latest
-    # - name: Push latest
-    #   if: inputs.publish
-    #   run: docker image push --all-tags ${{ env.IMAGE_ID }}
+    - name: Tag latest
+      if: inputs.publish && startsWith(github.ref, 'refs/tags/')
+      run: |
+        docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:latest
+        docker image push --all-tags ${{ env.IMAGE_ID }}
     - name: List images
       run: |
         docker --debug manifest inspect ${{ env.IMAGE_ID }}
-        docker buildx imagetools inspect --raw ${{ env.IMAGE_ID }}
+        echo "==========================="
         docker --debug manifest inspect ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+        echo "==========================="
+        docker buildx imagetools inspect --raw ${{ env.IMAGE_ID }}
+        echo "==========================="
         docker buildx imagetools inspect --raw ${{ env.IMAGE_ID }}:${{ env.VERSION }}
     - name: Scan for vulnerabilities
       id: scan
