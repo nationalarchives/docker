@@ -76,15 +76,6 @@ jobs:
       run: |
         docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:latest
         docker image push ${{ env.IMAGE_ID }}:latest
-    - name: List images
-      run: |
-        docker --debug manifest inspect ${{ env.IMAGE_ID }}
-        echo "==========================="
-        docker --debug manifest inspect ${{ env.IMAGE_ID }}:${{ env.VERSION }}
-        echo "==========================="
-        docker buildx imagetools inspect --raw ${{ env.IMAGE_ID }}
-        echo "==========================="
-        docker buildx imagetools inspect --raw ${{ env.IMAGE_ID }}:${{ env.VERSION }}
     - name: Scan for vulnerabilities
       id: scan
       uses: crazy-max/ghaction-container-scan@v2
