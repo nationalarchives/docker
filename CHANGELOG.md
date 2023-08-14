@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.1.3...HEAD)
 
 ### Added
+
+- Support for `linux/amd64` and `linux/arm64` base images
+
 ### Changed
 ### Deprecated
 ### Removed
