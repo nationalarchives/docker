@@ -1,11 +1,12 @@
-FROM python:3.11-slim
+ARG PLATFORM
+FROM --platform="$PLATFORM" python:3.11-slim
 
 # ==========================================
 # Label this container image with a semantic
 # version number
 # ==========================================
 ARG TNA_DOCKER_IMAGE_VERSION
-LABEL version="${TNA_DOCKER_IMAGE_VERSION}"
+LABEL version="$TNA_DOCKER_IMAGE_VERSION"
 
 # ==========================================
 # Add some opencontainer labels which GitHub
