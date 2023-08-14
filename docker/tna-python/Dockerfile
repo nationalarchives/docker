@@ -1,5 +1,4 @@
-ARG PLATFORM
-FROM --platform="$PLATFORM" python:3.11-slim
+FROM python:3.11-slim
 
 # ==========================================
 # Label this container image with a semantic
@@ -100,15 +99,19 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # create an /app directory in the root which
 # will contain all the application code
 # ==========================================
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends curl=7.88.1-10+deb12u1
-RUN apt-get clean
-RUN apt-get autoremove -y --purge
-RUN rm -rf /var/lib/apt/lists/*
-RUN useradd --system --create-home app
-RUN mkdir -p /app
-RUN chown app:app -R /app
-RUN chmod 700 /app
+RUN set -eux; \
+    \
+    apt-get update; \
+    apt-get install -y --no-install-recommends curl=7.88.1-10+deb12u1; \
+    apt-get clean; \
+    apt-get autoremove -y --purge; \
+	rm -rf /var/lib/apt/lists/*; \
+    \
+    useradd --system --create-home app; \
+    \
+    mkdir -p /app; \
+    chown app:app -R /app; \
+    chmod 700 /app
 
 # ==========================================
 # Set $HOME env var to be the home directory

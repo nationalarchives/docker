@@ -53,13 +53,14 @@ jobs:
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
         echo "VERSION=$VERSION" >> "$GITHUB_ENV"
     - name: Build images
-      run: |
-        # AMD64
-        docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }}-amd64 --platform=linux/amd64 --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" --build-arg="PLATFORM=linux/amd64" --build-arg="TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}" ${{ inputs.docker-context }}
-        #ARM64
-        docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }}-arm64v8 --platform=linux/arm64/v8 --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" --build-arg="PLATFORM=linux/arm64/v8" --build-arg="TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}" ${{ inputs.docker-context }}
-    - name: Build mainfest
-      run: docker manifest create ${{ env.IMAGE_ID }}:${{ env.VERSION }} --amend ${{ env.IMAGE_ID }}:${{ env.VERSION }}-amd64 --amend ${{ env.IMAGE_ID }}:${{ env.VERSION }}-arm64v8
+      if: !inputs.publish
+      run: docker buildx build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }}-amd64 --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" --build-arg="TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}" ${{ inputs.docker-context }}
+    - name: Build images
+      if: inputs.publish
+      run: docker buildx build --push --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }}-amd64 --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" --build-arg="TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}" ${{ inputs.docker-context }}
+    - name: Tag latest
+      if: inputs.publish && startsWith(github.ref, 'refs/tags/')
+      run: docker buildx build --push --tag ${{ env.IMAGE_ID }}:latest-amd64 --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" --build-arg="TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}" ${{ inputs.docker-context }}
     - name: Scan for vulnerabilities
       id: scan
       uses: crazy-max/ghaction-container-scan@v2
@@ -68,19 +69,6 @@ jobs:
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
         severity_threshold: CRITICAL
         annotations: true
-    - name: Tag latest
-      if: inputs.publish && startsWith(github.ref, 'refs/tags/')
-      run: |
-        docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }}-amd64 ${{ env.IMAGE_ID }}:latest-amd64
-        docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }}-arm64v8 ${{ env.IMAGE_ID }}:latest-arm64v8
-    - name: List images
-      if: inputs.publish
-      run: docker images
-    - name: Push image
-      if: inputs.publish
-      run: |
-        docker image push --all-tags ${{ env.IMAGE_ID }}
-        docker manifest push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
     - name: Upload SARIF file
       if: steps.scan.outputs.sarif != '' && inputs.publish
       uses: github/codeql-action/upload-sarif@v2
