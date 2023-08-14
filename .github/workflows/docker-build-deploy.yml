@@ -58,7 +58,8 @@ jobs:
         docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }}-amd64 --platform=linux/amd64 --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" --build-arg="TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}" ${{ inputs.docker-context }}
         #ARM64
         docker build --tag ${{ env.IMAGE_ID }}:${{ env.VERSION }}-arm64v8 --platform=linux/arm64/v8 --label "runnumber=${GITHUB_RUN_ID}" --build-arg="TNA_DOCKER_IMAGE_VERSION=$VERSION" --build-arg="TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}" ${{ inputs.docker-context }}
-        docker manifest create ${{ env.IMAGE_ID }}:${{ env.VERSION }} --amend ${{ env.IMAGE_ID }}:${{ env.VERSION }}-amd64 --amend ${{ env.IMAGE_ID }}:${{ env.VERSION }}-arm64v8
+    - name: Build mainfest
+      run: docker manifest create ${{ env.IMAGE_ID }}:${{ env.VERSION }} --amend ${{ env.IMAGE_ID }}:${{ env.VERSION }}-amd64 --amend ${{ env.IMAGE_ID }}:${{ env.VERSION }}-arm64v8
     - name: Scan for vulnerabilities
       id: scan
       uses: crazy-max/ghaction-container-scan@v2
