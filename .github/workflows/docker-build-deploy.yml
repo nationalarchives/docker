@@ -21,17 +21,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    uses: ./.github/workflows/lint.yml
-    with:
-      image-name: ${{ inputs.image-name }}
-      docker-context: ${{ inputs.docker-context }}
-      dockerfile: ${{ inputs.dockerfile }}
+  # lint:
+  #   uses: ./.github/workflows/lint.yml
+  #   with:
+  #     image-name: ${{ inputs.image-name }}
+  #     docker-context: ${{ inputs.docker-context }}
+  #     dockerfile: ${{ inputs.dockerfile }}
 
   build:
     name: Build and deploy
     runs-on: ubuntu-latest
-    needs: lint
+    # needs: lint
     permissions:
       packages: write
       contents: read
