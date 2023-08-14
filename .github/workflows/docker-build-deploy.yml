@@ -54,7 +54,7 @@ jobs:
         echo "VERSION=$VERSION" >> "$GITHUB_ENV"
     - name: Prepare Docker buildx
       run: |
-        docker buildx create --use --platform=linux/arm64,linux/amd64 --name multi-platform-builder
+        docker buildx create --use --platform=linux/arm/v8,linux/arm64,linux/amd64 --name multi-platform-builder
         docker buildx inspect --bootstrap
     - name: Build images
       if: inputs.publish != true
