@@ -9,10 +9,13 @@ jobs:
   delete:
     if: github.event.ref_type == 'branch'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image-name: [tna-python, tna-python-django]
     steps:
       - name: Prepare image tag
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${{ inputs.image-name }}
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${{ matrix.image-name }}
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
