@@ -4,15 +4,8 @@ on:
   delete:
 
 jobs:
-  debug:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debug
-        run: |
-          echo "github.event.ref: ${{ github.event.ref }}"
-
   delete:
-    if: github.event.ref_type == 'branch' && startsWith(github.ref, 'refs/head/feature/')
+    if: github.event.ref_type == 'branch' && startsWith(github.event.ref, 'feature/')
     runs-on: ubuntu-latest
     strategy:
       matrix:
