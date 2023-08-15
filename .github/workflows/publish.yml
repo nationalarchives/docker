@@ -11,7 +11,7 @@ on:
 jobs:
   python:
     name: Python
-    uses: ./.github/workflows/docker-build-deploy.yml
+    uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python
       docker-context: docker/tna-python
@@ -21,7 +21,7 @@ jobs:
   python-django:
     name: Python Django
     needs: python
-    uses: ./.github/workflows/docker-build-deploy.yml
+    uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-django
       docker-context: docker/tna-python-django
