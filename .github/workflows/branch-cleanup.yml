@@ -9,9 +9,7 @@ jobs:
     steps:
       - name: Debug
         run: |
-          echo "github.ref:      ${{ github.ref }}"
-          echo "github.head_ref: ${{ github.head_ref }}"
-          echo "github.ref_name: ${{ github.ref_name }}"
+          echo "github.event.ref: ${{ github.event.ref }}"
 
   delete:
     if: github.event.ref_type == 'branch' && startsWith(github.ref, 'refs/head/feature/')
