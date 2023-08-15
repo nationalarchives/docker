@@ -35,7 +35,7 @@ jobs:
       with:
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
         ignore: DL3007 # We want to allow the latest base image tag to build other base images
-    - name: Shellcheck
+    - name: ShellCheck
       run: |
         cd docker/${{ inputs.image-name }}
         shellcheck --external-sources --exclude=SC1091 ./bin/*
