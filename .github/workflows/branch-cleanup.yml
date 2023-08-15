@@ -1,11 +1,20 @@
-name: Clean up feature branch
+name: Clean up feature branches
 
 on:
   delete:
 
 jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug
+        run: |
+          echo "github.ref:      ${{ github.ref }}"
+          echo "github.head_ref: ${{ github.head_ref }}"
+          echo "github.ref_name: ${{ github.ref_name }}"
+
   delete:
-    if: github.event.ref_type == 'branch' && startsWith(github.head_ref, 'feature/')
+    if: github.event.ref_type == 'branch' && startsWith(github.ref, 'refs/head/feature/')
     runs-on: ubuntu-latest
     strategy:
       matrix:
