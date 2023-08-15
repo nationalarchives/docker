@@ -71,6 +71,7 @@ jobs:
         tags: ${{ env.IMAGE_ID }}:${{ env.TAG }}
         provenance: false
     - name: List manifest
+      if: inputs.publish
       run: docker buildx imagetools inspect ${{ env.IMAGE_ID }}:${{ env.TAG }}
     - name: Tag latest
       if: inputs.publish && startsWith(github.ref, 'refs/tags/')
