@@ -88,6 +88,7 @@ jobs:
         tags: ${{ env.IMAGE_ID }}:latest
         provenance: false
     - name: Scan for vulnerabilities
+      if: inputs.publish
       id: scan
       uses: crazy-max/ghaction-container-scan@v2
       with:
