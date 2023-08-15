@@ -18,9 +18,7 @@ jobs:
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
           # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          # Strip "v" prefix from tag name and add the commit count as a build number
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          VERSION=$(echo "${{ github.event.ref }}" | sed -e 's,.*/\(.*\),\1,')
           echo "TAG=$VERSION" >> "$GITHUB_ENV"
       - name: Output image tag
         run: echo "Clean up Docker image ${{ env.IMAGE_ID }}:${{ env.TAG }}"
