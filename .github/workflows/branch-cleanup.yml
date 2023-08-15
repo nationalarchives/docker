@@ -1,0 +1,32 @@
+name: Clean up feature branch
+
+on:
+  delete:
+    branches:
+      - feature/*
+
+jobs:
+  delete:
+    if: github.event.ref_type == 'branch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare image tag
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${{ inputs.image-name }}
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name and add the commit count as a build number
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          echo "TAG=$VERSION" >> "$GITHUB_ENV"
+      - name: Debug
+        run: echo "Clean up Docker image ${{ env.IMAGE_ID }}:${{ env.TAG }}"
+      # - name: Delete image
+      #   uses: bots-house/ghcr-delete-image-action@v1.1.0
+      #   with:
+      #     owner: nationalarchives
+      #     name: ${{ env.IMAGE_ID }}
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     tag: ${{ env.TAG }}
