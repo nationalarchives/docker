@@ -22,12 +22,12 @@ jobs:
           # Strip "v" prefix from tag name and add the commit count as a build number
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           echo "TAG=$VERSION" >> "$GITHUB_ENV"
-      - name: Debug
+      - name: Output image tag
         run: echo "Clean up Docker image ${{ env.IMAGE_ID }}:${{ env.TAG }}"
-      # - name: Delete image
-      #   uses: bots-house/ghcr-delete-image-action@v1.1.0
-      #   with:
-      #     owner: nationalarchives
-      #     name: ${{ env.IMAGE_ID }}
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     tag: ${{ env.TAG }}
+      - name: Delete image
+        uses: bots-house/ghcr-delete-image-action@v1.1.0
+        with:
+          owner: nationalarchives
+          name: ${{ env.IMAGE_ID }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.TAG }}
