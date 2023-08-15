@@ -44,6 +44,7 @@ jobs:
     permissions:
       packages: write
       contents: read
+      security-events: write
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -93,14 +94,6 @@ jobs:
         push: true
         tags: ${{ env.IMAGE_ID }}:latest
         provenance: false
-
-  scan:
-    name: Scan
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      security-events: write
-    steps:
     - name: Scan for vulnerabilities
       id: scan
       uses: crazy-max/ghaction-container-scan@v2
