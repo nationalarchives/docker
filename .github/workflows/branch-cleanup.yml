@@ -2,12 +2,10 @@ name: Clean up feature branch
 
 on:
   delete:
-    branches:
-      - feature/*
 
 jobs:
   delete:
-    if: github.event.ref_type == 'branch'
+    if: github.event.ref_type == 'branch' && startsWith(github.head_ref, 'feature/')
     runs-on: ubuntu-latest
     strategy:
       matrix:
