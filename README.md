@@ -6,12 +6,14 @@
 [![Latest release](https://img.shields.io/github/v/release/nationalarchives/docker?style=flat-square&logo=github&logoColor=white&sort=semver)](https://github.com/nationalarchives/docker/releases)
 [![Licence](https://img.shields.io/github/license/nationalarchives/docker?style=flat-square)](https://github.com/nationalarchives/docker/blob/main/LICENCE)
 
+The National Archives base Docker images are designed to serve as a starting point for all containerised applications in The National Archives.
+
 ## Base Python image
 
 - [About tna-python](./docker/tna-python)
 - [Example application](./tests/example-python-application)
 
-## Base Python Django image
+### Base Python Django image
 
 - [About tna-python-django](./docker/tna-python-django)
 - [Example Django application](./tests/example-python-django-application)
