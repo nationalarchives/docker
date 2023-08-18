@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 tna-build-common
 
 poetry run python /app/manage.py collectstatic --no-input --clear
