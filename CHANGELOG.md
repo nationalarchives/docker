@@ -5,17 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.1.5...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.1.6...HEAD)
 
 ### Added
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
-
-- Scripts exit immediately if any command or pipeline returns a non-zero exit status
-
 ### Security
+
+## [0.1.6](https://github.com/nationalarchives/docker/compare/v0.1.5...v0.1.6) - 2023-08-21
+
+### Added
+
+- Installed `build-essential` in `tna-python` to allow building of Node versions in nvm with GCC (GNU Compiler Collection)
+
+### Changed
+
+- Updated Poetry to [v1.6.0](https://github.com/python-poetry/poetry/releases/tag/1.6.0)
+
+### Fixed
+
+- Scripts exit immediately if any command or pipeline returns a non-zero exit status (`set -e`)
+- Changed all exit codes to `1`
+- `collectstatic` Django function on build won't error if `django.contrib.staticfiles` is not defined in `INSTALLED_APPS`
+- Explicitly set $NVM_DIR following [nvm v0.39.4](https://github.com/nvm-sh/nvm/releases/tag/v0.39.4)
 
 ## [0.1.5](https://github.com/nationalarchives/docker/compare/v0.1.4...v0.1.5) - 2023-08-16
 
