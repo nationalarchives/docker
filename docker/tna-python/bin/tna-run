@@ -8,7 +8,7 @@ then
   echo "PARAMETERS"
   echo "  application          the Python package you want to run"
   echo "                       Example: tna-run my_app:app";
-  exit 1
+  exit 1001
 fi
 
 if [ "$ENVIRONMENT" == 'develop' ] && [ -n "$NPM_DEVELOP_COMMAND" ]
