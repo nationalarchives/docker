@@ -124,7 +124,7 @@ ENV HOME=/home/app
 # Specify the directory for nvm to use which
 # is writable by our "app" user
 # ==========================================
-ENV NVM_DIR=$HOME/.nvm
+ENV NVM_DIR="$HOME/.nvm"
 
 # ==========================================
 # Install Poetry in the suggested manner and
