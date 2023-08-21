@@ -5,13 +5,13 @@ set -e
 if [ ! -f "/app/pyproject.toml" ]
 then
   echo "pyproject.toml does not exist";
-  exit 3001
+  exit 14
 fi
 
 if [ ! -f "/app/poetry.lock" ]
 then
   echo "poetry.lock does not exist";
-  exit 3002
+  exit 15
 fi
 
 if [ -n "$NPM_BUILD_COMMAND" ]
