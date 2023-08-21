@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changed
 
-- Updated Poetry to [v1.6.0](https://github.com/python-poetry/poetry/releases/tag/1.6.0)
+- Updated Poetry to [v1.6.1](https://github.com/python-poetry/poetry/releases/tag/1.6.1)
 
 ### Deprecated
 ### Removed
