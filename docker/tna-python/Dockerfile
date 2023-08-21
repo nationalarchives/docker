@@ -74,7 +74,7 @@ ENV PIP_NO_CACHE_DIR=true \
 # and what version is used
 # ==========================================
 ENV POETRY_HOME=/home/app/.local \
-    POETRY_VERSION=1.5.1 \
+    POETRY_VERSION=1.6.0 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=true \
     POETRY_VIRTUALENVS_IN_PROJECT=false
@@ -102,10 +102,10 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN set -eux; \
     \
     apt-get update; \
-    apt-get install -y --no-install-recommends curl=7.88.1-10+deb12u1; \
+    apt-get install -y --no-install-recommends curl=7.88.1-10+deb12u1 build-essential=12.9; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
-	rm -rf /var/lib/apt/lists/*; \
+	rm -rfv /var/lib/apt/lists/*; \
     \
     useradd --system --create-home app; \
     \
@@ -121,6 +121,12 @@ RUN set -eux; \
 ENV HOME=/home/app
 
 # ==========================================
+# Specify the directory for nvm to use which
+# is writable by our "app" user
+# ==========================================
+ENV NVM_DIR="$HOME/.nvm"
+
+# ==========================================
 # Install Poetry in the suggested manner and
 # nvm so we can build static assets like CSS
 # and JavaScript
@@ -129,7 +135,7 @@ RUN set -eux; \
     \
     curl -sSL "https://install.python-poetry.org" | python -; \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash; \
-    chown app:app -R "$POETRY_HOME" /home/app/.nvm
+    chown app:app -R "$POETRY_HOME" "$NVM_DIR"
 
 # ==========================================
 # Change the image current working directory

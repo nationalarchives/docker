@@ -14,27 +14,25 @@ fi
 if [ ! -f "/app/package.json" ]
 then
   echo "package.json does not exist";
-  exit 2
+  exit 1
 fi
 
 if [ ! -f "/app/package-lock.json" ]
 then
   echo "package-lock.json does not exist";
-  exit 3
+  exit 1
 fi
 
 if [ ! -f "/app/.nvmrc" ]
 then
   echo ".nvmrc does not exist";
-  exit 4
+  exit 1
 fi
 
 [[ -z $NODE_ENV ]] && NODE_ENV=$ENVIRONMENT
-. "$HOME/.nvm/nvm.sh"
+. "$NVM_DIR/nvm.sh" && true
 NODE_VERSION=$(cat /app/.nvmrc)
-nvm install "$NODE_VERSION"
-nvm use "$NODE_VERSION"
-# npm install --omit=dev
+nvm install "$NODE_VERSION" --default
+nvm use "$NODE_VERSION" --silent
 npm install
 npm run "$1"
-# rm -fR node_modules

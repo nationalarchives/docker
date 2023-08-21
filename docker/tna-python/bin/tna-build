@@ -11,7 +11,7 @@ fi
 if [ ! -f "/app/poetry.lock" ]
 then
   echo "poetry.lock does not exist";
-  exit 2
+  exit 1
 fi
 
 if [ -n "$NPM_BUILD_COMMAND" ]
