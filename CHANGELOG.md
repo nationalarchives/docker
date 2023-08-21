@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Scripts exit immediately if any command or pipeline returns a non-zero exit status (`set -e`)
 - Changed all exit codes to `1`
 - `collectstatic` Django function on build won't error if `django.contrib.staticfiles` is not defined in `INSTALLED_APPS`
-- Explicitly set $NVM_DIR following [nvm v0.39.4](https://github.com/nvm-sh/nvm/releases/tag/v0.39.4)
+- Explicitly set `$NVM_DIR` following [nvm v0.39.4](https://github.com/nvm-sh/nvm/releases/tag/v0.39.4)
 
 ## [0.1.5](https://github.com/nationalarchives/docker/compare/v0.1.4...v0.1.5) - 2023-08-16
 
