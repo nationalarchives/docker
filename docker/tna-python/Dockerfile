@@ -121,6 +121,12 @@ RUN set -eux; \
 ENV HOME=/home/app
 
 # ==========================================
+# Specify the directory for nvm to use which
+# is writable by our "app" user
+# ==========================================
+ENV NVM_DIR=$HOME/.nvm
+
+# ==========================================
 # Install Poetry in the suggested manner and
 # nvm so we can build static assets like CSS
 # and JavaScript
@@ -129,7 +135,7 @@ RUN set -eux; \
     \
     curl -sSL "https://install.python-poetry.org" | python -; \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash; \
-    chown app:app -R "$POETRY_HOME" /home/app/.nvm
+    chown app:app -R "$POETRY_HOME" "$NVM_DIR"
 
 # ==========================================
 # Change the image current working directory
