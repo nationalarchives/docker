@@ -8,25 +8,25 @@ then
   echo "PARAMETERS"
   echo "  script               the Node script you want to run"
   echo "                       Example: tna-node dev";
-  exit 10
+  exit 1
 fi
 
 if [ ! -f "/app/package.json" ]
 then
   echo "package.json does not exist";
-  exit 11
+  exit 1
 fi
 
 if [ ! -f "/app/package-lock.json" ]
 then
   echo "package-lock.json does not exist";
-  exit 12
+  exit 1
 fi
 
 if [ ! -f "/app/.nvmrc" ]
 then
   echo ".nvmrc does not exist";
-  exit 13
+  exit 1
 fi
 
 [[ -z $NODE_ENV ]] && NODE_ENV=$ENVIRONMENT
