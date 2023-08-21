@@ -74,7 +74,7 @@ ENV PIP_NO_CACHE_DIR=true \
 # and what version is used
 # ==========================================
 ENV POETRY_HOME=/home/app/.local \
-    POETRY_VERSION=1.5.1 \
+    POETRY_VERSION=1.6.0 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=true \
     POETRY_VIRTUALENVS_IN_PROJECT=false
@@ -102,10 +102,10 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN set -eux; \
     \
     apt-get update; \
-    apt-get install -y --no-install-recommends curl=7.88.1-10+deb12u1; \
+    apt-get install -y --no-install-recommends curl=7.88.1-10+deb12u1 build-essential=12.9; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
-	rm -rf /var/lib/apt/lists/*; \
+	rm -rfv /var/lib/apt/lists/*; \
     \
     useradd --system --create-home app; \
     \
