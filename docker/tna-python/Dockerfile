@@ -134,7 +134,7 @@ ENV NVM_DIR="$HOME/.nvm"
 RUN set -eux; \
     \
     curl -sSL "https://install.python-poetry.org" | python -; \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash; \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
 
 # ==========================================
