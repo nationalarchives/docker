@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- `tna-run` tries to use Django or Flask development servers if `$ENVIRONMENT == develop`, reverting to `gunicorn` if neither are available
+- Updated Gunicorn to [21.2.0](https://github.com/benoitc/gunicorn/releases/tag/21.2.0)
+
 ### Deprecated
 ### Removed
 ### Fixed

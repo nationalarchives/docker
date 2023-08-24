@@ -30,12 +30,27 @@ then
   poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind 0.0.0.0:8080
 elif [ "$ENVIRONMENT" == 'develop' ]
 then
+  echo "ENVIRONMENT is develop"
+  echo "Trying Django development server..."
+  if poetry show django ;
+  then
+    echo "Django found, starting server"
+    poetry run python /app/manage.py runserver 0.0.0.0:8080
+  fi
+  echo "Django not found"
+  echo "Trying Flask development server..."
+  if poetry show flask ;
+  then
+    echo "Flask found, starting server"
+    poetry run flask run --debug --host 0.0.0.0 --port 8080
+  fi
+  echo "Flask not found"
+  echo "No framework found, using Gunicorn to serve development application"
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
   [[ -z $WORKERS ]] && WORKERS=3
   [[ -z $TIMEOUT ]] && TIMEOUT=600
   [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=5
   poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --reload --bind 0.0.0.0:8080
-  # poetry run python manage.py runserver 0.0.0.0:8080
 else
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=info
   [[ -z $WORKERS ]] && WORKERS=$DEFAULT_WORKERS
