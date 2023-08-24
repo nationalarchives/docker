@@ -16,10 +16,8 @@ fi
 
 if [ -n "$NPM_BUILD_COMMAND" ]
 then
-  # npm install --omit=dev
   tna-node "$NPM_BUILD_COMMAND"
-  # rm -fR node_modules
 fi
 
-poetry add gunicorn@21.1.0
+poetry add gunicorn@21.2.0
 poetry install --sync --no-root
