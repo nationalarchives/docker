@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Installed `libmagic-dev` to enable `libmagic`
+- Installed Node `lts/hydrogen` using `nvm` to aid faster build times for projects using the latest LTS release
 
 ### Changed
 ### Deprecated
