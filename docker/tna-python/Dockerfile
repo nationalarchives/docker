@@ -145,14 +145,6 @@ RUN set -eux; \
 WORKDIR /app
 
 # ==========================================
-# Install the latest LTS version of Node.js,
-# but keeping within the releases code-named
-# as "hydrogen" (v18)
-# ==========================================
-RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install lts/hydrogen
-
-# ==========================================
 # Add the Poetry binary to our path
 # ==========================================
 ENV PATH="$POETRY_HOME/bin:$PATH"
@@ -171,6 +163,14 @@ RUN rm -fR "$POETRY_HOME/venv/lib/python3.11/site-packages/setuptools-65.5.0.dis
 # permissions
 # ==========================================
 USER app
+
+# ==========================================
+# Install the latest LTS version of Node.js,
+# but keeping within the releases code-named
+# as "hydrogen" (v18)
+# ==========================================
+RUN . "$NVM_DIR/nvm.sh"; \
+    nvm install lts/hydrogen
 
 # ==========================================
 # Into our .local/bin/ directory copy in the
