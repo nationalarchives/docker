@@ -52,7 +52,7 @@ jobs:
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         # Strip "v" prefix from tag name and add the commit count as a build number
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-        [ "$VERSION" == "main" ] && VERSION=latest
+        [ "$VERSION" == "main" ] && VERSION=preview
         echo "TAG=$VERSION" >> "$GITHUB_ENV"
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
