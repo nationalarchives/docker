@@ -146,12 +146,11 @@ WORKDIR /app
 
 # ==========================================
 # Install the latest LTS version of Node.js,
-# adding it to the .bashrc file of our newly
-# created user but keeping within the set of
-# "hydrogen" releases
+# but keeping within the releases code-named
+# as "hydrogen" (v18)
 # ==========================================
-RUN nvm install lts/hydrogen; \
-    echo "[ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\"" >> "$HOME/.bashrc"
+RUN . "$NVM_DIR/nvm.sh"; \
+    nvm install lts/hydrogen
 
 # ==========================================
 # Add the Poetry binary to our path
