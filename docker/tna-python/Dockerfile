@@ -165,6 +165,14 @@ RUN rm -fR "$POETRY_HOME/venv/lib/python3.11/site-packages/setuptools-65.5.0.dis
 USER app
 
 # ==========================================
+# Install the latest LTS version of Node.js,
+# but keeping within the releases code-named
+# as "hydrogen" (v18)
+# ==========================================
+RUN . "$NVM_DIR/nvm.sh"; \
+    nvm install lts/hydrogen
+
+# ==========================================
 # Into our .local/bin/ directory copy in the
 # bash scripts we need in order to build and
 # run our application in a consistent manner
