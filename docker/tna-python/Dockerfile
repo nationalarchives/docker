@@ -151,7 +151,7 @@ WORKDIR /app
 # "hydrogen" releases
 # ==========================================
 RUN nvm install lts/hydrogen; \
-    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> "$HOME/.bashrc"
+    echo "[ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\"" >> "$HOME/.bashrc"
 
 # ==========================================
 # Add the Poetry binary to our path
