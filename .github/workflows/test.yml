@@ -6,6 +6,10 @@ on:
       - main
       - '!feature/**'
 
+concurrency:
+  group: ${{ github.ref }}-test
+  cancel-in-progress: true
+
 jobs:
   python:
     name: Python

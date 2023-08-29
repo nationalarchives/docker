@@ -16,10 +16,6 @@ on:
         required: true
         type: boolean
 
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   build:
     name: Build and deploy
