@@ -2,6 +2,7 @@ name: Clean up feature branches
 
 on:
   delete:
+  workflow_dispatch:
 
 jobs:
   delete:
