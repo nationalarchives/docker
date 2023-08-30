@@ -43,7 +43,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const response = await github.request("GET /${{ github.repository_owner }}/packages/container/${{ matrix.image-name }}/versions",
+            const response = await github.request("GET /orgs/${{ github.repository_owner }}/packages/container/${{ matrix.image-name }}/versions",
               { per_page: ${{ env.PER_PAGE }}
             });
             for(version of response.data) {
