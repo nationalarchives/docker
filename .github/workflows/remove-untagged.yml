@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  remove-untaqged:
+  remove-untagged:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,9 +22,9 @@ jobs:
             });
             for(version of response.data) {
                 if (version.metadata.container.tags.length == 0) {
-                    console.log("delete " + version.id)
+                    console.log("Delete " + version.id)
 
-                    const deleteResponse = await github.request("DELETE /${{ github.repository_owner }}/packages/container/${{ matrix.image-name }}/versions/" + version.id, { });
+                    const deleteResponse = await github.request("DELETE /orgs/${{ github.repository_owner }}/packages/container/${{ matrix.image-name }}/versions/" + version.id, { });
                     console.log("status " + deleteResponse.status)
                 }
             }
