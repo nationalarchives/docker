@@ -23,6 +23,16 @@ jobs:
       dockerfile: Dockerfile
       publish: true
 
+  python-root:
+    name: Python (root)
+    needs: python
+    uses: ./.github/workflows/_docker-build-deploy.yml
+    with:
+      image-name: tna-python-root
+      docker-context: docker/tna-python-root
+      dockerfile: Dockerfile
+      publish: true
+
   python-django:
     name: Python Django
     needs: python
@@ -30,5 +40,15 @@ jobs:
     with:
       image-name: tna-python-django
       docker-context: docker/tna-python-django
+      dockerfile: Dockerfile
+      publish: true
+
+  python-django-root:
+    name: Python Django (root)
+    needs: python-django
+    uses: ./.github/workflows/_docker-build-deploy.yml
+    with:
+      image-name: tna-python-django-root
+      docker-context: docker/tna-python-django-root
       dockerfile: Dockerfile
       publish: true
