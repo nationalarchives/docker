@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+- Update `curl` to `7.88.1-10+deb12u4`
+
 ## [0.1.10](https://github.com/nationalarchives/docker/compare/v0.1.9...v0.1.10) - 2023-08-29
 
 ### Added
