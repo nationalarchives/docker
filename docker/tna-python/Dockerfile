@@ -102,7 +102,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN set -eux; \
     \
     apt-get update; \
-    apt-get install -y --no-install-recommends curl=7.88.1-10+deb12u1 build-essential=12.9 libmagic-dev=1:5.44-3; \
+    apt-get install -y --no-install-recommends curl=7.88.1-10+deb12u4 build-essential=12.9 libmagic-dev=1:5.44-3; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*; \
