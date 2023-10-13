@@ -37,7 +37,7 @@ jobs:
     - name: ShellCheck
       run: |
         cd docker/${{ inputs.image-name }}
-        shellcheck --external-sources --exclude=SC1091 ./bin/*
+        [ -d "./bin" ] && shellcheck --external-sources --exclude=SC1091 ./bin/*
         shellcheck --external-sources --exclude=SC2148 ./Dockerfile
     - name: Log in to registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
