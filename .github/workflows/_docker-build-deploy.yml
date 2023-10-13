@@ -15,6 +15,9 @@ on:
       publish:
         required: true
         type: boolean
+      ignore-linting-rules:
+        required: false
+        type: string
 
 jobs:
   build:
@@ -30,7 +33,7 @@ jobs:
     - uses: hadolint/hadolint-action@v3.1.0
       with:
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
-        ignore: SC1091
+        ignore: SC1091,${{ inputs.ignore-linting-rules }}
     - name: ShellCheck
       run: |
         cd docker/${{ inputs.image-name }}
