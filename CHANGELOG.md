@@ -5,16 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.1.10...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.1.11...HEAD)
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.1.11](https://github.com/nationalarchives/docker/compare/v0.1.10...v0.1.11) - 2023-10-16
 
 ### Added
 
 - New `-root` images which mirror thier parents with the exception that they are run under the `root` user for development purposes
 
-### Changed
-### Deprecated
-### Removed
-### Fixed
 ### Security
 
 - Update `curl` to `7.88.1-10+deb12u4`
