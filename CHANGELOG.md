@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New `-root` images which mirror thier parents with the exception that they are run under the `root` user for development purposes
+- New `-root` images which mirror their parents with the exception that they are run under the `root` user for development purposes
 
 ### Security
 
