@@ -167,10 +167,10 @@ USER app
 # ==========================================
 # Install the latest LTS version of Node.js,
 # but keeping within the releases code-named
-# as "hydrogen" (v18)
+# as "iron" (v20)
 # ==========================================
 RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install lts/hydrogen
+    nvm install lts/iron
 
 # ==========================================
 # Into our .local/bin/ directory copy in the
