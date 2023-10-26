@@ -150,12 +150,6 @@ WORKDIR /app
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
 # ==========================================
-# This is a temporary fix for CVE-2022-40897
-# https://access.redhat.com/security/cve/cve-2022-40897
-# ==========================================
-RUN rm -fR "$POETRY_HOME/venv/lib/python3.11/site-packages/setuptools-65.5.0.dist-info"
-
-# ==========================================
 # Now we have finished installing everything
 # at a system level, change the current user
 # to the non-root user we created previously
