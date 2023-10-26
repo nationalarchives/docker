@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM cgr.dev/chainguard/python-3.12:latest
 
 # ==========================================
 # Label this container image with a semantic
