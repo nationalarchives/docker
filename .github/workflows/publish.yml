@@ -22,6 +22,7 @@ jobs:
       docker-context: docker/tna-python
       dockerfile: Dockerfile
       publish: true
+      ignore-linting-rules: DL3007
 
   python-root:
     name: Python (root)
