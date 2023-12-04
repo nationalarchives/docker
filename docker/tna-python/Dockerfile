@@ -1,4 +1,4 @@
-FROM python:3-slim
+FROM python:3.12-slim
 
 # ==========================================
 # Label this container image with a semantic
@@ -103,6 +103,9 @@ RUN set -eux; \
     \
     apt-get update; \
     apt-get install -y --no-install-recommends curl=7.88.1-10+deb12u4 build-essential=12.9 libmagic-dev=1:5.44-3; \
+    # A temporary fix for a issue CVE-2023-45853
+    # https://access.redhat.com/security/cve/cve-2023-45853
+    apt-get remove -y minizip; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*; \
