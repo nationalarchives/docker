@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.11-slim-buster
 
 # ==========================================
 # Label this container image with a semantic
@@ -92,18 +92,22 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Update the package index files and install
 # a specific version of curl that we know to
 # have no issues which is required later for
-# installing Poetry then create a new system
-# -level non-root user, a home directory for
-# "them" where we can install libraries into
-# (along with our build and run scripts) and
-# create an /app directory in the root which
-# will contain all the application code
+# installing Poetry and create a new system-
+# level nonroot user who has with a new home
+# directory where we will be able to install
+# libraries into (along with our scripts for
+# building and running) and create an "/app"
+# directory in the root (for the application
+# code)
 # ==========================================
 RUN set -eux; \
+    \
+    export DEBIAN_FRONTEND=noninteractive; \
     \
     apt-get update; \
     apt-get -y upgrade; \
     apt-get install -y --no-install-recommends curl=7.88.1-10+deb12u4 build-essential=12.9 libmagic-dev=1:5.44-3; \
+    \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*; \
