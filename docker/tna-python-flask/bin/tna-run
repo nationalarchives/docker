@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+if [[ -z $SECRET_KEY ]]
+then
+  echo -e "Error: Environment variable SECRET_KEY not set";
+  exit 1
+fi
+
+tna-run-common "$1"

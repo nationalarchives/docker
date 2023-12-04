@@ -31,6 +31,16 @@ jobs:
       publish: false
       ignore-linting-rules: DL3002
 
+  python-flask:
+    name: Python Flask
+    needs: python
+    uses: ./.github/workflows/_docker-build-deploy.yml
+    with:
+      image-name: tna-python-flask
+      docker-context: docker/tna-python-flask
+      dockerfile: Dockerfile
+      publish: false
+
   python-django:
     name: Python Django
     needs: python
