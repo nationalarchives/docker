@@ -41,6 +41,7 @@ jobs:
     uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-django
+      base-image: ghcr.io/nationalarchives/tna-python
       docker-context: docker/tna-python-django
       dockerfile: Dockerfile
       publish: true
@@ -51,6 +52,7 @@ jobs:
     uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-django-root
+      base-image: ghcr.io/nationalarchives/tna-python-root
       docker-context: docker/tna-python-django
       dockerfile: Dockerfile
       publish: true

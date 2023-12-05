@@ -1,6 +1,7 @@
+ARG BASE_IMAGE=ghcr.io/nationalarchives/tna-python
 ARG BASE_IMAGE_TAG=latest
 
-FROM ghcr.io/nationalarchives/tna-python:"$BASE_IMAGE_TAG"
+FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG"
 
 # ==========================================
 # Move the existing build and run scripts to

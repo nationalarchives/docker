@@ -12,6 +12,9 @@ on:
       dockerfile:
         required: true
         type: string
+      base-image:
+        required: false
+        type: string
       user-image:
         required: false
         type: string
@@ -69,6 +72,7 @@ jobs:
         labels: |
           runnumber=${{ github.run_id }}
         build-args: |
+          BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=${{ env.TAG }}
           TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
@@ -88,6 +92,7 @@ jobs:
         labels: |
           runnumber=${{ github.run_id }}
         build-args: |
+          BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=latest
           TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
