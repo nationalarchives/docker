@@ -72,7 +72,7 @@ jobs:
           BASE_IMAGE_TAG=${{ env.TAG }}
           TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
-          USER_IMAGE=${{ inputs.user_image }}
+          USER_IMAGE=${{ inputs.user-image }}
         push: ${{ inputs.publish }}
         tags: ${{ env.IMAGE_ID }}:${{ env.TAG }}
         provenance: false
@@ -91,7 +91,7 @@ jobs:
           BASE_IMAGE_TAG=latest
           TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
-          USER_IMAGE=${{ inputs.user_image }}
+          USER_IMAGE=${{ inputs.user-image }}
         push: true
         tags: ${{ env.IMAGE_ID }}:latest
         provenance: false
