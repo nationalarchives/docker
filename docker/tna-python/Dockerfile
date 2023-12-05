@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.12-slim-bookworm
 
 # ==========================================
 # Label this container image with a semantic
@@ -74,7 +74,7 @@ ENV PIP_NO_CACHE_DIR=true \
 # and what version is used
 # ==========================================
 ENV POETRY_HOME=/home/app/.local \
-    POETRY_VERSION=1.6.1 \
+    POETRY_VERSION=1.7.1 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=true \
     POETRY_VIRTUALENVS_IN_PROJECT=false
@@ -92,17 +92,22 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Update the package index files and install
 # a specific version of curl that we know to
 # have no issues which is required later for
-# installing Poetry then create a new system
-# -level non-root user, a home directory for
-# "them" where we can install libraries into
-# (along with our build and run scripts) and
-# create an /app directory in the root which
-# will contain all the application code
+# installing Poetry and create a new system-
+# level nonroot user who has with a new home
+# directory where we will be able to install
+# libraries into (along with our scripts for
+# building and running) and create an "/app"
+# directory in the root (for the application
+# code)
 # ==========================================
 RUN set -eux; \
     \
+    export DEBIAN_FRONTEND=noninteractive; \
+    \
     apt-get update; \
+    apt-get -y upgrade; \
     apt-get install -y --no-install-recommends curl=7.88.1-10+deb12u4 build-essential=12.9 libmagic-dev=1:5.44-3; \
+    \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*; \
@@ -161,10 +166,10 @@ USER app
 # ==========================================
 # Install the latest LTS version of Node.js,
 # but keeping within the releases code-named
-# as "hydrogen" (v18)
+# as "iron" (v20)
 # ==========================================
 RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install lts/hydrogen
+    nvm install lts/iron
 
 # ==========================================
 # Into our .local/bin/ directory copy in the
