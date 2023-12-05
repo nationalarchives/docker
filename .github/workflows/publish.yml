@@ -22,10 +22,10 @@ jobs:
       docker-context: docker/tna-python
       dockerfile: Dockerfile
       publish: true
+      ignore-linting-rules: DL3002
 
   python-root:
     name: Python (root)
-    needs: python
     uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-root
@@ -47,12 +47,11 @@ jobs:
 
   python-django-root:
     name: Python Django (root)
-    needs: python-django
+    needs: python-root
     uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-django-root
       docker-context: docker/tna-python-django
-      user-image: root
       dockerfile: Dockerfile
       publish: true
       ignore-linting-rules: DL3002
