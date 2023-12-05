@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changed
 
+- Update Poetry to [1.7.1](https://github.com/python-poetry/poetry/releases/tag/1.7.1)
 - Updated Base Docker image from `python:3.11-slim` to `python:3.12-slim-bookworm`
 
 ### Deprecated
