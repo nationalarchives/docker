@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.1.11...HEAD)
 
 ### Added
+
+- Initial release of `tna-python-flask` Docker image
+
 ### Changed
 
 - Update Poetry to [1.7.1](https://github.com/python-poetry/poetry/releases/tag/1.7.1)

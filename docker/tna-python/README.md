@@ -14,17 +14,18 @@ This image requires you have the following files in the root of your project:
 
 ## Environment variables
 
-| Variable               | Description                                                               | Default                                                        |
-| ---------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| `ENVIRONMENT`          | The current environment[^1]                                               | `production`                                                   |
-| `WORKERS`              | Number of worker processes[^2]                                            | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
-| `THREADS`              | Number of threads[^3]                                                     | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
-| `LOG_LEVEL`            | The log level to stream to the console[^4]                                | `warn` on `production`, `debug` on `develop`, `info` elsewhere |
-| `NODE_ENV`             | The node environment which could affect the build[^5]                     | Copied from `ENVIRONMENT`                                      |
-| `NPM_BUILD_COMMAND`    | The npm script to run to build static assets                              | [None] - don't build anything by default                       |
-| `NPM_DEVELOP_COMMAND`  | The npm script to run in development environments                         | [None] - don't build and watch anything by default             |
-| `TIMEOUT`              | The number of seconds before a request is terminated[^6]                  | `30` on `production`, `600` on `develop`, `30` elsewhere       |
-| `KEEP_ALIVE`           | The number of seconds to wait for requests on a keep-alive connection[^7] | `30` on `production`, `5` on `develop`, `5` elsewhere          |
+| Variable                | Description                                                               | Default                                                        |
+| -----------------------  | ------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `SECRET_KEY` (required) | A random key used to secure client session data                           | [None]                                                         |
+| `ENVIRONMENT`           | The current environment[^1]                                               | `production`                                                   |
+| `WORKERS`               | Number of worker processes[^2]                                            | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
+| `THREADS`               | Number of threads[^3]                                                     | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
+| `LOG_LEVEL`             | The log level to stream to the console[^4]                                | `warn` on `production`, `debug` on `develop`, `info` elsewhere |
+| `NODE_ENV`              | The node environment[^5]                                                  | Copied from `ENVIRONMENT`                                      |
+| `NPM_BUILD_COMMAND`     | The npm script to run to build static assets                              | [None] - don't build anything by default                       |
+| `NPM_DEVELOP_COMMAND`   | The npm script to run in development environments                         | [None] - don't build and watch anything by default             |
+| `TIMEOUT`               | The number of seconds before a request is terminated[^6]                  | `30` on `production`, `600` on `develop`, `30` elsewhere       |
+| `KEEP_ALIVE`            | The number of seconds to wait for requests on a keep-alive connection[^7] | `30` on `production`, `5` on `develop`, `5` elsewhere          |
 
 [^1]: Predefined values are `production` and `develop` but any alphanumeric string is valid
 [^2]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
@@ -33,6 +34,12 @@ This image requires you have the following files in the root of your project:
 [^5]: [Node.js, the difference between development and production](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production/)
 [^6]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
 [^7]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
+
+A secret key (for `SECRET_KEY`) can be generated using:
+
+```sh
+python -c 'import secrets; print(secrets.token_hex())'
+```
 
 ## Commands for the Dockerfile
 

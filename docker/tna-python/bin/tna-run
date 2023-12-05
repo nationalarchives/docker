@@ -11,6 +11,12 @@ then
   exit 1
 fi
 
+if [[ -z $SECRET_KEY ]]
+then
+  echo -e "Error: Environment variable SECRET_KEY not set";
+  exit 1
+fi
+
 if [ "$ENVIRONMENT" == 'develop' ] && [ -n "$NPM_DEVELOP_COMMAND" ]
 then
   tna-node "$NPM_DEVELOP_COMMAND"

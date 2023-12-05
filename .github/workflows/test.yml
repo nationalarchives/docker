@@ -31,7 +31,7 @@ jobs:
       publish: false
       ignore-linting-rules: DL3002
 
-  python-django:
+      python-django:
     name: Python Django
     needs: python
     uses: ./.github/workflows/_docker-build-deploy.yml
