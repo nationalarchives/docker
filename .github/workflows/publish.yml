@@ -29,7 +29,8 @@ jobs:
     uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-root
-      docker-context: docker/tna-python-root
+      docker-context: docker/tna-python
+      user-image: root
       dockerfile: Dockerfile
       publish: true
       ignore-linting-rules: DL3002
@@ -50,7 +51,8 @@ jobs:
     uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-django-root
-      docker-context: docker/tna-python-django-root
+      docker-context: docker/tna-python-django
+      user-image: root
       dockerfile: Dockerfile
       publish: true
       ignore-linting-rules: DL3002

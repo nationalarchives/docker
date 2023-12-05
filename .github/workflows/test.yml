@@ -26,12 +26,13 @@ jobs:
     uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-root
-      docker-context: docker/tna-python-root
+      docker-context: docker/tna-python
+      user-image: root
       dockerfile: Dockerfile
       publish: false
       ignore-linting-rules: DL3002
 
-      python-django:
+  python-django:
     name: Python Django
     needs: python
     uses: ./.github/workflows/_docker-build-deploy.yml
@@ -47,7 +48,8 @@ jobs:
     uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-django-root
-      docker-context: docker/tna-python-django-root
+      docker-context: docker/tna-python-django
+      user-image: root
       dockerfile: Dockerfile
       publish: false
       ignore-linting-rules: DL3002

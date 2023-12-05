@@ -1,4 +1,6 @@
-FROM python:3.12-slim-bookworm
+ARG USER_IMAGE=appuser
+
+FROM python:3.12-slim-bookworm AS root
 
 # ==========================================
 # Label this container image with a semantic
@@ -160,6 +162,9 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 # ==========================================
 RUN rm -fR "$POETRY_HOME/venv/lib/python3.11/site-packages/setuptools-65.5.0.dist-info"
 
+
+
+FROM root AS appuser
 # ==========================================
 # Now we have finished installing everything
 # at a system level, change the current user
@@ -168,6 +173,10 @@ RUN rm -fR "$POETRY_HOME/venv/lib/python3.11/site-packages/setuptools-65.5.0.dis
 # permissions
 # ==========================================
 USER app
+
+
+
+FROM "$USER_IMAGE"
 
 # ==========================================
 # Install the latest LTS version of Node.js,
