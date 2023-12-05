@@ -40,7 +40,7 @@ jobs:
         ignore: SC1091,${{ inputs.ignore-linting-rules }}
     - name: ShellCheck
       run: |
-        cd docker/${{ inputs.image-name }}
+        cd docker/${{ inputs.docker-context }}
         [ -d "./bin" ] && shellcheck --external-sources --exclude=SC1091 ./bin/*
         shellcheck --external-sources --exclude=SC2148 ./Dockerfile
     - name: Log in to registry
