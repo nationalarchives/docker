@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 ### Removed
+
+- Remove fix for [CVE-2022-40897](https://access.redhat.com/security/cve/cve-2022-40897)
+
 ### Fixed
 ### Security
 
