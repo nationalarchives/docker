@@ -57,3 +57,15 @@ jobs:
       dockerfile: Dockerfile
       publish: true
       ignore-linting-rules: DL3002
+
+  python-dev:
+    name: Python Dev
+    needs: python-root
+    uses: ./.github/workflows/_docker-build-deploy.yml
+    with:
+      image-name: tna-python-dev
+      base-image: ghcr.io/nationalarchives/tna-python-root
+      docker-context: docker/tna-python-dev
+      dockerfile: Dockerfile
+      publish: true
+      ignore-linting-rules: DL3002

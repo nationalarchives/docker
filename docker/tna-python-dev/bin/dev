@@ -1,0 +1,15 @@
+#!/bin/bash
+
+python -m pip install --quiet black==23.7.0 flake8==6.1.0 isort==5.12.0
+
+. "$HOME/.nvm/nvm.sh"
+if [ -f "/app/.nvmrc" ]
+then
+  cd /app
+  nvm install
+else
+  nvm use lts/iron
+fi
+npm install -g prettier@3.0.2 eslint@8.47.0 stylelint@15.10.3 stylelint-config-standard-scss@10.0.0 stylelint-selector-bem-pattern@3.0.1
+
+welcome

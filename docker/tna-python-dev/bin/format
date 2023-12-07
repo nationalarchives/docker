@@ -1,0 +1,49 @@
+#!/bin/bash
+
+cd /app
+
+echo "Running isort..."
+isort --settings-file /home/app/.isort.cfg /app --overwrite-in-place
+echo
+
+echo "Running black..."
+black -t py38 -t py39 -t py310 -t py311 -t py312 --line-length 80 --verbose /app
+echo
+
+echo "Running flake8..."
+flake8 --config=/home/app/.flake8 /app
+echo
+
+. "$HOME/.nvm/nvm.sh"
+if [ -f "/app/.nvmrc" ]
+then
+  nvm install
+else
+  nvm use lts/iron
+fi
+
+echo "Running prettier..."
+prettier --write /app
+echo
+
+echo "Running stylelint..."
+if [ -f "/app/.stylelintrc" ]
+then
+  echo "Using app config"
+  stylelint --fix "/app/**/*.{css,scss}"
+else
+  echo "Using default config"
+  stylelint --config /home/app/.stylelintrc --fix "/app/**/*.{css,scss}"
+fi
+echo
+
+echo "Running eslint..."
+if [ -f "/app/.eslintrc.js" ]
+then
+  echo "Using app config"
+  eslint --fix "/app"
+else
+  echo "Using default config"
+  eslint -c /home/app/.eslintrc.js --fix "/app"
+fi
+echo
