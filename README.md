@@ -23,7 +23,7 @@ The National Archives base Docker images are designed to serve as a starting poi
 | Image                    | Dockerfile                                                                   | Base image        |
 | ------------------------ | ---------------------------------------------------------------------------- | ----------------- |
 | `tna-python`             | [`docker/tna-python/DockerFile`](docker/tna-python/DockerFile)               | `python`          |
-| `tna-python-root`        | [`docker/tna-python/DockerFile`](docker/tna-python/DockerFile)               | `tna-python`      |
+| `tna-python-root`        | [`docker/tna-python/DockerFile`](docker/tna-python/DockerFile)               | `python`          |
 | `tna-python-django`      | [`docker/tna-python-django/DockerFile`](docker/tna-python-django/DockerFile) | `tna-python`      |
 | `tna-python-django-root` | [`docker/tna-python-django/DockerFile`](docker/tna-python-django/DockerFile) | `tna-python-root` |
 
