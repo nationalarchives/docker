@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /app
+cd /app || return
 
 echo "Running isort..."
 isort --settings-file /home/app/.isort.cfg /app --overwrite-in-place
