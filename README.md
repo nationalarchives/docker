@@ -31,7 +31,7 @@ The National Archives base Docker images are designed to serve as a starting poi
 graph TD;
     debian --> python;
     python --> tna-python;
-    tna-python --> tna-python-root;
+    python --> tna-python-root;
     tna-python --> tna-python-django;
     tna-python-root --> tna-python-django-root;
 ```
