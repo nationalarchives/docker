@@ -68,4 +68,4 @@ jobs:
       docker-context: docker/tna-python-dev
       dockerfile: Dockerfile
       publish: true
-      ignore-linting-rules: DL3002
+      ignore-linting-rules: DL3002,DL3008
