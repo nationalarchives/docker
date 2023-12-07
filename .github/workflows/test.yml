@@ -19,35 +19,50 @@ jobs:
       docker-context: docker/tna-python
       dockerfile: Dockerfile
       publish: false
+      ignore-linting-rules: DL3002,DL3006
 
   python-root:
     name: Python (root)
-    needs: python
     uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-root
-      docker-context: docker/tna-python-root
+      docker-context: docker/tna-python
+      user-image: root
       dockerfile: Dockerfile
       publish: false
-      ignore-linting-rules: DL3002
+      ignore-linting-rules: DL3002,DL3006
 
-      python-django:
+  python-django:
     name: Python Django
     needs: python
     uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-django
+      base-image: ghcr.io/nationalarchives/tna-python
       docker-context: docker/tna-python-django
       dockerfile: Dockerfile
       publish: false
 
   python-django-root:
     name: Python Django (root)
-    needs: python-django
+    needs: python-root
     uses: ./.github/workflows/_docker-build-deploy.yml
     with:
       image-name: tna-python-django-root
-      docker-context: docker/tna-python-django-root
+      base-image: ghcr.io/nationalarchives/tna-python-root
+      docker-context: docker/tna-python-django
       dockerfile: Dockerfile
       publish: false
       ignore-linting-rules: DL3002
+
+  python-dev:
+    name: Python Dev
+    needs: python-root
+    uses: ./.github/workflows/_docker-build-deploy.yml
+    with:
+      image-name: tna-python-dev
+      base-image: ghcr.io/nationalarchives/tna-python-root
+      docker-context: docker/tna-python-dev
+      dockerfile: Dockerfile
+      publish: false
+      ignore-linting-rules: DL3002,DL3008
