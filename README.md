@@ -12,11 +12,11 @@ The National Archives base Docker images are designed to serve as a starting poi
 
 | Image                                           | Dockerfile                                                            | Base image        | User   |
 | ----------------------------------------------- | --------------------------------------------------------------------- | ----------------- | ------ |
-| [`tna-python`](docker/tna-python)               | [`tna-python/DockerFile`](docker/tna-python/DockerFile)               | `python`          | `app`  |
-| `tna-python-root`                               | [`tna-python/DockerFile`](docker/tna-python/DockerFile)               | `python`          | `root` |
-| [`tna-python-django`](docker/tna-python-django) | [`tna-python-django/DockerFile`](docker/tna-python-django/DockerFile) | `tna-python`      | `app`  |
-| `tna-python-django-root`                        | [`tna-python-django/DockerFile`](docker/tna-python-django/DockerFile) | `tna-python-root` | `root` |
-| [`tna-python-dev`](docker/tna-python-dev)       | [`tna-python-dev/DockerFile`](docker/tna-python-dev/DockerFile)       | `tna-python-root` | `root` |
+| [`tna-python`](docker/tna-python)               | [`tna-python/Dockerfile`](docker/tna-python/Dockerfile)               | `python`          | `app`  |
+| `tna-python-root`                               | [`tna-python/Dockerfile`](docker/tna-python/Dockerfile)               | `python`          | `root` |
+| [`tna-python-django`](docker/tna-python-django) | [`tna-python-django/Dockerfile`](docker/tna-python-django/Dockerfile) | `tna-python`      | `app`  |
+| `tna-python-django-root`                        | [`tna-python-django/Dockerfile`](docker/tna-python-django/Dockerfile) | `tna-python-root` | `root` |
+| [`tna-python-dev`](docker/tna-python-dev)       | [`tna-python-dev/Dockerfile`](docker/tna-python-dev/Dockerfile)       | `tna-python-root` | `root` |
 
 ### Image inheritance
 
