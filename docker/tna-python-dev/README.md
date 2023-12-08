@@ -23,6 +23,11 @@ Run `help` from within the container to see a list of available commands.
 1. Run `stylelint` against all SCSS files in the `/app` directory
 1. Run `eslint` against all JavaScript files in the `/app` directory
 
+### `upgrade`
+
+1. Updates Poetry dependencies
+1. Updates npm dependencies
+
 ### `secret-key`
 
 Generate a string that can be used as the environment variable `SECRET_KEY`:
