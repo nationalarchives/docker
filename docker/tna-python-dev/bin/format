@@ -3,7 +3,14 @@
 cd /app || return
 
 echo "Running isort..."
-isort --settings-file /home/app/.isort.cfg /app --overwrite-in-place
+if [ -f "/app/.isort.cfg" ]
+then
+  echo "Using app config"
+  isort --settings-file /app/.isort.cfg /app --overwrite-in-place
+else
+  echo "Using default config"
+  isort --settings-file /home/app/.isort.cfg /app --overwrite-in-place
+fi
 echo
 
 echo "Running black..."
@@ -11,7 +18,14 @@ black -t py38 -t py39 -t py310 -t py311 -t py312 --line-length 80 --verbose /app
 echo
 
 echo "Running flake8..."
-flake8 --config=/home/app/.flake8 /app
+if [ -f "/app/.flake8" ]
+then
+  echo "Using app config"
+  flake8 --config=/app/.flake8 /app
+else
+  echo "Using default config"
+  flake8 --config=/home/app/.flake8 /app
+fi
 echo
 
 . "$HOME/.nvm/nvm.sh"
@@ -30,7 +44,7 @@ echo "Running stylelint..."
 if [ -f "/app/.stylelintrc" ]
 then
   echo "Using app config"
-  stylelint --fix "/app/**/*.{css,scss}"
+  stylelint --config /app/.stylelintrc --fix "/app/**/*.{css,scss}"
 else
   echo "Using default config"
   stylelint --config /home/app/.stylelintrc --fix "/app/**/*.{css,scss}"
@@ -41,7 +55,7 @@ echo "Running eslint..."
 if [ -f "/app/.eslintrc.js" ]
 then
   echo "Using app config"
-  eslint --fix "/app"
+  eslint -c /app/.eslintrc.js --fix "/app"
 else
   echo "Using default config"
   eslint -c /home/app/.eslintrc.js --fix "/app"
