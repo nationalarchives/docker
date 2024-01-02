@@ -50,7 +50,7 @@ fi
 
 # Set up the default number of workers and threads
 DEFAULT_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
-DEFAULT_THREADS=$(($DEFAULT_WORKERS * 2))
+DEFAULT_THREADS=$((DEFAULT_WORKERS * 2))
 
 # Set the worker class
 [[ "$ASYNC" = true ]] && WORKER_CLASS=uvicorn.workers.UvicornWorker || WORKER_CLASS=sync
