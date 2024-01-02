@@ -10,11 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial release of `tna-python-dev` Docker image
+- Added `uvicorn` support for async applications such as FastAPI
 
 ### Changed
 
 - Update Poetry to [1.7.1](https://github.com/python-poetry/poetry/releases/tag/1.7.1)
 - Updated Base Docker image from `python:3.11-slim` to `python:3.12-slim-bookworm`
+- Install `libcurl4` version `7.88.1-10+deb12u4`
 
 ### Deprecated
 ### Removed

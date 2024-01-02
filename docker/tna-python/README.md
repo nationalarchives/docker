@@ -5,7 +5,8 @@ This image comes with:
 - A version of Python approved by TNA
 - [Poetry](https://python-poetry.org/) for dependency management
 - [nvm](https://github.com/nvm-sh/nvm) for compiling assets such as CSS and JavaScript
-- [Gunicorn](https://gunicorn.org/) for serving the Python application
+- [Gunicorn](https://gunicorn.org/) for serving the Python application via a WSGI
+- [Uvicorn](https://www.uvicorn.org/) for serving the Python application via a ASGI
 
 This image requires you have the following files in the root of your project:
 
@@ -35,11 +36,15 @@ This image requires you have the following files in the root of your project:
 [^6]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
 [^7]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
 
+### Secret key
+
 A secret key (for `SECRET_KEY`) can be generated using:
 
 ```sh
 python -c 'import secrets; print(secrets.token_hex())'
 ```
+
+Alternatively, using the [`tna-dev` image](https://github.com/nationalarchives/docker/tree/main/docker/tna-python-dev), you can run `secret-key` to generate one.
 
 ## Commands for the Dockerfile
 
@@ -76,10 +81,22 @@ tna-run my_app:app
 1. Count the number of CPU cores, multiply it by 2 and add 1 to get a suggested worker and thread count
 1. Start `gunicorn` with values appropriate to the environment taking into account any overrides
 
+#### Asynchronous support
+
+For frameworks that require or can use an ASGI rather than a WSGI you can use `tna-run` with a `-a` flag:
+
+```sh
+tna-run -a my_app:app
+```
+
+When working in a development environment (`ENVIRONMENT=production`) and using FastAPI, Uvicorn is used as the ASGI for `tna-run`.
+
+When using FastAPI in production, `tna-run -a` should be explicitly specified so Gunicron can use the Uvicorn worker class.
+
 ## Using Node
 
 To use Node to build your assets you need three files in your project:
 
 - `package.json`
 - `package-lock.json`
-- `.nvmrc`
+- `.nvmrc` containing the version of Node you would like to support (e.g. `lts/iron`)
