@@ -8,6 +8,9 @@ on:
     branches:
       - main
       - feature/**
+    paths:
+      - docker/**
+      - tests/**
 
 concurrency:
   group: ${{ github.ref }}-publish
