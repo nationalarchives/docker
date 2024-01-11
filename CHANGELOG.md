@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Added trailing slash to healthcheck liveliness URI (`/healthcheck/live/`)
+
 ### Deprecated
 ### Removed
 ### Fixed

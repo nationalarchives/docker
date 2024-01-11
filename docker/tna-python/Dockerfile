@@ -34,7 +34,7 @@ EXPOSE 8080/tcp
 # based on a GOV.UK proposal:
 # https://github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
-HEALTHCHECK CMD curl --fail http://localhost:8080/healthcheck/live || exit 1
+HEALTHCHECK CMD curl --fail http://localhost:8080/healthcheck/live/ || exit 1
 
 # ==========================================
 # The default environment type is production
