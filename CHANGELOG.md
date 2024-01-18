@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Ignore `venv*,__pycache__,node_modules,migrations` in Flake8 configuration
+
 ### Deprecated
 ### Removed
 ### Fixed
