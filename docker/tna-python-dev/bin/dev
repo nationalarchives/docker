@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python -m pip install --quiet black==23.7.0 flake8==6.1.0 isort==5.12.0
+python -m pip install --quiet black==24.2.0 flake8==7.0.0 isort==5.13.2
 
 cd /app || return
 
@@ -11,6 +11,6 @@ then
 else
   nvm use lts/iron
 fi
-npm install -g prettier@3.0.2 eslint@8.47.0 stylelint@15.10.3 stylelint-config-standard-scss@10.0.0 stylelint-selector-bem-pattern@3.0.1
+npm install -g prettier@3.2.5 eslint@8.56.0 stylelint@16.2.1 stylelint-config-standard-scss@13.0.0 stylelint-selector-bem-pattern@3.0.1
 
 welcome
