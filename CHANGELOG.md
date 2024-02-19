@@ -18,7 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated `prettier`, `eslint`, `stylelint`, `stylelint-config-standard-scss`, `stylelint-selector-bem-pattern`, `black`, `flake8` and `isort` in `tna-python-dev`
+- Updated `prettier`, `eslint`, `stylelint`, `stylelint-config-standard-scss` and `stylelint-selector-bem-pattern` in `tna-python-dev`
+- Updated `black`, `flake8` and `isort` in `tna-python-dev`
+- Updated `nvm`
+
+### Security
+
+- Updated `libcurl4` and `curl`
 
 ## [0.2.2](https://github.com/nationalarchives/docker/compare/v0.2.1...v0.2.2) - 2024-01-23
 

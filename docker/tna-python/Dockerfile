@@ -108,7 +108,7 @@ RUN set -eux; \
     \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u4 curl=7.88.1-10+deb12u4 build-essential=12.9 libmagic-dev=1:5.44-3; \
+    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u5 curl=7.88.1-10+deb12u5 build-essential=12.9 libmagic-dev=1:5.44-3; \
     \
     apt-get clean; \
     apt-get autoremove -y --purge; \
@@ -141,7 +141,7 @@ ENV NVM_DIR="$HOME/.nvm"
 RUN set -eux; \
     \
     curl -sSL "https://install.python-poetry.org" | python -; \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash; \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
 
 # ==========================================
