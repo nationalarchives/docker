@@ -5,17 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.2.5...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.2.6...HEAD)
 
 ### Added
 ### Changed
 ### Deprecated
 ### Removed
-
-- Remove fix for [CVE-2022-40897](https://access.redhat.com/security/cve/cve-2022-40897)
-
 ### Fixed
 ### Security
+
+## [0.2.6](https://github.com/nationalarchives/docker/compare/v0.2.5...v0.2.6) - 2024-04-05
+
+### Removed
+
+- Removed fix for [CVE-2022-40897](https://access.redhat.com/security/cve/cve-2022-40897)
 
 ## [0.2.5](https://github.com/nationalarchives/docker/compare/v0.2.4...v0.2.5) - 2024-03-27
 
