@@ -101,6 +101,7 @@ jobs:
         tags: ${{ env.IMAGE_ID }}:latest
         provenance: false
     - name: Scan for vulnerabilities
+      if: inputs.publish
       uses: aquasecurity/trivy-action@master
       with:
         image-ref: ${{ env.IMAGE_ID }}:${{ env.TAG }}
@@ -109,7 +110,7 @@ jobs:
         ignore-unfixed: true
         severity: 'CRITICAL,HIGH,MEDIUM'
     - name: Upload Trivy scan results to GitHub Security tab
-      if: always()
+      if: inputs.publish
       uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: 'trivy-results.sarif'
