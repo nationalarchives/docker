@@ -2,7 +2,28 @@
 
 set -e
 
-if [ -z "$1" ]
+# Set flag defaults
+ASYNC=false
+
+# Parse flags
+while getopts ":a" option; do
+  case "${option}" in
+    a)
+      ASYNC=true
+      shift 1
+      ;;
+    ?)
+      echo "Invalid option: -${OPTARG}"
+      exit 1
+      ;;
+  esac
+done
+
+# Get the application
+APPLICATION=$1
+
+# Error if no application is passed
+if [ -z "$APPLICATION" ]
 then
   echo -e "Error: application not specified in tna-run\n";
   echo "PARAMETERS"
@@ -11,26 +32,50 @@ then
   exit 1
 fi
 
+# Error if $SECRET_KEY is not defined
+if [[ -z $SECRET_KEY ]]
+then
+  echo -e "Error: Environment variable SECRET_KEY not set";
+  exit 1
+fi
+
+# Convert $ENVIRONMENT to lowercase
+ENVIRONMENT=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]')
+
+# If there is an $NPM_DEVELOP_COMMAND and we are running a development environment, run the development command now
 if [ "$ENVIRONMENT" == 'develop' ] && [ -n "$NPM_DEVELOP_COMMAND" ]
 then
   tna-node "$NPM_DEVELOP_COMMAND"
 fi
 
-MAX_REQUESTS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
-DEFAULT_WORKERS=$MAX_REQUESTS
-DEFAULT_THREADS=1
+# Set up the default number of workers and threads
+DEFAULT_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
+DEFAULT_THREADS=$((DEFAULT_WORKERS * 2))
+
+# Set the worker class
+[[ "$ASYNC" = true ]] && WORKER_CLASS=uvicorn.workers.UvicornWorker || WORKER_CLASS=sync
+
+# Use the number of workers and threads (if provided) else use defaults
+[[ -z $WORKERS ]] && WORKERS=$DEFAULT_WORKERS
 [[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS
 
 if [ "$ENVIRONMENT" == 'production' ]
 then
+  # Production environment
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warn
-  [[ -z $WORKERS ]] && WORKERS=$DEFAULT_WORKERS
   [[ -z $TIMEOUT ]] && TIMEOUT=30
   [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
-  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind 0.0.0.0:8080
 elif [ "$ENVIRONMENT" == 'develop' ]
 then
+  # Development environment
   echo "ENVIRONMENT is develop"
+  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
+  [[ -z $WORKERS ]] && WORKERS=3
+  [[ -z $THREADS ]] && THREADS=1
+  [[ -z $TIMEOUT ]] && TIMEOUT=600
+  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=5
+
+  # Try using the Django development server if the application uses Django
   echo "Trying Django development server..."
   if poetry show django ;
   then
@@ -38,6 +83,8 @@ then
     poetry run python /app/manage.py runserver 0.0.0.0:8080
   fi
   echo "Django not found"
+
+  # Try using the Flask development server if the application uses Flask
   echo "Trying Flask development server..."
   if poetry show flask ;
   then
@@ -45,16 +92,26 @@ then
     poetry run flask run --debug --host 0.0.0.0 --port 8080
   fi
   echo "Flask not found"
+
+  # Use a uvicorn server if the application uses FastAPI
+  echo "Trying FastAPI server..."
+  if poetry show fastapi ;
+  then
+    echo "FastAPI found, starting server"
+    poetry run uvicorn "$APPLICATION" --workers "$WORKERS" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host 0.0.0.0 --port 8080 --reload
+  fi
+  echo "FastAPI not found"
+
+  # Fall back to using Gunicorn
   echo "No framework found, using Gunicorn to serve development application"
-  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
-  [[ -z $WORKERS ]] && WORKERS=3
-  [[ -z $TIMEOUT ]] && TIMEOUT=600
-  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=5
-  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --reload --bind 0.0.0.0:8080
+  poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --bind 0.0.0.0:8080 --worker-class="$WORKER_CLASS" --reload
 else
+  # All other environments
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=info
-  [[ -z $WORKERS ]] && WORKERS=$DEFAULT_WORKERS
   [[ -z $TIMEOUT ]] && TIMEOUT=30
   [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=5
-  poetry run gunicorn "$1" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind 0.0.0.0:8080
 fi
+
+# Start the server
+echo "Starting $ENVIRONMENT server"
+poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind 0.0.0.0:8080 --worker-class="$WORKER_CLASS"

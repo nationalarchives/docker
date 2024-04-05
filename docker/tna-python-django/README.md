@@ -1,6 +1,6 @@
 # tna-python-django
 
-This image extends `tna-python` but adds:
+This image extends `tna-python` (or `tna-python-root` for `tna-python-django-root`) but adds:
 
 - `manage.py` - a generic entrypoint for Django applications
 
@@ -10,9 +10,9 @@ This image assumes you have a version of Django added to you project's `pyprojec
 
 All environment variables defined in [tna-python](../tna-python/README.md) as well as:
 
-| Variable                  | Description                                 | Default                     |
-| ------------------------- | ------------------------------------------- | --------------------------- |
-| `DJANGO_SETTINGS_MODULE`  | Which Django settings module to load        | [None]                      |
+| Variable                 | Description                          | Default |
+| ------------------------ | ------------------------------------ | ------- |
+| `DJANGO_SETTINGS_MODULE` | Which Django settings module to load | [None]  |
 
 ## Commands for the Dockerfile
 

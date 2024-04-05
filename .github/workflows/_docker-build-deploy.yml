@@ -12,6 +12,13 @@ on:
       dockerfile:
         required: true
         type: string
+      base-image:
+        required: false
+        type: string
+      user-image:
+        required: false
+        type: string
+        default: appuser
       publish:
         required: true
         type: boolean
@@ -36,7 +43,7 @@ jobs:
         ignore: SC1091,${{ inputs.ignore-linting-rules }}
     - name: ShellCheck
       run: |
-        cd docker/${{ inputs.image-name }}
+        cd ${{ inputs.docker-context }}
         [ -d "./bin" ] && shellcheck --external-sources --exclude=SC1091 ./bin/*
         shellcheck --external-sources --exclude=SC2148 ./Dockerfile
     - name: Log in to registry
@@ -65,9 +72,11 @@ jobs:
         labels: |
           runnumber=${{ github.run_id }}
         build-args: |
+          BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=${{ env.TAG }}
           TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+          USER_IMAGE=${{ inputs.user-image }}
         push: ${{ inputs.publish }}
         tags: ${{ env.IMAGE_ID }}:${{ env.TAG }}
         provenance: false
@@ -83,23 +92,25 @@ jobs:
         labels: |
           runnumber=${{ github.run_id }}
         build-args: |
+          BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=latest
           TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+          USER_IMAGE=${{ inputs.user-image }}
         push: true
         tags: ${{ env.IMAGE_ID }}:latest
         provenance: false
     - name: Scan for vulnerabilities
-      if: inputs.publish
-      id: scan
-      uses: crazy-max/ghaction-container-scan@v2
+      uses: aquasecurity/trivy-action@master
       with:
-        image: ${{ env.IMAGE_ID }}:${{ env.TAG }}
-        dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
-        severity_threshold: CRITICAL
-        annotations: true
-    - name: Upload SARIF file
-      if: steps.scan.outputs.sarif != '' && inputs.publish
+        image-ref: ${{ env.IMAGE_ID }}:${{ env.TAG }}
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+    - name: Upload Trivy scan results to GitHub Security tab
+      if: always()
       uses: github/codeql-action/upload-sarif@v2
       with:
-        sarif_file: ${{ steps.scan.outputs.sarif }}
+        sarif_file: 'trivy-results.sarif'

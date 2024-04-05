@@ -5,7 +5,8 @@ This image comes with:
 - A version of Python approved by TNA
 - [Poetry](https://python-poetry.org/) for dependency management
 - [nvm](https://github.com/nvm-sh/nvm) for compiling assets such as CSS and JavaScript
-- [Gunicorn](https://gunicorn.org/) for serving the Python application
+- [Gunicorn](https://gunicorn.org/) for serving the Python application via a WSGI
+- [Uvicorn](https://www.uvicorn.org/) for serving the Python application via a ASGI
 
 This image requires you have the following files in the root of your project:
 
@@ -14,17 +15,18 @@ This image requires you have the following files in the root of your project:
 
 ## Environment variables
 
-| Variable               | Description                                                               | Default                                                        |
-| ---------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| `ENVIRONMENT`          | The current environment[^1]                                               | `production`                                                   |
-| `WORKERS`              | Number of worker processes[^2]                                            | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
-| `THREADS`              | Number of threads[^3]                                                     | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
-| `LOG_LEVEL`            | The log level to stream to the console[^4]                                | `warn` on `production`, `debug` on `develop`, `info` elsewhere |
-| `NODE_ENV`             | The node environment which could affect the build[^5]                     | Copied from `ENVIRONMENT`                                      |
-| `NPM_BUILD_COMMAND`    | The npm script to run to build static assets                              | [None] - don't build anything by default                       |
-| `NPM_DEVELOP_COMMAND`  | The npm script to run in development environments                         | [None] - don't build and watch anything by default             |
-| `TIMEOUT`              | The number of seconds before a request is terminated[^6]                  | `30` on `production`, `600` on `develop`, `30` elsewhere       |
-| `KEEP_ALIVE`           | The number of seconds to wait for requests on a keep-alive connection[^7] | `30` on `production`, `5` on `develop`, `5` elsewhere          |
+| Variable                | Description                                                               | Default                                                        |
+| -----------------------  | ------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `SECRET_KEY` (required) | A random key used to secure client session data                           | [None]                                                         |
+| `ENVIRONMENT`           | The current environment[^1]                                               | `production`                                                   |
+| `WORKERS`               | Number of worker processes[^2]                                            | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
+| `THREADS`               | Number of threads[^3]                                                     | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
+| `LOG_LEVEL`             | The log level to stream to the console[^4]                                | `warn` on `production`, `debug` on `develop`, `info` elsewhere |
+| `NODE_ENV`              | The node environment[^5]                                                  | Copied from `ENVIRONMENT`                                      |
+| `NPM_BUILD_COMMAND`     | The npm script to run to build static assets                              | [None] - don't build anything by default                       |
+| `NPM_DEVELOP_COMMAND`   | The npm script to run in development environments                         | [None] - don't build and watch anything by default             |
+| `TIMEOUT`               | The number of seconds before a request is terminated[^6]                  | `30` on `production`, `600` on `develop`, `30` elsewhere       |
+| `KEEP_ALIVE`            | The number of seconds to wait for requests on a keep-alive connection[^7] | `30` on `production`, `5` on `develop`, `5` elsewhere          |
 
 [^1]: Predefined values are `production` and `develop` but any alphanumeric string is valid
 [^2]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
@@ -33,6 +35,16 @@ This image requires you have the following files in the root of your project:
 [^5]: [Node.js, the difference between development and production](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production/)
 [^6]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
 [^7]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
+
+### Secret key
+
+A secret key (for `SECRET_KEY`) can be generated using:
+
+```sh
+python -c 'import secrets; print(secrets.token_hex())'
+```
+
+Alternatively, using the [`tna-dev` image](https://github.com/nationalarchives/docker/tree/main/docker/tna-python-dev), you can run `secret-key` to generate one.
 
 ## Commands for the Dockerfile
 
@@ -69,10 +81,22 @@ tna-run my_app:app
 1. Count the number of CPU cores, multiply it by 2 and add 1 to get a suggested worker and thread count
 1. Start `gunicorn` with values appropriate to the environment taking into account any overrides
 
+#### Asynchronous support
+
+For frameworks that require or can use an ASGI rather than a WSGI you can use `tna-run` with a `-a` flag:
+
+```sh
+tna-run -a my_app:app
+```
+
+When working in a development environment (`ENVIRONMENT=production`) and using FastAPI, Uvicorn is used as the ASGI for `tna-run`.
+
+When using FastAPI in production, `tna-run -a` should be explicitly specified so Gunicron can use the Uvicorn worker class.
+
 ## Using Node
 
 To use Node to build your assets you need three files in your project:
 
 - `package.json`
 - `package-lock.json`
-- `.nvmrc`
+- `.nvmrc` containing the version of Node you would like to support (e.g. `lts/iron`)

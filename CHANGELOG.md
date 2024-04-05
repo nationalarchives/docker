@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.1.11...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.2.5...HEAD)
 
 ### Added
 ### Changed
@@ -16,6 +16,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 ### Security
+
+## [0.2.5](https://github.com/nationalarchives/docker/compare/v0.2.4...v0.2.5) - 2024-03-27
+
+### Changed
+
+- Update Poetry to [1.8.2](https://github.com/python-poetry/poetry/releases/tag/1.8.2)
+
+## [0.2.4](https://github.com/nationalarchives/docker/compare/v0.2.3...v0.2.4) - 2024-02-27
+
+### Changed
+
+- Update Poetry to [1.8.1](https://github.com/python-poetry/poetry/releases/tag/1.8.1)
+
+## [0.2.3](https://github.com/nationalarchives/docker/compare/v0.2.2...v0.2.3) - 2024-02-19
+
+### Changed
+
+- Updated `prettier`, `eslint`, `stylelint`, `stylelint-config-standard-scss` and `stylelint-selector-bem-pattern` in `tna-python-dev`
+- Updated `black`, `flake8` and `isort` in `tna-python-dev`
+- Updated `nvm`
+
+### Security
+
+- Updated `libcurl4` and `curl`
+
+## [0.2.2](https://github.com/nationalarchives/docker/compare/v0.2.1...v0.2.2) - 2024-01-23
+
+### Changed
+
+- Ignore `venv*,__pycache__,node_modules,migrations` in Flake8 configuration
+
+## [0.2.1](https://github.com/nationalarchives/docker/compare/v0.2.0...v0.2.1) - 2024-01-15
+
+### Changed
+
+- Added trailing slash to healthcheck liveliness URI (`/healthcheck/live/`)
+
+## [0.2.0](https://github.com/nationalarchives/docker/compare/v0.1.11...v0.2.0) - 2024-01-02
+
+### Added
+
+- Initial release of `tna-python-dev` Docker image
+- Added `uvicorn` support for async applications such as FastAPI
+
+### Changed
+
+- Update Poetry to [1.7.1](https://github.com/python-poetry/poetry/releases/tag/1.7.1)
+- Updated Base Docker image from `python:3.11-slim` to `python:3.12-slim-bookworm`
+- Install `libcurl4` version `7.88.1-10+deb12u4`
+
+### Security
+
+- Upgrade all Debian packages
 
 ## [0.1.11](https://github.com/nationalarchives/docker/compare/v0.1.10...v0.1.11) - 2023-10-16
 

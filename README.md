@@ -8,12 +8,24 @@
 
 The National Archives base Docker images are designed to serve as a starting point for all containerised applications in The National Archives.
 
-## Base Python image
+## Base images
 
-- [About tna-python](./docker/tna-python)
-- [Example application](./tests/example-python-application)
+| Image                                           | Dockerfile                                                            | Base image        | User   |
+| ----------------------------------------------- | --------------------------------------------------------------------- | ----------------- | ------ |
+| [`tna-python`](docker/tna-python)               | [`tna-python/Dockerfile`](docker/tna-python/Dockerfile)               | `python`          | `app`  |
+| `tna-python-root`                               | [`tna-python/Dockerfile`](docker/tna-python/Dockerfile)               | `python`          | `root` |
+| [`tna-python-django`](docker/tna-python-django) | [`tna-python-django/Dockerfile`](docker/tna-python-django/Dockerfile) | `tna-python`      | `app`  |
+| `tna-python-django-root`                        | [`tna-python-django/Dockerfile`](docker/tna-python-django/Dockerfile) | `tna-python-root` | `root` |
+| [`tna-python-dev`](docker/tna-python-dev)       | [`tna-python-dev/Dockerfile`](docker/tna-python-dev/Dockerfile)       | `tna-python-root` | `root` |
 
-### Base Python Django image
+### Image inheritance
 
-- [About tna-python-django](./docker/tna-python-django)
-- [Example Django application](./tests/example-python-django-application)
+```mermaid
+graph TD;
+    debian --> python;
+    python --> tna-python;
+    python --> tna-python-root;
+    tna-python --> tna-python-django;
+    tna-python-root --> tna-python-django-root;
+    tna-python-root --> tna-python-dev;
+```
