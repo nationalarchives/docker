@@ -1,4 +1,4 @@
-name: Remove untagged container images
+name: Remove untagged images
 
 on:
   workflow_dispatch:
@@ -14,7 +14,7 @@ jobs:
     env:
       PER_PAGE: 100
     steps:
-      - name: Delete untagged images
+      - name: Remove untagged images
         uses: actions/github-script@v6.3.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
