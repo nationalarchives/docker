@@ -101,16 +101,16 @@ jobs:
         tags: ${{ env.IMAGE_ID }}:latest
         provenance: false
     - name: Scan for vulnerabilities
-      if: inputs.publish
-      id: scan
-      uses: crazy-max/ghaction-container-scan@v2
+      uses: aquasecurity/trivy-action@master
       with:
-        image: ${{ env.IMAGE_ID }}:${{ env.TAG }}
-        dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
-        severity_threshold: CRITICAL
-        annotations: true
-    - name: Upload SARIF file
-      if: steps.scan.outputs.sarif != '' && inputs.publish
+        image-ref: ${{ env.IMAGE_ID }}:${{ env.TAG }}
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+    - name: Upload Trivy scan results to GitHub Security tab
+      if: always()
       uses: github/codeql-action/upload-sarif@v2
       with:
-        sarif_file: ${{ steps.scan.outputs.sarif }}
+        sarif_file: 'trivy-results.sarif'
