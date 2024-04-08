@@ -2,7 +2,7 @@
 
 # National Archives Base Docker Images
 
-[![Main build status](https://img.shields.io/github/actions/workflow/status/nationalarchives/docker/publish.yml?style=flat-square&event=push&branch=main)](https://github.com/nationalarchives/docker/actions/workflows/publish.yml?query=branch%3Amain)
+[![Main build status](https://img.shields.io/github/actions/workflow/status/nationalarchives/docker/build.yml?style=flat-square&event=push&branch=main)](https://github.com/nationalarchives/docker/actions/workflows/build.yml?query=branch%3Amain)
 [![Latest release](https://img.shields.io/github/v/release/nationalarchives/docker?style=flat-square&logo=github&logoColor=white&sort=semver)](https://github.com/nationalarchives/docker/releases)
 [![Licence](https://img.shields.io/github/license/nationalarchives/docker?style=flat-square)](https://github.com/nationalarchives/docker/blob/main/LICENCE)
 
