@@ -3,7 +3,7 @@ name: Remove untagged images
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 3 * * 1"
+    - cron: "0 4 * * *" # Every day at 04:00
 
 jobs:
   remove-untagged:
