@@ -23,11 +23,11 @@ jobs:
               { per_page: ${{ env.PER_PAGE }}
             });
             for(version of response.data) {
-                console.log("====================")
+                console.log("=====================")
                 console.log(version)
-                console.log(version.metadata.container.tags)
+                console.log(`Tags: ${version.metadata.container.tags.join(", ")}`)
                 if (version.metadata.container.tags.length === 0) {
-                    console.log(`Delete ${version.metadata.container.tags.join("/")}`)
+                    console.log(`Delete ${version.id} (${version.name})`)
                     // const deleteResponse = await github.request("DELETE /orgs/${{ github.repository_owner }}/packages/container/${{ matrix.image-name }}/versions/" + version.id, { });
                     // console.log(deleteResponse.status)
                 }
