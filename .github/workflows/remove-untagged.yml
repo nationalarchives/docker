@@ -25,15 +25,10 @@ jobs:
             for(version of response.data) {
                 console.log("====================")
                 console.log(version)
-                console.log(version.id)
-                console.log(version.name)
-                console.log(version.metadata)
-                console.log(version.metadata.container)
                 console.log(version.metadata.container.tags)
-                /*if (version.metadata.container.tags.length == 0 && version.name !== "latest" && version.name !== "preview") {
-                    console.log("Delete " + version.id)
-
-                    const deleteResponse = await github.request("DELETE /orgs/${{ github.repository_owner }}/packages/container/${{ matrix.image-name }}/versions/" + version.id, { });
-                    console.log("status " + deleteResponse.status)
-                }*/
+                if (version.metadata.container.tags.length === 0) {
+                    console.log(`Delete ${version.metadata.container.tags.join("/")}`)
+                    // const deleteResponse = await github.request("DELETE /orgs/${{ github.repository_owner }}/packages/container/${{ matrix.image-name }}/versions/" + version.id, { });
+                    // console.log(deleteResponse.status)
+                }
             }
