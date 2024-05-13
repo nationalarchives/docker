@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated Poetry to [1.8.3](https://github.com/python-poetry/poetry/releases/tag/1.8.3)
+- Updated Gunicorn to [22.0.0](https://github.com/benoitc/gunicorn/releases/tag/22.0.0)
+- Updated Uvicorn to [0.29.0](https://github.com/encode/uvicorn/releases/tag/0.29.0)
+
 ### Deprecated
 ### Removed
 ### Fixed
@@ -30,13 +35,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Update Poetry to [1.8.2](https://github.com/python-poetry/poetry/releases/tag/1.8.2)
+- Updated Poetry to [1.8.2](https://github.com/python-poetry/poetry/releases/tag/1.8.2)
 
 ## [0.2.4](https://github.com/nationalarchives/docker/compare/v0.2.3...v0.2.4) - 2024-02-27
 
 ### Changed
 
-- Update Poetry to [1.8.1](https://github.com/python-poetry/poetry/releases/tag/1.8.1)
+- Updated Poetry to [1.8.1](https://github.com/python-poetry/poetry/releases/tag/1.8.1)
 
 ## [0.2.3](https://github.com/nationalarchives/docker/compare/v0.2.2...v0.2.3) - 2024-02-19
 
