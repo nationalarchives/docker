@@ -89,7 +89,7 @@ then
   if poetry show flask ;
   then
     echo "Flask found, starting server"
-    poetry run flask run --debug --host 0.0.0.0 --port 8080
+    poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port 8080
   fi
   echo "Flask not found"
 
