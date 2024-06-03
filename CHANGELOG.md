@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Poetry to [1.8.3](https://github.com/python-poetry/poetry/releases/tag/1.8.3)
 - Updated Gunicorn to [22.0.0](https://github.com/benoitc/gunicorn/releases/tag/22.0.0)
-- Updated Uvicorn to [0.30.0](https://github.com/encode/uvicorn/releases/tag/0.30.0) and switched to [uvicorn-worker](https://github.com/Kludex/uvicorn-worker)
+- Updated Uvicorn to [0.30.1](https://github.com/encode/uvicorn/releases/tag/0.30.1) and switched to [uvicorn-worker](https://github.com/Kludex/uvicorn-worker)
 
 ### Deprecated
 ### Removed
