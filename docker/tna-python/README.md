@@ -15,18 +15,18 @@ This image requires you have the following files in the root of your project:
 
 ## Environment variables
 
-| Variable                | Description                                                               | Default                                                        |
-| -----------------------  | ------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| `SECRET_KEY` (required) | A random key used to secure client session data                           | [None]                                                         |
-| `ENVIRONMENT`           | The current environment[^1]                                               | `production`                                                   |
-| `WORKERS`               | Number of worker processes[^2]                                            | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
-| `THREADS`               | Number of threads[^3]                                                     | `3` on `develop`, `(cpu * 2) + 1` elsewhere                    |
-| `LOG_LEVEL`             | The log level to stream to the console[^4]                                | `warn` on `production`, `debug` on `develop`, `info` elsewhere |
-| `NODE_ENV`              | The node environment[^5]                                                  | Copied from `ENVIRONMENT`                                      |
-| `NPM_BUILD_COMMAND`     | The npm script to run to build static assets                              | [None] - don't build anything by default                       |
-| `NPM_DEVELOP_COMMAND`   | The npm script to run in development environments                         | [None] - don't build and watch anything by default             |
-| `TIMEOUT`               | The number of seconds before a request is terminated[^6]                  | `30` on `production`, `600` on `develop`, `30` elsewhere       |
-| `KEEP_ALIVE`            | The number of seconds to wait for requests on a keep-alive connection[^7] | `30` on `production`, `5` on `develop`, `5` elsewhere          |
+| Variable              | Description                                                               | Production default    | Staging default       | Develop default       | Other default         |
+| --------------------- | ------------------------------------------------------------------------- | --------------------- | --------------------- | --------------------- | --------------------- |
+| `ENVIRONMENT`         | The current environment[^1]                                               | `production`          | `staging`             | `develop`             | _none_                |
+| `SECRET_KEY`          | A random key used to secure client session data                           | _none_                | _none_                | _none_                | _none_                |
+| `WORKERS`             | Number of worker processes[^2]                                            | `(cpu * 2) + 1`       | `(cpu * 2) + 1`       | `3`                   | `(cpu * 2) + 1`       |
+| `THREADS`             | Number of threads[^3]                                                     | `(cpu * 2) + 1`       | `(cpu * 2) + 1`       | `3`                   | `(cpu * 2) + 1`       |
+| `LOG_LEVEL`           | The log level to stream to the console[^4]                                | `warn`                | `debug`               | `debug`               | `info`                |
+| `NODE_ENV`            | The node environment[^5]                                                  | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` |
+| `NPM_BUILD_COMMAND`   | The npm script to run to build static assets                              | _none_                | _none_                | _none_                | _none_                |
+| `NPM_DEVELOP_COMMAND` | The npm script to run in development environments                         | _ignored_             | _ignored_             | _none_                | _ignored_             |
+| `TIMEOUT`             | The number of seconds before a request is terminated[^6]                  | `30`                  | `30`                  | `600`                 | `30`                  |
+| `KEEP_ALIVE`          | The number of seconds to wait for requests on a keep-alive connection[^7] | `30`                  | `30`                  | `5`                   | `5`                   |
 
 [^1]: Predefined values are `production` and `develop` but any alphanumeric string is valid
 [^2]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)

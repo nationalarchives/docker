@@ -12,7 +12,7 @@ All environment variables defined in [tna-python](../tna-python/README.md) as we
 
 | Variable                 | Description                          | Default |
 | ------------------------ | ------------------------------------ | ------- |
-| `DJANGO_SETTINGS_MODULE` | Which Django settings module to load | [None]  |
+| `DJANGO_SETTINGS_MODULE` | Which Django settings module to load | _none_  |
 
 ## Commands for the Dockerfile
 
