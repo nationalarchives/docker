@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Gunicorn to [22.0.0](https://github.com/benoitc/gunicorn/releases/tag/22.0.0)
 - Updated Uvicorn to [0.30.1](https://github.com/encode/uvicorn/releases/tag/0.30.1) and switched to [uvicorn-worker](https://github.com/Kludex/uvicorn-worker)
 - Make `SECRET_KEY` optional
+- Allow more configuration file types for stylelint and eslint
 
 ### Deprecated
 ### Removed
