@@ -100,6 +100,18 @@ elif [ -f "/app/.eslintrc.cjs" ]
 then
   echo "Using app config (.eslintrc.cjs)"
   eslint -c /app/.eslintrc.cjs --fix "/app"
+elif [ -f "/app/eslintrc.config.js" ]
+then
+  echo "Using app config (eslintrc.config.js)"
+  eslint -c /app/eslintrc.config.js --fix "/app"
+elif [ -f "/app/eslintrc.config.mjs" ]
+then
+  echo "Using app config (eslintrc.config.mjs)"
+  eslint -c /app/eslintrc.config.mjs --fix "/app"
+elif [ -f "/app/eslintrc.config.cjs" ]
+then
+  echo "Using app config (eslintrc.config.cjs)"
+  eslint -c /app/eslintrc.config.cjs --fix "/app"
 else
   echo "Using default config"
   eslint -c /home/app/.eslintrc.js --fix "/app"
