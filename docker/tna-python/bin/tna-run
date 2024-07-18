@@ -32,13 +32,6 @@ then
   exit 1
 fi
 
-# Error if $SECRET_KEY is not defined
-if [[ -z $SECRET_KEY ]]
-then
-  echo -e "Error: Environment variable SECRET_KEY not set";
-  exit 1
-fi
-
 # Convert $ENVIRONMENT to lowercase
 ENVIRONMENT=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]')
 
