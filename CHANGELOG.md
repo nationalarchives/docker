@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.2.9...HEAD)
 
 ### Added
+
+- Updated Uvicorn to [0.30.3](https://github.com/encode/uvicorn/releases/tag/0.30.3)
+
 ### Changed
 ### Deprecated
 ### Removed
