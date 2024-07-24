@@ -1,5 +1,6 @@
 #!/bin/bash
 
+poetry install --with dev
 python -m pip install --quiet black==24.2.0 flake8==7.0.0 isort==5.13.2
 
 cd /app || return
