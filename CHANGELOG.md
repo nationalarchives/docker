@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated nvm to [v0.40.0](https://github.com/nvm-sh/nvm/releases/tag/v0.40.0)
 
 ### Changed
+
+- Install Poetry `dev` group during startup of `tna-python-dev`
+
 ### Deprecated
 ### Removed
 ### Fixed
