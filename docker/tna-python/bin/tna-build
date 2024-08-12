@@ -19,7 +19,7 @@ then
   tna-node "$NPM_BUILD_COMMAND"
 fi
 
-poetry add gunicorn@22.0.0
+poetry add gunicorn@23.0.0
 poetry add uvicorn@0.30.5
 poetry add uvicorn-worker@0.2.0
 poetry install --sync --no-root
