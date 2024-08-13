@@ -11,10 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Install Poetry `dev` group during startup of `tna-python-dev`
-- Updated Uvicorn to [0.30.5](https://github.com/encode/uvicorn/releases/tag/0.30.5)
+- Updated Uvicorn to [0.30.6](https://github.com/encode/uvicorn/releases/tag/0.30.6)
 - Updated nvm to [v0.40.0](https://github.com/nvm-sh/nvm/releases/tag/v0.40.0)
 - Updated Gunicorn to [23.0.0](https://github.com/benoitc/gunicorn/releases/tag/23.0.0)
-
 
 ### Deprecated
 ### Removed
