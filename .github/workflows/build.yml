@@ -3,6 +3,7 @@ name: Build and publish
 permissions:
   packages: write
   security-events: write
+  contents: read
 
 on:
   workflow_dispatch:
