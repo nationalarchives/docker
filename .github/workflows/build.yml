@@ -16,6 +16,10 @@ on:
       - docker/**
       - tests/**
 
+permissions:
+  packages: write
+  security-events: write
+
 concurrency:
   group: ${{ github.ref }}-publish
   cancel-in-progress: true
