@@ -1,5 +1,9 @@
 name: Build and publish
 
+permissions:
+  packages: write
+  security-events: write
+
 on:
   workflow_dispatch:
   schedule:
@@ -15,10 +19,6 @@ on:
       - .github/**
       - docker/**
       - tests/**
-
-permissions:
-  packages: write
-  security-events: write
 
 concurrency:
   group: ${{ github.ref }}-publish
