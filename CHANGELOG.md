@@ -5,20 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.2.9...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.2.10...HEAD)
 
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.2.10](https://github.com/nationalarchives/docker/compare/v0.2.9...v0.2.10) - 2024-09-02
+
 ### Changed
 
 - Install Poetry `dev` group during startup of `tna-python-dev`
 - Updated Uvicorn to [0.30.6](https://github.com/encode/uvicorn/releases/tag/0.30.6)
 - Updated nvm to [v0.40.1](https://github.com/nvm-sh/nvm/releases/tag/v0.40.1)
 - Updated Gunicorn to [23.0.0](https://github.com/benoitc/gunicorn/releases/tag/23.0.0)
-
-### Deprecated
-### Removed
-### Fixed
-### Security
 
 ## [0.2.9](https://github.com/nationalarchives/docker/compare/v0.2.8...v0.2.9) - 2024-07-18
 
