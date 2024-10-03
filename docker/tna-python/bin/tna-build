@@ -20,6 +20,6 @@ then
 fi
 
 poetry add gunicorn@23.0.0
-poetry add uvicorn@0.30.6
+poetry add uvicorn@0.31.0
 poetry add uvicorn-worker@0.2.0
 poetry install --sync --no-root
