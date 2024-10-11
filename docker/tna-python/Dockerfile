@@ -175,7 +175,7 @@ FROM "$USER_IMAGE"
 # ==========================================
 # Install the latest LTS version of Node.js,
 # but keeping within the releases code-named
-# as "iron" (v20)
+# as "iron" (v20.x)
 # ==========================================
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install lts/iron
