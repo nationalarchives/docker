@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated Python to [3.13](https://www.python.org/downloads/release/python-3130/)
+
 ### Deprecated
 ### Removed
 ### Fixed
