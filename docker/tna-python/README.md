@@ -56,14 +56,12 @@ There are two commands to use within your `Dockerfile`:
 
 ### `tna-build`
 
-1. Checks for the existance of a `pyproject.toml` and `poetry.lock` file
-1. Checks for correct Node files (see ["Using Node"](#using-node)) and if they exist:
-    1. Install the version of Node defined in `.nvmrc`
-    1. Install all the Node dependencies (not `devDependencies`)
-    1. Build the assets with the npm script defined in `$NPM_BUILD_COMMAND`
-    1. Remove the whole `node_modules` directory
-1. Add `gunicorn` to the project
-1. Install all the dependencies found in `pyproject.toml`
+1. Checks for the presence of `pyproject.toml` and `poetry.lock` files
+1. If `$NPM_BUILD_COMMAND` is defined, run `tna-node "$NPM_BUILD_COMMAND"` (See [tna-node](#tna-node-command))
+1. Installs `gunicorn`, `uvicorn`, `uvicorn-worker`
+1. Installs `tool.poetry.dependencies` from `pyproject.toml`
+    - `tna-python-dev` image also installs `tool.poetry.group.dev.dependencies`
+1. In `tna-python-django`, collect all static assets if `django.contrib.staticfiles` is used
 
 ### `tna-node [command]`
 
@@ -82,12 +80,15 @@ tna-run my_app:app
 
 #### Process
 
-1. If `$ENVIRONMENT` is set to `develop`, there is a `package.json` file and `$NPM_DEVELOP_COMMAND` has been defined:
-    1. Use the version of Node defined in `.nvmrc` as was installed by `tna-build`
-    1. Install all the Node dependencies
-    1. Run the npm script `$NPM_DEVELOP_COMMAND`
-1. Count the number of CPU cores, multiply it by 2 and add 1 to get a suggested worker and thread count
-1. Start `gunicorn` with values appropriate to the environment taking into account any overrides
+1. In `tna-python-django`, run all database migrations
+1. If `$ENVIRONMENT` is set to `develop` and `$NPM_DEVELOP_COMMAND` has been defined then run `tna-node "$NPM_DEVELOP_COMMAND"` (See [tna-node](#tna-node))
+1. Calculate the default worker and thread count based on the number of CPU cores
+1. If `$ENVIRONMENT` is set to `develop`:
+    1. If Django is installed, run the Django development server
+    1. Else if Flask is installed, run the Flask development server
+    1. Else if FastAPI is installed, run uvicorn with reloading
+    1. Else run the application through gunicorn with reloading using the async worker if the `-a` flag is passed
+1. Else for any other environment, start `gunicorn` with values appropriate to the environment taking into account any overrides
 
 #### Asynchronous support
 
