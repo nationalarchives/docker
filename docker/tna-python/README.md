@@ -51,6 +51,7 @@ Alternatively, using the [`tna-dev` image](https://github.com/nationalarchives/d
 There are two commands to use within your `Dockerfile`:
 
 - [`tna-build`](#tna-build)
+- [`tna-node`](#tna-node)
 - [`tna-run`](#tna-run)
 
 ### `tna-build`
@@ -63,6 +64,13 @@ There are two commands to use within your `Dockerfile`:
     1. Remove the whole `node_modules` directory
 1. Add `gunicorn` to the project
 1. Install all the dependencies found in `pyproject.toml`
+
+### `tna-node [command]`
+
+1. Checks for the presence of `package.json`, `package-lock.json` and `.nvmrc` files
+1. Sets the Node version to that defined in `.nvmrc`
+1. Installs Node dependencies from `package.json`
+1. Runs the passed `[command]` as `npm run [command]` (e.g. `build` from in `package.json`)
 
 ### `tna-run`
 
