@@ -37,3 +37,7 @@ For more information, see [how to deploy with WSGI](https://docs.djangoproject.c
 
 1. Run any required Django migrations
 1. Runs [`tna-run`](../tna-python/README.md#tna-run) from `tna-python` (now `tna-run-common`)
+
+### `manage [command]`
+
+1. Run the [Django admin command](https://docs.djangoproject.com/en/5.1/ref/django-admin/) in the context of `manage.py` (e.g. `manage makemigrations`)
