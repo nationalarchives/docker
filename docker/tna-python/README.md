@@ -51,7 +51,7 @@ Alternatively, using the [`tna-dev` image](https://github.com/nationalarchives/d
 There are two commands to use within your `Dockerfile`:
 
 - [`tna-build`](#tna-build)
-- [`tna-node`](#tna-node)
+- [`tna-node`](#tna-node-command)
 - [`tna-run`](#tna-run)
 
 ### `tna-build`
