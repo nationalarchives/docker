@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated Python to [3.13](https://www.python.org/downloads/release/python-3130/)
+- Updated Poetry to [1.8.4](https://github.com/python-poetry/poetry/releases/tag/1.8.4)
 
 ### Deprecated
 ### Removed
