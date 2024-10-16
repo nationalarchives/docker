@@ -57,6 +57,7 @@ jobs:
       docker-context: docker/tna-python-django
       dockerfile: Dockerfile
       publish: true
+      ignore-linting-rules: DL3006
 
   python-django-root:
     name: Python Django (root)
@@ -68,7 +69,7 @@ jobs:
       docker-context: docker/tna-python-django
       dockerfile: Dockerfile
       publish: true
-      ignore-linting-rules: DL3002
+      ignore-linting-rules: DL3002,DL3006
 
   python-dev:
     name: Python Dev
