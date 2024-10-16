@@ -2,7 +2,7 @@ ARG USER_IMAGE=appuser
 ARG BASE_IMAGE=ghcr.io/nationalarchives/tna-python
 ARG BASE_IMAGE_TAG=latest
 
-FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG" as appuser
+FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG"
 
 # ==========================================
 # Move the existing build and run scripts to
@@ -36,18 +36,3 @@ COPY --chown=app lib/manage.py /app
 # Allow all our scripts to be executable
 # ==========================================
 RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run manage.py
-
-
-
-FROM appuser AS root
-# ==========================================
-# If building the root Django image, we need
-# to install the Django debug toolbar
-# ==========================================
-RUN poetry add django-debug-toolbar
-
-
-
-FROM "$USER_IMAGE"
-
-CMD ["tail", "-f", "/dev/null"]
