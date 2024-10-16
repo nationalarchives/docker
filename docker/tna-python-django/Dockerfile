@@ -1,4 +1,3 @@
-ARG USER_IMAGE=appuser
 ARG BASE_IMAGE=ghcr.io/nationalarchives/tna-python
 ARG BASE_IMAGE_TAG=latest
 
