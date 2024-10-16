@@ -22,4 +22,9 @@ fi
 poetry add gunicorn@23.0.0
 poetry add uvicorn@0.31.1
 poetry add uvicorn-worker@0.2.0
-poetry install --sync --no-root
+poetry install --no-root --no-interaction
+
+if [ "$(id -u)" -eq 0 ]
+then
+    poetry install --no-root --with root || true
+fi
