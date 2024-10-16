@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.2.11...HEAD)
 
 ### Added
+
+- Install Poetry `root` group during `tna-build` process in `tna-python-root` and `tna-python-django-root`
+
 ### Changed
 
 - Updated Python to [3.13](https://www.python.org/downloads/release/python-3130/)
