@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.2.11...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.3.0...HEAD)
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.3.0](https://github.com/nationalarchives/docker/compare/v0.2.11...v0.3.0) - 2024-10-18
 
 ### Added
 
@@ -16,11 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Python to [3.13](https://www.python.org/downloads/release/python-3130/)
 - Updated Poetry to [1.8.4](https://github.com/python-poetry/poetry/releases/tag/1.8.4)
 - Updated Uvicorn to [0.32.0](https://github.com/encode/uvicorn/releases/tag/0.32.0)
-
-### Deprecated
-### Removed
-### Fixed
-### Security
 
 ## [0.2.11](https://github.com/nationalarchives/docker/compare/v0.2.10...v0.2.11) - 2024-10-11
 
