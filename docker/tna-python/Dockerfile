@@ -175,9 +175,12 @@ FROM "$USER_IMAGE"
 # ==========================================
 # Install the latest LTS version of Node.js,
 # but keeping within the releases code-named
-# as "iron" (v20.x)
+# "iron" (v20.x)
+# Also install the previous LTS release just
+# in case some applicaitons still use it
 # ==========================================
 RUN . "$NVM_DIR/nvm.sh"; \
+    nvm install lts/hydrogen; \
     nvm install lts/iron
 
 # ==========================================

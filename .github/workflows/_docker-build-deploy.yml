@@ -58,8 +58,12 @@ jobs:
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         # Strip "v" prefix from tag name and add the commit count as a build number
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+        VERSION_MAJOR=$(echo "$VERSION" | awk -F'.' '{print $1}')
+        VERSION_MINOR=$(echo "$VERSION" | awk -F'.' '{print $2}')
         [ "$VERSION" == "main" ] && VERSION=preview
         echo "TAG=$VERSION" >> "$GITHUB_ENV"
+        echo "MAJOR_VERSION=$VERSION_MAJOR" >> "$GITHUB_ENV"
+        echo "MINOR_VERSION=$VERSION_MAJOR.$VERSION_MINOR" >> "$GITHUB_ENV"
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
@@ -83,6 +87,40 @@ jobs:
     - name: List manifest
       if: inputs.publish
       run: docker buildx imagetools inspect ${{ env.IMAGE_ID }}:${{ env.TAG }}
+    - name: Tag major version
+      if: inputs.publish && startsWith(github.ref, 'refs/tags/')
+      uses: docker/build-push-action@v5
+      with:
+        context: ${{ inputs.docker-context }}
+        platforms: linux/amd64,linux/arm64
+        labels: |
+          runnumber=${{ github.run_id }}
+        build-args: |
+          BASE_IMAGE=${{ inputs.base-image }}
+          BASE_IMAGE_TAG=${{ env.VERSION_MAJOR }}
+          TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+          USER_IMAGE=${{ inputs.user-image }}
+        push: true
+        tags: ${{ env.IMAGE_ID }}:${{ env.VERSION_MAJOR }}
+        provenance: false
+    - name: Tag minor version
+      if: inputs.publish && startsWith(github.ref, 'refs/tags/')
+      uses: docker/build-push-action@v5
+      with:
+        context: ${{ inputs.docker-context }}
+        platforms: linux/amd64,linux/arm64
+        labels: |
+          runnumber=${{ github.run_id }}
+        build-args: |
+          BASE_IMAGE=${{ inputs.base-image }}
+          BASE_IMAGE_TAG=${{ env.MINOR_VERSION }}
+          TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+          USER_IMAGE=${{ inputs.user-image }}
+        push: true
+        tags: ${{ env.IMAGE_ID }}:${{ env.MINOR_VERSION }}
+        provenance: false
     - name: Tag latest
       if: inputs.publish && startsWith(github.ref, 'refs/tags/')
       uses: docker/build-push-action@v5

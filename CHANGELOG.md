@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.3.0...HEAD)
 
 ### Added
+
+- Pre-installed the previous Node LTS version as well as the latest
+- Semantically versioned images get tagged with their major and minor versions as well as the full version number
+
 ### Changed
 ### Deprecated
 ### Removed
