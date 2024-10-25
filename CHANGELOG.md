@@ -13,9 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Semantically versioned images get tagged with their major and minor versions as well as the full version number
 
 ### Changed
+
+- Updated `black`, `flake8`, `prettier`, `stylelint`, `stylelint-config-standard-scss` and `stylelint-selector-bem-pattern` in the dev image
+
 ### Deprecated
 ### Removed
+
+- The dev image no longer contains `docker`
+
 ### Fixed
+
+- Fixed the `rg.opencontainers.image.description` in the Django image
+
 ### Security
 
 ## [0.3.0](https://github.com/nationalarchives/docker/compare/v0.2.11...v0.3.0) - 2024-10-18

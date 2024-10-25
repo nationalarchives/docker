@@ -1,7 +1,7 @@
 #!/bin/bash
 
 poetry install --no-root --with dev || true
-python -m pip install --quiet black==24.2.0 flake8==7.0.0 isort==5.13.2
+python -m pip install --quiet black==24.10.0 flake8==7.1.0 isort==5.13.2
 
 cd /app || return
 
@@ -12,6 +12,6 @@ then
 else
   nvm use lts/iron
 fi
-npm install -g prettier@3.2.5 eslint@8.56.0 stylelint@16.2.1 stylelint-config-standard-scss@13.0.0 stylelint-selector-bem-pattern@3.0.1
+npm install -g prettier@3.3.3 eslint@8.56.0 stylelint@16.10.0 stylelint-config-standard-scss@13.1.0 stylelint-selector-bem-pattern@4.0.1
 
 welcome

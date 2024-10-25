@@ -4,6 +4,15 @@ ARG BASE_IMAGE_TAG=latest
 FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG"
 
 # ==========================================
+# Add some opencontainer labels which GitHub
+# uses to display additional information
+# ==========================================
+ARG TNA_DOCKER_IMAGE_SOURCE
+LABEL org.opencontainers.image.description="National Archives base Docker image" \
+    org.opencontainers.image.source="$TNA_DOCKER_IMAGE_SOURCE" \
+    org.opencontainers.image.licenses=MIT
+
+# ==========================================
 # Move the existing build and run scripts to
 # a -common suffix so that we can keep using
 # the base tna-build and tna-run commands
