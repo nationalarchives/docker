@@ -9,12 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Pre-installed the previous Node LTS version as well as the latest
+- Pre-installed the previous NodeJS LTS version as well as the latest
 - Semantically versioned images get tagged with their major and minor versions as well as the full version number
 
 ### Changed
 
 - Updated `black`, `flake8`, `prettier`, `stylelint`, `stylelint-config-standard-scss` and `stylelint-selector-bem-pattern` in the dev image
+- Updated the LTS version of NodeJS from `iron` to `jod`
 
 ### Deprecated
 ### Removed

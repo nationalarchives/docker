@@ -175,14 +175,14 @@ FROM "$USER_IMAGE"
 # ==========================================
 # Install the latest LTS version of Node.js,
 # but keeping within the releases code-named
-# "iron" (v20.x)
+# "jod" (v22.x)
 # (Install the previous LTS release, just in
 # case some applicaitons still use it)
 # ==========================================
 RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install lts/hydrogen; \
     nvm install lts/iron; \
-    nvm use lts/iron
+    nvm install lts/jod; \
+    nvm use lts/jod
 
 # ==========================================
 # Into our .local/bin/ directory copy in the
