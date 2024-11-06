@@ -63,8 +63,6 @@ jobs:
           user-image: root
           ignore-linting-rules: DL3002,DL3006
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: List Docker images
-        run: docker images
       - name: Test
         uses: ./.github/actions/test
         with:
@@ -75,7 +73,7 @@ jobs:
       - name: Push
         uses: ./.github/actions/push
         with:
-          image-name: tna-python-root
+          image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
@@ -98,8 +96,6 @@ jobs:
           base-image: ghcr.io/nationalarchives/tna-python
           docker-context: docker/tna-python-django
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: List Docker images
-        run: docker images
       - name: Test
         uses: ./.github/actions/test
         with:
@@ -111,7 +107,7 @@ jobs:
       - name: Push
         uses: ./.github/actions/push
         with:
-          image-name: tna-python-django
+          image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}

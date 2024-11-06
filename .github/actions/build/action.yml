@@ -45,9 +45,9 @@ runs:
         [ -d "./bin" ] && shellcheck --external-sources --exclude=SC1091 ./bin/*
         shellcheck --external-sources --exclude=SC2148 ./Dockerfile
       shell: bash
-    - name: Log in to registry
-      run: echo "${{ inputs.github-token }}" | docker login ghcr.io -u $ --password-stdin
-      shell: bash
+    # - name: Log in to registry
+    #   run: echo "${{ inputs.github-token }}" | docker login ghcr.io -u $ --password-stdin
+    #   shell: bash
     - name: Prepare image tag
       id: generate-tags
       run: |
@@ -89,9 +89,6 @@ runs:
         provenance: false
     - name: List manifest
       run: docker buildx imagetools inspect ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
-      shell: bash
-    - name: List Docker images
-      run: docker images
       shell: bash
     # - name: Tag major version
     #   if: startsWith(github.ref, 'refs/tags/')
