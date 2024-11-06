@@ -20,6 +20,9 @@ inputs:
   ignore-linting-rules:
     required: false
     type: string
+  github-token:
+    required: true
+    type: string
 
 runs:
   using: "composite"
@@ -35,7 +38,7 @@ runs:
         shellcheck --external-sources --exclude=SC2148 ./Dockerfile
       shell: bash
     - name: Log in to registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      run: echo "${{ inputs.github-token }}" | docker login ghcr.io -u $ --password-stdin
       shell: bash
     - name: Prepare image tag
       run: |

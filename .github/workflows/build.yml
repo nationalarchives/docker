@@ -39,6 +39,7 @@ jobs:
           docker-context: docker/tna-python
           dockerfile: Dockerfile
           ignore-linting-rules: DL3002,DL3006
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   python-root:
     name: Python (root)
@@ -54,6 +55,7 @@ jobs:
           user-image: root
           dockerfile: Dockerfile
           ignore-linting-rules: DL3002,DL3006
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   python-django:
     name: Python Django
@@ -69,6 +71,7 @@ jobs:
           base-image: ghcr.io/nationalarchives/tna-python
           docker-context: docker/tna-python-django
           dockerfile: Dockerfile
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   python-django-root:
     name: Python Django (root)
@@ -85,6 +88,7 @@ jobs:
           docker-context: docker/tna-python-django
           dockerfile: Dockerfile
           ignore-linting-rules: DL3002
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   python-dev:
     name: Python Dev
@@ -101,3 +105,4 @@ jobs:
           docker-context: docker/tna-python-dev
           dockerfile: Dockerfile
           ignore-linting-rules: DL3002,DL3008
+          github-token: ${{ secrets.GITHUB_TOKEN }}
