@@ -42,9 +42,13 @@ runs:
         echo "PORT=$PORT" >> "$GITHUB_ENV"
         docker compose up ${{ inputs.service }} -d
       shell: bash
-    - name: Test healthcheck endpoint
-      run: curl http://localhost:82/healthcheck/live/
-      shell: bash
+    # - name: Test healthcheck endpoint
+    #   run: curl http://localhost:82/healthcheck/live/
+    #   shell: bash
+    - name: Wait for healthcheck
+      uses: gerdemann/http-status-code@1.0.0
+      with:
+        url: http://localhost:${{ env.PORT }}/healthcheck/live/
     - name: Wait for healthcheck
       uses: cygnetdigital/wait_for_response@v2.0.0
       with:
