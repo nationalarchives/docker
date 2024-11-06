@@ -1,0 +1,23 @@
+name: Test Docker image
+
+inputs:
+  application-repository:
+    required: true
+    type: string
+  image:
+    required: true
+    type: string
+  image-tag:
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: TODO
+      run: |
+        echo "inputs.application-repository: ${{ inputs.application-repository }}"
+        echo "inputs.image: ${{ inputs.image }}"
+        echo "inputs.image-tag: ${{ inputs.image-tag }}"
+      shell: bash
+    

@@ -7,9 +7,6 @@ inputs:
   docker-context:
     required: true
     type: string
-  dockerfile:
-    required: true
-    type: string
   base-image:
     required: false
     type: string
@@ -24,12 +21,17 @@ inputs:
     required: true
     type: string
 
+outputs:
+  tag:
+    description: "The generated tag"
+    value: ${{ env.TAG }}
+
 runs:
   using: "composite"
   steps:
     - uses: hadolint/hadolint-action@v3.1.0
       with:
-        dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+        dockerfile: ${{ inputs.docker-context }}/Dockerfile
         ignore: SC1091,${{ inputs.ignore-linting-rules }}
     - name: ShellCheck
       run: |
@@ -72,7 +74,7 @@ runs:
           BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=${{ env.TAG }}
           TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
-          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
           USER_IMAGE=${{ inputs.user-image }}
         push: true
         tags: ${{ env.IMAGE_ID }}:${{ env.TAG }}
@@ -92,7 +94,7 @@ runs:
           BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=${{ env.MAJOR_VERSION }}
           TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
-          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
           USER_IMAGE=${{ inputs.user-image }}
         push: true
         tags: ${{ env.IMAGE_ID }}:${{ env.MAJOR_VERSION }}
@@ -109,7 +111,7 @@ runs:
           BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=${{ env.MINOR_VERSION }}
           TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
-          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
           USER_IMAGE=${{ inputs.user-image }}
         push: true
         tags: ${{ env.IMAGE_ID }}:${{ env.MINOR_VERSION }}
@@ -126,7 +128,7 @@ runs:
           BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=latest
           TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
-          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
           USER_IMAGE=${{ inputs.user-image }}
         push: true
         tags: ${{ env.IMAGE_ID }}:latest

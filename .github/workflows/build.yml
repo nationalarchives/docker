@@ -19,7 +19,6 @@ on:
     paths:
       - .github/**
       - docker/**
-      - tests/**
 
 concurrency:
   group: ${{ github.ref }}-publish
@@ -33,76 +32,78 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build and push
+        id: build
         uses: ./.github/actions/build
         with:
           image-name: tna-python
           docker-context: docker/tna-python
-          dockerfile: Dockerfile
           ignore-linting-rules: DL3002,DL3006
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
-  python-root:
-    name: Python (root)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build and push
-        uses: ./.github/actions/build
+      - name: Test
+        uses: ./.github/actions/test
         with:
-          image-name: tna-python-root
-          docker-context: docker/tna-python
-          user-image: root
-          dockerfile: Dockerfile
-          ignore-linting-rules: DL3002,DL3006
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          application-repository: https://github.com/nationalarchives/flask-application-template
+          image: tna-python
+          image-tag: ${{ steps.build.outputs.tag }}
 
-  python-django:
-    name: Python Django
-    needs: python
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build and push
-        uses: ./.github/actions/build
-        with:
-          image-name: tna-python-django
-          base-image: ghcr.io/nationalarchives/tna-python
-          docker-context: docker/tna-python-django
-          dockerfile: Dockerfile
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  # python-root:
+  #   name: Python (root)
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Build and push
+  #       uses: ./.github/actions/build
+  #       with:
+  #         image-name: tna-python-root
+  #         docker-context: docker/tna-python
+  #         user-image: root
+  #         ignore-linting-rules: DL3002,DL3006
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
 
-  python-django-root:
-    name: Python Django (root)
-    needs: python-root
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build and push
-        uses: ./.github/actions/build
-        with:
-          image-name: tna-python-django-root
-          base-image: ghcr.io/nationalarchives/tna-python-root
-          docker-context: docker/tna-python-django
-          dockerfile: Dockerfile
-          ignore-linting-rules: DL3002
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  # python-django:
+  #   name: Python Django
+  #   needs: python
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Build and push
+  #       uses: ./.github/actions/build
+  #       with:
+  #         image-name: tna-python-django
+  #         base-image: ghcr.io/nationalarchives/tna-python
+  #         docker-context: docker/tna-python-django
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
 
-  python-dev:
-    name: Python Dev
-    needs: python-root
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build and push
-        uses: ./.github/actions/build
-        with:
-          image-name: tna-python-dev
-          base-image: ghcr.io/nationalarchives/tna-python-root
-          docker-context: docker/tna-python-dev
-          dockerfile: Dockerfile
-          ignore-linting-rules: DL3002,DL3008
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  # python-django-root:
+  #   name: Python Django (root)
+  #   needs: python-root
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Build and push
+  #       uses: ./.github/actions/build
+  #       with:
+  #         image-name: tna-python-django-root
+  #         base-image: ghcr.io/nationalarchives/tna-python-root
+  #         docker-context: docker/tna-python-django
+  #         ignore-linting-rules: DL3002
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  # python-dev:
+  #   name: Python Dev
+  #   needs: python-root
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Build and push
+  #       uses: ./.github/actions/build
+  #       with:
+  #         image-name: tna-python-dev
+  #         base-image: ghcr.io/nationalarchives/tna-python-root
+  #         docker-context: docker/tna-python-dev
+  #         ignore-linting-rules: DL3002,DL3008
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
