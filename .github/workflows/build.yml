@@ -91,6 +91,9 @@ jobs:
         uses: ./.github/actions/push
         with:
           image-name: tna-python-django
+          image-tag: ${{ steps.build.outputs.tag }}
+          major-version: ${{ steps.build.outputs.major-version }}
+          minor-version: ${{ steps.build.outputs.minor-version }}
           base-image: ghcr.io/nationalarchives/tna-python
           docker-context: docker/tna-python-django
           github-token: ${{ secrets.GITHUB_TOKEN }}

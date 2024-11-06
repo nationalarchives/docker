@@ -22,9 +22,15 @@ inputs:
     type: string
 
 outputs:
+  image-id:
+    value: ${{ steps.generate-tags.outputs.image-id }}
   tag:
     description: "The generated tag"
     value: ${{ steps.generate-tags.outputs.tag }}
+  major-version:
+    value: ${{ steps.generate-tags.outputs.major-version }}
+  minor-version:
+    value: ${{ steps.generate-tags.outputs.minor-version }}
 
 runs:
   using: "composite"
@@ -53,13 +59,13 @@ runs:
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         # Strip "v" prefix from tag name and add the commit count as a build number
         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-        VERSION_MAJOR=$(echo "$VERSION" | awk -F'.' '{print $1}')
-        VERSION_MINOR=$(echo "$VERSION" | awk -F'.' '{print $2}')
+        VERSION_PART_MAJOR=$(echo "$VERSION" | awk -F'.' '{print $1}')
+        VERSION_PART_MINOR=$(echo "$VERSION" | awk -F'.' '{print $2}')
         [ "$VERSION" == "main" ] && VERSION=preview
-        echo "TAG=$VERSION" >> "$GITHUB_ENV"
-        echo "MAJOR_VERSION=$VERSION_MAJOR" >> "$GITHUB_ENV"
-        echo "MINOR_VERSION=$VERSION_MAJOR.$VERSION_MINOR" >> "$GITHUB_ENV"
+        echo "image-id=$IMAGE_ID" >> "$GITHUB_OUTPUT"
         echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "major-version=$MAJOR_VERSION" >> "$GITHUB_OUTPUT"
+        echo "minor-version=$MINOR_VERSION" >> "$GITHUB_OUTPUT"
       shell: bash
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
@@ -74,15 +80,18 @@ runs:
           runnumber=${{ github.run_id }}
         build-args: |
           BASE_IMAGE=${{ inputs.base-image }}
-          BASE_IMAGE_TAG=${{ env.TAG }}
-          TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
+          BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.tag }}
+          TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
           USER_IMAGE=${{ inputs.user-image }}
-        push: true
-        tags: ${{ env.IMAGE_ID }}:${{ env.TAG }}
+        push: false
+        tags: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
         provenance: false
     - name: List manifest
-      run: docker buildx imagetools inspect ${{ env.IMAGE_ID }}:${{ env.TAG }}
+      run: docker buildx imagetools inspect ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
+      shell: bash
+    - name: List Docker images
+      run: docker images
       shell: bash
     # - name: Tag major version
     #   if: startsWith(github.ref, 'refs/tags/')
@@ -94,12 +103,12 @@ runs:
     #       runnumber=${{ github.run_id }}
     #     build-args: |
     #       BASE_IMAGE=${{ inputs.base-image }}
-    #       BASE_IMAGE_TAG=${{ env.MAJOR_VERSION }}
-    #       TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
+    #       BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.major-version }}
+    #       TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
     #       TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
     #       USER_IMAGE=${{ inputs.user-image }}
     #     push: true
-    #     tags: ${{ env.IMAGE_ID }}:${{ env.MAJOR_VERSION }}
+    #     tags: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.major-version }}
     #     provenance: false
     # - name: Tag minor version
     #   if: startsWith(github.ref, 'refs/tags/')
@@ -111,12 +120,12 @@ runs:
     #       runnumber=${{ github.run_id }}
     #     build-args: |
     #       BASE_IMAGE=${{ inputs.base-image }}
-    #       BASE_IMAGE_TAG=${{ env.MINOR_VERSION }}
-    #       TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
+    #       BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.minor-version }}
+    #       TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
     #       TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
     #       USER_IMAGE=${{ inputs.user-image }}
     #     push: true
-    #     tags: ${{ env.IMAGE_ID }}:${{ env.MINOR_VERSION }}
+    #     tags: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.minor-version }}
     #     provenance: false
     # - name: Tag latest
     #   if: startsWith(github.ref, 'refs/tags/')
@@ -129,16 +138,16 @@ runs:
     #     build-args: |
     #       BASE_IMAGE=${{ inputs.base-image }}
     #       BASE_IMAGE_TAG=latest
-    #       TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
+    #       TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
     #       TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
     #       USER_IMAGE=${{ inputs.user-image }}
     #     push: true
-    #     tags: ${{ env.IMAGE_ID }}:latest
+    #     tags: ${{ steps.generate-tags.outputs.image-id }}:latest
     #     provenance: false
     # - name: Scan for vulnerabilities
     #   uses: aquasecurity/trivy-action@0.28.0
     #   with:
-    #     image-ref: ${{ env.IMAGE_ID }}:${{ env.TAG }}
+    #     image-ref: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
     #     format: "sarif"
     #     output: "trivy-results.sarif"
     #     ignore-unfixed: true
