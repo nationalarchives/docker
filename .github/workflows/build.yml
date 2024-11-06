@@ -1,4 +1,4 @@
-name: Build and publish
+name: Build, test and publish
 
 permissions:
   contents: read
@@ -25,28 +25,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  python:
-    name: Python
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build and push
-        id: build
-        uses: ./.github/actions/build
-        with:
-          image-name: tna-python
-          docker-context: docker/tna-python
-          ignore-linting-rules: DL3002,DL3006
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Test
-        uses: ./.github/actions/test
-        with:
-          application-repository: nationalarchives/flask-application-template
-          service: app
-          # image: ghcr.io/${{ github.repository_owner }}/tna-python
-          image: tna-python
-          image-tag: ${{ steps.build.outputs.tag }}
+  # python:
+  #   name: Python
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Build
+  #       id: build
+  #       uses: ./.github/actions/build
+  #       with:
+  #         image-name: tna-python
+  #         docker-context: docker/tna-python
+  #         ignore-linting-rules: DL3002,DL3006
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Test
+  #       uses: ./.github/actions/test
+  #       with:
+  #         application-repository: nationalarchives/flask-application-template
+  #         service: app
+  #         image: ghcr.io/${{ github.repository_owner }}/tna-python
+  #         image: tna-python
+  #         image-tag: ${{ steps.build.outputs.tag }}
 
   # python-root:
   #   name: Python (root)
@@ -54,7 +54,7 @@ jobs:
   #   steps:
   #     - name: Checkout
   #       uses: actions/checkout@v4
-  #     - name: Build and push
+  #     - name: Build
   #       id: build
   #       uses: ./.github/actions/build
   #       with:
@@ -71,7 +71,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build and push
+      - name: Build
         id: build
         uses: ./.github/actions/build
         with:
@@ -87,6 +87,13 @@ jobs:
           # image: ghcr.io/${{ github.repository_owner }}/tna-python-django
           image: tna-python-django
           image-tag: ${{ steps.build.outputs.tag }}
+      - name: Push
+        uses: ./.github/actions/push
+        with:
+          image-name: tna-python-django
+          base-image: ghcr.io/nationalarchives/tna-python
+          docker-context: docker/tna-python-django
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   # python-django-root:
   #   name: Python Django (root)
@@ -95,7 +102,7 @@ jobs:
   #   steps:
   #     - name: Checkout
   #       uses: actions/checkout@v4
-  #     - name: Build and push
+  #     - name: Build
   #       id: build
   #       uses: ./.github/actions/build
   #       with:
@@ -112,7 +119,7 @@ jobs:
   #   steps:
   #     - name: Checkout
   #       uses: actions/checkout@v4
-  #     - name: Build and push
+  #     - name: Build
   #       id: build
   #       uses: ./.github/actions/build
   #       with:

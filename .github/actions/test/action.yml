@@ -22,7 +22,7 @@ runs:
       with:
         repository: ${{ inputs.application-repository }}
         path: test
-    - name: TODO
+    - name: DEBUG
       run: |
         echo "inputs.application-repository: ${{ inputs.application-repository }}"
         echo "inputs.image: ${{ inputs.image }}"
@@ -30,11 +30,12 @@ runs:
         ls -alh
         ls -alh test
       shell: bash
-    - name: Update docker-compose.yml
+    - name: Start application
       run: |
         cd test
+        docker images
         cat docker-compose.yml
-        yq '(.services.app.build.args.IMAGE|="${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        yq '(.services.app.build.args.IMAGE|="ghcr.io/${{ github.repository_owner }}/${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         yq '(.services.app.build.args.IMAGE_TAG|="${{ inputs.image-tag }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         cat docker-compose.yml
         PORT=$(yq '(.services.app.ports)' docker-compose.yml | sed -e 's/^\- \(.*\)\:.*$/\1/')

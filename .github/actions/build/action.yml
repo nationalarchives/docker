@@ -1,4 +1,4 @@
-name: Build and push Docker images
+name: Build Docker images
 
 inputs:
   image-name:
@@ -84,65 +84,65 @@ runs:
     - name: List manifest
       run: docker buildx imagetools inspect ${{ env.IMAGE_ID }}:${{ env.TAG }}
       shell: bash
-    - name: Tag major version
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: docker/build-push-action@v6
-      with:
-        context: ${{ inputs.docker-context }}
-        platforms: linux/amd64,linux/arm64
-        labels: |
-          runnumber=${{ github.run_id }}
-        build-args: |
-          BASE_IMAGE=${{ inputs.base-image }}
-          BASE_IMAGE_TAG=${{ env.MAJOR_VERSION }}
-          TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
-          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
-          USER_IMAGE=${{ inputs.user-image }}
-        push: true
-        tags: ${{ env.IMAGE_ID }}:${{ env.MAJOR_VERSION }}
-        provenance: false
-    - name: Tag minor version
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: docker/build-push-action@v6
-      with:
-        context: ${{ inputs.docker-context }}
-        platforms: linux/amd64,linux/arm64
-        labels: |
-          runnumber=${{ github.run_id }}
-        build-args: |
-          BASE_IMAGE=${{ inputs.base-image }}
-          BASE_IMAGE_TAG=${{ env.MINOR_VERSION }}
-          TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
-          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
-          USER_IMAGE=${{ inputs.user-image }}
-        push: true
-        tags: ${{ env.IMAGE_ID }}:${{ env.MINOR_VERSION }}
-        provenance: false
-    - name: Tag latest
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: docker/build-push-action@v6
-      with:
-        context: ${{ inputs.docker-context }}
-        platforms: linux/amd64,linux/arm64
-        labels: |
-          runnumber=${{ github.run_id }}
-        build-args: |
-          BASE_IMAGE=${{ inputs.base-image }}
-          BASE_IMAGE_TAG=latest
-          TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
-          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
-          USER_IMAGE=${{ inputs.user-image }}
-        push: true
-        tags: ${{ env.IMAGE_ID }}:latest
-        provenance: false
-    - name: Scan for vulnerabilities
-      uses: aquasecurity/trivy-action@0.28.0
-      with:
-        image-ref: ${{ env.IMAGE_ID }}:${{ env.TAG }}
-        format: "sarif"
-        output: "trivy-results.sarif"
-        ignore-unfixed: true
-    - name: Upload Trivy scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: "trivy-results.sarif"
+    # - name: Tag major version
+    #   if: startsWith(github.ref, 'refs/tags/')
+    #   uses: docker/build-push-action@v6
+    #   with:
+    #     context: ${{ inputs.docker-context }}
+    #     platforms: linux/amd64,linux/arm64
+    #     labels: |
+    #       runnumber=${{ github.run_id }}
+    #     build-args: |
+    #       BASE_IMAGE=${{ inputs.base-image }}
+    #       BASE_IMAGE_TAG=${{ env.MAJOR_VERSION }}
+    #       TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
+    #       TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
+    #       USER_IMAGE=${{ inputs.user-image }}
+    #     push: true
+    #     tags: ${{ env.IMAGE_ID }}:${{ env.MAJOR_VERSION }}
+    #     provenance: false
+    # - name: Tag minor version
+    #   if: startsWith(github.ref, 'refs/tags/')
+    #   uses: docker/build-push-action@v6
+    #   with:
+    #     context: ${{ inputs.docker-context }}
+    #     platforms: linux/amd64,linux/arm64
+    #     labels: |
+    #       runnumber=${{ github.run_id }}
+    #     build-args: |
+    #       BASE_IMAGE=${{ inputs.base-image }}
+    #       BASE_IMAGE_TAG=${{ env.MINOR_VERSION }}
+    #       TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
+    #       TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
+    #       USER_IMAGE=${{ inputs.user-image }}
+    #     push: true
+    #     tags: ${{ env.IMAGE_ID }}:${{ env.MINOR_VERSION }}
+    #     provenance: false
+    # - name: Tag latest
+    #   if: startsWith(github.ref, 'refs/tags/')
+    #   uses: docker/build-push-action@v6
+    #   with:
+    #     context: ${{ inputs.docker-context }}
+    #     platforms: linux/amd64,linux/arm64
+    #     labels: |
+    #       runnumber=${{ github.run_id }}
+    #     build-args: |
+    #       BASE_IMAGE=${{ inputs.base-image }}
+    #       BASE_IMAGE_TAG=latest
+    #       TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
+    #       TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
+    #       USER_IMAGE=${{ inputs.user-image }}
+    #     push: true
+    #     tags: ${{ env.IMAGE_ID }}:latest
+    #     provenance: false
+    # - name: Scan for vulnerabilities
+    #   uses: aquasecurity/trivy-action@0.28.0
+    #   with:
+    #     image-ref: ${{ env.IMAGE_ID }}:${{ env.TAG }}
+    #     format: "sarif"
+    #     output: "trivy-results.sarif"
+    #     ignore-unfixed: true
+    # - name: Upload Trivy scan results to GitHub Security tab
+    #   uses: github/codeql-action/upload-sarif@v3
+    #   with:
+    #     sarif_file: "trivy-results.sarif"
