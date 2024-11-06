@@ -35,13 +35,15 @@ runs:
         cd test
         docker images
         cat docker-compose.yml
-        yq '(.services.app.build.args.IMAGE|="ghcr.io/${{ github.repository_owner }}/${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
-        yq '(.services.app.build.args.IMAGE_TAG|="${{ inputs.image-tag }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        yq '(.services.${{ inputs.service }}.build.args.IMAGE|="ghcr.io/${{ github.repository_owner }}/${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        yq '(.services.${{ inputs.service }}.build.args.IMAGE_TAG|="${{ inputs.image-tag }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         cat docker-compose.yml
-        PORT=$(yq '(.services.app.ports)' docker-compose.yml | sed -e 's/^\- \(.*\)\:.*$/\1/')
+        PORT=$(yq '(.services.${{ inputs.service }}.ports)' docker-compose.yml | sed -e 's/^\- \(.*\)\:.*$/\1/')
         echo "PORT=$PORT" >> "$GITHUB_ENV"
-        docker compose up -d
+        docker compose up ${{ inputs.service }} -d
       shell: bash
+    - name: Test healthcheck endpoint
+      run: curl http://localhost:82/healthcheck/live/
     - name: Wait for healthcheck
       uses: nev7n/wait_for_response@v1
       with:
