@@ -25,32 +25,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # python:
-  #   name: Python
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Build
-  #       id: build
-  #       uses: ./.github/actions/build
-  #       with:
-  #         image-name: tna-python
-  #         docker-context: docker/tna-python
-  #         ignore-linting-rules: DL3002,DL3006
-  #         github-token: ${{ secrets.GITHUB_TOKEN }}
-  #     - name: Test
-  #       uses: ./.github/actions/test
-  #       with:
-  #         application-repository: nationalarchives/flask-application-template
-  #         service: app
-  #         image: ghcr.io/${{ github.repository_owner }}/tna-python
-  #         image: tna-python
-  #         image-tag: ${{ steps.build.outputs.tag }}
-
-  python-root:
-    name: Python (root)
+  python:
+    name: Python
     runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: tna-python
+      DOCKER_CONTEXT: docker/tna-python
+      BASE_IMAGE: ghcr.io/nationalarchives/tna-python
+      USER_IMAGE: app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,17 +40,24 @@ jobs:
         id: build
         uses: ./.github/actions/build
         with:
-          image-name: tna-python-root
-          docker-context: docker/tna-python
-          user-image: root
+          image-name: ${{ env.IMAGE_NAME }}
+          base-image: ${{ env.BASE_IMAGE }}
+          docker-context: ${{ env.DOCKER_CONTEXT }}
+          user-image: ${{ env.USER_IMAGE }}
           ignore-linting-rules: DL3002,DL3006
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Test
+      - name: Test Flask
         uses: ./.github/actions/test
         with:
           application-repository: nationalarchives/flask-application-template
           service: app
-          image: tna-python-root
+          image: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+      - name: Test FastAPI
+        uses: ./.github/actions/test
+        with:
+          application-repository: nationalarchives/fastapi-application-template
+          service: app
+          image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
       - name: Push
         uses: ./.github/actions/push
@@ -77,14 +66,24 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
-          base-image: ghcr.io/nationalarchives/tna-python
-          docker-context: docker/tna-python
+          base-image: ${{ env.BASE_IMAGE }}
+          docker-context: ${{ env.DOCKER_CONTEXT }}
+          user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Scan
+        uses: ./.github/actions/scan
+        with:
+          image-id: ${{ steps.build.outputs.image-id }}
+          image-tag: ${{ steps.build.outputs.tag }}
 
-  python-django:
-    name: Python Django
-    # needs: python
+  python-root:
+    name: Python (root)
     runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: tna-python-root
+      DOCKER_CONTEXT: docker/tna-python
+      BASE_IMAGE: ghcr.io/nationalarchives/tna-python
+      USER_IMAGE: root
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -92,17 +91,24 @@ jobs:
         id: build
         uses: ./.github/actions/build
         with:
-          image-name: tna-python-django
-          base-image: ghcr.io/nationalarchives/tna-python
-          docker-context: docker/tna-python-django
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Test
+          image-name: ${{ env.IMAGE_NAME }}
+          base-image: ${{ env.BASE_IMAGE }}
+          docker-context: ${{ env.DOCKER_CONTEXT }}
+          user-image: ${{ env.USER_IMAGE }}
+          ignore-linting-rules: DL3002,DL3006
+      - name: Test Flask
         uses: ./.github/actions/test
         with:
-          application-repository: nationalarchives/django-application-template
+          application-repository: nationalarchives/flask-application-template
           service: app
-          # image: ghcr.io/${{ github.repository_owner }}/tna-python-django
-          image: tna-python-django
+          image: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+      - name: Test FastAPI
+        uses: ./.github/actions/test
+        with:
+          application-repository: nationalarchives/fastapi-application-template
+          service: app
+          image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
       - name: Push
         uses: ./.github/actions/push
@@ -111,40 +117,147 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
-          base-image: ghcr.io/nationalarchives/tna-python
-          docker-context: docker/tna-python-django
+          base-image: ${{ env.BASE_IMAGE }}
+          docker-context: ${{ env.DOCKER_CONTEXT }}
+          user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Scan
+        uses: ./.github/actions/scan
+        with:
+          image-id: ${{ steps.build.outputs.image-id }}
+          image-tag: ${{ steps.build.outputs.tag }}
 
-  # python-django-root:
-  #   name: Python Django (root)
-  #   needs: python-root
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Build
-  #       id: build
-  #       uses: ./.github/actions/build
-  #       with:
-  #         image-name: tna-python-django-root
-  #         base-image: ghcr.io/nationalarchives/tna-python-root
-  #         docker-context: docker/tna-python-django
-  #         ignore-linting-rules: DL3002
-  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  python-django:
+    name: Python Django
+    needs: python
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: tna-python-django
+      DOCKER_CONTEXT: docker/tna-python-django
+      BASE_IMAGE: ghcr.io/nationalarchives/tna-python
+      USER_IMAGE: root
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        id: build
+        uses: ./.github/actions/build
+        with:
+          image-name: ${{ env.IMAGE_NAME }}
+          base-image: ${{ env.BASE_IMAGE }}
+          docker-context: ${{ env.DOCKER_CONTEXT }}
+          user-image: ${{ env.USER_IMAGE }}
+      - name: Test Django
+        uses: ./.github/actions/test
+        with:
+          application-repository: nationalarchives/django-application-template
+          service: app
+          image: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+      - name: Push
+        uses: ./.github/actions/push
+        with:
+          image-id: ${{ steps.build.outputs.image-id }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          major-version: ${{ steps.build.outputs.major-version }}
+          minor-version: ${{ steps.build.outputs.minor-version }}
+          base-image: ${{ env.BASE_IMAGE }}
+          docker-context: ${{ env.DOCKER_CONTEXT }}
+          user-image: ${{ env.USER_IMAGE }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Scan
+        uses: ./.github/actions/scan
+        with:
+          image-id: ${{ steps.build.outputs.image-id }}
+          image-tag: ${{ steps.build.outputs.tag }}
 
-  # python-dev:
-  #   name: Python Dev
-  #   needs: python-root
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Build
-  #       id: build
-  #       uses: ./.github/actions/build
-  #       with:
-  #         image-name: tna-python-dev
-  #         base-image: ghcr.io/nationalarchives/tna-python-root
-  #         docker-context: docker/tna-python-dev
-  #         ignore-linting-rules: DL3002,DL3008
-  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  python-django-root:
+    name: Python Django (root)
+    needs: python-root
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: tna-python-django-root
+      DOCKER_CONTEXT: docker/tna-python-django
+      BASE_IMAGE: ghcr.io/nationalarchives/tna-python-root
+      USER_IMAGE: root
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        id: build
+        uses: ./.github/actions/build
+        with:
+          image-name: ${{ env.IMAGE_NAME }}
+          base-image: ${{ env.BASE_IMAGE }}
+          docker-context: ${{ env.DOCKER_CONTEXT }}
+          user-image: ${{ env.USER_IMAGE }}
+          ignore-linting-rules: DL3002
+      - name: Test Django
+        uses: ./.github/actions/test
+        with:
+          application-repository: nationalarchives/django-application-template
+          service: app
+          image: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+      - name: Push
+        uses: ./.github/actions/push
+        with:
+          image-id: ${{ steps.build.outputs.image-id }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          major-version: ${{ steps.build.outputs.major-version }}
+          minor-version: ${{ steps.build.outputs.minor-version }}
+          base-image: ${{ env.BASE_IMAGE }}
+          docker-context: ${{ env.DOCKER_CONTEXT }}
+          user-image: ${{ env.USER_IMAGE }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Scan
+        uses: ./.github/actions/scan
+        with:
+          image-id: ${{ steps.build.outputs.image-id }}
+          image-tag: ${{ steps.build.outputs.tag }}
+
+
+  python-dev:
+    name: Python Dev
+    needs: python-root
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: tna-python-dev
+      DOCKER_CONTEXT: docker/tna-python-dev
+      BASE_IMAGE: ghcr.io/nationalarchives/tna-python-root
+      USER_IMAGE: root
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        id: build
+        uses: ./.github/actions/build
+        with:
+          image-name: ${{ env.IMAGE_NAME }}
+          base-image: ${{ env.BASE_IMAGE }}
+          docker-context: ${{ env.DOCKER_CONTEXT }}
+          user-image: ${{ env.USER_IMAGE }}
+          ignore-linting-rules: DL3002,DL3008
+      - name: Test Django
+        uses: ./.github/actions/test
+        with:
+          application-repository: nationalarchives/django-application-template
+          service: app
+          image: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+      - name: Push
+        uses: ./.github/actions/push
+        with:
+          image-id: ${{ steps.build.outputs.image-id }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          major-version: ${{ steps.build.outputs.major-version }}
+          minor-version: ${{ steps.build.outputs.minor-version }}
+          base-image: ${{ env.BASE_IMAGE }}
+          docker-context: ${{ env.DOCKER_CONTEXT }}
+          user-image: ${{ env.USER_IMAGE }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Scan
+        uses: ./.github/actions/scan
+        with:
+          image-id: ${{ steps.build.outputs.image-id }}
+          image-tag: ${{ steps.build.outputs.tag }}

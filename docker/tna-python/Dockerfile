@@ -1,4 +1,4 @@
-ARG USER_IMAGE=appuser
+ARG USER_IMAGE=app
 
 FROM python:3.13-slim-bookworm AS root
 
@@ -158,7 +158,7 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 
 
 
-FROM root AS appuser
+FROM root AS app
 # ==========================================
 # Now we have finished installing everything
 # at a system level, change the current user

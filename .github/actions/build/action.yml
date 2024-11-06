@@ -13,12 +13,9 @@ inputs:
   user-image:
     required: false
     type: string
-    default: appuser
+    default: app
   ignore-linting-rules:
     required: false
-    type: string
-  github-token:
-    required: true
     type: string
 
 outputs:
@@ -45,9 +42,6 @@ runs:
         [ -d "./bin" ] && shellcheck --external-sources --exclude=SC1091 ./bin/*
         shellcheck --external-sources --exclude=SC2148 ./Dockerfile
       shell: bash
-    # - name: Log in to registry
-    #   run: echo "${{ inputs.github-token }}" | docker login ghcr.io -u $ --password-stdin
-    #   shell: bash
     - name: Prepare image tag
       id: generate-tags
       run: |
@@ -90,65 +84,3 @@ runs:
     - name: List manifest
       run: docker buildx imagetools inspect ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
       shell: bash
-    # - name: Tag major version
-    #   if: startsWith(github.ref, 'refs/tags/')
-    #   uses: docker/build-push-action@v6
-    #   with:
-    #     context: ${{ inputs.docker-context }}
-    #     platforms: linux/amd64,linux/arm64
-    #     labels: |
-    #       runnumber=${{ github.run_id }}
-    #     build-args: |
-    #       BASE_IMAGE=${{ inputs.base-image }}
-    #       BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.major-version }}
-    #       TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
-    #       TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
-    #       USER_IMAGE=${{ inputs.user-image }}
-    #     push: true
-    #     tags: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.major-version }}
-    #     provenance: false
-    # - name: Tag minor version
-    #   if: startsWith(github.ref, 'refs/tags/')
-    #   uses: docker/build-push-action@v6
-    #   with:
-    #     context: ${{ inputs.docker-context }}
-    #     platforms: linux/amd64,linux/arm64
-    #     labels: |
-    #       runnumber=${{ github.run_id }}
-    #     build-args: |
-    #       BASE_IMAGE=${{ inputs.base-image }}
-    #       BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.minor-version }}
-    #       TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
-    #       TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
-    #       USER_IMAGE=${{ inputs.user-image }}
-    #     push: true
-    #     tags: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.minor-version }}
-    #     provenance: false
-    # - name: Tag latest
-    #   if: startsWith(github.ref, 'refs/tags/')
-    #   uses: docker/build-push-action@v6
-    #   with:
-    #     context: ${{ inputs.docker-context }}
-    #     platforms: linux/amd64,linux/arm64
-    #     labels: |
-    #       runnumber=${{ github.run_id }}
-    #     build-args: |
-    #       BASE_IMAGE=${{ inputs.base-image }}
-    #       BASE_IMAGE_TAG=latest
-    #       TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
-    #       TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
-    #       USER_IMAGE=${{ inputs.user-image }}
-    #     push: true
-    #     tags: ${{ steps.generate-tags.outputs.image-id }}:latest
-    #     provenance: false
-    # - name: Scan for vulnerabilities
-    #   uses: aquasecurity/trivy-action@0.28.0
-    #   with:
-    #     image-ref: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
-    #     format: "sarif"
-    #     output: "trivy-results.sarif"
-    #     ignore-unfixed: true
-    # - name: Upload Trivy scan results to GitHub Security tab
-    #   uses: github/codeql-action/upload-sarif@v3
-    #   with:
-    #     sarif_file: "trivy-results.sarif"
