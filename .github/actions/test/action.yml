@@ -44,6 +44,7 @@ runs:
       shell: bash
     - name: Test healthcheck endpoint
       run: curl http://localhost:82/healthcheck/live/
+      shell: bash
     - name: Wait for healthcheck
       uses: nev7n/wait_for_response@v1
       with:
