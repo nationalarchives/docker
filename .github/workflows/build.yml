@@ -78,7 +78,7 @@ jobs:
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
           base-image: ghcr.io/nationalarchives/tna-python
-          docker-context: docker/tna-python-root
+          docker-context: docker/tna-python
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
   python-django:
