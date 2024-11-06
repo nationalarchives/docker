@@ -24,7 +24,7 @@ inputs:
 outputs:
   tag:
     description: "The generated tag"
-    value: ${{ env.TAG }}
+    value: ${{ steps.generate-tags.outputs.tag }}
 
 runs:
   using: "composite"
@@ -43,6 +43,7 @@ runs:
       run: echo "${{ inputs.github-token }}" | docker login ghcr.io -u $ --password-stdin
       shell: bash
     - name: Prepare image tag
+      id: generate-tags
       run: |
         IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${{ inputs.image-name }}
         # Change all uppercase to lowercase
@@ -58,6 +59,7 @@ runs:
         echo "TAG=$VERSION" >> "$GITHUB_ENV"
         echo "MAJOR_VERSION=$VERSION_MAJOR" >> "$GITHUB_ENV"
         echo "MINOR_VERSION=$VERSION_MAJOR.$VERSION_MINOR" >> "$GITHUB_ENV"
+        echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
       shell: bash
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3

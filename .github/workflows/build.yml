@@ -43,6 +43,7 @@ jobs:
         uses: ./.github/actions/test
         with:
           application-repository: https://github.com/nationalarchives/flask-application-template
+          service: app
           image: tna-python
           image-tag: ${{ steps.build.outputs.tag }}
 
