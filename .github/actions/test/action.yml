@@ -22,19 +22,19 @@ runs:
       with:
         repository: ${{ inputs.application-repository }}
         path: test
-    - name: DEBUG
-      run: |
-        echo "inputs.application-repository: ${{ inputs.application-repository }}"
-        echo "inputs.image: ${{ inputs.image }}"
-        echo "inputs.image-tag: ${{ inputs.image-tag }}"
-        ls -alh
-        ls -alh test
-      shell: bash
     - name: Start application
       run: |
         cd test
+        cat docker-compose.yml
+
         yq '(.services.${{ inputs.service }}.build.args.IMAGE|="ghcr.io/${{ github.repository_owner }}/${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+
         yq '(.services.${{ inputs.service }}.build.args.IMAGE_TAG|="${{ inputs.image-tag }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+
+        yq 'del(.services.${{ inputs.service }}.volumes)' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+
+        cat docker-compose.yml
+
         PORT=$(yq '(.services.${{ inputs.service }}.ports)' docker-compose.yml | sed -e 's/^\- \(.*\)\:.*$/\1/')
         echo "PORT=$PORT" >> "$GITHUB_ENV"
         [[ -f "package.json" ]] && npm install
