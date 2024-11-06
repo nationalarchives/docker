@@ -30,6 +30,8 @@ jobs:
     name: Python
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Build and push
         uses: ./.github/actions/build
         with:
@@ -42,6 +44,8 @@ jobs:
     name: Python (root)
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Build and push
         uses: ./.github/actions/build
         with:
@@ -56,6 +60,8 @@ jobs:
     needs: python
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Build and push
         uses: ./.github/actions/build
         with:
@@ -69,6 +75,8 @@ jobs:
     needs: python-root
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Build and push
         uses: ./.github/actions/build
         with:
@@ -83,6 +91,8 @@ jobs:
     needs: python-root
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Build and push
         uses: ./.github/actions/build
         with:
