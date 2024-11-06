@@ -37,7 +37,11 @@ runs:
 
         PORT=$(yq '(.services.${{ inputs.service }}.ports)' docker-compose.yml | sed -e 's/^\- \(.*\)\:.*$/\1/')
         echo "PORT=$PORT" >> "$GITHUB_ENV"
-        [[ -f "package.json" ]] && npm install
+
+
+        # [[ -f "package.json" ]] && docker compose exec app cp -r /app/node_modules/@nationalarchives/frontend/nationalarchives/assets /app/app/static
+
+
         docker compose up ${{ inputs.service }} -d
       shell: bash
 
