@@ -33,11 +33,8 @@ runs:
     - name: Start application
       run: |
         cd test
-        docker images
-        cat docker-compose.yml
         yq '(.services.${{ inputs.service }}.build.args.IMAGE|="ghcr.io/${{ github.repository_owner }}/${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         yq '(.services.${{ inputs.service }}.build.args.IMAGE_TAG|="${{ inputs.image-tag }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
-        cat docker-compose.yml
         PORT=$(yq '(.services.${{ inputs.service }}.ports)' docker-compose.yml | sed -e 's/^\- \(.*\)\:.*$/\1/')
         echo "PORT=$PORT" >> "$GITHUB_ENV"
         docker compose up ${{ inputs.service }} -d
@@ -52,7 +49,7 @@ runs:
 
 
     - name: Test healthcheck endpoint
-      run: curl http://localhost:82/healthcheck/live/
+      run: curl -o - -I http://localhost:82/healthcheck/live/
       shell: bash
     - name: Wait for healthcheck
       uses: gerdemann/http-status-code@1.0.0
