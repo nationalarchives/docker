@@ -34,7 +34,7 @@ runs:
       run: |
         cd test
         cat docker-compose.yml
-        yq '(.services.app.build.args.IMAGE|="ghcr.io/${{ github.repository_owner }}/${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        yq '(.services.app.build.args.IMAGE|="${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         yq '(.services.app.build.args.IMAGE_TAG|="ghcr.io/${{ github.repository_owner }}/${{ inputs.image-tag }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         cat docker-compose.yml
         PORT=$(yq '(.services.app.ports)' docker-compose.yml | sed -e 's/^\- \(.*\)\:.*$/\1/')

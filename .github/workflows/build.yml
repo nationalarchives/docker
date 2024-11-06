@@ -42,8 +42,9 @@ jobs:
       - name: Test
         uses: ./.github/actions/test
         with:
-          application-repository: https://github.com/nationalarchives/flask-application-template
+          application-repository: nationalarchives/flask-application-template
           service: app
+          # image: ghcr.io/${{ github.repository_owner }}/tna-python
           image: tna-python
           image-tag: ${{ steps.build.outputs.tag }}
 
@@ -54,6 +55,7 @@ jobs:
   #     - name: Checkout
   #       uses: actions/checkout@v4
   #     - name: Build and push
+  #       id: build
   #       uses: ./.github/actions/build
   #       with:
   #         image-name: tna-python-root
@@ -62,20 +64,29 @@ jobs:
   #         ignore-linting-rules: DL3002,DL3006
   #         github-token: ${{ secrets.GITHUB_TOKEN }}
 
-  # python-django:
-  #   name: Python Django
-  #   needs: python
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #     - name: Build and push
-  #       uses: ./.github/actions/build
-  #       with:
-  #         image-name: tna-python-django
-  #         base-image: ghcr.io/nationalarchives/tna-python
-  #         docker-context: docker/tna-python-django
-  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  python-django:
+    name: Python Django
+    # needs: python
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build and push
+        id: build
+        uses: ./.github/actions/build
+        with:
+          image-name: tna-python-django
+          base-image: ghcr.io/nationalarchives/tna-python
+          docker-context: docker/tna-python-django
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test
+        uses: ./.github/actions/test
+        with:
+          application-repository: nationalarchives/django-application-template
+          service: app
+          # image: ghcr.io/${{ github.repository_owner }}/tna-python-django
+          image: tna-python-django
+          image-tag: ${{ steps.build.outputs.tag }}
 
   # python-django-root:
   #   name: Python Django (root)
@@ -85,6 +96,7 @@ jobs:
   #     - name: Checkout
   #       uses: actions/checkout@v4
   #     - name: Build and push
+  #       id: build
   #       uses: ./.github/actions/build
   #       with:
   #         image-name: tna-python-django-root
@@ -101,6 +113,7 @@ jobs:
   #     - name: Checkout
   #       uses: actions/checkout@v4
   #     - name: Build and push
+  #       id: build
   #       uses: ./.github/actions/build
   #       with:
   #         image-name: tna-python-dev
