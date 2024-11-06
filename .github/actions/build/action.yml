@@ -1,42 +1,29 @@
-name: Docker build
+name: Build and push Docker images
 
-on:
-  workflow_call:
-    inputs:
-      image-name:
-        required: true
-        type: string
-      docker-context:
-        required: true
-        type: string
-      dockerfile:
-        required: true
-        type: string
-      base-image:
-        required: false
-        type: string
-      user-image:
-        required: false
-        type: string
-        default: appuser
-      publish:
-        required: true
-        type: boolean
-      ignore-linting-rules:
-        required: false
-        type: string
+inputs:
+  image-name:
+    required: true
+    type: string
+  docker-context:
+    required: true
+    type: string
+  dockerfile:
+    required: true
+    type: string
+  base-image:
+    required: false
+    type: string
+  user-image:
+    required: false
+    type: string
+    default: appuser
+  ignore-linting-rules:
+    required: false
+    type: string
 
-jobs:
-  build:
-    name: Build and deploy
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-      security-events: write
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+runs:
+  using: "composite"
+  steps:
     - uses: hadolint/hadolint-action@v3.1.0
       with:
         dockerfile: ${{ inputs.docker-context }}/${{ inputs.dockerfile }}
@@ -46,8 +33,10 @@ jobs:
         cd ${{ inputs.docker-context }}
         [ -d "./bin" ] && shellcheck --external-sources --exclude=SC1091 ./bin/*
         shellcheck --external-sources --exclude=SC2148 ./Dockerfile
+      shell: bash
     - name: Log in to registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      shell: bash
     - name: Prepare image tag
       run: |
         IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${{ inputs.image-name }}
@@ -64,12 +53,13 @@ jobs:
         echo "TAG=$VERSION" >> "$GITHUB_ENV"
         echo "MAJOR_VERSION=$VERSION_MAJOR" >> "$GITHUB_ENV"
         echo "MINOR_VERSION=$VERSION_MAJOR.$VERSION_MINOR" >> "$GITHUB_ENV"
+      shell: bash
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
     - name: Build and push images
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         context: ${{ inputs.docker-context }}
         platforms: linux/amd64,linux/arm64
@@ -81,15 +71,15 @@ jobs:
           TNA_DOCKER_IMAGE_VERSION=${{ env.TAG }}
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/${{ inputs.dockerfile }}
           USER_IMAGE=${{ inputs.user-image }}
-        push: ${{ inputs.publish }}
+        push: true
         tags: ${{ env.IMAGE_ID }}:${{ env.TAG }}
         provenance: false
     - name: List manifest
-      if: inputs.publish
       run: docker buildx imagetools inspect ${{ env.IMAGE_ID }}:${{ env.TAG }}
+      shell: bash
     - name: Tag major version
-      if: inputs.publish && startsWith(github.ref, 'refs/tags/')
-      uses: docker/build-push-action@v5
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: docker/build-push-action@v6
       with:
         context: ${{ inputs.docker-context }}
         platforms: linux/amd64,linux/arm64
@@ -105,8 +95,8 @@ jobs:
         tags: ${{ env.IMAGE_ID }}:${{ env.MAJOR_VERSION }}
         provenance: false
     - name: Tag minor version
-      if: inputs.publish && startsWith(github.ref, 'refs/tags/')
-      uses: docker/build-push-action@v5
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: docker/build-push-action@v6
       with:
         context: ${{ inputs.docker-context }}
         platforms: linux/amd64,linux/arm64
@@ -122,8 +112,8 @@ jobs:
         tags: ${{ env.IMAGE_ID }}:${{ env.MINOR_VERSION }}
         provenance: false
     - name: Tag latest
-      if: inputs.publish && startsWith(github.ref, 'refs/tags/')
-      uses: docker/build-push-action@v5
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: docker/build-push-action@v6
       with:
         context: ${{ inputs.docker-context }}
         platforms: linux/amd64,linux/arm64
@@ -139,15 +129,13 @@ jobs:
         tags: ${{ env.IMAGE_ID }}:latest
         provenance: false
     - name: Scan for vulnerabilities
-      if: inputs.publish
-      uses: aquasecurity/trivy-action@0.27.0
+      uses: aquasecurity/trivy-action@0.28.0
       with:
         image-ref: ${{ env.IMAGE_ID }}:${{ env.TAG }}
-        format: 'sarif'
-        output: 'trivy-results.sarif'
+        format: "sarif"
+        output: "trivy-results.sarif"
         ignore-unfixed: true
     - name: Upload Trivy scan results to GitHub Security tab
-      if: inputs.publish
       uses: github/codeql-action/upload-sarif@v3
       with:
-        sarif_file: 'trivy-results.sarif'
+        sarif_file: "trivy-results.sarif"
