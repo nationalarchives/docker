@@ -21,10 +21,10 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
 # ==========================================
 # All TNA containers should expose identical
 # ports which will then be mapped to another
-# port on the host system - we are using 443
-# which is the standard port for HTTPS
+# port on the host system - we use port 8080
+# for all our applications
 # ==========================================
-EXPOSE 443/tcp
+EXPOSE 8080/tcp
 
 # ==========================================
 # To aid consistency Dockerised applications

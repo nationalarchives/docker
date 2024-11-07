@@ -15,32 +15,37 @@ This image requires you have the following files in the root of your project:
 
 ## Environment variables
 
-| Variable              | Description                                                               | Production default    | Staging default       | Develop default       | Other default         |
+The three default environment names are:
+
+- `production`
+- `staging`
+- `develop`
+
+Any other alphanumeric string is considered a valid environment name but won't have predefined settings.
+
+| Variable              | Description                                                               | Production default    | Staging default       | Develop default       | Other envs default    |
 | --------------------- | ------------------------------------------------------------------------- | --------------------- | --------------------- | --------------------- | --------------------- |
-| `ENVIRONMENT`         | The current environment[^1]                                               | `production`          | `staging`             | `develop`             | _none_                |
 | `SECRET_KEY`          | A random key used to secure client session data                           | _none_                | _none_                | _none_                | _none_                |
-| `WORKERS`             | Number of worker processes[^2]                                            | `(cpu * 2) + 1`       | `(cpu * 2) + 1`       | `3`                   | `(cpu * 2) + 1`       |
-| `THREADS`             | Number of threads[^3]                                                     | `(cpu * 2) + 1`       | `(cpu * 2) + 1`       | `3`                   | `(cpu * 2) + 1`       |
-| `LOG_LEVEL`           | The log level to stream to the console[^4]                                | `warn`                | `debug`               | `debug`               | `info`                |
-| `NODE_ENV`            | The node environment[^5]                                                  | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` |
+| `WORKERS`             | Number of worker processes[^1]                                            | `(cpu * 2) + 1`       | `(cpu * 2) + 1`       | `3`                   | `(cpu * 2) + 1`       |
+| `THREADS`             | Number of threads[^2]                                                     | `(cpu * 2) + 1`       | `(cpu * 2) + 1`       | `3`                   | `(cpu * 2) + 1`       |
+| `LOG_LEVEL`           | The log level to stream to the console[^3]                                | `warn`                | `debug`               | `debug`               | `info`                |
+| `NODE_ENV`            | The node environment[^4]                                                  | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` |
 | `NPM_BUILD_COMMAND`   | The npm script to run to build static assets                              | _none_                | _none_                | _none_                | _none_                |
 | `NPM_DEVELOP_COMMAND` | The npm script to run in development environments                         | _ignored_             | _ignored_             | _none_                | _ignored_             |
-| `TIMEOUT`             | The number of seconds before a request is terminated[^6]                  | `30`                  | `30`                  | `600`                 | `30`                  |
-| `KEEP_ALIVE`          | The number of seconds to wait for requests on a keep-alive connection[^7] | `30`                  | `30`                  | `5`                   | `5`                   |
+| `TIMEOUT`             | The number of seconds before a request is terminated[^5]                  | `30`                  | `30`                  | `600`                 | `30`                  |
+| `KEEP_ALIVE`          | The number of seconds to wait for requests on a keep-alive connection[^6] | `30`                  | `30`                  | `5`                   | `5`                   |
 
-[^1]: Predefined values are `production` and `develop` but any alphanumeric string is valid
+[^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 
-[^2]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
+[^2]: [Gunicorn docs - How Many Threads?](https://docs.gunicorn.org/en/latest/design.html#how-many-threads)
 
-[^3]: [Gunicorn docs - How Many Threads?](https://docs.gunicorn.org/en/latest/design.html#how-many-threads)
+[^3]: Supported levels are `critical`, `error`, `warn`, `info` and `debug` [Gunicorn docs - log level](https://docs.gunicorn.org/en/latest/settings.html?highlight=log#loglevel)
 
-[^4]: Supported levels are `critical`, `error`, `warn`, `info` and `debug` [Gunicorn docs - log level](https://docs.gunicorn.org/en/latest/settings.html?highlight=log#loglevel)
+[^4]: [Node.js, the difference between development and production](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production/)
 
-[^5]: [Node.js, the difference between development and production](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production/)
+[^5]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
 
-[^6]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
-
-[^7]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
+[^6]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
 
 ### Secret key
 
@@ -115,3 +120,12 @@ To use Node to build your assets you need three files in your project:
 - `package.json`
 - `package-lock.json`
 - `.nvmrc` containing the version of Node you would like to support (e.g. `lts/iron`)
+
+## Using SSL
+
+On all environments apart from `develop`, an SSL certificate is required.
+
+Two files need to be mounted to the container in order to run environments outside of development:
+
+- `/home/app/ssl/key.pem`
+- `/home/app/ssl/cert.pem`

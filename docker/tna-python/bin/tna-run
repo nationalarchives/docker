@@ -76,7 +76,7 @@ then
   if poetry show flask ;
   then
     echo "Flask found, starting server"
-    poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port 8080 --reload
+    poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port 8080
   fi
   echo "Flask not found"
 
@@ -90,7 +90,7 @@ then
   echo "FastAPI not found"
 
   # Fall back to using Gunicorn
-  echo "No framework found, using Gunicorn to serve development application"
+  echo "No framework found, using Gunicorn to serve development application..."
   poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --bind 0.0.0.0:8080 --worker-class="$WORKER_CLASS" --reload
 elif [ "$ENVIRONMENT" == 'production' ]
 then
@@ -117,7 +117,6 @@ then
   echo "/home/app/ssl/key.pem does not exist";
   exit 1
 fi
-
 if [ ! -f "/home/app/ssl/cert.pem" ]
 then
   echo "/home/app/ssl/cert.pem does not exist";
@@ -128,5 +127,5 @@ fi
 chmod 644 /home/app/ssl/key.pem
 
 # Start the server
-echo "Starting $ENVIRONMENT server"
+echo "Starting $ENVIRONMENT server..."
 poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind 0.0.0.0:8080 --worker-class="$WORKER_CLASS" --keyfile=/home/app/ssl/key.pem --certfile=/home/app/ssl/cert.pem
