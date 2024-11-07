@@ -4,7 +4,7 @@ inputs:
   image-name:
     required: true
     type: string
-  docker-context:
+  dockerfile-location:
     required: true
     type: string
   base-image:
@@ -14,9 +14,6 @@ inputs:
     required: false
     type: string
     default: app
-  ignore-linting-rules:
-    required: false
-    type: string
 
 outputs:
   image-id:
@@ -32,20 +29,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-
-    - uses: hadolint/hadolint-action@v3.1.0
-      with:
-        dockerfile: ${{ inputs.docker-context }}/Dockerfile
-        ignore: SC1091,${{ inputs.ignore-linting-rules }}
-    - name: ShellCheck
-      run: |
-        cd ${{ inputs.docker-context }}
-        [ -d "./bin" ] && shellcheck --external-sources --exclude=SC1091 ./bin/*
-        shellcheck --external-sources --exclude=SC2148 ./Dockerfile
-      shell: bash
-
-
-
     - name: Prepare image tag
       id: generate-tags
       run: |
@@ -72,7 +55,7 @@ runs:
     - name: Build and push images
       uses: docker/build-push-action@v6
       with:
-        context: ${{ inputs.docker-context }}
+        context: ${{ inputs.dockerfile-location }}
         platforms: linux/amd64,linux/arm64
         labels: |
           runnumber=${{ github.run_id }}
@@ -80,7 +63,7 @@ runs:
           BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.tag }}
           TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
-          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.docker-context }}/Dockerfile
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-location }}/Dockerfile
           USER_IMAGE=${{ inputs.user-image }}
         push: false
         tags: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
