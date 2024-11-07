@@ -11,10 +11,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Set up Docker build
-      uses: docker/build-push-action@v6
-      with:
-        load: true
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: DEBUG
+      run: |
+        docker --version
+      shell: bash
     - uses: hadolint/hadolint-action@v3.1.0
       with:
         dockerfile: ${{ inputs.docker-context }}/Dockerfile
