@@ -148,7 +148,7 @@ RUN mkdir -p /app; \
 # allows us to use a reverse proxy and serve
 # the app securely through HTTPS
 # ==========================================
-COPY lib/nginx.conf /etc/nginx/conf.d
+COPY lib/nginx.conf /etc/nginx/nginx.conf
 
 # ==========================================
 # Set $HOME env var to be the home directory
