@@ -30,9 +30,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: tna-python
-    #   DOCKER_CONTEXT: docker/tna-python
-    #   BASE_IMAGE: ghcr.io/nationalarchives/tna-python
-    #   USER_IMAGE: app
+      DOCKER_CONTEXT: docker/tna-python
+      BASE_IMAGE: ghcr.io/nationalarchives/tna-python
+      USER_IMAGE: app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
