@@ -40,3 +40,4 @@ runs:
       shell: bash
     - name: Check user
       run: docker compose exec ${{ inputs.service }} whoami | grep "${{ inputs.expected-user }}"
+      shell: bash
