@@ -96,28 +96,12 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # ==========================================
 # 1.
 # Update the package index files and install
-# a specific version of curl that we know to
-# have no issues which is required later for
-# installing Poetry
-# ------------------------------------------
-# 2.
-# Install nginx and update the firewall rule
-# to allow only HTTPS traffic
-# ------------------------------------------
-# 3.
-# Clean and remove all the apt registries to
-# disallow additional installations later on
-# ------------------------------------------
-# 4.
-# Create a new system-level nonroot user who
-# owns a home directory where we can install
-# libraries into (along with our scripts for
-# building and running)
-# ------------------------------------------
-# 5.
-# Create an "/app" directory in the root dir
-# for the application code and allow the new
-# app user to access it
+# specific versions of libcurl4, curl, build
+# essentials (which then enables us to later
+# install Poetry), as well as both nginx and
+# ufw - after this, clean and remove all the
+# apt registries to avoid the possibility of
+# additional installations later on
 # ==========================================
 RUN set -eux; \
     \
@@ -125,20 +109,36 @@ RUN set -eux; \
     \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u7 curl=7.88.1-10+deb12u7 build-essential=12.9 libmagic-dev=1:5.44-3; \
-    \
-    apt-get install -y --no-install-recommends nginx=1.22.1-9 nginx-common=1.22.1-9; \
-    ufw allow 'Nginx HTTPS'; \
-    mkdir /etc/nginx/ssl; \
-    openssl req -x509 -noenc -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/req.pem -days 90 -subj "/C=GB/ST=London/L=Kew/O=The National Archives/OU=Digital/CN=localhost"; \
+    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u7 curl=7.88.1-10+deb12u7 build-essential=12.9 libmagic-dev=1:5.44-3 nginx=1.22.1-9 nginx-common=1.22.1-9 ufw=0.36.2-1; \
     \
     apt-get clean; \
     apt-get autoremove -y --purge; \
-	rm -rfv /var/lib/apt/lists/*; \
-    \
-    useradd --system --create-home app; \
-    \
-    mkdir -p /app; \
+	rm -rfv /var/lib/apt/lists/*
+
+# ==========================================
+# Update the firewall rule to allow only for
+# HTTPS, then create an SSL certificate that
+# we can use locally in nginx to secure this
+# container
+# ==========================================
+RUN ufw allow 'Nginx HTTPS'; \
+    mkdir /etc/nginx/ssl; \
+    openssl req -x509 -noenc -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/req.pem -days 90 -subj "/C=GB/ST=London/L=Kew/O=The National Archives/OU=Digital/CN=localhost"
+
+# ==========================================
+# Create a new system-level nonroot user who
+# owns a home directory where we can install
+# libraries into (along with our scripts for
+# building and running)
+# ==========================================
+RUN useradd --system --create-home app
+
+# ==========================================
+# Create an "/app" directory in the root dir
+# for the application code and allow the new
+# app user to access it
+# ==========================================
+RUN mkdir -p /app; \
     chown app:app -R /app; \
     chmod 700 /app
 
