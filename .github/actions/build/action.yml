@@ -66,8 +66,6 @@ runs:
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-location }}/Dockerfile
           USER_IMAGE=${{ inputs.user-image }}
         push: false
+        load: true
         tags: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
         provenance: false
-    - name: List manifest
-      run: docker buildx imagetools inspect ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
-      shell: bash
