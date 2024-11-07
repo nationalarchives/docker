@@ -94,13 +94,6 @@ ENV POETRY_HOME=/home/app/.local \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # ==========================================
-# Copy in the nginx configuration file which
-# allows us to use a reverse proxy and serve
-# the application through HTTPS
-# ==========================================
-COPY lib/nginx.conf /etc/nginx/nginx.conf
-
-# ==========================================
 # 1.
 # Update the package index files and install
 # a specific version of curl that we know to
@@ -148,6 +141,15 @@ RUN set -eux; \
     mkdir -p /app; \
     chown app:app -R /app; \
     chmod 700 /app
+
+# ==========================================
+# Copy in the nginx configuration file which
+# allows us to use a reverse proxy and serve
+# the app securely through HTTPS - this will
+# replace the default configuration provided
+# by nginx
+# ==========================================
+COPY lib/nginx.conf /etc/nginx/nginx.conf
 
 # ==========================================
 # Set $HOME env var to be the home directory
