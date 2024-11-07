@@ -29,11 +29,17 @@ This image requires you have the following files in the root of your project:
 | `KEEP_ALIVE`          | The number of seconds to wait for requests on a keep-alive connection[^7] | `30`                  | `30`                  | `5`                   | `5`                   |
 
 [^1]: Predefined values are `production` and `develop` but any alphanumeric string is valid
+
 [^2]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
+
 [^3]: [Gunicorn docs - How Many Threads?](https://docs.gunicorn.org/en/latest/design.html#how-many-threads)
+
 [^4]: Supported levels are `critical`, `error`, `warn`, `info` and `debug` [Gunicorn docs - log level](https://docs.gunicorn.org/en/latest/settings.html?highlight=log#loglevel)
+
 [^5]: [Node.js, the difference between development and production](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production/)
+
 [^6]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
+
 [^7]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
 
 ### Secret key
@@ -60,7 +66,7 @@ There are two commands to use within your `Dockerfile`:
 1. If `$NPM_BUILD_COMMAND` is defined, run `tna-node "$NPM_BUILD_COMMAND"` (See [tna-node](#tna-node-command))
 1. Installs `gunicorn`, `uvicorn`, `uvicorn-worker`
 1. Installs `tool.poetry.dependencies` from `pyproject.toml`
-    - `tna-python-dev` image also installs `tool.poetry.group.dev.dependencies`
+   - `tna-python-dev` image also installs `tool.poetry.group.dev.dependencies`
 1. In `tna-python-django`, collect all static assets if `django.contrib.staticfiles` is used
 
 ### `tna-node [command]`
@@ -84,10 +90,10 @@ tna-run my_app:app
 1. If `$ENVIRONMENT` is set to `develop` and `$NPM_DEVELOP_COMMAND` has been defined then run `tna-node "$NPM_DEVELOP_COMMAND"` (See [tna-node](#tna-node))
 1. Calculate the default worker and thread count based on the number of CPU cores
 1. If `$ENVIRONMENT` is set to `develop`:
-    1. If Django is installed, run the Django development server
-    1. Else if Flask is installed, run the Flask development server
-    1. Else if FastAPI is installed, run uvicorn with reloading
-    1. Else run the application through gunicorn with reloading using the async worker if the `-a` flag is passed
+   1. If Django is installed, run the Django development server
+   1. Else if Flask is installed, run the Flask development server
+   1. Else if FastAPI is installed, run uvicorn with reloading
+   1. Else run the application through gunicorn with reloading using the async worker if the `-a` flag is passed
 1. Else for any other environment, start `gunicorn` with values appropriate to the environment taking into account any overrides
 
 #### Asynchronous support
