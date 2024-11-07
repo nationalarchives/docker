@@ -34,8 +34,6 @@ EXPOSE 443/tcp
 # live-ness of an application - this idea is
 # based on a GOV.UK proposal:
 # https://github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
-# This goes directly to the app, rather than
-# through nginx
 # ==========================================
 HEALTHCHECK CMD curl --fail http://localhost:8080/healthcheck/live/ || exit 1
 
@@ -97,10 +95,10 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Update the package index files and install
 # specific versions of libcurl4, curl, build
 # essentials (which then enables us to later
-# install Poetry), as well as both nginx and
-# ufw - after this, clean and remove all the
-# apt registries to avoid the possibility of
-# additional installations later on
+# install Poetry) after which go on to clean
+# and remove all the apt registries to avoid
+# the possibility of additional applications
+# being installed later on
 # ==========================================
 RUN set -eux; \
     \
@@ -108,7 +106,7 @@ RUN set -eux; \
     \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u7 curl=7.88.1-10+deb12u7 build-essential=12.9 libmagic-dev=1:5.44-3 nginx=1.22.1-9 nginx-common=1.22.1-9 ufw=0.36.2-1 iptables=1.8.9-2; \
+    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u7 curl=7.88.1-10+deb12u7 build-essential=12.9 libmagic-dev=1:5.44-3; \
     \
     apt-get clean; \
     apt-get autoremove -y --purge; \
@@ -143,29 +141,6 @@ ENV HOME=/home/app
 # is writable by our "app" user
 # ==========================================
 ENV NVM_DIR="$HOME/.nvm"
-
-# ==========================================
-# Update the firewall rule to allow only for
-# HTTPS, then create an SSL certificate that
-# we can use locally in nginx to secure this
-# container
-# ==========================================
-RUN ufw allow 'Nginx HTTPS'; \
-    mkdir /etc/nginx/ssl; \
-    openssl req -x509 -noenc -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/req.pem -days 90 -subj "/C=GB/ST=London/L=Kew/O=The National Archives/OU=Digital/CN=localhost"; \
-    chmod 644 /etc/nginx/ssl/key.pem
-
-# ==========================================
-# Copy in the nginx configuration file which
-# allows us to use a reverse proxy and serve
-# the app securely through HTTPS
-# ==========================================
-COPY lib/nginx.conf /etc/nginx/nginx.conf
-
-# ==========================================
-# Test the installed nginx configuration
-# ==========================================
-RUN nginx -t
 
 # ==========================================
 # Install Poetry in the suggested manner and
@@ -211,14 +186,17 @@ FROM "$USER_IMAGE"
 # Install the latest LTS version of Node.js,
 # but keeping within the releases code-named
 # "jod" (v22.x)
-# (Install the previous LTS release, just in
-# case some applicaitons still use it)
 # ==========================================
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install lts/iron; \
     nvm install lts/jod; \
     nvm alias default lts/jod
+
+# ==========================================
+# Create a directory for our SSL certificate
+# files
+# ==========================================
+RUN mkdir /home/app/ssl
 
 # ==========================================
 # Into our .local/bin/ directory copy in the

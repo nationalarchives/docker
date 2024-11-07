@@ -52,19 +52,7 @@ DEFAULT_THREADS=$((DEFAULT_WORKERS * 2))
 [[ -z $WORKERS ]] && WORKERS=$DEFAULT_WORKERS
 [[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS
 
-if [ "$ENVIRONMENT" == 'production' ]
-then
-  # Production environment
-  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warn
-  [[ -z $TIMEOUT ]] && TIMEOUT=30
-  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
-elif [ "$ENVIRONMENT" == 'staging' ]
-then
-  # Staging environment
-  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
-  [[ -z $TIMEOUT ]] && TIMEOUT=30
-  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
-elif [ "$ENVIRONMENT" == 'develop' ]
+if [ "$ENVIRONMENT" == 'develop' ]
 then
   # Development environment
   echo "ENVIRONMENT is develop"
@@ -88,7 +76,7 @@ then
   if poetry show flask ;
   then
     echo "Flask found, starting server"
-    poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port 8080
+    poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port 8080 --reload
   fi
   echo "Flask not found"
 
@@ -104,6 +92,18 @@ then
   # Fall back to using Gunicorn
   echo "No framework found, using Gunicorn to serve development application"
   poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --bind 0.0.0.0:8080 --worker-class="$WORKER_CLASS" --reload
+elif [ "$ENVIRONMENT" == 'production' ]
+then
+  # Production environment
+  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warn
+  [[ -z $TIMEOUT ]] && TIMEOUT=30
+  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
+elif [ "$ENVIRONMENT" == 'staging' ]
+then
+  # Staging environment
+  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
+  [[ -z $TIMEOUT ]] && TIMEOUT=30
+  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
 else
   # All other environments
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=info
@@ -111,6 +111,22 @@ else
   [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=5
 fi
 
+# Check for SSL certificates
+if [ ! -f "/home/app/ssl/key.pem" ]
+then
+  echo "/home/app/ssl/key.pem does not exist";
+  exit 1
+fi
+
+if [ ! -f "/home/app/ssl/cert.pem" ]
+then
+  echo "/home/app/ssl/cert.pem does not exist";
+  exit 1
+fi
+
+# Ensure the SSL key file can be read
+chmod 644 /home/app/ssl/key.pem
+
 # Start the server
 echo "Starting $ENVIRONMENT server"
-poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind 0.0.0.0:8080 --worker-class="$WORKER_CLASS"
+poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind 0.0.0.0:8080 --worker-class="$WORKER_CLASS" --keyfile=/home/app/ssl/key.pem --certfile=/home/app/ssl/cert.pem
