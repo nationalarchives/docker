@@ -14,6 +14,9 @@ inputs:
     required: false
     type: string
     default: app
+  ignore-linting-rules:
+    required: false
+    type: string
 
 outputs:
   image-id:
@@ -25,9 +28,6 @@ outputs:
     value: ${{ steps.generate-tags.outputs.major-version }}
   minor-version:
     value: ${{ steps.generate-tags.outputs.minor-version }}
-  ignore-linting-rules:
-    required: false
-    type: string
 
 runs:
   using: "composite"
