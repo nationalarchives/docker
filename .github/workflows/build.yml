@@ -40,8 +40,8 @@ jobs:
         id: build
         uses: ./.github/actions/build
         with:
-          # image-name: ${{ env.IMAGE_NAME }}
-          image-name: tna-python
+          image-name: ${{ env.IMAGE_NAME }}
+          # image-name: tna-python
           # base-image: ${{ env.BASE_IMAGE }}
           base-image: ghcr.io/nationalarchives/tna-python
           # docker-context: ${{ env.DOCKER_CONTEXT }}
