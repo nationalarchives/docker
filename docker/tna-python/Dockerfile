@@ -98,7 +98,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # allows us to use a reverse proxy and serve
 # the application through HTTPS
 # ==========================================
-COPY --chown=app bin/nginx.conf /etc/nginx/nginx.conf
+COPY lib/nginx.conf /etc/nginx/nginx.conf
 
 # ==========================================
 # 1.
