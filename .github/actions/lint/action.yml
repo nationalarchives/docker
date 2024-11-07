@@ -18,6 +18,7 @@ runs:
     - name: DEBUG
       run: |
         docker --version
+      shell: bash
     - uses: hadolint/hadolint-action@v3.1.0
       with:
         dockerfile: ${{ inputs.docker-context }}/Dockerfile
