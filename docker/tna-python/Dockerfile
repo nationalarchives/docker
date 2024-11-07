@@ -134,7 +134,7 @@ RUN set -eux; \
     apt-get -y upgrade; \
     apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u5 curl=7.88.1-10+deb12u5 build-essential=12.9 libmagic-dev=1:5.44-3; \
     \
-    apt-get install -y --no-install-recommends nginx; \
+    apt-get install -y --no-install-recommends nginx=1.22.1-9; \
     ufw allow 'Nginx HTTPS'; \
     mkdir /etc/nginx/ssl; \
     openssl req -x509 -noenc -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/req.pem -days 90 -subj "/C=GB/ST=London/L=Kew/O=The National Archives/OU=Digital/CN=localhost"; \
