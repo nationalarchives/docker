@@ -19,11 +19,12 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
     org.opencontainers.image.licenses=MIT
 
 # ==========================================
-# All of our Python containers should expose
-# port 8080, which can then be mapped to any
-# other port on the host system
+# All TNA containers should expose identical
+# ports which will then be mapped to another
+# port on the host system - we are using 443
+# which is the standard port for HTTPS
 # ==========================================
-EXPOSE 8080/tcp
+EXPOSE 443/tcp
 
 # ==========================================
 # To aid consistency Dockerised applications
@@ -33,6 +34,8 @@ EXPOSE 8080/tcp
 # live-ness of an application - this idea is
 # based on a GOV.UK proposal:
 # https://github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
+# This goes directly to the app, rather than
+# through nginx
 # ==========================================
 HEALTHCHECK CMD curl --fail http://localhost:8080/healthcheck/live/ || exit 1
 
@@ -91,16 +94,37 @@ ENV POETRY_HOME=/home/app/.local \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # ==========================================
+# Copy in the nginx configuration file which
+# allows us to use a reverse proxy and serve
+# the application through HTTPS
+# ==========================================
+COPY --chown=app bin/nginx.conf /etc/nginx/nginx.conf
+
+# ==========================================
+# 1.
 # Update the package index files and install
 # a specific version of curl that we know to
 # have no issues which is required later for
-# installing Poetry and create a new system-
-# level nonroot user who has with a new home
-# directory where we will be able to install
+# installing Poetry
+# ------------------------------------------
+# 2.
+# Install nginx and update the firewall rule
+# to allow only HTTPS traffic
+# ------------------------------------------
+# 3.
+# Clean and remove all the apt registries to
+# disallow additional installations later on
+# ------------------------------------------
+# 4.
+# Create a new system-level nonroot user who
+# owns a home directory where we can install
 # libraries into (along with our scripts for
-# building and running) and create an "/app"
-# directory in the root (for the application
-# code)
+# building and running)
+# ------------------------------------------
+# 5.
+# Create an "/app" directory in the root dir
+# for the application code and allow the new
+# app user to access it
 # ==========================================
 RUN set -eux; \
     \
@@ -109,6 +133,11 @@ RUN set -eux; \
     apt-get update; \
     apt-get -y upgrade; \
     apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u5 curl=7.88.1-10+deb12u5 build-essential=12.9 libmagic-dev=1:5.44-3; \
+    \
+    apt-get install -y --no-install-recommends nginx; \
+    ufw allow 'Nginx HTTPS'; \
+    mkdir /etc/nginx/ssl; \
+    openssl req -x509 -noenc -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/req.pem -days 90 -subj "/C=GB/ST=London/L=Kew/O=The National Archives/OU=Digital/CN=localhost"; \
     \
     apt-get clean; \
     apt-get autoremove -y --purge; \
