@@ -11,11 +11,15 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
     - name: Set up Docker build
       uses: docker/build-push-action@v6
       with:
+        context: ${{ inputs.docker-context }}
+        push: false
         load: true
     - name: DEBUG
       run: |
