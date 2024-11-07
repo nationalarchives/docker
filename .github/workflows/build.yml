@@ -37,12 +37,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Debug
-        run: |
-          docker image ls
-          docker context ls
-          hadolint --version
-          hadolint docker/tna-python/Dockerfile
+      # - name: Debug
+      #   run: |
+      #     docker image ls
+      #     docker context ls
+      #     hadolint --version
+      #     hadolint docker/tna-python/Dockerfile
 
         
       - name: Lint
