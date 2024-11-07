@@ -13,7 +13,7 @@ runs:
   steps:
     - uses: hadolint/hadolint-action@v3.1.0
       with:
-        dockerfile: ${{ inputs.docker-context }}/Dockerfile
+        dockerfile: docker/tna-python/Dockerfile
         ignore: SC1091,${{ inputs.ignore-linting-rules }}
     - name: ShellCheck
       run: |
