@@ -39,5 +39,7 @@ runs:
       run: for c in {1..30}; do sleep 1 && curl -s -w '%{http_code}' -o /dev/null http://localhost:${{ env.PORT }}/healthcheck/live/ | grep -o "200" && break; done
       shell: bash
     - name: Check user
-      run: docker compose exec ${{ inputs.service }} whoami | grep "${{ inputs.expected-user }}"
+      run: |
+        docker compose exec ${{ inputs.service }} whoami
+        docker compose exec ${{ inputs.service }} whoami | grep "${{ inputs.expected-user }}"
       shell: bash
