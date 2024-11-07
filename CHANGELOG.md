@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+- Updated `libcurl4` to `7.88.1-10+deb12u6` ([CVE-2024-2398](https://avd.aquasec.com/nvd/2024/cve-2024-2398/))
+
 ## [0.4.0](https://github.com/nationalarchives/docker/compare/v0.3.0...v0.4.0) - 2024-11-04
 
 ### Added
