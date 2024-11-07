@@ -94,7 +94,6 @@ ENV POETRY_HOME=/home/app/.local \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # ==========================================
-# 1.
 # Update the package index files and install
 # specific versions of libcurl4, curl, build
 # essentials (which then enables us to later
@@ -122,7 +121,6 @@ RUN set -eux; \
 # container
 # ==========================================
 RUN ufw allow 'Nginx HTTPS'; \
-    rm /etc/nginx/conf.d/default.conf; \
     mkdir /etc/nginx/ssl; \
     openssl req -x509 -noenc -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/req.pem -days 90 -subj "/C=GB/ST=London/L=Kew/O=The National Archives/OU=Digital/CN=localhost"
 
@@ -149,6 +147,11 @@ RUN mkdir -p /app; \
 # the app securely through HTTPS
 # ==========================================
 COPY lib/nginx.conf /etc/nginx/nginx.conf
+
+# ==========================================
+# Test the installed nginx configuration
+# ==========================================
+RUN nginx -t
 
 # ==========================================
 # Set $HOME env var to be the home directory
@@ -199,7 +202,7 @@ FROM root AS app
 USER app
 
 
-
+# hadolint ignore=DL3006
 FROM "$USER_IMAGE"
 
 # ==========================================

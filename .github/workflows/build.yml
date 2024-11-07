@@ -42,7 +42,6 @@ jobs:
         uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          ignore-linting-rules: DL3002,DL3006
 
       - name: Test Docker image build
         id: build
@@ -106,7 +105,7 @@ jobs:
         uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          ignore-linting-rules: DL3002,DL3006
+          ignore-linting-rules: DL3002
 
       - name: Test Docker image build
         id: build
@@ -282,7 +281,7 @@ jobs:
         uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          ignore-linting-rules: DL3002,DL3006
+          ignore-linting-rules: DL3002
 
       - name: Test Docker image build
         id: build
