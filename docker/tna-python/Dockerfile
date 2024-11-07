@@ -122,6 +122,7 @@ RUN set -eux; \
 # container
 # ==========================================
 RUN ufw allow 'Nginx HTTPS'; \
+    rm /etc/nginx/conf.d/default.conf; \
     mkdir /etc/nginx/ssl; \
     openssl req -x509 -noenc -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/req.pem -days 90 -subj "/C=GB/ST=London/L=Kew/O=The National Archives/OU=Digital/CN=localhost"
 
@@ -145,11 +146,9 @@ RUN mkdir -p /app; \
 # ==========================================
 # Copy in the nginx configuration file which
 # allows us to use a reverse proxy and serve
-# the app securely through HTTPS - this will
-# replace the default configuration provided
-# by nginx
+# the app securely through HTTPS
 # ==========================================
-COPY lib/nginx.conf /etc/nginx/nginx.conf
+COPY lib/nginx.conf /etc/nginx/conf.d
 
 # ==========================================
 # Set $HOME env var to be the home directory
