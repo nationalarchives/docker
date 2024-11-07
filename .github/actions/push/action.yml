@@ -40,8 +40,7 @@ runs:
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
-    - name: Build and push fixed version image
-      if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+    - name: Build and push image
       uses: docker/build-push-action@v6
       with:
         context: ${{ inputs.dockerfile-location }}
@@ -57,7 +56,10 @@ runs:
         push: true
         tags: ${{ inputs.image-id }}:${{ inputs.image-tag }}
         provenance: false
-    - name: Build and push versioned image
+    - name: List manifest
+      run: docker buildx imagetools inspect ${{ inputs.image-id }}:${{ inputs.image-tag }}
+      shell: bash
+    - name: Build and push versioned and latest image tags
       if: startsWith(github.ref, 'refs/tags/')
       uses: docker/build-push-action@v6
       with:
@@ -72,8 +74,5 @@ runs:
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-location }}/Dockerfile
           USER_IMAGE=${{ inputs.user-image }}
         push: true
-        tags: ${{ inputs.image-id }}:${{ inputs.image-tag }},${{ inputs.image-id }}:${{ inputs.major-version }},${{ inputs.image-id }}:${{ inputs.minor-version }},${{ inputs.image-id }}:latest
+        tags: ${{ inputs.image-id }}:${{ inputs.major-version }},${{ inputs.image-id }}:${{ inputs.minor-version }},${{ inputs.image-id }}:latest
         provenance: false
-    - name: List manifest
-      run: docker buildx imagetools inspect ${{ inputs.image-id }}:${{ inputs.image-tag }}
-      shell: bash

@@ -1,4 +1,4 @@
-name: Test Docker image
+name: Test the Docker image user
 
 inputs:
   application-repository:
@@ -11,6 +11,9 @@ inputs:
     required: true
     type: string
   image-tag:
+    required: true
+    type: string
+  expected-user:
     required: true
     type: string
 
@@ -32,6 +35,8 @@ runs:
         echo "PORT=$PORT" >> "$GITHUB_ENV"
         docker compose up ${{ inputs.service }} -d
       shell: bash
-    - name: Curl
+    - name: Check healthcheck endpoint
       run: for c in {1..30}; do sleep 1 && curl -s -w '%{http_code}' -o /dev/null http://localhost:${{ env.PORT }}/healthcheck/live/ | grep -o "200" && break; done
       shell: bash
+    - name: Check user
+      run: docker compose exec ${{ inputs.service }} whoami | grep "${{ inputs.expected-user }}"

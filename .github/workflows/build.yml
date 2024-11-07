@@ -56,6 +56,7 @@ jobs:
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          expected-user: app
       - name: Test FastAPI
         uses: ./.github/actions/test
         with:
@@ -63,6 +64,7 @@ jobs:
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          expected-user: app
       - name: Push
         uses: ./.github/actions/push
         with:
@@ -111,6 +113,7 @@ jobs:
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          expected-user: root
       - name: Test FastAPI
         uses: ./.github/actions/test
         with:
@@ -118,6 +121,7 @@ jobs:
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          expected-user: root
       - name: Push
         uses: ./.github/actions/push
         with:
@@ -166,6 +170,7 @@ jobs:
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          expected-user: app
       - name: Push
         uses: ./.github/actions/push
         with:
@@ -215,6 +220,7 @@ jobs:
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          expected-user: root
       - name: Push
         uses: ./.github/actions/push
         with:
