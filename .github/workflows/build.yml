@@ -28,11 +28,11 @@ jobs:
   python:
     name: Python
     runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: tna-python
-      DOCKER_CONTEXT: docker/tna-python
-      BASE_IMAGE: ghcr.io/nationalarchives/tna-python
-      USER_IMAGE: app
+    # env:
+    #   IMAGE_NAME: tna-python
+    #   DOCKER_CONTEXT: docker/tna-python
+    #   BASE_IMAGE: ghcr.io/nationalarchives/tna-python
+    #   USER_IMAGE: app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,12 +41,12 @@ jobs:
         uses: ./.github/actions/build
         with:
           # image-name: ${{ env.IMAGE_NAME }}
-          # base-image: ${{ env.BASE_IMAGE }}
-          # docker-context: ${{ env.DOCKER_CONTEXT }}
-          # user-image: ${{ env.USER_IMAGE }}
           image-name: tna-python
+          # base-image: ${{ env.BASE_IMAGE }}
           base-image: ghcr.io/nationalarchives/tna-python
+          # docker-context: ${{ env.DOCKER_CONTEXT }}
           docker-context: docker/tna-python
+          # user-image: ${{ env.USER_IMAGE }}
           user-image: app
           ignore-linting-rules: DL3002,DL3006
       - name: Test Flask
@@ -54,14 +54,16 @@ jobs:
         with:
           application-repository: nationalarchives/flask-application-template
           service: app
-          image: ${{ env.IMAGE_NAME }}
+          # image: ${{ env.IMAGE_NAME }}
+          image: tna-python
           image-tag: ${{ steps.build.outputs.tag }}
       - name: Test FastAPI
         uses: ./.github/actions/test
         with:
           application-repository: nationalarchives/fastapi-application-template
           service: app
-          image: ${{ env.IMAGE_NAME }}
+          # image: ${{ env.IMAGE_NAME }}
+          image: tna-python
           image-tag: ${{ steps.build.outputs.tag }}
       - name: Push
         uses: ./.github/actions/push
@@ -70,9 +72,12 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
-          base-image: ${{ env.BASE_IMAGE }}
-          docker-context: ${{ env.DOCKER_CONTEXT }}
-          user-image: ${{ env.USER_IMAGE }}
+          # base-image: ${{ env.BASE_IMAGE }}
+          base-image: ghcr.io/nationalarchives/tna-python
+          # docker-context: ${{ env.DOCKER_CONTEXT }}
+          docker-context: docker/tna-python
+          # user-image: ${{ env.USER_IMAGE }}
+          user-image: app
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Scan
         uses: ./.github/actions/scan
