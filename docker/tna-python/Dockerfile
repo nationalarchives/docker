@@ -202,6 +202,7 @@ FROM root AS app
 USER app
 
 
+
 # hadolint ignore=DL3006
 FROM "$USER_IMAGE"
 
@@ -212,6 +213,7 @@ FROM "$USER_IMAGE"
 # (Install the previous LTS release, just in
 # case some applicaitons still use it)
 # ==========================================
+# hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install lts/iron; \
     nvm install lts/jod; \
