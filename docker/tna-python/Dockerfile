@@ -115,16 +115,6 @@ RUN set -eux; \
 	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
-# Update the firewall rule to allow only for
-# HTTPS, then create an SSL certificate that
-# we can use locally in nginx to secure this
-# container
-# ==========================================
-RUN ufw allow 'Nginx HTTPS'; \
-    mkdir /etc/nginx/ssl; \
-    openssl req -x509 -noenc -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/req.pem -days 90 -subj "/C=GB/ST=London/L=Kew/O=The National Archives/OU=Digital/CN=localhost"
-
-# ==========================================
 # Create a new system-level nonroot user who
 # owns a home directory where we can install
 # libraries into (along with our scripts for
@@ -142,18 +132,6 @@ RUN mkdir -p /app; \
     chmod 700 /app
 
 # ==========================================
-# Copy in the nginx configuration file which
-# allows us to use a reverse proxy and serve
-# the app securely through HTTPS
-# ==========================================
-COPY lib/nginx.conf /etc/nginx/nginx.conf
-
-# ==========================================
-# Test the installed nginx configuration
-# ==========================================
-RUN nginx -t
-
-# ==========================================
 # Set $HOME env var to be the home directory
 # of our new app user so we can install libs
 # to that location
@@ -165,6 +143,29 @@ ENV HOME=/home/app
 # is writable by our "app" user
 # ==========================================
 ENV NVM_DIR="$HOME/.nvm"
+
+# ==========================================
+# Update the firewall rule to allow only for
+# HTTPS, then create an SSL certificate that
+# we can use locally in nginx to secure this
+# container
+# ==========================================
+RUN ufw allow 'Nginx HTTPS'; \
+    mkdir /etc/nginx/ssl; \
+    openssl req -x509 -noenc -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/req.pem -days 90 -subj "/C=GB/ST=London/L=Kew/O=The National Archives/OU=Digital/CN=localhost"; \
+    chmod 644 /etc/nginx/ssl/key.pem
+
+# ==========================================
+# Copy in the nginx configuration file which
+# allows us to use a reverse proxy and serve
+# the app securely through HTTPS
+# ==========================================
+COPY lib/nginx.conf /etc/nginx/nginx.conf
+
+# ==========================================
+# Test the installed nginx configuration
+# ==========================================
+RUN nginx -t
 
 # ==========================================
 # Install Poetry in the suggested manner and
