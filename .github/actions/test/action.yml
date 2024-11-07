@@ -44,6 +44,14 @@ runs:
         curl -i http://localhost:${{ env.PORT }}/healthcheck/live/
       shell: bash
 
+    - name: Curl
+      run: for c in {1..30}; do sleep 1 && curl -s http://localhost:${{ env.PORT }}/healthcheck/live/ | grep -o "ok" && break; done
+      shell: bash
+
+    - name: Wait for healthcheck
+      uses: emilioschepis/wait-for-endpoint@v1.0.4
+      with:
+        url: http://localhost:${{ env.PORT }}/healthcheck/live/
 
 
     - name: Wait for healthcheck
