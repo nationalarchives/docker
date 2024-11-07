@@ -40,10 +40,14 @@ jobs:
         id: build
         uses: ./.github/actions/build
         with:
-          image-name: ${{ env.IMAGE_NAME }}
-          base-image: ${{ env.BASE_IMAGE }}
-          docker-context: ${{ env.DOCKER_CONTEXT }}
-          user-image: ${{ env.USER_IMAGE }}
+          # image-name: ${{ env.IMAGE_NAME }}
+          # base-image: ${{ env.BASE_IMAGE }}
+          # docker-context: ${{ env.DOCKER_CONTEXT }}
+          # user-image: ${{ env.USER_IMAGE }}
+          image-name: tna-python
+          base-image: ghcr.io/nationalarchives/tna-python
+          docker-context: docker/tna-python
+          user-image: app
           ignore-linting-rules: DL3002,DL3006
       - name: Test Flask
         uses: ./.github/actions/test
