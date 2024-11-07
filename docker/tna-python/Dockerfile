@@ -182,7 +182,7 @@ FROM "$USER_IMAGE"
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install lts/iron; \
     nvm install lts/jod; \
-    nvm use lts/jod
+    nvm alias default lts/jod
 
 # ==========================================
 # Into our .local/bin/ directory copy in the
