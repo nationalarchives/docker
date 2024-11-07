@@ -15,6 +15,8 @@ runs:
       uses: docker/build-push-action@v6
       with:
         load: true
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
     - name: DEBUG
       run: |
         docker --version
