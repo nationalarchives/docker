@@ -116,10 +116,13 @@ RUN set -eux; \
 	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
-# Generate an SSL cert we can use locally in
-# nginx to secure this container
+# Update the firewall rule to allow only for
+# HTTPS, then create an SSL certificate that
+# we can use locally in nginx to secure this
+# container
 # ==========================================
-RUN mkdir /etc/nginx/ssl; \
+RUN ufw allow 'Nginx HTTPS'; \
+    mkdir /etc/nginx/ssl; \
     openssl req -x509 -noenc -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/req.pem -days 90 -subj "/C=GB/ST=London/L=Kew/O=The National Archives/OU=Digital/CN=localhost"
 
 # ==========================================

@@ -32,9 +32,6 @@ then
   exit 1
 fi
 
-# Change the firewall rules to only allow HTTPS traffic
-ufw allow 'Nginx HTTPS'
-
 # Convert $ENVIRONMENT to lowercase
 ENVIRONMENT=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]')
 
