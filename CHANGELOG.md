@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- SSL certificates must be generated and used on environments outside of production
+
 ### Changed
 
 - Set the `default` alias for nvm to `lts/jod`
