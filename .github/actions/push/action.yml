@@ -1,0 +1,78 @@
+name: Push Docker image
+
+inputs:
+  image-id:
+    required: true
+    type: string
+  image-tag:
+    required: true
+    type: string
+  major-version:
+    required: true
+    type: string
+  minor-version:
+    required: true
+    type: string
+  dockerfile-location:
+    required: true
+    type: string
+  base-image:
+    required: false
+    type: string
+  user-image:
+    required: false
+    type: string
+    default: app
+  github-token:
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ inputs.github-token }}
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Build and push image
+      uses: docker/build-push-action@v6
+      with:
+        context: ${{ inputs.dockerfile-location }}
+        platforms: linux/amd64,linux/arm64
+        labels: |
+          runnumber=${{ github.run_id }}
+        build-args: |
+          BASE_IMAGE=${{ inputs.base-image }}
+          BASE_IMAGE_TAG=${{ inputs.image-tag }}
+          TNA_DOCKER_IMAGE_VERSION=${{ inputs.image-tag }}
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-location }}/Dockerfile
+          USER_IMAGE=${{ inputs.user-image }}
+        push: true
+        tags: ${{ inputs.image-id }}:${{ inputs.image-tag }}
+        provenance: false
+    - name: List manifest
+      run: docker buildx imagetools inspect ${{ inputs.image-id }}:${{ inputs.image-tag }}
+      shell: bash
+    - name: Build and push versioned and latest image tags
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: docker/build-push-action@v6
+      with:
+        context: ${{ inputs.dockerfile-location }}
+        platforms: linux/amd64,linux/arm64
+        labels: |
+          runnumber=${{ github.run_id }}
+        build-args: |
+          BASE_IMAGE=${{ inputs.base-image }}
+          BASE_IMAGE_TAG=${{ inputs.image-tag }}
+          TNA_DOCKER_IMAGE_VERSION=${{ inputs.image-tag }}
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-location }}/Dockerfile
+          USER_IMAGE=${{ inputs.user-image }}
+        push: true
+        tags: ${{ inputs.image-id }}:${{ inputs.major-version }},${{ inputs.image-id }}:${{ inputs.minor-version }},${{ inputs.image-id }}:latest
+        provenance: false

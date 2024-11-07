@@ -1,4 +1,4 @@
-ARG USER_IMAGE=appuser
+ARG USER_IMAGE=app
 
 FROM python:3.13-slim-bookworm AS root
 
@@ -132,7 +132,7 @@ RUN set -eux; \
     \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u5 curl=7.88.1-10+deb12u5 build-essential=12.9 libmagic-dev=1:5.44-3; \
+    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u7 curl=7.88.1-10+deb12u7 build-essential=12.9 libmagic-dev=1:5.44-3; \
     \
     apt-get install -y --no-install-recommends nginx=1.22.1-9 nginx-common=1.22.1-9; \
     ufw allow 'Nginx HTTPS'; \
@@ -187,7 +187,7 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 
 
 
-FROM root AS appuser
+FROM root AS app
 # ==========================================
 # Now we have finished installing everything
 # at a system level, change the current user
@@ -211,7 +211,7 @@ FROM "$USER_IMAGE"
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install lts/iron; \
     nvm install lts/jod; \
-    nvm use lts/jod
+    nvm alias default lts/jod
 
 # ==========================================
 # Into our .local/bin/ directory copy in the

@@ -1,0 +1,73 @@
+name: Build Docker images
+
+inputs:
+  image-name:
+    required: true
+    type: string
+  dockerfile-location:
+    required: true
+    type: string
+  base-image:
+    required: false
+    type: string
+  user-image:
+    required: false
+    type: string
+    default: app
+
+outputs:
+  image-id:
+    value: ${{ steps.generate-tags.outputs.image-id }}
+  tag:
+    description: "The generated tag"
+    value: ${{ steps.generate-tags.outputs.tag }}
+  major-version:
+    value: ${{ steps.generate-tags.outputs.major-version }}
+  minor-version:
+    value: ${{ steps.generate-tags.outputs.minor-version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Prepare image tag
+      id: generate-tags
+      run: |
+        IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${{ inputs.image-name }}
+        # Change all uppercase to lowercase
+        IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+        echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
+        # Strip git ref prefix from version
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        # Strip "v" prefix from tag name and add the commit count as a build number
+        [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+        VERSION_PART_MAJOR=$(echo "$VERSION" | awk -F'.' '{print $1}')
+        VERSION_PART_MINOR=$(echo "$VERSION" | awk -F'.' '{print $2}')
+        [ "$VERSION" == "main" ] && VERSION=preview
+        echo "image-id=$IMAGE_ID" >> "$GITHUB_OUTPUT"
+        echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "major-version=$MAJOR_VERSION" >> "$GITHUB_OUTPUT"
+        echo "minor-version=$MINOR_VERSION" >> "$GITHUB_OUTPUT"
+      shell: bash
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Build images
+      uses: docker/build-push-action@v6
+      with:
+        context: ${{ inputs.dockerfile-location }}
+        platforms: linux/amd64,linux/arm64
+        labels: |
+          runnumber=${{ github.run_id }}
+        build-args: |
+          BASE_IMAGE=${{ inputs.base-image }}
+          BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.tag }}
+          TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-location }}/Dockerfile
+          USER_IMAGE=${{ inputs.user-image }}
+        push: false
+        tags: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
+        provenance: false
+    - name: List manifest
+      run: docker buildx imagetools inspect ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
+      shell: bash
