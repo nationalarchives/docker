@@ -1,4 +1,4 @@
-name: Build, test and publish
+name: Build, test and push
 
 permissions:
   contents: read
@@ -36,13 +36,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Lint
-        uses: ./.github/actions/lint
+      - uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002,DL3006
-      - name: Build
-        id: build
+      - id: build
         uses: ./.github/actions/build
         with:
           image-name: ${{ env.IMAGE_NAME }}
@@ -65,8 +63,7 @@ jobs:
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
-      - name: Push
-        uses: ./.github/actions/push
+      - uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -76,8 +73,7 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Scan
-        uses: ./.github/actions/scan
+      - uses: ./.github/actions/scan
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -93,13 +89,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Lint
-        uses: ./.github/actions/lint
+      - uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002,DL3006
-      - name: Build
-        id: build
+      - id: build
         uses: ./.github/actions/build
         with:
           image-name: ${{ env.IMAGE_NAME }}
@@ -122,8 +116,7 @@ jobs:
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
-      - name: Push
-        uses: ./.github/actions/push
+      - uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -133,8 +126,7 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Scan
-        uses: ./.github/actions/scan
+      - uses: ./.github/actions/scan
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -151,12 +143,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Lint
-        uses: ./.github/actions/lint
+      - uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-      - name: Build
-        id: build
+      - id: build
         uses: ./.github/actions/build
         with:
           image-name: ${{ env.IMAGE_NAME }}
@@ -171,8 +161,7 @@ jobs:
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
-      - name: Push
-        uses: ./.github/actions/push
+      - uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -182,8 +171,7 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Scan
-        uses: ./.github/actions/scan
+      - uses: ./.github/actions/scan
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -200,13 +188,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Lint
-        uses: ./.github/actions/lint
+      - uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002
-      - name: Build
-        id: build
+      - id: build
         uses: ./.github/actions/build
         with:
           image-name: ${{ env.IMAGE_NAME }}
@@ -221,8 +207,7 @@ jobs:
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
-      - name: Push
-        uses: ./.github/actions/push
+      - uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -232,8 +217,7 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Scan
-        uses: ./.github/actions/scan
+      - uses: ./.github/actions/scan
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -250,21 +234,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Lint
-        uses: ./.github/actions/lint
+      - uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002,DL3006
-      - name: Build
-        id: build
+      - id: build
         uses: ./.github/actions/build
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
-      - name: Push
-        uses: ./.github/actions/push
+      - uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -274,8 +255,7 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Scan
-        uses: ./.github/actions/scan
+      - uses: ./.github/actions/scan
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}

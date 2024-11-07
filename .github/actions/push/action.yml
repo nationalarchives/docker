@@ -1,4 +1,4 @@
-name: Push Docker image
+name: Build and push Docker images
 
 inputs:
   image-id:
