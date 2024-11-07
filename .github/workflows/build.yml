@@ -232,7 +232,6 @@ jobs:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
 
-
   python-dev:
     name: Python Dev
     needs: python-root
