@@ -45,7 +45,7 @@ runs:
     #   shell: bash
 
     - name: Curl
-      run: for c in {1..30}; do sleep 1 && curl -s -w '%{http_code}' -o /dev/null http://localhost:83/healthcheck/live/ | grep -o "200" && break; done
+      run: for c in {1..30}; do sleep 1 && curl -s -w '%{http_code}' -o /dev/null http://localhost:${{ env.PORT }}/healthcheck/live/ | grep -o "200" && break; done
       shell: bash
 
     # - name: Wait for healthcheck
