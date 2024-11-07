@@ -37,19 +37,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-
-      - uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: docker/tna-python/Dockerfile
-          ignore: SC1091,DL3002,DL3006
-      - name: ShellCheck
+      - name: Debug
         run: |
-          cd docker/tna-python
-          [ -d "./bin" ] && shellcheck --external-sources --exclude=SC1091 ./bin/*
-          shellcheck --external-sources --exclude=SC2148 ./Dockerfile
-        shell: bash
+          docker image ls
+          docker context ls
+          hadolint --version
+          hadolint docker/tna-python/Dockerfile
 
-
+        
       - name: Lint
         uses: ./.github/actions/lint
         with:
