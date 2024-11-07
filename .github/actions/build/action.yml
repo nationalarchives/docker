@@ -25,10 +25,27 @@ outputs:
     value: ${{ steps.generate-tags.outputs.major-version }}
   minor-version:
     value: ${{ steps.generate-tags.outputs.minor-version }}
+  ignore-linting-rules:
+    required: false
+    type: string
 
 runs:
   using: "composite"
   steps:
+
+    - uses: hadolint/hadolint-action@v3.1.0
+      with:
+        dockerfile: ${{ inputs.docker-context }}/Dockerfile
+        ignore: SC1091,${{ inputs.ignore-linting-rules }}
+    - name: ShellCheck
+      run: |
+        cd ${{ inputs.docker-context }}
+        [ -d "./bin" ] && shellcheck --external-sources --exclude=SC1091 ./bin/*
+        shellcheck --external-sources --exclude=SC2148 ./Dockerfile
+      shell: bash
+
+
+
     - name: Prepare image tag
       id: generate-tags
       run: |

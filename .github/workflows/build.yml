@@ -36,20 +36,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      # - name: Debug
-      #   run: |
-      #     docker image ls
-      #     docker context ls
-      #     hadolint --version
-      #     hadolint docker/tna-python/Dockerfile
-
-        
-      - name: Lint
-        uses: ./.github/actions/lint
-        with:
-          docker-context: ${{ env.DOCKER_CONTEXT }}
-          ignore-linting-rules: DL3002,DL3006
       - name: Build
         id: build
         uses: ./.github/actions/build
@@ -58,6 +44,7 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           docker-context: ${{ env.DOCKER_CONTEXT }}
           user-image: ${{ env.USER_IMAGE }}
+          ignore-linting-rules: DL3002,DL3006
       - name: Test Flask
         uses: ./.github/actions/test
         with:
@@ -100,11 +87,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Lint
-        uses: ./.github/actions/lint
-        with:
-          docker-context: ${{ env.DOCKER_CONTEXT }}
-          ignore-linting-rules: DL3002,DL3006
       - name: Build
         id: build
         uses: ./.github/actions/build
@@ -113,6 +95,7 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           docker-context: ${{ env.DOCKER_CONTEXT }}
           user-image: ${{ env.USER_IMAGE }}
+          ignore-linting-rules: DL3002,DL3006
       - name: Test Flask
         uses: ./.github/actions/test
         with:
@@ -156,10 +139,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Lint
-        uses: ./.github/actions/lint
-        with:
-          docker-context: ${{ env.DOCKER_CONTEXT }}
       - name: Build
         id: build
         uses: ./.github/actions/build
@@ -204,11 +183,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Lint
-        uses: ./.github/actions/lint
-        with:
-          docker-context: ${{ env.DOCKER_CONTEXT }}
-          ignore-linting-rules: DL3002
       - name: Build
         id: build
         uses: ./.github/actions/build
@@ -255,11 +229,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Lint
-        uses: ./.github/actions/lint
-        with:
-          docker-context: ${{ env.DOCKER_CONTEXT }}
-          ignore-linting-rules: DL3002,DL3006
       - name: Build
         id: build
         uses: ./.github/actions/build
@@ -268,6 +237,7 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           docker-context: ${{ env.DOCKER_CONTEXT }}
           user-image: ${{ env.USER_IMAGE }}
+          ignore-linting-rules: DL3002,DL3006
       - name: Test Django
         uses: ./.github/actions/test
         with:
