@@ -36,10 +36,13 @@ runs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ inputs.github-token }}
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
+
     - name: Build and push image
       uses: docker/build-push-action@v6
       with:
@@ -56,9 +59,11 @@ runs:
         push: true
         tags: ${{ inputs.image-id }}:${{ inputs.image-tag }}
         provenance: false
+
     - name: List manifest
       run: docker buildx imagetools inspect ${{ inputs.image-id }}:${{ inputs.image-tag }}
       shell: bash
+
     - name: Build and push versioned and latest image tags
       if: startsWith(github.ref, 'refs/tags/')
       uses: docker/build-push-action@v6

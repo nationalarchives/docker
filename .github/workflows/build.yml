@@ -28,6 +28,7 @@ jobs:
   python:
     name: Python
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       IMAGE_NAME: tna-python
       DOCKERFILE_LOCATION: docker/tna-python
@@ -36,34 +37,42 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: ./.github/actions/lint
+
+      - name: Lint Dockerfile
+        uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002,DL3006
-      - id: build
-        uses: ./.github/actions/build
+
+      - name: Test Docker image build
+        id: build
+        uses: ./.github/actions/test-build
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
+
       - name: Test Flask
-        uses: ./.github/actions/test
+        uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/flask-application-template
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
+
       - name: Test FastAPI
-        uses: ./.github/actions/test
+        uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/fastapi-application-template
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
-      - uses: ./.github/actions/push
+
+      - name: Build and push Docker images
+        uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -73,7 +82,9 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ./.github/actions/scan
+
+      - name: Scan Docker image
+        uses: ./.github/actions/scan
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -81,6 +92,7 @@ jobs:
   python-root:
     name: Python (root)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       IMAGE_NAME: tna-python-root
       DOCKERFILE_LOCATION: docker/tna-python
@@ -89,34 +101,42 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: ./.github/actions/lint
+
+      - name: Lint Dockerfile
+        uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002,DL3006
-      - id: build
-        uses: ./.github/actions/build
+
+      - name: Test Docker image build
+        id: build
+        uses: ./.github/actions/test-build
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
+
       - name: Test Flask
-        uses: ./.github/actions/test
+        uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/flask-application-template
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
+
       - name: Test FastAPI
-        uses: ./.github/actions/test
+        uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/fastapi-application-template
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
-      - uses: ./.github/actions/push
+
+      - name: Build and push Docker images
+        uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -126,7 +146,9 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ./.github/actions/scan
+
+      - name: Scan Docker image
+        uses: ./.github/actions/scan
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -135,6 +157,7 @@ jobs:
     name: Python Django
     needs: python
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     env:
       IMAGE_NAME: tna-python-django
       DOCKERFILE_LOCATION: docker/tna-python-django
@@ -143,25 +166,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: ./.github/actions/lint
+
+      - name: Lint Dockerfile
+        uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-      - id: build
-        uses: ./.github/actions/build
+
+      - name: Test Docker image build
+        id: build
+        uses: ./.github/actions/test-build
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
+
       - name: Test Django
-        uses: ./.github/actions/test
+        uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/django-application-template
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
-      - uses: ./.github/actions/push
+
+      - name: Build and push Docker images
+        uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -171,7 +201,9 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ./.github/actions/scan
+
+      - name: Scan Docker image
+        uses: ./.github/actions/scan
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -180,6 +212,7 @@ jobs:
     name: Python Django (root)
     needs: python-root
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     env:
       IMAGE_NAME: tna-python-django-root
       DOCKERFILE_LOCATION: docker/tna-python-django
@@ -188,26 +221,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: ./.github/actions/lint
+
+      - name: Lint Dockerfile
+        uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002
-      - id: build
-        uses: ./.github/actions/build
+
+      - name: Test Docker image build
+        id: build
+        uses: ./.github/actions/test-build
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
+
       - name: Test Django
-        uses: ./.github/actions/test
+        uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/django-application-template
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
-      - uses: ./.github/actions/push
+
+      - name: Build and push Docker images
+        uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -217,7 +257,9 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ./.github/actions/scan
+
+      - name: Scan Docker image
+        uses: ./.github/actions/scan
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -226,6 +268,7 @@ jobs:
     name: Python Dev
     needs: python-root
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     env:
       IMAGE_NAME: tna-python-dev
       DOCKERFILE_LOCATION: docker/tna-python-dev
@@ -234,18 +277,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: ./.github/actions/lint
+
+      - name: Lint Dockerfile
+        uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002,DL3006
-      - id: build
-        uses: ./.github/actions/build
+
+      - name: Test Docker image build
+        id: build
+        uses: ./.github/actions/test-build
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
-      - uses: ./.github/actions/push
+
+      - name: Build and push Docker images
+        uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -255,7 +304,9 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: ./.github/actions/scan
+
+      - name: Scan Docker image
+        uses: ./.github/actions/scan
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
