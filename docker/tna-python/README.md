@@ -23,7 +23,7 @@ The three default environment names are:
 
 Any other alphanumeric string is considered a valid environment name but won't have predefined settings.
 
-| Variable               | Description                                                               | Production default       | Staging default          | Develop default          | Other envs default       |
+| Variable               | Description                                                               | Production default       | Staging default          | Develop default          | Custom env               |
 | ---------------------- | ------------------------------------------------------------------------- | ------------------------ | ------------------------ | ------------------------ | ------------------------ |
 | `SECRET_KEY`           | A random key used to secure client session data                           | _none_                   | _none_                   | _none_                   | _none_                   |
 | `WORKERS`              | Number of worker processes[^1]                                            | `(cpu * 2) + 1`          | `(cpu * 2) + 1`          | `3`                      | `(cpu * 2) + 1`          |
@@ -36,6 +36,7 @@ Any other alphanumeric string is considered a valid environment name but won't h
 | `KEEP_ALIVE`           | The number of seconds to wait for requests on a keep-alive connection[^6] | `30`                     | `30`                     | `5`                      | `5`                      |
 | `SSL_KEY_FILE`         | The location of the SSL key                                               | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  |
 | `SSL_CERTIFICATE_FILE` | The location of the SSL certificate                                       | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` |
+| `ALLOW_INSECURE`       | If `true`, allow servers above development to run HTTP rather than HTTPS  | `false`                  | `false`                  | _ignored_                | `false`                  |
 
 [^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 
@@ -123,7 +124,7 @@ To use Node to build your assets you need three files in your project:
 - `package-lock.json`
 - `.nvmrc` containing the version of Node you would like to support (e.g. `lts/iron`)
 
-## Using SSL
+## SSL
 
 On all environments apart from `develop`, an SSL certificate is required.
 
@@ -132,4 +133,10 @@ Two files need to be mounted to the container in order to run environments outsi
 - `/home/app/ssl/key.pem`
 - `/home/app/ssl/cert.pem`
 
+Ensure the files can be read by the container user.
+
 These locations can be overridden with the `SSL_KEY_FILE` and `SSL_CERTIFICATE_FILE` environment variables.
+
+### Disabling SSL
+
+Although not recommended, SSL can be disabled on higher environments by setting `ALLOW_INSECURE` to `true`.
