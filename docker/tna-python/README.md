@@ -15,32 +15,40 @@ This image requires you have the following files in the root of your project:
 
 ## Environment variables
 
-| Variable              | Description                                                               | Production default    | Staging default       | Develop default       | Other default         |
-| --------------------- | ------------------------------------------------------------------------- | --------------------- | --------------------- | --------------------- | --------------------- |
-| `ENVIRONMENT`         | The current environment[^1]                                               | `production`          | `staging`             | `develop`             | _none_                |
-| `SECRET_KEY`          | A random key used to secure client session data                           | _none_                | _none_                | _none_                | _none_                |
-| `WORKERS`             | Number of worker processes[^2]                                            | `(cpu * 2) + 1`       | `(cpu * 2) + 1`       | `3`                   | `(cpu * 2) + 1`       |
-| `THREADS`             | Number of threads[^3]                                                     | `(cpu * 2) + 1`       | `(cpu * 2) + 1`       | `3`                   | `(cpu * 2) + 1`       |
-| `LOG_LEVEL`           | The log level to stream to the console[^4]                                | `warn`                | `debug`               | `debug`               | `info`                |
-| `NODE_ENV`            | The node environment[^5]                                                  | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` | Mirrors `ENVIRONMENT` |
-| `NPM_BUILD_COMMAND`   | The npm script to run to build static assets                              | _none_                | _none_                | _none_                | _none_                |
-| `NPM_DEVELOP_COMMAND` | The npm script to run in development environments                         | _ignored_             | _ignored_             | _none_                | _ignored_             |
-| `TIMEOUT`             | The number of seconds before a request is terminated[^6]                  | `30`                  | `30`                  | `600`                 | `30`                  |
-| `KEEP_ALIVE`          | The number of seconds to wait for requests on a keep-alive connection[^7] | `30`                  | `30`                  | `5`                   | `5`                   |
+The three default environment names are:
 
-[^1]: Predefined values are `production` and `develop` but any alphanumeric string is valid
+- `production`
+- `staging`
+- `develop`
 
-[^2]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
+Any other alphanumeric string is considered a valid environment name but won't have predefined settings.
 
-[^3]: [Gunicorn docs - How Many Threads?](https://docs.gunicorn.org/en/latest/design.html#how-many-threads)
+| Variable               | Description                                                               | Production default       | Staging default          | Develop default          | Custom env               |
+| ---------------------- | ------------------------------------------------------------------------- | ------------------------ | ------------------------ | ------------------------ | ------------------------ |
+| `SECRET_KEY`           | A random key used to secure client session data                           | _none_                   | _none_                   | _none_                   | _none_                   |
+| `WORKERS`              | Number of worker processes[^1]                                            | `(cpu * 2) + 1`          | `(cpu * 2) + 1`          | `3`                      | `(cpu * 2) + 1`          |
+| `THREADS`              | Number of threads[^2]                                                     | `(cpu * 2) + 1`          | `(cpu * 2) + 1`          | `3`                      | `(cpu * 2) + 1`          |
+| `LOG_LEVEL`            | The log level to stream to the console[^3]                                | `warn`                   | `debug`                  | `debug`                  | `info`                   |
+| `NODE_ENV`             | The node environment[^4]                                                  | Mirrors `ENVIRONMENT`    | Mirrors `ENVIRONMENT`    | Mirrors `ENVIRONMENT`    | Mirrors `ENVIRONMENT`    |
+| `NPM_BUILD_COMMAND`    | The npm script to run to build static assets                              | _none_                   | _none_                   | _none_                   | _none_                   |
+| `NPM_DEVELOP_COMMAND`  | The npm script to run in development environments                         | _ignored_                | _ignored_                | _none_                   | _ignored_                |
+| `TIMEOUT`              | The number of seconds before a request is terminated[^5]                  | `30`                     | `30`                     | `600`                    | `30`                     |
+| `KEEP_ALIVE`           | The number of seconds to wait for requests on a keep-alive connection[^6] | `30`                     | `30`                     | `5`                      | `5`                      |
+| `SSL_KEY_FILE`         | The location of the SSL key                                               | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  |
+| `SSL_CERTIFICATE_FILE` | The location of the SSL certificate                                       | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` |
+| `ALLOW_INSECURE`       | If `true`, allow servers above development to run HTTP rather than HTTPS  | `false`                  | `false`                  | _ignored_                | `false`                  |
 
-[^4]: Supported levels are `critical`, `error`, `warn`, `info` and `debug` [Gunicorn docs - log level](https://docs.gunicorn.org/en/latest/settings.html?highlight=log#loglevel)
+[^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 
-[^5]: [Node.js, the difference between development and production](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production/)
+[^2]: [Gunicorn docs - How Many Threads?](https://docs.gunicorn.org/en/latest/design.html#how-many-threads)
 
-[^6]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
+[^3]: Supported levels are `critical`, `error`, `warn`, `info` and `debug` [Gunicorn docs - log level](https://docs.gunicorn.org/en/latest/settings.html?highlight=log#loglevel)
 
-[^7]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
+[^4]: [Node.js, the difference between development and production](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production/)
+
+[^5]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
+
+[^6]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
 
 ### Secret key
 
@@ -115,3 +123,20 @@ To use Node to build your assets you need three files in your project:
 - `package.json`
 - `package-lock.json`
 - `.nvmrc` containing the version of Node you would like to support (e.g. `lts/iron`)
+
+## SSL
+
+On all environments apart from `develop`, an SSL certificate is required.
+
+Two files need to be mounted to the container in order to run environments outside of development:
+
+- `/home/app/ssl/key.pem`
+- `/home/app/ssl/cert.pem`
+
+Ensure the files can be read by the container user.
+
+These locations can be overridden with the `SSL_KEY_FILE` and `SSL_CERTIFICATE_FILE` environment variables.
+
+### Disabling SSL
+
+Although not recommended, SSL can be disabled on higher environments by setting `ALLOW_INSECURE` to `true`.

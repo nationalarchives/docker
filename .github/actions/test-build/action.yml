@@ -1,4 +1,4 @@
-name: Build Docker images
+name: Test Docker image build
 
 inputs:
   image-name:
@@ -14,17 +14,6 @@ inputs:
     required: false
     type: string
     default: app
-
-outputs:
-  image-id:
-    value: ${{ steps.generate-tags.outputs.image-id }}
-  tag:
-    description: "The generated tag"
-    value: ${{ steps.generate-tags.outputs.tag }}
-  major-version:
-    value: ${{ steps.generate-tags.outputs.major-version }}
-  minor-version:
-    value: ${{ steps.generate-tags.outputs.minor-version }}
 
 runs:
   using: "composite"
@@ -48,15 +37,11 @@ runs:
         echo "major-version=$MAJOR_VERSION" >> "$GITHUB_OUTPUT"
         echo "minor-version=$MINOR_VERSION" >> "$GITHUB_OUTPUT"
       shell: bash
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+
     - name: Build images
       uses: docker/build-push-action@v6
       with:
         context: ${{ inputs.dockerfile-location }}
-        platforms: linux/amd64,linux/arm64
         labels: |
           runnumber=${{ github.run_id }}
         build-args: |
@@ -66,8 +51,17 @@ runs:
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-location }}/Dockerfile
           USER_IMAGE=${{ inputs.user-image }}
         push: false
+        load: true
         tags: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
         provenance: false
-    - name: List manifest
-      run: docker buildx imagetools inspect ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
-      shell: bash
+
+outputs:
+  image-id:
+    value: ${{ steps.generate-tags.outputs.image-id }}
+  tag:
+    description: "The generated tag"
+    value: ${{ steps.generate-tags.outputs.tag }}
+  major-version:
+    value: ${{ steps.generate-tags.outputs.major-version }}
+  minor-version:
+    value: ${{ steps.generate-tags.outputs.minor-version }}

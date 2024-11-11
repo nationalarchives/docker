@@ -10,7 +10,7 @@ if [ -f "/app/.nvmrc" ]
 then
   nvm install
 else
-  nvm use lts/iron
+  nvm use lts/jod
 fi
 npm install -g prettier@3.3.3 eslint@8.56.0 stylelint@16.10.0 stylelint-config-standard-scss@13.1.0 stylelint-selector-bem-pattern@4.0.1
 

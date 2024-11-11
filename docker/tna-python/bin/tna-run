@@ -52,19 +52,7 @@ DEFAULT_THREADS=$((DEFAULT_WORKERS * 2))
 [[ -z $WORKERS ]] && WORKERS=$DEFAULT_WORKERS
 [[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS
 
-if [ "$ENVIRONMENT" == 'production' ]
-then
-  # Production environment
-  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warn
-  [[ -z $TIMEOUT ]] && TIMEOUT=30
-  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
-elif [ "$ENVIRONMENT" == 'staging' ]
-then
-  # Staging environment
-  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
-  [[ -z $TIMEOUT ]] && TIMEOUT=30
-  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
-elif [ "$ENVIRONMENT" == 'develop' ]
+if [ "$ENVIRONMENT" == 'develop' ]
 then
   # Development environment
   echo "ENVIRONMENT is develop"
@@ -102,8 +90,20 @@ then
   echo "FastAPI not found"
 
   # Fall back to using Gunicorn
-  echo "No framework found, using Gunicorn to serve development application"
+  echo "No framework found, using Gunicorn to serve development application..."
   poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --bind 0.0.0.0:8080 --worker-class="$WORKER_CLASS" --reload
+elif [ "$ENVIRONMENT" == 'production' ]
+then
+  # Production environment
+  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warn
+  [[ -z $TIMEOUT ]] && TIMEOUT=30
+  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
+elif [ "$ENVIRONMENT" == 'staging' ]
+then
+  # Staging environment
+  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
+  [[ -z $TIMEOUT ]] && TIMEOUT=30
+  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
 else
   # All other environments
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=info
@@ -111,6 +111,30 @@ else
   [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=5
 fi
 
-# Start the server
-echo "Starting $ENVIRONMENT server"
-poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind 0.0.0.0:8080 --worker-class="$WORKER_CLASS"
+[[ -z $ALLOW_INSECURE ]] && ALLOW_INSECURE='false'
+
+if [ "$ALLOW_INSECURE" = 'true' ]
+then
+  # Start the server
+  echo "Starting $ENVIRONMENT server (insecure)..."
+  poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind 0.0.0.0:8080 --worker-class="$WORKER_CLASS"
+else
+  [[ -z $SSL_KEY_FILE ]] && SSL_KEY_FILE=/home/app/ssl/key.pem
+  [[ -z $SSL_CERTIFICATE_FILE ]] && SSL_CERTIFICATE_FILE=/home/app/ssl/cert.pem
+
+  # Check for SSL certificates
+  if [ ! -f "$SSL_KEY_FILE" ]
+  then
+    echo "$SSL_KEY_FILE does not exist";
+    exit 1
+  fi
+  if [ ! -f "$SSL_CERTIFICATE_FILE" ]
+  then
+    echo "$SSL_CERTIFICATE_FILE does not exist";
+    exit 1
+  fi
+
+  # Start the server
+  echo "Starting $ENVIRONMENT server..."
+  poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind 0.0.0.0:8080 --worker-class="$WORKER_CLASS" --keyfile="$SSL_KEY_FILE" --certfile="$SSL_CERTIFICATE_FILE"
+fi

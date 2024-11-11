@@ -27,8 +27,10 @@ jobs:
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.event.ref }}" | sed -e 's,.*/\(.*\),\1,')
           echo "TAG=$VERSION" >> "$GITHUB_ENV"
+
       - name: Output image tag
         run: echo "Clean up Docker image ${{ env.IMAGE_ID }}:${{ env.TAG }}"
+
       - name: Delete image
         uses: bots-house/ghcr-delete-image-action@v1.1.0
         with:

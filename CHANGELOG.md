@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- SSL certificates must be generated and used on environments outside of production
+
 ### Changed
 
 - Set the `default` alias for nvm to `lts/jod`
@@ -17,11 +19,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- Removed `lts/iron`
+
 ### Fixed
+
+- Fixed the default NodeJS version in `tna-python-dev`
 
 ### Security
 
-- Updated `curl` and `libcurl4` to `7.88.1-10+deb12u7` ([CVE-2024-2004](https://avd.aquasec.com/nvd/2024/cve-2024-2004/), [CVE-2024-2398](https://avd.aquasec.com/nvd/2024/cve-2024-2398/), [CVE-2024-7264](https://avd.aquasec.com/nvd/cve-2024-7264))
+- Updated `curl` and `libcurl4` to `7.88.1-10+deb12u8` (fixes [CVE-2024-2004](https://avd.aquasec.com/nvd/2024/cve-2024-2004/), [CVE-2024-2398](https://avd.aquasec.com/nvd/2024/cve-2024-2398/) and [CVE-2024-7264](https://avd.aquasec.com/nvd/cve-2024-7264))
 
 ## [0.4.0](https://github.com/nationalarchives/docker/compare/v0.3.0...v0.4.0) - 2024-11-04
 

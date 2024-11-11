@@ -14,7 +14,8 @@ runs:
     - uses: hadolint/hadolint-action@v3.1.0
       with:
         dockerfile: ${{ inputs.dockerfile-location }}/Dockerfile
-        ignore: SC1091,${{ inputs.ignore-linting-rules }}
+        ignore: ${{ inputs.ignore-linting-rules }}
+
     - name: ShellCheck
       run: |
         cd ${{ inputs.dockerfile-location }}

@@ -19,9 +19,10 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
     org.opencontainers.image.licenses=MIT
 
 # ==========================================
-# All of our Python containers should expose
-# port 8080, which can then be mapped to any
-# other port on the host system
+# All TNA containers should expose identical
+# ports which will then be mapped to another
+# port on the host system - we use port 8080
+# for all our applications
 # ==========================================
 EXPOSE 8080/tcp
 
@@ -92,15 +93,12 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # ==========================================
 # Update the package index files and install
-# a specific version of curl that we know to
-# have no issues which is required later for
-# installing Poetry and create a new system-
-# level nonroot user who has with a new home
-# directory where we will be able to install
-# libraries into (along with our scripts for
-# building and running) and create an "/app"
-# directory in the root (for the application
-# code)
+# specific versions of libcurl4, curl, build
+# essentials (which then enables us to later
+# install Poetry) after which go on to clean
+# and remove all the apt registries to avoid
+# the possibility of additional applications
+# being installed later on
 # ==========================================
 RUN set -eux; \
     \
@@ -108,15 +106,26 @@ RUN set -eux; \
     \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u7 curl=7.88.1-10+deb12u7 build-essential=12.9 libmagic-dev=1:5.44-3; \
+    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u8 curl=7.88.1-10+deb12u8 build-essential=12.9 libmagic-dev=1:5.44-3; \
     \
     apt-get clean; \
     apt-get autoremove -y --purge; \
-	rm -rfv /var/lib/apt/lists/*; \
-    \
-    useradd --system --create-home app; \
-    \
-    mkdir -p /app; \
+	rm -rfv /var/lib/apt/lists/*
+
+# ==========================================
+# Create a new system-level nonroot user who
+# owns a home directory where we can install
+# libraries into (along with our scripts for
+# building and running)
+# ==========================================
+RUN useradd --system --create-home app
+
+# ==========================================
+# Create an "/app" directory in the root dir
+# for the application code and allow the new
+# app user to access it
+# ==========================================
+RUN mkdir -p /app; \
     chown app:app -R /app; \
     chmod 700 /app
 
@@ -170,19 +179,24 @@ USER app
 
 
 
+# hadolint ignore=DL3006
 FROM "$USER_IMAGE"
 
 # ==========================================
 # Install the latest LTS version of Node.js,
 # but keeping within the releases code-named
 # "jod" (v22.x)
-# (Install the previous LTS release, just in
-# case some applicaitons still use it)
 # ==========================================
+# hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install lts/iron; \
     nvm install lts/jod; \
     nvm alias default lts/jod
+
+# ==========================================
+# Create a directory for our SSL certificate
+# files
+# ==========================================
+RUN mkdir /home/app/ssl
 
 # ==========================================
 # Into our .local/bin/ directory copy in the
