@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed the default NodeJS version in `tna-python-dev`
+
 ### Security
 
 - Updated `curl` and `libcurl4` to `7.88.1-10+deb12u8` (fixes [CVE-2024-2004](https://avd.aquasec.com/nvd/2024/cve-2024-2004/), [CVE-2024-2398](https://avd.aquasec.com/nvd/2024/cve-2024-2398/) and [CVE-2024-7264](https://avd.aquasec.com/nvd/cve-2024-7264))
