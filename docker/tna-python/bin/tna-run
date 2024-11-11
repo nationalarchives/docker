@@ -127,7 +127,11 @@ then
 fi
 
 # Ensure the SSL key file can be read
-chmod 644 $SSL_KEY_FILE
+if [ ! -r $SSL_KEY_FILE ]
+then
+  echo "Read permission not granted for $SSL_KEY_FILE";
+  exit 1
+fi
 
 # Start the server
 echo "Starting $ENVIRONMENT server..."

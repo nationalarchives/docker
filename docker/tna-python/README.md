@@ -132,4 +132,4 @@ Two files need to be mounted to the container in order to run environments outsi
 - `/home/app/ssl/key.pem`
 - `/home/app/ssl/cert.pem`
 
-These locations can be overridden with the `$SSL_KEY_FILE` and `$SSL_CERTIFICATE_FILE` environment variables.
+These locations can be overridden with the `SSL_KEY_FILE` and `SSL_CERTIFICATE_FILE` environment variables.
