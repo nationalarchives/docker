@@ -17,7 +17,6 @@ npm install -g prettier@3.3.3 eslint@8.56.0 stylelint@16.10.0 stylelint-config-s
 if [ -d "/home/app/.local/bin/tasks" ]
 then
   chmod +x -fR /home/app/.local/bin/tasks
-  PATH="/home/app/.local/bin/tasks:$PATH"
 fi
 
 welcome

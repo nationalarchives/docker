@@ -30,11 +30,13 @@ RUN apt-get update; \
 
 # ==========================================
 # Copy the development scripts into the user
-# .local/bin/dev/ directory
+# .local/bin/dev/ directory, and prepare the
+# future .local/bin/tasks/ directory, adding
+# it to the path ready for mounted scripts
 # ==========================================
 COPY --chown=app bin /home/app/.local/bin/dev
 RUN chmod +x -fR /home/app/.local/bin/dev
-ENV PATH="/home/app/.local/bin/dev:$PATH"
+ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
 
 # ==========================================
 # Copy any configuration files into the main

@@ -46,3 +46,43 @@ Generate a string that can be used as the environment variable `SECRET_KEY`:
 - https://docs.python.org/3/library/secrets.html
 - https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 - https://flask.palletsprojects.com/en/2.3.x/config/#SECRET_KEY
+
+## Mountable scripts
+
+You can create a directory of custom scripts and mount the directory to the volume `/home/app/.local/bin/tasks`.
+
+This will allow you to run the scripts inside the dev Docker container. These could be used to migrate data, manipulate the database or run specific tests.
+
+### Example
+
+Create a file called `foo` in the `tasks` directory:
+
+```sh
+#!/bin/bash
+echo "bar"
+```
+
+Mount the directory to `/home/app/.local/bin/tasks`:
+
+```yml
+services:
+  dev:
+    image: ghcr.io/nationalarchives/tna-python-dev:preview
+    volumes:
+      - ./:/app                             # Application code
+      - ./tasks:/home/app/.local/bin/tasks  # Tasks directory
+```
+
+Run your command from the host machine:
+
+```sh
+docker compose exec dev foo
+>>> bar
+```
+
+...or from within the container:
+
+```sh
+foo
+>>> bar
+```
