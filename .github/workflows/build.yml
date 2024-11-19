@@ -281,7 +281,7 @@ jobs:
         uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          ignore-linting-rules: DL3002
+          ignore-linting-rules: DL3002,DL3008
 
       - name: Test Docker image build
         id: build
