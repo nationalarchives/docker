@@ -17,7 +17,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # lists afterwards
 # ==========================================
 RUN apt-get update; \
-    apt-get install -y --no-install-recommends ca-certificates gnupg; \
+    apt-get install -y --no-install-recommends ca-certificates gnupg git ssh-keygen; \
     install -m 0755 -d /etc/apt/keyrings; \
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg; \
     chmod a+r /etc/apt/keyrings/docker.gpg; \
