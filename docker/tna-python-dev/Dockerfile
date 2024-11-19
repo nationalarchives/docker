@@ -17,13 +17,13 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # lists afterwards
 # ==========================================
 RUN apt-get update; \
-    apt-get install -y --no-install-recommends ca-certificates curl gnupg; \
+    apt-get install -y --no-install-recommends ca-certificates=20230311 gnupg=2.2.40-1.1; \
     install -m 0755 -d /etc/apt/keyrings; \
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg; \
     chmod a+r /etc/apt/keyrings/docker.gpg; \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null; \
     apt-get update; \
-    apt-get install -y --no-install-recommends docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin; \
+    apt-get install -y --no-install-recommends docker-ce=5:27.3.1-1~debian.12~bookworm docker-ce-cli=5:27.3.1-1~debian.12~bookworm containerd.io=1.7.23-1 docker-buildx-plugin=0.17.1-1~debian.12~bookworm docker-compose-plugin=2.29.7-1~debian.12~bookworm; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
     rm -rfv /var/lib/apt/lists/*
