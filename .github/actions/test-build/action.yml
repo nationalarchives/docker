@@ -32,10 +32,14 @@ runs:
         VERSION_PART_MAJOR=$(echo "$VERSION" | awk -F'.' '{print $1}')
         VERSION_PART_MINOR=$(echo "$VERSION" | awk -F'.' '{print $2}')
         [ "$VERSION" == "main" ] && VERSION=preview
+        echo "IMAGE_ID:           $IMAGE_ID"
+        echo "VERSION:            $VERSION"
+        echo "VERSION_PART_MAJOR: $VERSION_PART_MAJOR"
+        echo "VERSION_PART_MINOR: $VERSION_PART_MINOR"
         echo "image-id=$IMAGE_ID" >> "$GITHUB_OUTPUT"
         echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
-        echo "major-version=$MAJOR_VERSION" >> "$GITHUB_OUTPUT"
-        echo "minor-version=$MINOR_VERSION" >> "$GITHUB_OUTPUT"
+        echo "major-version=$VERSION_PART_MAJOR" >> "$GITHUB_OUTPUT"
+        echo "minor-version=$VERSION_PART_MINOR" >> "$GITHUB_OUTPUT"
       shell: bash
 
     - name: Build images
