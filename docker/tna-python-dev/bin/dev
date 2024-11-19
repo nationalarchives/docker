@@ -10,8 +10,14 @@ if [ -f "/app/.nvmrc" ]
 then
   nvm install
 else
-  nvm use lts/jod
+  nvm use default
 fi
 npm install -g prettier@3.3.3 eslint@8.56.0 stylelint@16.10.0 stylelint-config-standard-scss@13.1.0 stylelint-selector-bem-pattern@4.0.1
+
+if [ -d "/home/app/.local/bin/tasks" ]
+then
+  chmod +x -fR /home/app/.local/bin/tasks
+  PATH="/home/app/.local/bin/tasks:$PATH"
+fi
 
 welcome
