@@ -9,6 +9,6 @@ if [ -f "/app/.nvmrc" ]
 then
   nvm install
 else
-  nvm use lts/iron
+  nvm use default
 fi
 npm update
