@@ -23,13 +23,7 @@ RUN apt-get update; \
     chmod a+r /etc/apt/keyrings/docker.gpg; \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null; \
     apt-get update; \
-    apt-get install -y --no-install-recommends docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin autoconf; \
-    \
-    git clone https://github.com/openssh/openssh-portable /home/app/openssh-portable; \
-    cd /home/app/openssh-portable || exit; \
-    autoreconf; \
-    ./configure; \
-    make && make tests; \
+    apt-get install -y --no-install-recommends docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin; \
     \
     apt-get clean; \
     apt-get autoremove -y --purge; \
