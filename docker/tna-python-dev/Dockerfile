@@ -26,7 +26,7 @@ RUN apt-get update; \
     apt-get install -y --no-install-recommends docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin; \
     \
     git clone https://github.com/openssh/openssh-portable /home/app/openssh-portable; \
-    cd /home/app/openssh-portable; \
+    cd /home/app/openssh-portable || exit; \
     autoreconf; \
     ./configure; \
     make && make tests; \
