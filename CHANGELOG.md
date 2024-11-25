@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated Uvicorn to [0.32.1](https://github.com/encode/uvicorn/releases/tag/0.32.1)
+
 ### Deprecated
 ### Removed
 ### Fixed
