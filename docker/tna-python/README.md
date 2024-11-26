@@ -37,6 +37,7 @@ Any other alphanumeric string is considered a valid environment name but won't h
 | `SSL_KEY_FILE`         | The location of the SSL key                                               | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  |
 | `SSL_CERTIFICATE_FILE` | The location of the SSL certificate                                       | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` |
 | `ALLOW_INSECURE`       | If `true`, allow servers above development to run HTTP rather than HTTPS  | `false`                  | `false`                  | _ignored_                | `false`                  |
+| `PORT`                 | Set the port used by the container (only used outside of AWS)             | `8080`                   | `8080`                   | `8080`                   | `8080`                   |
 
 [^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 
