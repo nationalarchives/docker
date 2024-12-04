@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Installation of formatting and linting tools moved to `Dockerfile` so are available at startup of the dev image
+
 ### Deprecated
 ### Removed
 ### Fixed
