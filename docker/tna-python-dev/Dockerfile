@@ -49,7 +49,7 @@ COPY --chown=app lib/* /home/app/
 # Install the tools required for linting and
 # fixing both Python and JS/CSS code
 # ==========================================
-RUN python -m pip install --quiet black==24.10.0 flake8==7.1.0 isort==5.13.2; \
-    npm install -g prettier@3.3.3 eslint@8.56.0 stylelint@16.10.0 stylelint-config-standard-scss@13.1.0 stylelint-selector-bem-pattern@4.0.1
+RUN python -m pip install --no-cache-dir --quiet black==24.10.0 flake8==7.1.1 isort==5.13.2; \
+    npm install -g prettier@3.4.2 eslint@8.56.0 stylelint@16.11.0 stylelint-config-standard-scss@14.0.0 stylelint-selector-bem-pattern@4.0.1
 
 CMD ["dev"]
