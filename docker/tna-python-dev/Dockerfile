@@ -45,4 +45,11 @@ ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
 # ==========================================
 COPY --chown=app lib/* /home/app/
 
+# ==========================================
+# Install the tools required for linting and
+# fixing both Python and JS/CSS code
+# ==========================================
+RUN python -m pip install --quiet black==24.10.0 flake8==7.1.0 isort==5.13.2; \
+    npm install -g prettier@3.3.3 eslint@8.56.0 stylelint@16.10.0 stylelint-config-standard-scss@13.1.0 stylelint-selector-bem-pattern@4.0.1
+
 CMD ["dev"]
