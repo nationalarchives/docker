@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Installation of formatting and linting tools moved to `Dockerfile` so are available at startup of the dev image
 - Updated `prettier`, `stylelint` and `stylelint-config-standard-scss` in `tna-python-dev`
+- Updated Poetry to [1.8.5](https://github.com/python-poetry/poetry/releases/tag/1.8.5)
 
 ### Deprecated
 ### Removed
