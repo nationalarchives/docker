@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Installation of formatting and linting tools moved to `Dockerfile` so are available at startup of the dev image
+- Installation of Python formatting and linting tools moved to `Dockerfile` so are available at startup of the dev image
 - Updated `prettier`, `stylelint` and `stylelint-config-standard-scss` in `tna-python-dev`
 - Updated Poetry to [1.8.5](https://github.com/python-poetry/poetry/releases/tag/1.8.5)
 - Updated Stylelint to [16.12.0](https://github.com/stylelint/stylelint/releases/tag/16.12.0)
