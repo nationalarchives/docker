@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+if [ -z "$1" ]
+then
+  echo -e "Error: manage command not specified\n";
+  echo "PARAMETERS"
+  echo "  command              the manage.py script you want to run"
+  echo "                       Example: manage makemigrations";
+  exit 1
+fi
+
+poetry run python /app/manage.py "$1"

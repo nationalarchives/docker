@@ -28,7 +28,7 @@ RUN set -eux; \
 # in the parent Docker image, but with extra
 # Django-specific commands
 # ==========================================
-COPY --chown=app bin/tna-build bin/tna-run /home/app/.local/bin/
+COPY --chown=app bin/tna-build bin/tna-run bin/manage /home/app/.local/bin/
 
 # ==========================================
 # manage.py is the recommended Django way of
@@ -43,4 +43,4 @@ COPY --chown=app lib/manage.py /app
 # ==========================================
 # Allow all our scripts to be executable
 # ==========================================
-RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run manage.py
+RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run /home/app/.local/bin/manage manage.py
