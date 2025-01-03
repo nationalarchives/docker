@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added `stylelint-order` for `stylelint`
 - `manage` command added to `tna-python-django`
+- The `upgrade` command in the dev container can now run separate upgrades with either `upgrade poetry` or `upgrade npm`
 
 ### Changed
 
