@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+
+- Allow the `manage` command in the dev container to accept multiple arguements
+
 ### Security
 
 ## [0.5.2](https://github.com/nationalarchives/docker/compare/v0.5.1...v0.5.2) - 2024-12-04
