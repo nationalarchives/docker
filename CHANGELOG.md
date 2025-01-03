@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.5.2...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.6.0...HEAD)
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.6.0](https://github.com/nationalarchives/docker/compare/v0.5.2...v0.6.0) - 2025-01-03
 
 ### Added
 
@@ -22,13 +31,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Uvicorn to [0.34.0](https://github.com/encode/uvicorn/releases/tag/0.34.0)
 - Updated Uvicorn Worker to [0.3.0](https://github.com/Kludex/uvicorn-worker/releases/tag/0.3.0)
 
-### Deprecated
-### Removed
 ### Fixed
 
 - Allow the `manage` command in the dev container to accept multiple arguments
-
-### Security
 
 ## [0.5.2](https://github.com/nationalarchives/docker/compare/v0.5.1...v0.5.2) - 2024-12-04
 
