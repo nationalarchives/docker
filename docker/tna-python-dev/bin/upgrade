@@ -2,12 +2,12 @@
 
 cd /app || return
 
-if [ -z "$1" ] || [ $1 == "poetry" ]; then
+if [ -z "$1" ] || [ "$1" == "poetry" ]; then
   echo "Upgrading Poetry dependencies..."
   poetry update
 fi
 
-if [ -z "$1" ] || [ $1 == "npm" ]; then
+if [ -z "$1" ] || [ "$1" == "npm" ]; then
   echo "Upgrading npm dependencies..."
   . "$HOME/.nvm/nvm.sh"
   if [ -f "/app/.nvmrc" ]
