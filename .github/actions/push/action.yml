@@ -79,5 +79,5 @@ runs:
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-location }}/Dockerfile
           USER_IMAGE=${{ inputs.user-image }}
         push: true
-        tags: ${{ inputs.image-id }}:${{ inputs.major-version }},${{ inputs.image-id }}:${{ inputs.minor-version }},${{ inputs.image-id }}:latest
+        tags: ${{ inputs.image-id }}:${{ inputs.major-version }},${{ inputs.image-id }}:${{ inputs.major-version }}.${{ inputs.minor-version }},${{ inputs.image-id }}:latest
         provenance: false
