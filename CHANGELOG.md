@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 
-- Allow the `manage` command in the dev container to accept multiple arguements
+- Allow the `manage` command in the dev container to accept multiple arguments
 
 ### Security
 
