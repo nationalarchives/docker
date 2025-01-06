@@ -101,12 +101,6 @@ then
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warn
   [[ -z $TIMEOUT ]] && TIMEOUT=30
   [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
-elif [ "$ENVIRONMENT" == 'staging' ]
-then
-  # Staging environment
-  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
-  [[ -z $TIMEOUT ]] && TIMEOUT=30
-  [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
 else
   # All other environments
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=info
