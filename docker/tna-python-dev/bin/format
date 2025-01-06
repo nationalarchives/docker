@@ -14,7 +14,7 @@ fi
 echo
 
 echo "Running black..."
-black -t py38 -t py39 -t py310 -t py311 -t py312 --line-length 80 --verbose /app
+black -t py38 -t py39 -t py310 -t py311 -t py312 --verbose /app
 echo
 
 echo "Running flake8..."
