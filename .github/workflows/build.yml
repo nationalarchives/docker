@@ -302,9 +302,11 @@ jobs:
       - name: Test development formatting
         run: |
           set +e
-          
+
           # Install Python linting and formatting tools
           pip install black flake8 isort
+
+          npm i stylelint-config-standard-scss stylelint-selector-bem-pattern
 
           # Create directories for test files
           mkdir tests
@@ -345,7 +347,10 @@ jobs:
           echo "Checking flake8..."
           flake8 --config=.flake8 tests; [[ "$?" == "1" ]]
 
+          set -e
+
           # Format the code
+          echo "Formatting code..."
           docker exec test_container format
 
           # Check that Prettier finds no issues
