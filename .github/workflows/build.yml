@@ -25,247 +25,247 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  python:
-    name: Python
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    env:
-      IMAGE_NAME: tna-python
-      DOCKERFILE_LOCATION: docker/tna-python
-      BASE_IMAGE: ghcr.io/nationalarchives/tna-python
-      USER_IMAGE: app
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # python:
+  #   name: Python
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 15
+  #   env:
+  #     IMAGE_NAME: tna-python
+  #     DOCKERFILE_LOCATION: docker/tna-python
+  #     BASE_IMAGE: ghcr.io/nationalarchives/tna-python
+  #     USER_IMAGE: app
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Lint Dockerfile
-        uses: ./.github/actions/lint
-        with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #     - name: Lint Dockerfile
+  #       uses: ./.github/actions/lint
+  #       with:
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
 
-      - name: Test Docker image build
-        id: build
-        uses: ./.github/actions/test-build
-        with:
-          image-name: ${{ env.IMAGE_NAME }}
-          base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          user-image: ${{ env.USER_IMAGE }}
+  #     - name: Test Docker image build
+  #       id: build
+  #       uses: ./.github/actions/test-build
+  #       with:
+  #         image-name: ${{ env.IMAGE_NAME }}
+  #         base-image: ${{ env.BASE_IMAGE }}
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #         user-image: ${{ env.USER_IMAGE }}
 
-      - name: Test Flask
-        uses: ./.github/actions/test-container
-        with:
-          application-repository: nationalarchives/flask-application-template
-          service: app
-          image: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: app
+  #     - name: Test Flask
+  #       uses: ./.github/actions/test-container
+  #       with:
+  #         application-repository: nationalarchives/flask-application-template
+  #         service: app
+  #         image: ${{ env.IMAGE_NAME }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         expected-user: app
 
-      - name: Test FastAPI
-        uses: ./.github/actions/test-container
-        with:
-          application-repository: nationalarchives/fastapi-application-template
-          service: app
-          image: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: app
+  #     - name: Test FastAPI
+  #       uses: ./.github/actions/test-container
+  #       with:
+  #         application-repository: nationalarchives/fastapi-application-template
+  #         service: app
+  #         image: ${{ env.IMAGE_NAME }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         expected-user: app
 
-      - name: Build and push Docker images
-        uses: ./.github/actions/push
-        with:
-          image-id: ${{ steps.build.outputs.image-id }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          major-version: ${{ steps.build.outputs.major-version }}
-          minor-version: ${{ steps.build.outputs.minor-version }}
-          base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          user-image: ${{ env.USER_IMAGE }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Build and push Docker images
+  #       uses: ./.github/actions/push
+  #       with:
+  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         major-version: ${{ steps.build.outputs.major-version }}
+  #         minor-version: ${{ steps.build.outputs.minor-version }}
+  #         base-image: ${{ env.BASE_IMAGE }}
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #         user-image: ${{ env.USER_IMAGE }}
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scan Docker image
-        uses: ./.github/actions/scan
-        with:
-          image-id: ${{ steps.build.outputs.image-id }}
-          image-tag: ${{ steps.build.outputs.tag }}
+  #     - name: Scan Docker image
+  #       uses: ./.github/actions/scan
+  #       with:
+  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
 
-  python-root:
-    name: Python (root)
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    env:
-      IMAGE_NAME: tna-python-root
-      DOCKERFILE_LOCATION: docker/tna-python
-      BASE_IMAGE: ghcr.io/nationalarchives/tna-python
-      USER_IMAGE: root
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # python-root:
+  #   name: Python (root)
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 15
+  #   env:
+  #     IMAGE_NAME: tna-python-root
+  #     DOCKERFILE_LOCATION: docker/tna-python
+  #     BASE_IMAGE: ghcr.io/nationalarchives/tna-python
+  #     USER_IMAGE: root
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Lint Dockerfile
-        uses: ./.github/actions/lint
-        with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          ignore-linting-rules: DL3002
+  #     - name: Lint Dockerfile
+  #       uses: ./.github/actions/lint
+  #       with:
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #         ignore-linting-rules: DL3002
 
-      - name: Test Docker image build
-        id: build
-        uses: ./.github/actions/test-build
-        with:
-          image-name: ${{ env.IMAGE_NAME }}
-          base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          user-image: ${{ env.USER_IMAGE }}
+  #     - name: Test Docker image build
+  #       id: build
+  #       uses: ./.github/actions/test-build
+  #       with:
+  #         image-name: ${{ env.IMAGE_NAME }}
+  #         base-image: ${{ env.BASE_IMAGE }}
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #         user-image: ${{ env.USER_IMAGE }}
 
-      - name: Test Flask
-        uses: ./.github/actions/test-container
-        with:
-          application-repository: nationalarchives/flask-application-template
-          service: app
-          image: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: root
+  #     - name: Test Flask
+  #       uses: ./.github/actions/test-container
+  #       with:
+  #         application-repository: nationalarchives/flask-application-template
+  #         service: app
+  #         image: ${{ env.IMAGE_NAME }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         expected-user: root
 
-      - name: Test FastAPI
-        uses: ./.github/actions/test-container
-        with:
-          application-repository: nationalarchives/fastapi-application-template
-          service: app
-          image: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: root
+  #     - name: Test FastAPI
+  #       uses: ./.github/actions/test-container
+  #       with:
+  #         application-repository: nationalarchives/fastapi-application-template
+  #         service: app
+  #         image: ${{ env.IMAGE_NAME }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         expected-user: root
 
-      - name: Build and push Docker images
-        uses: ./.github/actions/push
-        with:
-          image-id: ${{ steps.build.outputs.image-id }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          major-version: ${{ steps.build.outputs.major-version }}
-          minor-version: ${{ steps.build.outputs.minor-version }}
-          base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          user-image: ${{ env.USER_IMAGE }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Build and push Docker images
+  #       uses: ./.github/actions/push
+  #       with:
+  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         major-version: ${{ steps.build.outputs.major-version }}
+  #         minor-version: ${{ steps.build.outputs.minor-version }}
+  #         base-image: ${{ env.BASE_IMAGE }}
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #         user-image: ${{ env.USER_IMAGE }}
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scan Docker image
-        uses: ./.github/actions/scan
-        with:
-          image-id: ${{ steps.build.outputs.image-id }}
-          image-tag: ${{ steps.build.outputs.tag }}
+  #     - name: Scan Docker image
+  #       uses: ./.github/actions/scan
+  #       with:
+  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
 
-  python-django:
-    name: Python Django
-    needs: python
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    env:
-      IMAGE_NAME: tna-python-django
-      DOCKERFILE_LOCATION: docker/tna-python-django
-      BASE_IMAGE: ghcr.io/nationalarchives/tna-python
-      USER_IMAGE: root
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # python-django:
+  #   name: Python Django
+  #   needs: python
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 5
+  #   env:
+  #     IMAGE_NAME: tna-python-django
+  #     DOCKERFILE_LOCATION: docker/tna-python-django
+  #     BASE_IMAGE: ghcr.io/nationalarchives/tna-python
+  #     USER_IMAGE: root
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Lint Dockerfile
-        uses: ./.github/actions/lint
-        with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #     - name: Lint Dockerfile
+  #       uses: ./.github/actions/lint
+  #       with:
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
 
-      - name: Test Docker image build
-        id: build
-        uses: ./.github/actions/test-build
-        with:
-          image-name: ${{ env.IMAGE_NAME }}
-          base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          user-image: ${{ env.USER_IMAGE }}
+  #     - name: Test Docker image build
+  #       id: build
+  #       uses: ./.github/actions/test-build
+  #       with:
+  #         image-name: ${{ env.IMAGE_NAME }}
+  #         base-image: ${{ env.BASE_IMAGE }}
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #         user-image: ${{ env.USER_IMAGE }}
 
-      - name: Test Django
-        uses: ./.github/actions/test-container
-        with:
-          application-repository: nationalarchives/django-application-template
-          service: app
-          image: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: app
+  #     - name: Test Django
+  #       uses: ./.github/actions/test-container
+  #       with:
+  #         application-repository: nationalarchives/django-application-template
+  #         service: app
+  #         image: ${{ env.IMAGE_NAME }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         expected-user: app
 
-      - name: Build and push Docker images
-        uses: ./.github/actions/push
-        with:
-          image-id: ${{ steps.build.outputs.image-id }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          major-version: ${{ steps.build.outputs.major-version }}
-          minor-version: ${{ steps.build.outputs.minor-version }}
-          base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          user-image: ${{ env.USER_IMAGE }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Build and push Docker images
+  #       uses: ./.github/actions/push
+  #       with:
+  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         major-version: ${{ steps.build.outputs.major-version }}
+  #         minor-version: ${{ steps.build.outputs.minor-version }}
+  #         base-image: ${{ env.BASE_IMAGE }}
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #         user-image: ${{ env.USER_IMAGE }}
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scan Docker image
-        uses: ./.github/actions/scan
-        with:
-          image-id: ${{ steps.build.outputs.image-id }}
-          image-tag: ${{ steps.build.outputs.tag }}
+  #     - name: Scan Docker image
+  #       uses: ./.github/actions/scan
+  #       with:
+  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
 
-  python-django-root:
-    name: Python Django (root)
-    needs: python-root
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    env:
-      IMAGE_NAME: tna-python-django-root
-      DOCKERFILE_LOCATION: docker/tna-python-django
-      BASE_IMAGE: ghcr.io/nationalarchives/tna-python-root
-      USER_IMAGE: root
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # python-django-root:
+  #   name: Python Django (root)
+  #   needs: python-root
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 5
+  #   env:
+  #     IMAGE_NAME: tna-python-django-root
+  #     DOCKERFILE_LOCATION: docker/tna-python-django
+  #     BASE_IMAGE: ghcr.io/nationalarchives/tna-python-root
+  #     USER_IMAGE: root
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Lint Dockerfile
-        uses: ./.github/actions/lint
-        with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          ignore-linting-rules: DL3002
+  #     - name: Lint Dockerfile
+  #       uses: ./.github/actions/lint
+  #       with:
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #         ignore-linting-rules: DL3002
 
-      - name: Test Docker image build
-        id: build
-        uses: ./.github/actions/test-build
-        with:
-          image-name: ${{ env.IMAGE_NAME }}
-          base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          user-image: ${{ env.USER_IMAGE }}
+  #     - name: Test Docker image build
+  #       id: build
+  #       uses: ./.github/actions/test-build
+  #       with:
+  #         image-name: ${{ env.IMAGE_NAME }}
+  #         base-image: ${{ env.BASE_IMAGE }}
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #         user-image: ${{ env.USER_IMAGE }}
 
-      - name: Test Django
-        uses: ./.github/actions/test-container
-        with:
-          application-repository: nationalarchives/django-application-template
-          service: app
-          image: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: root
+  #     - name: Test Django
+  #       uses: ./.github/actions/test-container
+  #       with:
+  #         application-repository: nationalarchives/django-application-template
+  #         service: app
+  #         image: ${{ env.IMAGE_NAME }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         expected-user: root
 
-      - name: Build and push Docker images
-        uses: ./.github/actions/push
-        with:
-          image-id: ${{ steps.build.outputs.image-id }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          major-version: ${{ steps.build.outputs.major-version }}
-          minor-version: ${{ steps.build.outputs.minor-version }}
-          base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          user-image: ${{ env.USER_IMAGE }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Build and push Docker images
+  #       uses: ./.github/actions/push
+  #       with:
+  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         major-version: ${{ steps.build.outputs.major-version }}
+  #         minor-version: ${{ steps.build.outputs.minor-version }}
+  #         base-image: ${{ env.BASE_IMAGE }}
+  #         dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+  #         user-image: ${{ env.USER_IMAGE }}
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scan Docker image
-        uses: ./.github/actions/scan
-        with:
-          image-id: ${{ steps.build.outputs.image-id }}
-          image-tag: ${{ steps.build.outputs.tag }}
+  #     - name: Scan Docker image
+  #       uses: ./.github/actions/scan
+  #       with:
+  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
 
   python-dev:
     name: Python Dev
-    needs: python-root
+    # needs: python-root
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
@@ -291,6 +291,54 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
+
+      - uses: actions/setup-node@v4
+      - uses: actions/setup-python@v5
+      - name: Test development formatting
+        run: |
+          # Install Python linting and formatting tools
+          pip install black flake8 isort
+
+          # Create directories for test files
+          mkdir tests
+
+          # Create test files for Prettier
+          echo "  const  foo  =  'bar';; const a=foo ;console.log(  a) " > tests/test.js
+          echo " *  {    color :  red;text-decoration:underline}  " > tests/test.css
+          echo "  {    'foo'  :   'bar'} " > tests/test.json
+
+          # Create test files for Python
+          echo "import sys  " > tests/test.py
+          echo "import datetime  " >> tests/test.py
+          echo "print( 'test'  )  " >> tests/test.py
+
+          # Run the dev container
+          docker run -v ./tests:/app/tests --name test_container -d ghcr.io/${{ github.repository_owner }}/${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}
+
+          # Copy configuration files from container
+          docker cp test_container:/home/app/.eslintrc.js .eslintrc.js
+          docker cp test_container:/home/app/.flake8 .flake8
+          docker cp test_container:/home/app/.isort.cfg .isort.cfg
+          docker cp test_container:/home/app/.stylelintrc .stylelintrc
+
+          # Check that Prettier finds issues
+          npx prettier tests --check; [[ "$?" == "1" ]]
+
+          # Check that issues are found in Python code
+          isort --settings-file .isort.cfg --check tests; [[ "$?" == "1" ]]
+          black --check tests; [[ "$?" == "1" ]]
+          flake8 --config=.flake8 tests; [[ "$?" == "1" ]]
+
+          # Format the code
+          docker exec test_container format
+
+          # Check that Prettier finds no issues
+          npx prettier tests --check
+
+          # Check that no issues are found in Python code
+          isort --settings-file .isort.cfg --check tests
+          black --check tests
+          flake8 --config=.flake8 tests
 
       - name: Build and push Docker images
         uses: ./.github/actions/push
