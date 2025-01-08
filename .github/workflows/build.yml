@@ -314,7 +314,7 @@ jobs:
           # Create test files for Prettier
           echo "  const  foo  =  'bar';; const a=foo ;console.log(  a) " > tests/test.js
           echo " *  {    color :  red;text-decoration:underline}  " > tests/test.css
-          echo " $colour = #ff0000; *  {    color :  $colour;text-decoration:underline}  " > tests/test.scss
+          echo " \$colour : #ff0000; *  {    color :  \$colour;text-decoration:underline}  " > tests/test.scss
           echo "  {    'foo'  :   'bar'} " > tests/test.json
 
           # Create test files for Python
