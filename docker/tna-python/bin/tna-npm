@@ -9,8 +9,8 @@ then
   if [ -f "/app/.nvmrc" ]
   then
     NVM_NODE_VERSION=$(cat /app/.nvmrc)
-    nvm install $NVM_NODE_VERSION
-    nvm use $NVM_NODE_VERSION --silent
+    nvm install "$NVM_NODE_VERSION"
+    nvm use "$NVM_NODE_VERSION" --silent
   else
     nvm use default --silent
   fi
