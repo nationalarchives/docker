@@ -337,7 +337,7 @@ jobs:
           echo "Checking stylelint..."
           npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"; [[ "$?" == "1" ]]
           echo "Checking eslint..."
-          npx eslint -c .eslintrc.js "tests"; [[ "$?" == "1" ]]
+          npx eslint@8.56.0 -c .eslintrc.js "tests"; [[ "$?" == "1" ]]
 
           # Check that issues are found in Python code
           echo "Checking isort..."
@@ -359,7 +359,7 @@ jobs:
           echo "Checking stylelint..."
           npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"
           echo "Checking eslint..."
-          npx eslint -c .eslintrc.js "tests"
+          npx eslint@8.56.0 -c .eslintrc.js "tests"
 
           # Check that no issues are found in Python code
           echo "Checking isort..."
