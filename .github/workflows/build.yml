@@ -292,11 +292,11 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
 
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      # - uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-node@v4
       - uses: actions/setup-python@v5
       - name: Test development formatting
@@ -319,6 +319,7 @@ jobs:
           echo "print( 'test'  )  " >> tests/test.py
 
           # Run the dev container
+          echo "ghcr.io/${{ github.repository_owner }}/${{ steps.build.outputs.image-id }}:preview"
           docker pull ghcr.io/${{ github.repository_owner }}/${{ steps.build.outputs.image-id }}:preview
           docker run -v ./tests:/app/tests --name test_container -d ghcr.io/${{ github.repository_owner }}/${{ steps.build.outputs.image-id }}:preview
           # TODO: Enable once not using preview
