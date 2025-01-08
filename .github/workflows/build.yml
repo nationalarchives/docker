@@ -292,6 +292,78 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
 
+      - uses: actions/setup-node@v4
+      - uses: actions/setup-python@v5
+      - name: Test development formatting
+        run: |
+          set +e
+
+          # Install Python linting and formatting tools
+          pip install black flake8 isort
+
+          npm i stylelint-config-standard-scss stylelint-selector-bem-pattern
+
+          # Create directories for test files
+          mkdir tests
+
+          # Create test files for Prettier
+          echo "  const  foo  =  'bar';; const a=foo ;console.log(  a) " > tests/test.js
+          echo " *  {    color :  red;text-decoration:underline}  " > tests/test.css
+          echo " \$colour : #ff0000; *  {    color :  \$colour;text-decoration:underline}  " > tests/test.scss
+          echo "  {    'foo'  :   'bar'} " > tests/test.json
+
+          # Create test files for Python
+          echo "import sys  " > tests/test.py
+          echo "import datetime  " >> tests/test.py
+          echo "print( 'test'  )  " >> tests/test.py
+
+          # Run the dev container
+          docker run -v ./tests:/app/tests --name test_container -d ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}
+
+          # Copy configuration files from container
+          docker cp test_container:/home/app/.eslintrc.js .eslintrc.js
+          docker cp test_container:/home/app/.flake8 .flake8
+          docker cp test_container:/home/app/.isort.cfg .isort.cfg
+          docker cp test_container:/home/app/.stylelintrc .stylelintrc
+
+          # Check that Prettier finds issues
+          echo "Checking Prettier..."
+          npx prettier tests --check; [[ "$?" == "1" ]]
+          echo "Checking stylelint..."
+          npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"; [[ "$?" == "1" ]]
+          echo "Checking eslint..."
+          npx eslint@8.56.0 -c .eslintrc.js "tests"; [[ "$?" == "1" ]]
+
+          # Check that issues are found in Python code
+          echo "Checking isort..."
+          isort --settings-file .isort.cfg --check tests; [[ "$?" == "1" ]]
+          echo "Checking black..."
+          black --check tests; [[ "$?" == "1" ]]
+          echo "Checking flake8..."
+          flake8 --config=.flake8 tests; [[ "$?" == "1" ]]
+
+          set -e
+
+          # Format the code
+          echo "Formatting code..."
+          docker exec test_container format
+
+          # Check that Prettier finds no issues
+          echo "Checking Prettier..."
+          npx prettier tests --check
+          echo "Checking stylelint..."
+          npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"
+          echo "Checking eslint..."
+          npx eslint@8.56.0 -c .eslintrc.js "tests"
+
+          # Check that no issues are found in Python code
+          echo "Checking isort..."
+          isort --settings-file .isort.cfg --check tests
+          echo "Checking black..."
+          black --check tests
+          echo "Checking flake8..."
+          flake8 --config=.flake8 tests
+
       - name: Build and push Docker images
         uses: ./.github/actions/push
         with:

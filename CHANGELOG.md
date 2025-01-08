@@ -67,7 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - SSL certificates must be generated and used on environments outside of production
 - Docker added back into `tna-python-dev`
-- `tna-python-dev` can now run custom scripts when mounted to `/home/app/.local/bin/tasks` 
+- `tna-python-dev` can now run custom scripts when mounted to `/home/app/.local/bin/tasks`
 
 ### Changed
 
