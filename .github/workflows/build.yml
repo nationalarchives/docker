@@ -319,8 +319,6 @@ jobs:
           echo "print( 'test'  )  " >> tests/test.py
 
           # Run the dev container
-          # docker run -v ./tests:/app/tests --name test_container -d ${{ steps.build.outputs.image-id }}:preview
-          # TODO: Enable once not using preview
           docker run -v ./tests:/app/tests --name test_container -d ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}
 
           # Copy configuration files from container
@@ -330,26 +328,38 @@ jobs:
           docker cp test_container:/home/app/.stylelintrc .stylelintrc
 
           # Check that Prettier finds issues
+          echo "Checking Prettier..."
           npx prettier tests --check; [[ "$?" == "1" ]]
+          echo "Checking stylelint..."
           npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"; [[ "$?" == "1" ]]
+          echo "Checking eslint..."
           npx eslint -c .eslintrc.js "tests"; [[ "$?" == "1" ]]
 
           # Check that issues are found in Python code
+          echo "Checking isort..."
           isort --settings-file .isort.cfg --check tests; [[ "$?" == "1" ]]
+          echo "Checking black..."
           black --check tests; [[ "$?" == "1" ]]
+          echo "Checking flake8..."
           flake8 --config=.flake8 tests; [[ "$?" == "1" ]]
 
           # Format the code
           docker exec test_container format
 
           # Check that Prettier finds no issues
+          echo "Checking Prettier..."
           npx prettier tests --check
+          echo "Checking stylelint..."
           npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"
+          echo "Checking eslint..."
           npx eslint -c .eslintrc.js "tests"
 
           # Check that no issues are found in Python code
+          echo "Checking isort..."
           isort --settings-file .isort.cfg --check tests
+          echo "Checking black..."
           black --check tests
+          echo "Checking flake8..."
           flake8 --config=.flake8 tests
 
       - name: Build and push Docker images
