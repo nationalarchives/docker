@@ -305,6 +305,7 @@ jobs:
           # Create test files for Prettier
           echo "  const  foo  =  'bar';; const a=foo ;console.log(  a) " > tests/test.js
           echo " *  {    color :  red;text-decoration:underline}  " > tests/test.css
+          echo " $colour : red; *  {    color :  $colour;text-decoration:underline}  " > tests/test.scss
           echo "  {    'foo'  :   'bar'} " > tests/test.json
 
           # Create test files for Python
@@ -313,7 +314,9 @@ jobs:
           echo "print( 'test'  )  " >> tests/test.py
 
           # Run the dev container
-          docker run -v ./tests:/app/tests --name test_container -d ghcr.io/${{ github.repository_owner }}/${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}
+          docker run -v ./tests:/app/tests --name test_container -d ghcr.io/${{ github.repository_owner }}/${{ steps.build.outputs.image-id }}:preview
+          # TODO: Enable once not using preview
+          # docker run -v ./tests:/app/tests --name test_container -d ghcr.io/${{ github.repository_owner }}/${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}
 
           # Copy configuration files from container
           docker cp test_container:/home/app/.eslintrc.js .eslintrc.js
@@ -323,6 +326,8 @@ jobs:
 
           # Check that Prettier finds issues
           npx prettier tests --check; [[ "$?" == "1" ]]
+          npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"; [[ "$?" == "1" ]]
+          npx eslint -c .eslintrc.js "tests"; [[ "$?" == "1" ]]
 
           # Check that issues are found in Python code
           isort --settings-file .isort.cfg --check tests; [[ "$?" == "1" ]]
@@ -334,6 +339,8 @@ jobs:
 
           # Check that Prettier finds no issues
           npx prettier tests --check
+          npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"
+          npx eslint -c .eslintrc.js "tests"
 
           # Check that no issues are found in Python code
           isort --settings-file .isort.cfg --check tests
