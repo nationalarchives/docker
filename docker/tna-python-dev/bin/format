@@ -28,7 +28,7 @@ else
 fi
 echo
 
-tna-npm install
+tna-npm --version
 
 echo "Running prettier..."
 prettier --write /app
