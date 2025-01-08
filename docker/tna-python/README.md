@@ -70,6 +70,7 @@ There are two commands to use within your `Dockerfile`:
 
 - [`tna-build`](#tna-build)
 - [`tna-node`](#tna-node-command)
+- [`tna-npm`](#tna-npm-command)
 - [`tna-run`](#tna-run)
 
 ### `tna-build`
@@ -83,10 +84,15 @@ There are two commands to use within your `Dockerfile`:
 
 ### `tna-node [command]`
 
-1. Checks for the presence of `package.json`, `package-lock.json` and `.nvmrc` files
+1. Checks for the presence of a `package.json` file
+1. Installs Node dependencies from `package.json` using [tna-npm](#tna-npm-command)
+1. Runs the passed `[command]` as `npm run [command]` (e.g. `build` from in `package.json`) using [tna-npm](#tna-npm-command)
+
+### `tna-npm [command]`
+
 1. Sets the Node version to that defined in `.nvmrc`
-1. Installs Node dependencies from `package.json`
-1. Runs the passed `[command]` as `npm run [command]` (e.g. `build` from in `package.json`)
+   - If `.nvmrc` is not defined, use the `default` nvm version
+1. Runs the passed `[command]` as `npm [command]` (e.g. `install @nationalarchives/frontend`)
 
 ### `tna-run`
 

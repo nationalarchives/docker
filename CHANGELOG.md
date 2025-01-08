@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.6.0...HEAD)
 
 ### Added
+
+- `tna-npm` command added to allow running of npm commands using nvm
+
 ### Changed
 
 - Changed Python line lengths from `80` to `88` (default for Black)

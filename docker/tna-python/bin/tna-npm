@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+if ! type npm &> /dev/null
+then
+  [[ -z $NODE_ENV ]] && NODE_ENV=$ENVIRONMENT
+  . "$NVM_DIR/nvm.sh" && true
+  if [ -f "/app/.nvmrc" ]
+  then
+    nvm use "$(cat /app/.nvmrc)" --silent
+  else
+    nvm use default --silent
+  fi
+fi
+
+npm "$@"

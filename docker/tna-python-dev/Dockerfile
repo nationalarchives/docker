@@ -36,7 +36,7 @@ RUN apt-get update; \
 # it to the path ready for mounted scripts
 # ==========================================
 COPY --chown=app bin /home/app/.local/bin/dev
-RUN chmod +x -fR /home/app/.local/bin/dev
+RUN chmod +x -R /home/app/.local/bin/dev
 ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
 
 # ==========================================
