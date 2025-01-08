@@ -204,7 +204,7 @@ RUN mkdir /home/app/ssl
 # run our application in a consistent manner
 # ==========================================
 COPY --chown=app bin /home/app/.local/bin
-RUN chmod +x -R /home/app/.local/bin
+RUN chmod +x -fR /home/app/.local/bin
 
 # ==========================================
 # This does nothing but will act as a way to

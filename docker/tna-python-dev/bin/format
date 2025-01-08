@@ -28,13 +28,7 @@ else
 fi
 echo
 
-. "$HOME/.nvm/nvm.sh"
-if [ -f "/app/.nvmrc" ]
-then
-  nvm install
-else
-  nvm use default
-fi
+tna-npm install
 
 echo "Running prettier..."
 prettier --write /app

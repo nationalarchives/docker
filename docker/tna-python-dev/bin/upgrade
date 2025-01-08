@@ -9,12 +9,5 @@ fi
 
 if [ -z "$1" ] || [ "$1" == "npm" ]; then
   echo "Upgrading npm dependencies..."
-  . "$HOME/.nvm/nvm.sh"
-  if [ -f "/app/.nvmrc" ]
-  then
-    nvm install
-  else
-    nvm use default
-  fi
-  npm update
+  tna-npm update
 fi
