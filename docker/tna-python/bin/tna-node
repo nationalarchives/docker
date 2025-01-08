@@ -17,5 +17,5 @@ then
   exit 1
 fi
 
-npmv install
-npmv run "$1"
+tna-npm install
+tna-npm run "$1"
