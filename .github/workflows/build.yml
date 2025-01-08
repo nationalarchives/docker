@@ -319,6 +319,7 @@ jobs:
           echo "print( 'test'  )  " >> tests/test.py
 
           # Run the dev container
+          docker pull ghcr.io/${{ github.repository_owner }}/${{ steps.build.outputs.image-id }}:preview
           docker run -v ./tests:/app/tests --name test_container -d ghcr.io/${{ github.repository_owner }}/${{ steps.build.outputs.image-id }}:preview
           # TODO: Enable once not using preview
           # docker run -v ./tests:/app/tests --name test_container -d ghcr.io/${{ github.repository_owner }}/${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}
