@@ -292,6 +292,11 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
 
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-node@v4
       - uses: actions/setup-python@v5
       - name: Test development formatting
