@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Only upgrade npm packages if a `package.json` file exists
+- Only upgrade npm packages or try to build with `NPM_BUILD_COMMAND` if a `package.json` file exists
 
 ### Security
 
