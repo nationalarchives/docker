@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `staging` option removed from `ENVIRONMENT` - there is now only `production` and `develop`
 
 ### Fixed
+
+- Only upgrade npm packages if a `package.json` file exists
+
 ### Security
 
 ## [0.6.0](https://github.com/nationalarchives/docker/compare/v0.5.2...v0.6.0) - 2025-01-03

@@ -2,12 +2,25 @@
 
 cd /app || return
 
-if [ -z "$1" ] || [ "$1" == "poetry" ]; then
-  echo "Upgrading Poetry dependencies..."
-  poetry update
+if [ -z "$1" ] || [ "$1" == "poetry" ]
+then
+  if [ -f "/app/pyproject.toml" ]
+  then
+    echo "Upgrading Poetry dependencies..."
+    poetry update
+  else
+    echo "pyproject.toml does not exist"
+    exit 1
+  fi
 fi
 
-if [ -z "$1" ] || [ "$1" == "npm" ]; then
-  echo "Upgrading npm dependencies..."
-  tna-npm update
+if [ -z "$1" ] || [ "$1" == "npm" ]
+then
+  if [ -f "/app/package.json" ]
+  then
+    echo "Upgrading npm dependencies..."
+    tna-npm update
+  else
+    echo "package.json does not exist"
+  fi
 fi
