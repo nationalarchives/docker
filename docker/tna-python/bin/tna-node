@@ -17,6 +17,6 @@ then
   exit 1
 fi
 
-. tna-nvm
+tna-nvm
 npm install
 npm run "$1"

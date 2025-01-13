@@ -19,7 +19,7 @@ then
   if [ -f "/app/package.json" ]
   then
     echo "Upgrading npm dependencies..."
-    . tna-nvm
+    tna-nvm
     npm update
   else
     echo "package.json does not exist"
