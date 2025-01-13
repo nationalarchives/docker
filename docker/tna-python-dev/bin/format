@@ -28,7 +28,8 @@ else
 fi
 echo
 
-tna-npm --version
+. tna-nvm
+npm --version
 
 echo "Running prettier..."
 prettier --write /app

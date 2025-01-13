@@ -14,6 +14,8 @@ then
   exit 1
 fi
 
+[[ -z $NODE_ENV ]] && NODE_ENV=$ENVIRONMENT
+
 if [ -n "$NPM_BUILD_COMMAND" ] && [ -f "/app/package.json" ]
 then
   tna-node "$NPM_BUILD_COMMAND"

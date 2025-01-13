@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `tna-npm` command added to allow running of npm commands using nvm
+- `. tna-npm` can be used to load nvm and install the required version
 
 ### Changed
 
@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - `staging` option removed from `ENVIRONMENT` - there is now only `production` and `develop`
+- `welcome` script removed and added to the end of `dev`
 
 ### Fixed
 

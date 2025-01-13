@@ -6,8 +6,9 @@ poetry install --no-root --with dev || true
 
 if [ -f "/app/package.json" ]
 then
-  tna-npm install -g prettier@3.4.2 eslint@8.56.0 stylelint@16.12.0 stylelint-config-standard-scss@14.0.0 stylelint-selector-bem-pattern@4.0.1 stylelint-order@6.0.4
-  tna-npm install
+  . tna-nvm
+  npm install -g prettier@3.4.2 eslint@8.56.0 stylelint@16.12.0 stylelint-config-standard-scss@14.0.0 stylelint-selector-bem-pattern@4.0.1 stylelint-order@6.0.4
+  npm install
 fi
 
 if [ -d "/home/app/.local/bin/tasks" ]
@@ -15,4 +16,32 @@ then
   chmod +x -fR /home/app/.local/bin/tasks
 fi
 
-welcome
+echo "                  ,--.    ,--.            .-------------------------------."
+echo "                 ((O ))--((O ))           |                               |"
+echo "               ,'_\`--'____\`--'_\`.         |   Awaiting your command...    |"
+echo "              _:  ____________  :_        |   Run \"help\" to get started   |"
+echo "             | | ||::::::::::|| | |       |                               |"
+echo "             | | ||::::::::::|| | |       | .-----------------------------'"
+echo "             |_| |/__________\\| |_|       |/"
+echo "               |________________|"
+echo "            __..-'            \`-..__"
+echo "         .-| : .----------------. : |-."
+echo "       ,\\ || | |\\______________/| | || /."
+echo "      /\`.\\:| | ||  __  __  __  || | |;/,'\\"
+echo "     :\`-._\\;.| || '--''--''--' || |,:/_.-':"
+echo "     |    :  | || .----------. || |  :    |"
+echo "     |    |  | || '- TNABOT -' || |  |    |"
+echo "     |    |  | ||   _   _   _  || |  |    |"
+echo "     :,--.;  | ||  (_) (_) (_) || |  :,--.;"
+echo "     (\`-'|)  | ||______________|| |  (|\`-')"
+echo "      \`--'   | |/______________\\| |   \`--'"
+echo "             |____________________|"
+echo "              \`.________________,'"
+echo "               (_______)(_______)"
+echo "               (_______)(_______)"
+echo "               (_______)(_______)"
+echo "               (_______)(_______)"
+echo "              |        ||        |"
+echo "              '--------''--------'"
+
+tail -f /dev/null
