@@ -324,7 +324,7 @@ jobs:
           # Wait for everything to be installed
           echo "Sleeping..."
           # TODO: Improve this
-          sleep 30
+          sleep 90
 
           # Copy configuration files from container
           docker cp test_container:/home/app/.eslintrc.js .eslintrc.js
