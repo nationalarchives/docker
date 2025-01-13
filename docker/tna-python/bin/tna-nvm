@@ -15,5 +15,3 @@ then
     nvm use default --silent
   fi
 fi
-
-npm "$@"
