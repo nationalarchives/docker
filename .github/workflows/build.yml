@@ -319,12 +319,12 @@ jobs:
           echo "print( 'test'  )  " >> tests/test.py
 
           # Run the dev container
-          docker run -v ./tests:/app/tests --name test_container -d ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}
+          docker run -v ./tests:/app/tests --name test_container -it -d ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}
 
           # Wait for everything to be installed
           echo "Sleeping..."
           # TODO: Improve this
-          sleep 90
+          sleep 30
 
           # Copy configuration files from container
           docker cp test_container:/home/app/.eslintrc.js .eslintrc.js
