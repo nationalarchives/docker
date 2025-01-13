@@ -2,7 +2,6 @@
 
 set -e
 
-[[ -z $NODE_ENV ]] && NODE_ENV=$ENVIRONMENT
 . "$NVM_DIR/nvm.sh" && true
 
 if [ -f "/app/.nvmrc" ]
