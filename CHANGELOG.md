@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated Stylelint to [16.13.1](https://github.com/stylelint/stylelint/releases/tag/16.13.1)
+
 ### Deprecated
 ### Removed
 ### Fixed
