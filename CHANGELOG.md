@@ -14,7 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Changed Python line lengths from `80` to `88` (default for Black)
-- Updated Stylelint to [16.13.0](https://github.com/stylelint/stylelint/releases/tag/16.13.0)
 
 ### Deprecated
 ### Removed
