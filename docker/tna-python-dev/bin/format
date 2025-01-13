@@ -28,7 +28,7 @@ else
 fi
 echo
 
-tna-nvm
+. tna-nvm
 npm --version
 
 echo "Running prettier..."
