@@ -8,11 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.7.0...HEAD)
 
 ### Added
+
+- Black target version `py313` added
+
 ### Changed
 
 - Updated Stylelint to [16.13.1](https://github.com/stylelint/stylelint/releases/tag/16.13.1)
+- Set the Stylelint fix type to `"strict"`
 
 ### Deprecated
+
+- Black target version `py38` removed
+
 ### Removed
 ### Fixed
 ### Security
