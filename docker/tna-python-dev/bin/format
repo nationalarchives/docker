@@ -39,46 +39,46 @@ echo "Running stylelint..."
 if [ -f "/app/.stylelintrc" ]
 then
   echo "Using app config (.stylelintrc)"
-  stylelint --config /app/.stylelintrc --fix "strict" "/app/**/*.{css,scss}"
+  stylelint --config /app/.stylelintrc --fix "/app/**/*.{css,scss}"
 elif [ -f "/app/stylelint.config.js" ]
 then
   echo "Using app config (stylelint.config.js)"
-  stylelint --config /app/stylelint.config.js --fix "strict" "/app/**/*.{css,scss}"
+  stylelint --config /app/stylelint.config.js --fix "/app/**/*.{css,scss}"
 elif [ -f "/app/.stylelintrc.js" ]
 then
   echo "Using app config (.stylelintrc.js)"
-  stylelint --config /app/.stylelintrc.js --fix "strict" "/app/**/*.{css,scss}"
+  stylelint --config /app/.stylelintrc.js --fix "/app/**/*.{css,scss}"
 elif [ -f "/app/stylelint.config.mjs" ]
 then
   echo "Using app config (stylelint.config.mjs)"
-  stylelint --config /app/stylelint.config.mjs --fix "strict" "/app/**/*.{css,scss}"
+  stylelint --config /app/stylelint.config.mjs --fix "/app/**/*.{css,scss}"
 elif [ -f "/app/.stylelintrc.mjs" ]
 then
   echo "Using app config (.stylelintrc.mjs)"
-  stylelint --config /app/.stylelintrc.mjs --fix "strict" "/app/**/*.{css,scss}"
+  stylelint --config /app/.stylelintrc.mjs --fix "/app/**/*.{css,scss}"
 elif [ -f "/app/stylelint.config.cjs" ]
 then
   echo "Using app config (stylelint.config.cjs)"
-  stylelint --config /app/stylelint.config.cjs --fix "strict" "/app/**/*.{css,scss}"
+  stylelint --config /app/stylelint.config.cjs --fix "/app/**/*.{css,scss}"
 elif [ -f "/app/.stylelintrc.cjs" ]
 then
   echo "Using app config (.stylelintrc.cjs)"
-  stylelint --config /app/.stylelintrc.cjs --fix "strict" "/app/**/*.{css,scss}"
+  stylelint --config /app/.stylelintrc.cjs --fix "/app/**/*.{css,scss}"
 elif [ -f "/app/.stylelintrc.json" ]
 then
   echo "Using app config (.stylelintrc.json)"
-  stylelint --config /app/.stylelintrc.json --fix "strict" "/app/**/*.{css,scss}"
+  stylelint --config /app/.stylelintrc.json --fix "/app/**/*.{css,scss}"
 elif [ -f "/app/.stylelintrc.yml" ]
 then
   echo "Using app config (.stylelintrc.yml)"
-  stylelint --config /app/.stylelintrc.yml --fix "strict" "/app/**/*.{css,scss}"
+  stylelint --config /app/.stylelintrc.yml --fix "/app/**/*.{css,scss}"
 elif [ -f "/app/.stylelintrc.yaml" ]
 then
   echo "Using app config (.stylelintrc.yaml)"
-  stylelint --config /app/.stylelintrc.yaml --fix "strict" "/app/**/*.{css,scss}"
+  stylelint --config /app/.stylelintrc.yaml --fix "/app/**/*.{css,scss}"
 else
   echo "Using default config"
-  stylelint --config /home/app/.stylelintrc --fix "strict" "/app/**/*.{css,scss}"
+  stylelint --config /home/app/.stylelintrc --fix "/app/**/*.{css,scss}"
 fi
 echo
 
