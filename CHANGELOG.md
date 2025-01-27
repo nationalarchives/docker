@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated Stylelint to [16.13.2](https://github.com/stylelint/stylelint/releases/tag/16.13.2)
+- Updated Stylelint to [16.14.0](https://github.com/stylelint/stylelint/releases/tag/16.14.0)
 
 ### Deprecated
 
