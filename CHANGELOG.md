@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Stylelint to [16.14.0](https://github.com/stylelint/stylelint/releases/tag/16.14.0)
 - Updated Black to [25.1.0](https://github.com/psf/black/releases/tag/25.1.0)
 - Updated isort to [6.0.0](https://github.com/PyCQA/isort/releases/tag/6.0.0)
-- Updated Prettier to [3.5.1](https://github.com/prettier/prettier/releases/tag/3.5.1)
+- Updated Prettier to [3.5.2](https://github.com/prettier/prettier/releases/tag/3.5.2)
 
 ### Deprecated
 
