@@ -24,8 +24,5 @@ runs:
       shell: bash
 
     - name: Scan DockerFile
-      run: |
-        ./wizcli --help
-        ./wizcli iac scan --help
-        ./wizcli iac scan --path ${{ inputs.dockerfile-location }} --type dockerfile
+      run: ./wizcli iac scan --path ${{ inputs.dockerfile-location }} --types Dockerfile --tag ${{ inputs.dockerfile-location }} --tag ${{ github.sha }}
       shell: bash
