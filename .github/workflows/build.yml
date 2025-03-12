@@ -77,7 +77,7 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
 
-      - name: Build and push Docker images
+      - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
@@ -147,7 +147,7 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
 
-      - name: Build and push Docker images
+      - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
@@ -169,7 +169,7 @@ jobs:
     name: Python Django
     needs: python
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     env:
       IMAGE_NAME: tna-python-django
       DOCKERFILE_LOCATION: docker/tna-python-django
@@ -208,7 +208,7 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
 
-      - name: Build and push Docker images
+      - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
@@ -230,7 +230,7 @@ jobs:
     name: Python Django (root)
     needs: python-root
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     env:
       IMAGE_NAME: tna-python-django-root
       DOCKERFILE_LOCATION: docker/tna-python-django
@@ -270,7 +270,7 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
 
-      - name: Build and push Docker images
+      - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}
@@ -292,7 +292,7 @@ jobs:
     name: Python Dev
     needs: python-root
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     env:
       IMAGE_NAME: tna-python-dev
       DOCKERFILE_LOCATION: docker/tna-python-dev
@@ -400,7 +400,7 @@ jobs:
       #     echo "Checking flake8..."
       #     flake8 --config=.flake8 tests
 
-      - name: Build and push Docker images
+      - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
           image-id: ${{ steps.build.outputs.image-id }}

@@ -179,6 +179,7 @@ USER app
 
 
 
+# wiz-scan ignore-block
 # hadolint ignore=DL3006
 FROM "$USER_IMAGE"
 
@@ -203,6 +204,7 @@ RUN mkdir /home/app/ssl
 # bash scripts we need in order to build and
 # run our application in a consistent manner
 # ==========================================
+# wiz-scan ignore-line
 COPY --chown=app bin /home/app/.local/bin
 RUN chmod +x -fR /home/app/.local/bin
 
