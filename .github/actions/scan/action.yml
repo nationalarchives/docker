@@ -23,3 +23,11 @@ runs:
       uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: "trivy-results.sarif"
+
+    - name: Scan image with Wiz
+      run: |
+        ./wizcli docker scan --help
+        ./wizcli docker scan --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
+        ./wizcli docker tag --help
+        # ./wizcli docker tag --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
+      shell: bash

@@ -23,6 +23,6 @@ runs:
         shellcheck --external-sources --exclude=SC2148 ./Dockerfile
       shell: bash
 
-    - name: Scan DockerFile
+    - name: Scan DockerFile with Wiz
       run: ./wizcli iac scan --path ${{ inputs.dockerfile-location }} --types Dockerfile --tag ${{ inputs.dockerfile-location }}
       shell: bash
