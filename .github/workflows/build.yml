@@ -39,6 +39,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Wiz
+        uses: ./.github/actions/setup-wiz
+        with:
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
+
       - name: Lint Dockerfile
         uses: ./.github/actions/lint
         with:
@@ -101,6 +107,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Wiz
+        uses: ./.github/actions/setup-wiz
+        with:
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
 
       - name: Lint Dockerfile
         uses: ./.github/actions/lint
@@ -167,6 +179,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Wiz
+        uses: ./.github/actions/setup-wiz
+        with:
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
+
       - name: Lint Dockerfile
         uses: ./.github/actions/lint
         with:
@@ -221,6 +239,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Wiz
+        uses: ./.github/actions/setup-wiz
+        with:
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
 
       - name: Lint Dockerfile
         uses: ./.github/actions/lint
@@ -277,6 +301,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Wiz
+        uses: ./.github/actions/setup-wiz
+        with:
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
 
       - name: Lint Dockerfile
         uses: ./.github/actions/lint
