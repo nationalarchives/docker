@@ -114,7 +114,6 @@ jobs:
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002
-          disable-wiz: ${{ env.DISABLE_WIZ }}
 
       - name: Test Docker image build
         id: build
@@ -160,7 +159,6 @@ jobs:
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
-          disable-wiz: ${{ env.DISABLE_WIZ }}
 
   python-django:
     name: Python Django
@@ -243,7 +241,6 @@ jobs:
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002
-          disable-wiz: ${{ env.DISABLE_WIZ }}
 
       - name: Test Docker image build
         id: build
@@ -280,7 +277,6 @@ jobs:
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
-          disable-wiz: ${{ env.DISABLE_WIZ }}
 
   python-dev:
     name: Python Dev
@@ -302,7 +298,6 @@ jobs:
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002,DL3008,SC1091
-          disable-wiz: ${{ env.DISABLE_WIZ }}
 
       - name: Test Docker image build
         id: build
