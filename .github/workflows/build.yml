@@ -104,21 +104,17 @@ jobs:
       DOCKERFILE_LOCATION: docker/tna-python
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python
       USER_IMAGE: root
+      DISABLE_WIZ: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Wiz
-        uses: ./.github/actions/setup-wiz
-        with:
-          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
-          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
 
       - name: Lint Dockerfile
         uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002
+          disable-wiz: ${{ env.DISABLE_WIZ }}
 
       - name: Test Docker image build
         id: build
@@ -164,6 +160,7 @@ jobs:
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
+          disable-wiz: ${{ env.DISABLE_WIZ }}
 
   python-django:
     name: Python Django
@@ -236,21 +233,17 @@ jobs:
       DOCKERFILE_LOCATION: docker/tna-python-django
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python-root
       USER_IMAGE: root
+      DISABLE_WIZ: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Wiz
-        uses: ./.github/actions/setup-wiz
-        with:
-          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
-          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
 
       - name: Lint Dockerfile
         uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002
+          disable-wiz: ${{ env.DISABLE_WIZ }}
 
       - name: Test Docker image build
         id: build
@@ -287,6 +280,7 @@ jobs:
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
+          disable-wiz: ${{ env.DISABLE_WIZ }}
 
   python-dev:
     name: Python Dev
@@ -298,21 +292,17 @@ jobs:
       DOCKERFILE_LOCATION: docker/tna-python-dev
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python-root
       USER_IMAGE: root
+      DISABLE_WIZ: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup Wiz
-        uses: ./.github/actions/setup-wiz
-        with:
-          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
-          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
 
       - name: Lint Dockerfile
         uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002,DL3008,SC1091
+          disable-wiz: ${{ env.DISABLE_WIZ }}
 
       - name: Test Docker image build
         id: build
@@ -417,3 +407,4 @@ jobs:
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
+          disable-wiz: ${{ env.DISABLE_WIZ }}
