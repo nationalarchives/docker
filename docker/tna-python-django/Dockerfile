@@ -1,6 +1,7 @@
 ARG BASE_IMAGE=ghcr.io/nationalarchives/tna-python
 ARG BASE_IMAGE_TAG=latest
 
+# wiz-scan ignore-line
 FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG"
 
 # ==========================================
@@ -28,6 +29,7 @@ RUN set -eux; \
 # in the parent Docker image, but with extra
 # Django-specific commands
 # ==========================================
+# wiz-scan ignore-line
 COPY --chown=app bin/tna-build bin/tna-run bin/manage /home/app/.local/bin/
 
 # ==========================================
@@ -38,6 +40,7 @@ COPY --chown=app bin/tna-build bin/tna-run bin/manage /home/app/.local/bin/
 # should still still work albeit not with no
 # output
 # ==========================================
+# wiz-scan ignore-line
 COPY --chown=app lib/manage.py /app
 
 # ==========================================

@@ -22,3 +22,8 @@ runs:
         [ -d "./bin" ] && shellcheck --external-sources --exclude=SC1091 ./bin/*
         shellcheck --external-sources --exclude=SC2148 ./Dockerfile
       shell: bash
+
+    - name: Scan DockerFile with Wiz
+      if: ${{ env.DISABLE_WIZ != 'true' }}
+      run: ./wizcli iac scan --path ${{ inputs.dockerfile-location }} --types Dockerfile --tag ${{ inputs.dockerfile-location }} --ignore-comments
+      shell: bash

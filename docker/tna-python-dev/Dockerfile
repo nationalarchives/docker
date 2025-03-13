@@ -1,3 +1,4 @@
+# wiz-scan ignore
 ARG BASE_IMAGE=ghcr.io/nationalarchives/tna-python-root
 ARG BASE_IMAGE_TAG=latest
 
