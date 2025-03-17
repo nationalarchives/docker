@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - The `ENVIRONMENT` variable has now changed to `RUNTIME` - both will still work for now but `ENVIRONMENT` will be deprecated in a future release
+- Updated `curl` and `libcurl4` packages
 
 ### Deprecated
 ### Removed
