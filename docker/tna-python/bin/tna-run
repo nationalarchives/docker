@@ -33,7 +33,7 @@ then
 fi
 
 # Add support for the older ENVIRONMENT variable
-if [ -n "$ENVIRONMENT" ] && [ -z "$RUNTIME" ]
+if [ "$ENVIRONMENT" != 'production' ]
 then
   RUNTIME=$ENVIRONMENT
 fi

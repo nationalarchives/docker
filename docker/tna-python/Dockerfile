@@ -43,8 +43,13 @@ HEALTHCHECK CMD curl --fail http://localhost:8080/healthcheck/live/ || exit 1
 # which ensures all our production instances
 # will act in a similar manner, and have the
 # same setup and configuration
+# "ENVIRONMENT" is the previous name for the
+# runtime variable and is kept for backwards
+# compatibility - it will be deprecated in a
+# future release
 # ==========================================
 ENV RUNTIME=production
+ENV ENVIRONMENT=production
 
 # ==========================================
 # Set Python up in a consistent manner, with
