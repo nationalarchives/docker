@@ -38,14 +38,13 @@ EXPOSE 8080/tcp
 HEALTHCHECK CMD curl --fail http://localhost:8080/healthcheck/live/ || exit 1
 
 # ==========================================
-# The default environment type is production
-# and something different, like "develop" or
-# "staging" will have to be given for others
-# which provides us a failsafe to ensure the
-# all our production instances will act in a
-# similar way and have the same log level
+# The default runtime option is "production"
+# with the only other option being "develop"
+# which ensures all our production instances
+# will act in a similar manner, and have the
+# same setup and configuration
 # ==========================================
-ENV ENVIRONMENT=production
+ENV RUNTIME=production
 
 # ==========================================
 # Set Python up in a consistent manner, with

@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- The `ENVIRONMENT` variable has now changed to `RUNTIME` - both will still work for now but `ENVIRONMENT` will be deprecated in a future release
+
 ### Deprecated
 ### Removed
 ### Fixed

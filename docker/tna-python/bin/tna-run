@@ -32,11 +32,17 @@ then
   exit 1
 fi
 
-# Convert $ENVIRONMENT to lowercase
-ENVIRONMENT=$(echo "$ENVIRONMENT" | tr '[:upper:]' '[:lower:]')
+# Add support for the older ENVIRONMENT variable
+if [ -n "$ENVIRONMENT" ] && [ -z "$RUNTIME" ]
+then
+  RUNTIME=$ENVIRONMENT
+fi
+
+# Convert $RUNTIME to lowercase
+RUNTIME=$(echo "$RUNTIME" | tr '[:upper:]' '[:lower:]')
 
 # If there is an $NPM_DEVELOP_COMMAND and we are running a development environment, run the development command now
-if [ "$ENVIRONMENT" == 'develop' ] && [ -n "$NPM_DEVELOP_COMMAND" ]
+if [ "$RUNTIME" == 'develop' ] && [ -n "$NPM_DEVELOP_COMMAND" ]
 then
   tna-node "$NPM_DEVELOP_COMMAND"
 fi
@@ -55,10 +61,10 @@ DEFAULT_THREADS=$((DEFAULT_WORKERS * 2))
 # Set the port to 8080 if one is not defined
 [[ -z $PORT ]] && PORT=8080
 
-if [ "$ENVIRONMENT" == 'develop' ]
+if [ "$RUNTIME" == 'develop' ]
 then
   # Development environment
-  echo "ENVIRONMENT is develop"
+  echo "RUNTIME is develop"
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
   [[ -z $WORKERS ]] && WORKERS=3
   [[ -z $THREADS ]] && THREADS=1
@@ -95,7 +101,7 @@ then
   # Fall back to using Gunicorn
   echo "No framework found, using Gunicorn to serve development application..."
   poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --bind "0.0.0.0:$PORT" --worker-class="$WORKER_CLASS" --reload
-elif [ "$ENVIRONMENT" == 'production' ]
+elif [ "$RUNTIME" == 'production' ]
 then
   # Production environment
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warn
@@ -113,7 +119,7 @@ fi
 if [ "$ALLOW_INSECURE" = 'true' ]
 then
   # Start the server
-  echo "Starting $ENVIRONMENT server (insecure)..."
+  echo "Starting $RUNTIME server (insecure)..."
   poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind "0.0.0.0:$PORT" --worker-class="$WORKER_CLASS"
 else
   [[ -z $SSL_KEY_FILE ]] && SSL_KEY_FILE=/home/app/ssl/key.pem
@@ -132,6 +138,6 @@ else
   fi
 
   # Start the server
-  echo "Starting $ENVIRONMENT server..."
+  echo "Starting $RUNTIME server..."
   poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind "0.0.0.0:$PORT" --worker-class="$WORKER_CLASS" --keyfile="$SSL_KEY_FILE" --certfile="$SSL_CERTIFICATE_FILE"
 fi
