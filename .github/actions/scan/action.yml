@@ -30,5 +30,8 @@ runs:
         ./wizcli docker scan --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
         docker image list
         docker images --digests
+        docker pull ${{ inputs.image-id }}:${{ inputs.image-tag }}
+        docker image list
+        docker images --digests
         # ./wizcli docker tag --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
       shell: bash
