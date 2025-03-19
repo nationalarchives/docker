@@ -7,9 +7,6 @@ inputs:
   ignore-linting-rules:
     required: false
     type: string
-  image-tag:
-    required: true
-    type: string
 
 runs:
   using: "composite"
@@ -28,5 +25,5 @@ runs:
 
     - name: Scan DockerFile with Wiz
       if: ${{ env.DISABLE_WIZ != 'true' }}
-      run: ./wizcli iac scan --path ${{ inputs.dockerfile-location }} --types Dockerfile --tag ${{ inputs.image-tag }} --ignore-comments
+      run: ./wizcli iac scan --path ${{ inputs.dockerfile-location }} --types Dockerfile --tag ${{ inputs.dockerfile-location }} --ignore-comments
       shell: bash

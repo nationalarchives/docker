@@ -45,6 +45,11 @@ jobs:
           wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
           wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
 
+      - name: Lint Dockerfile
+        uses: ./.github/actions/lint
+        with:
+          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+
       - name: Test Docker image build
         id: build
         uses: ./.github/actions/test-build
@@ -53,12 +58,6 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
-
-      - name: Lint Dockerfile
-        uses: ./.github/actions/lint
-        with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          image-tag: "${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}"
 
       - name: Test Flask
         uses: ./.github/actions/test-container
@@ -110,6 +109,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Lint Dockerfile
+        uses: ./.github/actions/lint
+        with:
+          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          ignore-linting-rules: DL3002
+
       - name: Test Docker image build
         id: build
         uses: ./.github/actions/test-build
@@ -118,13 +123,6 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
-
-      - name: Lint Dockerfile
-        uses: ./.github/actions/lint
-        with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          ignore-linting-rules: DL3002
-          image-tag: "${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}"
 
       - name: Test Flask
         uses: ./.github/actions/test-container
@@ -182,6 +180,11 @@ jobs:
           wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
           wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
 
+      - name: Lint Dockerfile
+        uses: ./.github/actions/lint
+        with:
+          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+
       - name: Test Docker image build
         id: build
         uses: ./.github/actions/test-build
@@ -190,12 +193,6 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
-
-      - name: Lint Dockerfile
-        uses: ./.github/actions/lint
-        with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          image-tag: "${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}"
 
       - name: Test Django
         uses: ./.github/actions/test-container
@@ -239,6 +236,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Lint Dockerfile
+        uses: ./.github/actions/lint
+        with:
+          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          ignore-linting-rules: DL3002
+
       - name: Test Docker image build
         id: build
         uses: ./.github/actions/test-build
@@ -247,13 +250,6 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
-
-      - name: Lint Dockerfile
-        uses: ./.github/actions/lint
-        with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          ignore-linting-rules: DL3002
-          image-tag: "${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}"
 
       - name: Test Django
         uses: ./.github/actions/test-container
@@ -297,6 +293,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Lint Dockerfile
+        uses: ./.github/actions/lint
+        with:
+          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          ignore-linting-rules: DL3002,DL3008,SC1091
+
       - name: Test Docker image build
         id: build
         uses: ./.github/actions/test-build
@@ -305,13 +307,6 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
-
-      - name: Lint Dockerfile
-        uses: ./.github/actions/lint
-        with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          ignore-linting-rules: DL3002,DL3008,SC1091
-          image-tag: "${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}"
 
       # - uses: actions/setup-node@v4
       # - uses: actions/setup-python@v5
