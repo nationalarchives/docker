@@ -28,6 +28,6 @@ runs:
       if: ${{ env.DISABLE_WIZ != 'true' }}
       run: |
         docker pull ${{ inputs.image-id }}:${{ inputs.image-tag }}
-        ./wizcli docker scan --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
+        ./wizcli docker scan --image ${{ inputs.image-id }}:${{ inputs.image-tag }} --driver mountWithLayers
         ./wizcli docker tag --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
       shell: bash
