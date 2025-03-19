@@ -14,7 +14,13 @@ then
   exit 1
 fi
 
-[[ -z $NODE_ENV ]] && NODE_ENV=$ENVIRONMENT
+if [ -n "$RUNTIME" ]
+then
+  [[ -z $NODE_ENV ]] && NODE_ENV=$RUNTIME
+elif [ -n "$ENVIRONMENT" ]
+then
+  [[ -z $NODE_ENV ]] && NODE_ENV=$ENVIRONMENT
+fi
 
 if [ -n "$NPM_BUILD_COMMAND" ] && [ -f "/app/package.json" ]
 then

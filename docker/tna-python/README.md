@@ -15,12 +15,12 @@ This image requires you have the following files in the root of your project:
 
 ## Environment variables
 
-The two default environment names are:
+The two default runtime names are:
 
 - `production` - used when deployed on any hosted service such as AWS
 - `develop` - used for local development
 
-These can be used by setting the `ENVIRONMENT` environment variable.
+These can be used by setting the `RUNTIME` environment variable.
 
 Any other alphanumeric string is considered a valid environment name but won't have predefined settings.
 
@@ -32,7 +32,7 @@ Each environment has some default values but all can be overwritten:
 | `WORKERS`              | Number of worker processes[^1]                                            | `(cpu * 2) + 1`          | `3`                      | `(cpu * 2) + 1`          |
 | `THREADS`              | Number of threads[^2]                                                     | `(cpu * 2) + 1`          | `3`                      | `(cpu * 2) + 1`          |
 | `LOG_LEVEL`            | The log level to stream to the console[^3]                                | `warn`                   | `debug`                  | `info`                   |
-| `NODE_ENV`             | The node environment[^4]                                                  | Mirrors `ENVIRONMENT`    | Mirrors `ENVIRONMENT`    | Mirrors `ENVIRONMENT`    |
+| `NODE_ENV`             | The node environment[^4]                                                  | Mirrors `RUNTIME`        | Mirrors `RUNTIME`        | Mirrors `RUNTIME`        |
 | `NPM_BUILD_COMMAND`    | The npm script to run to build static assets                              | _none_                   | _none_                   | _none_                   |
 | `NPM_DEVELOP_COMMAND`  | The npm script to run in development environments                         | _ignored_                | _none_                   | _ignored_                |
 | `TIMEOUT`              | The number of seconds before a request is terminated[^5]                  | `30`                     | `600`                    | `30`                     |
@@ -105,9 +105,9 @@ tna-run my_app:app
 #### Process
 
 1. In `tna-python-django`, run all database migrations
-1. If `$ENVIRONMENT` is set to `develop` and `$NPM_DEVELOP_COMMAND` has been defined then run `tna-node "$NPM_DEVELOP_COMMAND"` (See [tna-node](#tna-node))
+1. If `$RUNTIME` is set to `develop` and `$NPM_DEVELOP_COMMAND` has been defined then run `tna-node "$NPM_DEVELOP_COMMAND"` (See [tna-node](#tna-node))
 1. Calculate the default worker and thread count based on the number of CPU cores
-1. If `$ENVIRONMENT` is set to `develop`:
+1. If `$RUNTIME` is set to `develop`:
    1. If Django is installed, run the Django development server
    1. Else if Flask is installed, run the Flask development server
    1. Else if FastAPI is installed, run uvicorn with reloading
@@ -122,7 +122,7 @@ For frameworks that require or can use an ASGI rather than a WSGI you can use `t
 tna-run -a my_app:app
 ```
 
-When working in a development environment (`ENVIRONMENT=production`) and using FastAPI, Uvicorn is used as the ASGI for `tna-run`.
+When working in a development environment (`RUNTIME=production`) and using FastAPI, Uvicorn is used as the ASGI for `tna-run`.
 
 When using FastAPI in production, `tna-run -a` should be explicitly specified so Gunicron can use the Uvicorn worker class.
 

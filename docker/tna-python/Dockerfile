@@ -38,13 +38,17 @@ EXPOSE 8080/tcp
 HEALTHCHECK CMD curl --fail http://localhost:8080/healthcheck/live/ || exit 1
 
 # ==========================================
-# The default environment type is production
-# and something different, like "develop" or
-# "staging" will have to be given for others
-# which provides us a failsafe to ensure the
-# all our production instances will act in a
-# similar way and have the same log level
+# The default runtime option is "production"
+# with the only other option being "develop"
+# which ensures all our production instances
+# will act in a similar manner, and have the
+# same setup and configuration
+# "ENVIRONMENT" is the previous name for the
+# runtime variable and is kept for backwards
+# compatibility - it will be deprecated in a
+# future release
 # ==========================================
+ENV RUNTIME=production
 ENV ENVIRONMENT=production
 
 # ==========================================
@@ -77,7 +81,7 @@ ENV PIP_NO_CACHE_DIR=true \
 # and what version is used
 # ==========================================
 ENV POETRY_HOME=/home/app/.local \
-    POETRY_VERSION=1.8.5 \
+    POETRY_VERSION=2.1.1 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=true \
     POETRY_VIRTUALENVS_IN_PROJECT=false
@@ -106,7 +110,7 @@ RUN set -eux; \
     \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u8 curl=7.88.1-10+deb12u8 build-essential=12.9 libmagic-dev=1:5.44-3; \
+    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u5 curl=7.88.1-10+deb12u5 build-essential=12.9 libmagic-dev=1:5.44-3; \
     \
     apt-get clean; \
     apt-get autoremove -y --purge; \
