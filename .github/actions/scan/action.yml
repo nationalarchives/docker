@@ -33,11 +33,11 @@ runs:
         docker rmi ${{ inputs.image-id }}:${{ inputs.image-tag }}
 
         docker pull --platform linux/arm64 ${{ inputs.image-id }}:${{ inputs.image-tag }}
-        ./wizcli docker scan ${{ inputs.image-id }}:${{ inputs.image-tag }}
+        ./wizcli docker scan --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
         docker rmi ${{ inputs.image-id }}:${{ inputs.image-tag }}
 
         docker pull --platform linux/amd64 ${{ inputs.image-id }}:${{ inputs.image-tag }}
-        ./wizcli docker scan ${{ inputs.image-id }}:${{ inputs.image-tag }}
+        ./wizcli docker scan --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
         docker rmi ${{ inputs.image-id }}:${{ inputs.image-tag }}
 
         # ./wizcli docker scan --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
