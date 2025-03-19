@@ -28,5 +28,7 @@ runs:
       if: ${{ env.DISABLE_WIZ != 'true' }}
       run: |
         ./wizcli docker scan --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
+        docker image list
+        docker images --digests
         # ./wizcli docker tag --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
       shell: bash
