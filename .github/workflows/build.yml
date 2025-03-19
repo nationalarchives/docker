@@ -58,7 +58,7 @@ jobs:
         uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          image-tag: ${{ steps.build.outputs.tag }}
+          image-tag: "${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}"
 
       - name: Test Flask
         uses: ./.github/actions/test-container
@@ -124,7 +124,7 @@ jobs:
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002
-          image-tag: ${{ steps.build.outputs.tag }}
+          image-tag: "${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}"
 
       - name: Test Flask
         uses: ./.github/actions/test-container
@@ -195,7 +195,7 @@ jobs:
         uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
-          image-tag: ${{ steps.build.outputs.tag }}
+          image-tag: "${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}"
 
       - name: Test Django
         uses: ./.github/actions/test-container
@@ -253,7 +253,7 @@ jobs:
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002
-          image-tag: ${{ steps.build.outputs.tag }}
+          image-tag: "${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}"
 
       - name: Test Django
         uses: ./.github/actions/test-container
@@ -311,7 +311,7 @@ jobs:
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002,DL3008,SC1091
-          image-tag: ${{ steps.build.outputs.tag }}
+          image-tag: "${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}"
 
       # - uses: actions/setup-node@v4
       # - uses: actions/setup-python@v5
