@@ -158,6 +158,12 @@ RUN set -eux; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
 
 # ==========================================
+# Uninstall libcurl4 and curl as they are no
+# longer needed
+# ==========================================
+RUN apt-get remove -y libcurl4 curl
+
+# ==========================================
 # Change the image current working directory
 # to the new /app directory we just created,
 # ready for our application code
