@@ -7,6 +7,9 @@ inputs:
   image-tag:
     required: true
     type: string
+  wiz-project-id:
+    required: true
+    type: string
 
 runs:
   using: "composite"
@@ -28,6 +31,6 @@ runs:
       if: ${{ env.DISABLE_WIZ != 'true' }}
       run: |
         docker pull ${{ inputs.image-id }}:${{ inputs.image-tag }}
-        ./wizcli docker scan --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
-        ./wizcli docker tag --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
+        ./wizcli docker scan --image ${{ inputs.image-id }}:${{ inputs.image-tag }} --project ${{ inputs.wiz-project-id }}
+        ./wizcli docker tag --image ${{ inputs.image-id }}:${{ inputs.image-tag }} --project ${{ inputs.wiz-project-id }}
       shell: bash

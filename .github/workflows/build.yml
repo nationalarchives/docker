@@ -49,6 +49,7 @@ jobs:
         uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
         id: build
@@ -94,6 +95,7 @@ jobs:
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
   python-root:
     name: Python (root)
@@ -114,6 +116,7 @@ jobs:
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
         id: build
@@ -159,6 +162,7 @@ jobs:
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
   python-django:
     name: Python Django
@@ -184,6 +188,7 @@ jobs:
         uses: ./.github/actions/lint
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
         id: build
@@ -220,6 +225,7 @@ jobs:
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
   python-django-root:
     name: Python Django (root)
@@ -241,6 +247,7 @@ jobs:
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
         id: build
@@ -277,6 +284,7 @@ jobs:
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
   python-dev:
     name: Python Dev
@@ -298,6 +306,7 @@ jobs:
         with:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           ignore-linting-rules: DL3002,DL3008,SC1091
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
         id: build
@@ -402,3 +411,4 @@ jobs:
         with:
           image-id: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
