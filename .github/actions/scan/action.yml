@@ -32,5 +32,5 @@ runs:
       run: |
         docker pull ${{ inputs.image-id }}:${{ inputs.image-tag }}
         ./wizcli docker scan --image ${{ inputs.image-id }}:${{ inputs.image-tag }} --project ${{ inputs.wiz-project-id }}
-        ./wizcli docker tag --image ${{ inputs.image-id }}:${{ inputs.image-tag }} --project ${{ inputs.wiz-project-id }}
+        ./wizcli docker tag --image ${{ inputs.image-id }}:${{ inputs.image-tag }}
       shell: bash
