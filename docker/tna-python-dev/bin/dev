@@ -7,7 +7,7 @@ poetry install --no-root --with dev || true
 if [ -f "/app/package.json" ]
 then
   . tna-nvm
-  npm install -g prettier@3.5.3 eslint@8.56.0 stylelint@16.16.0 stylelint-config-standard-scss@14.0.0 stylelint-selector-bem-pattern@4.0.1 stylelint-order@6.0.4
+  npm install -g prettier@3.5.3 eslint@8.56.0 stylelint@16.17.0 stylelint-config-standard-scss@14.0.0 stylelint-selector-bem-pattern@4.0.1 stylelint-order@6.0.4
   npm install
 fi
 
