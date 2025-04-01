@@ -33,6 +33,7 @@ then
 fi
 
 # Add support for the older ENVIRONMENT variable
+# TODO: DEPRECATE THIS LATER ON
 if [ "$ENVIRONMENT" != 'production' ]
 then
   RUNTIME=$ENVIRONMENT
@@ -116,7 +117,7 @@ fi
 
 [[ -z $ALLOW_INSECURE ]] && ALLOW_INSECURE='false'
 
-if [ "$ALLOW_INSECURE" = 'true' ]
+if [ "$ALLOW_INSECURE" == 'true' ]
 then
   # Start the server
   echo "Starting $RUNTIME server (insecure)..."

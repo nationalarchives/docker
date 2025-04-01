@@ -46,4 +46,4 @@ COPY --chown=app lib/manage.py /app
 # ==========================================
 # Allow all our scripts to be executable
 # ==========================================
-RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run /home/app/.local/bin/manage manage.py
+RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run /home/app/.local/bin/manage /home/app/.local/bin/migrate manage.py

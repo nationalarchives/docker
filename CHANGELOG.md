@@ -8,12 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.8.0...HEAD)
 
 ### Added
+
+- For `tna-python-django`, create a separate `migrate` script for applying database migrations
+
 ### Changed
 
 - The `ENVIRONMENT` variable has now changed to `RUNTIME` - both will still work for now but `ENVIRONMENT` will be deprecated in a future release
 - Updated `curl` and `libcurl4` packages
 - Updated Stylelint to [16.17.0](https://github.com/stylelint/stylelint/releases/tag/16.17.0)
 - Updated Poetry to [2.1.2](https://github.com/python-poetry/poetry/releases/tag/2.1.2)
+- Only run Django migrations automatically when `$RUNTIME` is set to `develop`
 
 ### Deprecated
 ### Removed
