@@ -22,16 +22,14 @@ runs:
         # gpg --keyserver keyserver.ubuntu.com --recv-keys CE4AE4BAD12EE02C
 
         # Download files to perform signature verification
-        mkdir tmp
-        curl -Lo tmp/wizcli-sha256 https://downloads.wiz.io/wizcli/latest/wizcli-linux-amd64-sha256
-        curl -Lo tmp/wizcli-sha256.sig https://downloads.wiz.io/wizcli/latest/wizcli-linux-amd64-sha256.sig
+        curl -Lo /tmp/wizcli-sha256 https://downloads.wiz.io/wizcli/latest/wizcli-linux-amd64-sha256
+        curl -Lo /tmp/wizcli-sha256.sig https://downloads.wiz.io/wizcli/latest/wizcli-linux-amd64-sha256.sig
 
         # Verify signature
-        gpg --verify tmp/wizcli-sha256.sig tmp/wizcli-sha256
+        gpg --verify /tmp/wizcli-sha256.sig /tmp/wizcli-sha256
 
         # Verify SHA256
-        echo "$(cat tmp/wizcli-sha256) wizcli" | sha256sum --check
-        rm -fR tmp
+        echo "$(cat /tmp/wizcli-sha256) wizcli" | sha256sum --check
         chmod +x wizcli
       shell: bash
 
