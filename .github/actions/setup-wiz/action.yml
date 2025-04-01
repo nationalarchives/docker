@@ -16,10 +16,10 @@ runs:
         curl -Lo wizcli https://downloads.wiz.io/wizcli/latest/wizcli-linux-amd64
 
         # Import the public key
-        curl -Lo public_key.asc https://downloads.wiz.io/wizcli/public_key.asc
-        gpg --import public_key.asc
+        # curl -Lo public_key.asc https://downloads.wiz.io/wizcli/public_key.asc
+        # gpg --import public_key.asc
         # (OR) Ubuntu's Keyserver
-        # gpg --keyserver keyserver.ubuntu.com --recv-keys CE4AE4BAD12EE02C
+        gpg --keyserver keyserver.ubuntu.com --recv-keys CE4AE4BAD12EE02C
 
         # Download files to perform signature verification
         cd /tmp
