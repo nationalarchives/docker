@@ -31,6 +31,7 @@ runs:
         # Verify SHA256
         echo "$(cat /tmp/wizcli-sha256) wizcli" | sha256sum --check
         chmod +x wizcli
+        ./wizcli version
       shell: bash
 
     - name: Authenticate Wiz API
