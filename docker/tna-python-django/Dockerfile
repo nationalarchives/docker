@@ -30,7 +30,7 @@ RUN set -eux; \
 # Django-specific commands
 # ==========================================
 # wiz-scan ignore-line
-COPY --chown=app bin/tna-build bin/tna-run bin/manage /home/app/.local/bin/
+COPY --chown=app bin/tna-build bin/tna-run bin/manage bin/migrate /home/app/.local/bin/
 
 # ==========================================
 # manage.py is the recommended Django way of
