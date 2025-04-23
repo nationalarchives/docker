@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Stylelint to [16.19.0](https://github.com/stylelint/stylelint/releases/tag/16.19.0)
 - Updated Poetry to [2.1.2](https://github.com/python-poetry/poetry/releases/tag/2.1.2)
 - Only run Django migrations automatically when `$RUNTIME` is set to `develop`
+- Updated Uvicorn to [0.34.2](https://github.com/encode/uvicorn/releases/tag/0.34.2)
 
 ### Deprecated
 ### Removed

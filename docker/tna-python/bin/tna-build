@@ -32,7 +32,7 @@ then
 fi
 
 poetry add gunicorn@23.0.0
-poetry add uvicorn@0.34.0
+poetry add uvicorn@0.34.2
 poetry add uvicorn-worker@0.3.0
 poetry install --no-root --no-interaction
 
