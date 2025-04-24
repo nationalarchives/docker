@@ -18,7 +18,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # been created by the container after it has
 # finished installing and configuring itself
 # ==========================================
-HEALTHCHECK CMD [[ -f /tmp/up ]]
+HEALTHCHECK CMD test -f /tmp/up
 
 # ==========================================
 # Install and configure Docker, removing all
