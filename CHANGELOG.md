@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.8.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.9.0...HEAD)
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.9.0](https://github.com/nationalarchives/docker/compare/v0.8.0...v0.9.0) - 2025-04-24
 
 ### Added
 
@@ -22,11 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Uvicorn to [0.34.2](https://github.com/encode/uvicorn/releases/tag/0.34.2)
 - Updated stylelint-order to [7.0.0](https://github.com/hudochenkov/stylelint-order/releases/tag/7.0.0)
 - Updated nvm to [v0.40.3](https://github.com/nvm-sh/nvm/releases/tag/v0.40.3)
-
-### Deprecated
-### Removed
-### Fixed
-### Security
 
 ## [0.8.0](https://github.com/nationalarchives/docker/compare/v0.7.0...v0.8.0) - 2025-03-12
 
