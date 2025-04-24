@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Only run Django migrations automatically when `$RUNTIME` is set to `develop`
 - Updated Uvicorn to [0.34.2](https://github.com/encode/uvicorn/releases/tag/0.34.2)
 - Updated stylelint-order to [7.0.0](https://github.com/hudochenkov/stylelint-order/releases/tag/7.0.0)
+- Updated nvm to [v0.40.3](https://github.com/nvm-sh/nvm/releases/tag/v0.40.3)
 
 ### Deprecated
 ### Removed
