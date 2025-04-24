@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - For `tna-python-django`, create a separate `migrate` script for applying database migrations
+- Added a heathcheck for `dev` containers
 
 ### Changed
 
