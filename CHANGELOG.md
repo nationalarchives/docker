@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `outdated` command to `tna-python-dev` to show outdated packages
 
 ### Changed
+
+- Updated Stylelint to [16.19.1](https://github.com/stylelint/stylelint/releases/tag/16.19.1)
+
 ### Deprecated
 ### Removed
 ### Fixed
