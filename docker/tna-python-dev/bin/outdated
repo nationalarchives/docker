@@ -1,0 +1,22 @@
+#!/bin/bash
+
+cd /app || return
+
+if [ -z "$1" ] || [ "$1" == "poetry" ]
+then
+  if [ -f "/app/pyproject.toml" ]
+  then
+    echo "Listing Poetry dependencies..."
+    poetry show --outdated --tree
+  fi
+fi
+
+if [ -z "$1" ] || [ "$1" == "npm" ]
+then
+  if [ -f "/app/package.json" ]
+  then
+    echo "Listing npm dependencies..."
+    . tna-nvm
+    npm outdated
+  fi
+fi

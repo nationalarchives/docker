@@ -34,6 +34,11 @@ Run `help` from within the container to see a list of available commands.
 | `stylelint` | `.stylelintrc` file in the project root           | https://stylelint.io/user-guide/configure/                                                              |
 | `eslint`    | `.eslintrc.js` file in the project root           | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files              |
 
+### `outdated`
+
+1. Shows outdated Poetry dependencies
+1. Shows outdated npm dependencies
+
 ### `upgrade`
 
 1. Updates Poetry dependencies

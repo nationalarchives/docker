@@ -5,14 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.9.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.9.1...HEAD)
 
 ### Added
+
+- Added `outdated` command to `tna-python-dev` to show outdated packages
+
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
+
+## [0.9.1](https://github.com/nationalarchives/docker/compare/v0.9.0...v0.9.1) - 2025-04-28
+
+### Security
+
+- Version bump to include newer h11 `0.16.0` package to fix [CVE-2025-43859](https://nvd.nist.gov/vuln/detail/CVE-2025-43859)
 
 ## [0.9.0](https://github.com/nationalarchives/docker/compare/v0.8.0...v0.9.0) - 2025-04-24
 
