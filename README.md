@@ -29,3 +29,18 @@ graph TD;
     tna-python-root --> tna-python-django-root;
     tna-python-root --> tna-python-dev;
 ```
+
+## Building locally
+
+```sh
+# Build tna-python
+docker build -t tna-python:local --build-arg USER_IMAGE=app docker/tna-python
+
+# Build tna-python-django
+docker build -t tna-python-django:local --build-arg BASE_IMAGE=tna-python --build-arg BASE_IMAGE_TAG=local --build-arg USER_IMAGE=app docker/tna-python-django
+
+# Run
+docker run tna-python:local
+# ...or
+docker run tna-python-django:local
+```
