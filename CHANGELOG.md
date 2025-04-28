@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+
+- Make `ALLOW_INSECURE` case-insensitive
+
 ### Security
 
 ## [0.9.1](https://github.com/nationalarchives/docker/compare/v0.9.0...v0.9.1) - 2025-04-28

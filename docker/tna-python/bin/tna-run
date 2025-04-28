@@ -116,6 +116,7 @@ else
 fi
 
 [[ -z $ALLOW_INSECURE ]] && ALLOW_INSECURE='false'
+$ALLOW_INSECURE = $(echo $ALLOW_INSECURE | tr '[:upper:]' '[:lower:]')
 
 if [ "$ALLOW_INSECURE" == 'true' ]
 then
