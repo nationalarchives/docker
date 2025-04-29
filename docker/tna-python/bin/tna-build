@@ -14,13 +14,6 @@ then
   exit 1
 fi
 
-# Add support for the older ENVIRONMENT variable
-# TODO: DEPRECATE THIS LATER ON
-if [ "$ENVIRONMENT" != 'production' ]
-then
-  RUNTIME=$ENVIRONMENT
-fi
-
 if [ -n "$RUNTIME" ]
 then
   [[ -z $NODE_ENV ]] && NODE_ENV=$RUNTIME

@@ -32,13 +32,6 @@ then
   exit 1
 fi
 
-# Add support for the older ENVIRONMENT variable
-# TODO: DEPRECATE THIS LATER ON
-if [ "$ENVIRONMENT" != 'production' ]
-then
-  RUNTIME=$ENVIRONMENT
-fi
-
 # Convert $RUNTIME to lowercase
 RUNTIME=$(echo "$RUNTIME" | tr '[:upper:]' '[:lower:]')
 
