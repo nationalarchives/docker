@@ -16,8 +16,6 @@ then
   chmod +x -fR /home/app/.local/bin/tasks
 fi
 
-touch /tmp/up
-
 echo "                  ,--.    ,--.            .-------------------------------."
 echo "                 ((O ))--((O ))           |                               |"
 echo "               ,'_\`--'____\`--'_\`.         |   Awaiting your command...    |"
@@ -45,5 +43,7 @@ echo "               (_______)(_______)"
 echo "               (_______)(_______)"
 echo "              |        ||        |"
 echo "              '--------''--------'"
+
+touch /tmp/up
 
 tail -f /dev/null
