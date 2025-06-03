@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Uvicorn to [0.34.3](https://github.com/encode/uvicorn/releases/tag/0.34.3)
 - Updated Stylelint to [16.20.0](https://github.com/stylelint/stylelint/releases/tag/16.20.0)
+- Updated stylelint-config-standard-scss to [15.0.1](https://github.com/stylelint-scss/stylelint-config-standard-scss/releases/tag/v15.0.1)
 
 ### Deprecated
 ### Removed
