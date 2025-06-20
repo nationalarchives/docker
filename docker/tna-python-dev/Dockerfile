@@ -46,13 +46,13 @@ COPY lib/aws-cli-public.key /home/app/aws-cli-public.key
 
 ENV AWS_CLI_VERSION=2.27.28
 
-RUN [[ "$TARGETPLATFORM" == "linux/arm64" ]] && (curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64-$AWS_CLI_VERSION.zip" -o awscliv2.zip || curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-$AWS_CLI_VERSION.zip" -o awscliv2.zip); \
-    gpg --import /home/app/aws-cli-public.key; \
-    [[ "$TARGETPLATFORM" == "linux/arm64" ]] && (curl -o awscliv2.sig "https://awscli.amazonaws.com/awscli-exe-linux-aarch64-$AWS_CLI_VERSION.zip.sig" || curl -o awscliv2.sig "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-$AWS_CLI_VERSION.zip.sig"); \
+RUN gpg --import /home/app/aws-cli-public.key; \
+    AWS_CLI_PLATFORM=arm64x86_64; \
+    [[ "$TARGETPLATFORM" == "linux/arm64" ]] && AWS_CLI_PLATFORM=aarch64; \
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-$AWS_CLI_PLATFORM-$AWS_CLI_VERSION.zip" -o awscliv2.zip; \
     gpg --verify awscliv2.sig awscliv2.zip; \
     unzip awscliv2.zip; \
-    ls -alh aws; \
-    ./aws/install; \
+    ./aws/install -i /usr/local/aws-cli -b /usr/local/bin; \
     rm -fR awscliv2.zip awscliv2.sig aws
 
 # ==========================================
