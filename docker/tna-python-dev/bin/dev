@@ -16,6 +16,8 @@ then
   chmod +x -fR /home/app/.local/bin/tasks
 fi
 
+echo "Using AWS CLI $(aws --version)"
+
 echo "                  ,--.    ,--.            .-------------------------------."
 echo "                 ((O ))--((O ))           |                               |"
 echo "               ,'_\`--'____\`--'_\`.         |   Awaiting your command...    |"

@@ -47,13 +47,14 @@ COPY lib/aws-cli-public.key /home/app/aws-cli-public.key
 ENV AWS_CLI_VERSION=2.27.28
 
 RUN gpg --import /home/app/aws-cli-public.key; \
-    AWS_CLI_PLATFORM=arm64x86_64; \
+    AWS_CLI_PLATFORM=x86_64; \
     [[ "$TARGETPLATFORM" == "linux/arm64" ]] && AWS_CLI_PLATFORM=aarch64; \
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-$AWS_CLI_PLATFORM-$AWS_CLI_VERSION.zip" -o awscliv2.zip; \
-    gpg --verify awscliv2.sig awscliv2.zip; \
+    curl -o awscliv2.zip "https://awscli.amazonaws.com/awscli-exe-linux-$AWS_CLI_PLATFORM-$AWS_CLI_VERSION.zip"; \
+    curl -o awscliv2.zip.sig "https://awscli.amazonaws.com/awscli-exe-linux-$AWS_CLI_PLATFORM-$AWS_CLI_VERSION.zip.sig"; \
+    gpg --verify awscliv2.zip.sig awscliv2.zip; \
     unzip awscliv2.zip; \
     ./aws/install -i /usr/local/aws-cli -b /usr/local/bin; \
-    rm -fR awscliv2.zip awscliv2.sig aws
+    rm -fR awscliv2.zip awscliv2.zip.sig aws
 
 # ==========================================
 # Copy the development scripts into the user
