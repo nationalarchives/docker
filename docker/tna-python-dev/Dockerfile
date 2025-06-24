@@ -2,10 +2,9 @@
 ARG BASE_IMAGE=ghcr.io/nationalarchives/tna-python-root
 ARG BASE_IMAGE_TAG=latest
 
-ARG BUILDPLATFORM
-ARG TARGETPLATFORM
-
 FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG"
+
+ARG TARGETPLATFORM
 
 # ==========================================
 # Ensure the `/bin/sh -c` interpreter Docker
@@ -22,10 +21,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # finished installing and configuring itself
 # ==========================================
 HEALTHCHECK --interval=10s CMD test -f /tmp/up
-
-RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
-RUN echo "I am running on ${BUILDPLATFORM}, building for ${TARGETPLATFORM}"
-RUN printenv
 
 # ==========================================
 # Install and configure Docker, removing all
@@ -52,7 +47,8 @@ COPY lib/aws-cli-public.key /home/app/aws-cli-public.key
 ENV AWS_CLI_VERSION=2.27.28
 
 RUN gpg --import /home/app/aws-cli-public.key; \
-    AWS_CLI_PLATFORM=x86_64; \
+    AWS_CLI_PLATFORM=none; \
+    [[ "$TARGETPLATFORM" == "linux/amd64" ]] && AWS_CLI_PLATFORM=x86_64; \
     [[ "$TARGETPLATFORM" == "linux/arm64" ]] && AWS_CLI_PLATFORM=aarch64; \
     echo "Downloading AWS CLI v$AWS_CLI_VERSION for $TARGETPLATFORM using $AWS_CLI_PLATFORM..."; \
     curl -o /home/app/awscliv2.zip "https://awscli.amazonaws.com/awscli-exe-linux-$AWS_CLI_PLATFORM-$AWS_CLI_VERSION.zip"; \
