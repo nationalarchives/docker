@@ -317,6 +317,9 @@ jobs:
           dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
           user-image: ${{ env.USER_IMAGE }}
 
+      - name: Check AWS CLI
+        run: docker compose run ${{ env.IMAGE_NAME }} aws --version"
+
       # - uses: actions/setup-node@v4
       # - uses: actions/setup-python@v5
       # - name: Test development formatting

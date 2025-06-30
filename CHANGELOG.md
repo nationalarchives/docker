@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.10.0...HEAD)
 
 ### Added
+
+- AWS CLI (`2.27.28`) added to `tna-python-dev`
+
 ### Changed
 
 - Updated Uvicorn to [0.35.0](https://github.com/encode/uvicorn/releases/tag/0.35.0)
