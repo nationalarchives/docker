@@ -318,7 +318,7 @@ jobs:
           user-image: ${{ env.USER_IMAGE }}
 
       - name: Check AWS CLI
-        run: docker run ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.image-tag }} aws --version
+        run: docker run ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }} aws --version
 
       # - uses: actions/setup-node@v4
       # - uses: actions/setup-python@v5
