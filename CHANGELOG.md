@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- AWS CLI (`2.27.28`) added to `tna-python-dev`
+- AWS CLI (`2.27.45`) added to `tna-python-dev`
 
 ### Changed
 

@@ -44,7 +44,7 @@ RUN apt-get update; \
 # ==========================================
 COPY lib/aws-cli-public.key /home/app/aws-cli-public.key
 
-ENV AWS_CLI_VERSION=2.27.28
+ENV AWS_CLI_VERSION=2.27.45
 
 RUN gpg --import /home/app/aws-cli-public.key; \
     AWS_CLI_PLATFORM=none; \
