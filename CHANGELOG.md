@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.10.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.11.0...HEAD)
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.11.0](https://github.com/nationalarchives/docker/compare/v0.10.0...v0.11.0) - 2025-07-04
 
 ### Added
 
@@ -19,13 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Prettier to [3.6.2](https://github.com/prettier/prettier/releases/tag/3.6.2)
 - Update default Flake8 configuration to reinstate some ignored rules
 
-### Deprecated
 ### Removed
 
 - Removed the default `manage.py` from `tna-python-django`
-
-### Fixed
-### Security
 
 ## [0.10.0](https://github.com/nationalarchives/docker/compare/v0.9.1...v0.10.0) - 2025-05-13
 
