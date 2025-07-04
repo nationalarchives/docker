@@ -33,17 +33,6 @@ RUN set -eux; \
 COPY --chown=app bin/tna-build bin/tna-run bin/manage bin/migrate /home/app/.local/bin/
 
 # ==========================================
-# manage.py is the recommended Django way of
-# running administrative tasks, and while it
-# might be replaced by the application, this
-# way we can ensure running the Docker image
-# should still still work albeit not with no
-# output
-# ==========================================
-# wiz-scan ignore-line
-COPY --chown=app lib/manage.py /app
-
-# ==========================================
 # Allow all our scripts to be executable
 # ==========================================
 RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run /home/app/.local/bin/manage /home/app/.local/bin/migrate manage.py
