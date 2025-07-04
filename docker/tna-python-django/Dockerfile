@@ -35,4 +35,4 @@ COPY --chown=app bin/tna-build bin/tna-run bin/manage bin/migrate /home/app/.loc
 # ==========================================
 # Allow all our scripts to be executable
 # ==========================================
-RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run /home/app/.local/bin/manage /home/app/.local/bin/migrate manage.py
+RUN chmod +x /home/app/.local/bin/tna-build /home/app/.local/bin/tna-run /home/app/.local/bin/manage /home/app/.local/bin/migrate
