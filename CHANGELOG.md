@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated Stylelint to [16.21.1](https://github.com/stylelint/stylelint/releases/tag/16.21.1)
+- Removed `-verbose` option from Black formatting when running `format`
 
 ### Deprecated
 ### Removed
