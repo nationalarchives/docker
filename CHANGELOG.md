@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changed
 
-- Updated Stylelint to [16.21.1](https://github.com/stylelint/stylelint/releases/tag/16.21.1)
+- Updated Stylelint to [16.22.0](https://github.com/stylelint/stylelint/releases/tag/16.22.0)
 - Removed `-verbose` option from Black formatting when running `format`
 
 ### Deprecated
