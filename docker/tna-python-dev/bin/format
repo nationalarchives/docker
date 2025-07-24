@@ -32,7 +32,7 @@ echo
 npm --version
 
 echo "Running prettier..."
-prettier --write /app
+prettier --write --list-different /app
 echo
 
 echo "Running stylelint..."
