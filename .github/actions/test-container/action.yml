@@ -34,11 +34,7 @@ runs:
         yq 'del(.services.${{ inputs.service }}.volumes)' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         PORT=$(yq '(.services.${{ inputs.service }}.ports)' docker-compose.yml | sed -e 's/^\- \(.*\)\:.*$/\1/')
         echo "PORT=$PORT" >> "$GITHUB_ENV"
-        docker compose up ${{ inputs.service }} -d
-      shell: bash
-
-    - name: Check healthcheck endpoint
-      run: for c in {1..30}; do sleep 1 && curl -s -w '%{http_code}' -o /dev/null http://localhost:${{ env.PORT }}/healthcheck/live/ | grep -o "200" && break; done
+        docker compose up ${{ inputs.service }} --detach --wait
       shell: bash
 
     - name: Check user
