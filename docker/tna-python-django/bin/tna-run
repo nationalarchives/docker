@@ -11,9 +11,9 @@ then
   exit 1
 fi
 
-if [ "$RUNTIME" == 'develop' ]
-then
-  poetry run python /app/manage.py migrate
-fi
+# if [ "$RUNTIME" == 'develop' ]
+# then
+#   poetry run python /app/manage.py migrate
+# fi
 
 tna-run-common "$1"
