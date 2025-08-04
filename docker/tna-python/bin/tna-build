@@ -35,10 +35,10 @@ then
 
   tna-node "$NPM_BUILD_COMMAND"
 
-  if [ "$RUNTIME" != "develop" ]
-  then
-    rm -rf /app/node_modules
-  fi
+  # if [ "$RUNTIME" != "develop" ]
+  # then
+  #   rm -rf /app/node_modules
+  # fi
 fi
 
 poetry add gunicorn@23.0.0
