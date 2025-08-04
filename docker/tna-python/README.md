@@ -39,7 +39,7 @@ Each environment has some default values but all can be overwritten:
 | `KEEP_ALIVE`           | The number of seconds to wait for requests on a keep-alive connection[^6] | `30`                     | `5`                      | `5`                      |
 | `SSL_KEY_FILE`         | The location of the SSL key                                               | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  |
 | `SSL_CERTIFICATE_FILE` | The location of the SSL certificate                                       | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` |
-| `ALLOW_INSECURE`       | If `true`, allow servers above development to run HTTP rather than HTTPS  | `false`                  | _ignored_                | `false`                  |
+| `ALLOW_INSECURE`       | If `true`, allow containers above dev to use HTTP rather than HTTPS.      | `false`                  | _ignored_                | `false`                  |
 | `PORT`                 | Set the port used by the container (only used outside of AWS)             | `8080`                   | `8080`                   | `8080`                   |
 
 [^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
@@ -149,4 +149,4 @@ These locations can be overridden with the `SSL_KEY_FILE` and `SSL_CERTIFICATE_F
 
 ### Disabling SSL
 
-Although not recommended, SSL can be disabled on higher environments by setting `ALLOW_INSECURE` to `true`.
+Although not recommended, SSL for the containers can be disabled on higher environments by setting `ALLOW_INSECURE` to `true`.
