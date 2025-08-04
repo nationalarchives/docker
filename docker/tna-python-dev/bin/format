@@ -28,87 +28,92 @@ else
 fi
 echo
 
-. tna-nvm
-npm --version
+if [ -f "/app/package.json" ]
+then
+  . tna-nvm
+  npm --version
 
-echo "Running prettier..."
-prettier --write --list-different /app
-echo
+  echo "Running prettier..."
+  npx --yes prettier@3.6.2 --write --list-different /app
+  echo
 
-echo "Running stylelint..."
-if [ -f "/app/.stylelintrc" ]
-then
-  echo "Using app config (.stylelintrc)"
-  stylelint --config /app/.stylelintrc --fix "/app/**/*.{css,scss}"
-elif [ -f "/app/stylelint.config.js" ]
-then
-  echo "Using app config (stylelint.config.js)"
-  stylelint --config /app/stylelint.config.js --fix "/app/**/*.{css,scss}"
-elif [ -f "/app/.stylelintrc.js" ]
-then
-  echo "Using app config (.stylelintrc.js)"
-  stylelint --config /app/.stylelintrc.js --fix "/app/**/*.{css,scss}"
-elif [ -f "/app/stylelint.config.mjs" ]
-then
-  echo "Using app config (stylelint.config.mjs)"
-  stylelint --config /app/stylelint.config.mjs --fix "/app/**/*.{css,scss}"
-elif [ -f "/app/.stylelintrc.mjs" ]
-then
-  echo "Using app config (.stylelintrc.mjs)"
-  stylelint --config /app/.stylelintrc.mjs --fix "/app/**/*.{css,scss}"
-elif [ -f "/app/stylelint.config.cjs" ]
-then
-  echo "Using app config (stylelint.config.cjs)"
-  stylelint --config /app/stylelint.config.cjs --fix "/app/**/*.{css,scss}"
-elif [ -f "/app/.stylelintrc.cjs" ]
-then
-  echo "Using app config (.stylelintrc.cjs)"
-  stylelint --config /app/.stylelintrc.cjs --fix "/app/**/*.{css,scss}"
-elif [ -f "/app/.stylelintrc.json" ]
-then
-  echo "Using app config (.stylelintrc.json)"
-  stylelint --config /app/.stylelintrc.json --fix "/app/**/*.{css,scss}"
-elif [ -f "/app/.stylelintrc.yml" ]
-then
-  echo "Using app config (.stylelintrc.yml)"
-  stylelint --config /app/.stylelintrc.yml --fix "/app/**/*.{css,scss}"
-elif [ -f "/app/.stylelintrc.yaml" ]
-then
-  echo "Using app config (.stylelintrc.yaml)"
-  stylelint --config /app/.stylelintrc.yaml --fix "/app/**/*.{css,scss}"
-else
-  echo "Using default config"
-  stylelint --config /home/app/.stylelintrc --fix "/app/**/*.{css,scss}"
+  echo "Running stylelint..."
+  npm install -g stylelint@16.23.0 stylelint-config-standard-scss@15.0.1 stylelint-selector-bem-pattern@4.0.1 stylelint-order@7.0.0
+  if [ -f "/app/.stylelintrc" ]
+  then
+    echo "Using app config (.stylelintrc)"
+    stylelint --config /app/.stylelintrc --fix "/app/**/*.{css,scss}"
+  elif [ -f "/app/stylelint.config.js" ]
+  then
+    echo "Using app config (stylelint.config.js)"
+    stylelint --config /app/stylelint.config.js --fix "/app/**/*.{css,scss}"
+  elif [ -f "/app/.stylelintrc.js" ]
+  then
+    echo "Using app config (.stylelintrc.js)"
+    stylelint --config /app/.stylelintrc.js --fix "/app/**/*.{css,scss}"
+  elif [ -f "/app/stylelint.config.mjs" ]
+  then
+    echo "Using app config (stylelint.config.mjs)"
+    stylelint --config /app/stylelint.config.mjs --fix "/app/**/*.{css,scss}"
+  elif [ -f "/app/.stylelintrc.mjs" ]
+  then
+    echo "Using app config (.stylelintrc.mjs)"
+    stylelint --config /app/.stylelintrc.mjs --fix "/app/**/*.{css,scss}"
+  elif [ -f "/app/stylelint.config.cjs" ]
+  then
+    echo "Using app config (stylelint.config.cjs)"
+    stylelint --config /app/stylelint.config.cjs --fix "/app/**/*.{css,scss}"
+  elif [ -f "/app/.stylelintrc.cjs" ]
+  then
+    echo "Using app config (.stylelintrc.cjs)"
+    stylelint --config /app/.stylelintrc.cjs --fix "/app/**/*.{css,scss}"
+  elif [ -f "/app/.stylelintrc.json" ]
+  then
+    echo "Using app config (.stylelintrc.json)"
+    stylelint --config /app/.stylelintrc.json --fix "/app/**/*.{css,scss}"
+  elif [ -f "/app/.stylelintrc.yml" ]
+  then
+    echo "Using app config (.stylelintrc.yml)"
+    stylelint --config /app/.stylelintrc.yml --fix "/app/**/*.{css,scss}"
+  elif [ -f "/app/.stylelintrc.yaml" ]
+  then
+    echo "Using app config (.stylelintrc.yaml)"
+    stylelint --config /app/.stylelintrc.yaml --fix "/app/**/*.{css,scss}"
+  else
+    echo "Using default config"
+    stylelint --config /home/app/.stylelintrc --fix "/app/**/*.{css,scss}"
+  fi
+  echo
+
+  echo "Running eslint..."
+  ESLINT_VERSION=8.56.0
+  if [ -f "/app/.eslintrc.js" ]
+  then
+    echo "Using app config (.eslintrc.js)"
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.js --fix "/app"
+  elif [ -f "/app/.eslintrc.mjs" ]
+  then
+    echo "Using app config (.eslintrc.mjs)"
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.mjs --fix "/app"
+  elif [ -f "/app/.eslintrc.cjs" ]
+  then
+    echo "Using app config (.eslintrc.cjs)"
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.cjs --fix "/app"
+  elif [ -f "/app/eslintrc.config.js" ]
+  then
+    echo "Using app config (eslintrc.config.js)"
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.js --fix "/app"
+  elif [ -f "/app/eslintrc.config.mjs" ]
+  then
+    echo "Using app config (eslintrc.config.mjs)"
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.mjs --fix "/app"
+  elif [ -f "/app/eslintrc.config.cjs" ]
+  then
+    echo "Using app config (eslintrc.config.cjs)"
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.cjs --fix "/app"
+  else
+    echo "Using default config"
+    npx --yes "eslint@$ESLINT_VERSION" -c /home/app/.eslintrc.js --fix "/app"
+  fi
+  echo
 fi
-echo
-
-echo "Running eslint..."
-if [ -f "/app/.eslintrc.js" ]
-then
-  echo "Using app config (.eslintrc.js)"
-  eslint -c /app/.eslintrc.js --fix "/app"
-elif [ -f "/app/.eslintrc.mjs" ]
-then
-  echo "Using app config (.eslintrc.mjs)"
-  eslint -c /app/.eslintrc.mjs --fix "/app"
-elif [ -f "/app/.eslintrc.cjs" ]
-then
-  echo "Using app config (.eslintrc.cjs)"
-  eslint -c /app/.eslintrc.cjs --fix "/app"
-elif [ -f "/app/eslintrc.config.js" ]
-then
-  echo "Using app config (eslintrc.config.js)"
-  eslint -c /app/eslintrc.config.js --fix "/app"
-elif [ -f "/app/eslintrc.config.mjs" ]
-then
-  echo "Using app config (eslintrc.config.mjs)"
-  eslint -c /app/eslintrc.config.mjs --fix "/app"
-elif [ -f "/app/eslintrc.config.cjs" ]
-then
-  echo "Using app config (eslintrc.config.cjs)"
-  eslint -c /app/eslintrc.config.cjs --fix "/app"
-else
-  echo "Using default config"
-  eslint -c /home/app/.eslintrc.js --fix "/app"
-fi
-echo
