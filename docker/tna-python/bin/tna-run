@@ -36,7 +36,7 @@ fi
 RUNTIME=$(echo "$RUNTIME" | tr '[:upper:]' '[:lower:]')
 
 # If there is an $NPM_DEVELOP_COMMAND and we are running a development environment, run the development command now
-if [ "$RUNTIME" == 'develop' ] && [ -n "$NPM_DEVELOP_COMMAND" ]
+if [ "$RUNTIME" == "develop" ] && [ -n "$NPM_DEVELOP_COMMAND" ]
 then
   tna-node "$NPM_DEVELOP_COMMAND"
 fi
@@ -55,7 +55,7 @@ DEFAULT_THREADS=$((DEFAULT_WORKERS * 2))
 # Set the port to 8080 if one is not defined
 [[ -z $PORT ]] && PORT=8080
 
-if [ "$RUNTIME" == 'develop' ]
+if [ "$RUNTIME" == "develop" ]
 then
   # Development environment
   echo "RUNTIME is develop"
@@ -95,7 +95,7 @@ then
   # Fall back to using Gunicorn
   echo "No framework found, using Gunicorn to serve development application..."
   poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --bind "0.0.0.0:$PORT" --worker-class="$WORKER_CLASS" --reload
-elif [ "$RUNTIME" == 'production' ]
+elif [ "$RUNTIME" == "production" ]
 then
   # Production environment
   [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warn
@@ -108,10 +108,10 @@ else
   [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=5
 fi
 
-[[ -z $ALLOW_INSECURE ]] && ALLOW_INSECURE='false'
+[[ -z $ALLOW_INSECURE ]] && ALLOW_INSECURE="false"
 ALLOW_INSECURE=$(echo "$ALLOW_INSECURE" | tr '[:upper:]' '[:lower:]')
 
-if [ "$ALLOW_INSECURE" == 'true' ]
+if [ "$ALLOW_INSECURE" == "true" ]
 then
   # Start the server
   echo "Starting $RUNTIME server (insecure)..."

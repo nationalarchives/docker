@@ -33,8 +33,8 @@ Each environment has some default values but all can be overwritten:
 | `THREADS`              | Number of threads[^2]                                                     | `(cpu * 2) + 1`          | `3`                      | `(cpu * 2) + 1`          |
 | `LOG_LEVEL`            | The log level to stream to the console[^3]                                | `warn`                   | `debug`                  | `info`                   |
 | `NODE_ENV`             | The node environment[^4]                                                  | Mirrors `RUNTIME`        | Mirrors `RUNTIME`        | Mirrors `RUNTIME`        |
-| `NPM_BUILD_COMMAND`    | The npm script to run to build static assets                              | _none_                   | _none_                   | _none_                   |
-| `NPM_DEVELOP_COMMAND`  | The npm script to run in development environments                         | _ignored_                | _none_                   | _ignored_                |
+| `NPM_BUILD_COMMAND`    | The npm script from `package.json` to run to build static assets          | _none_                   | _none_                   | _none_                   |
+| `NPM_DEVELOP_COMMAND`  | The npm script from `package.json` to run in development environments     | _ignored_                | _none_                   | _ignored_                |
 | `TIMEOUT`              | The number of seconds before a request is terminated[^5]                  | `30`                     | `600`                    | `30`                     |
 | `KEEP_ALIVE`           | The number of seconds to wait for requests on a keep-alive connection[^6] | `30`                     | `5`                      | `5`                      |
 | `SSL_KEY_FILE`         | The location of the SSL key                                               | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  |

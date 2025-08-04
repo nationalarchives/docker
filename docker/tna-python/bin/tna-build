@@ -19,9 +19,26 @@ then
   [[ -z $NODE_ENV ]] && NODE_ENV=$RUNTIME
 fi
 
-if [ -n "$NPM_BUILD_COMMAND" ] && [ -f "/app/package.json" ]
+if [ -n "$NPM_BUILD_COMMAND" ]
 then
+  if [ ! -f "/app/package.json" ]
+  then
+    echo "package.json does not exist";
+    exit 1
+  fi
+
+  if [ ! -f "/app/package-lock.json" ]
+  then
+    echo "package-lock.json does not exist";
+    exit 1
+  fi
+
   tna-node "$NPM_BUILD_COMMAND"
+
+  if [ "$RUNTIME" != "develop" ]
+  then
+    rm -rf /app/node_modules
+  fi
 fi
 
 poetry add gunicorn@23.0.0
