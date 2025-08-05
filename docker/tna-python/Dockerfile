@@ -76,7 +76,7 @@ ENV PIP_NO_CACHE_DIR=true \
 # and what version is used
 # ==========================================
 ENV POETRY_HOME=/home/app/.local \
-    POETRY_VERSION=2.1.3 \
+    POETRY_VERSION=2.1.4 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=true \
     POETRY_VIRTUALENVS_IN_PROJECT=false
