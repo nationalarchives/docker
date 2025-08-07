@@ -32,7 +32,7 @@ jobs:
     timeout-minutes: 15
     env:
       IMAGE_NAME: tna-python
-      DOCKERFILE_LOCATION: docker/tna-python
+      DOCKERFILE_PATH: docker/tna-python
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python
       USER_IMAGE: app
       DISABLE_WIZ: true  # TODO: Remove this when Wiz fixes the Python version number detection
@@ -49,7 +49,7 @@ jobs:
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
@@ -58,7 +58,7 @@ jobs:
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
 
       - name: Test Flask
@@ -87,7 +87,7 @@ jobs:
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -104,7 +104,7 @@ jobs:
     timeout-minutes: 15
     env:
       IMAGE_NAME: tna-python-root
-      DOCKERFILE_LOCATION: docker/tna-python
+      DOCKERFILE_PATH: docker/tna-python
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python
       USER_IMAGE: root
       DISABLE_WIZ: true
@@ -115,7 +115,7 @@ jobs:
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           ignore-linting-rules: DL3002
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -125,7 +125,7 @@ jobs:
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
 
       - name: Test Flask
@@ -154,7 +154,7 @@ jobs:
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -172,7 +172,7 @@ jobs:
     timeout-minutes: 10
     env:
       IMAGE_NAME: tna-python-django
-      DOCKERFILE_LOCATION: docker/tna-python-django
+      DOCKERFILE_PATH: docker/tna-python-django
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python
       USER_IMAGE: root
       DISABLE_WIZ: true  # TODO: Remove this when Wiz fixes the Python version number detection
@@ -189,7 +189,7 @@ jobs:
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
@@ -198,7 +198,7 @@ jobs:
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
 
       - name: Test Django
@@ -218,7 +218,7 @@ jobs:
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -236,7 +236,7 @@ jobs:
     timeout-minutes: 10
     env:
       IMAGE_NAME: tna-python-django-root
-      DOCKERFILE_LOCATION: docker/tna-python-django
+      DOCKERFILE_PATH: docker/tna-python-django
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python-root
       USER_IMAGE: root
       DISABLE_WIZ: true
@@ -247,7 +247,7 @@ jobs:
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           ignore-linting-rules: DL3002
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -257,7 +257,7 @@ jobs:
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
 
       - name: Test Django
@@ -277,7 +277,7 @@ jobs:
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -295,7 +295,7 @@ jobs:
     timeout-minutes: 10
     env:
       IMAGE_NAME: tna-python-dev
-      DOCKERFILE_LOCATION: docker/tna-python-dev
+      DOCKERFILE_PATH: docker/tna-python-dev
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python-root
       USER_IMAGE: root
       DISABLE_WIZ: true
@@ -306,7 +306,7 @@ jobs:
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           ignore-linting-rules: DL3002,DL3008,SC1091
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -316,7 +316,7 @@ jobs:
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
 
       - name: Check AWS CLI
@@ -407,7 +407,7 @@ jobs:
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-location: ${{ env.DOCKERFILE_LOCATION }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 

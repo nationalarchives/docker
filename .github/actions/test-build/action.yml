@@ -4,7 +4,7 @@ inputs:
   image-name:
     required: true
     type: string
-  dockerfile-location:
+  dockerfile-path:
     required: true
     type: string
   base-image:
@@ -45,14 +45,14 @@ runs:
     - name: Build images
       uses: docker/build-push-action@v6
       with:
-        context: ${{ inputs.dockerfile-location }}
+        context: ${{ inputs.dockerfile-path }}
         labels: |
           runnumber=${{ github.run_id }}
         build-args: |
           BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.tag }}
           TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
-          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-location }}/Dockerfile
+          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-path }}/Dockerfile
           USER_IMAGE=${{ inputs.user-image }}
         push: false
         load: true
