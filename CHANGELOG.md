@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated Poetry to [2.1.4](https://github.com/python-poetry/poetry/releases/tag/2.1.4)
+- Temporarily updated Python version from `3.13` to more explicit `3.13.5` to fix false positive on CVEs from Wiz that incorrectly claimed version `3.13` was being used - this does not affect the actual version used in the containers
 
 ## [0.12.0](https://github.com/nationalarchives/docker/compare/v0.11.1...v0.12.0) - 2025-08-01
 
