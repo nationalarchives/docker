@@ -20,7 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Poetry to [2.1.4](https://github.com/python-poetry/poetry/releases/tag/2.1.4)
 
-
 ## [0.12.0](https://github.com/nationalarchives/docker/compare/v0.11.1...v0.12.0) - 2025-08-01
 
 ### Changed
