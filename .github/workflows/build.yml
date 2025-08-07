@@ -61,6 +61,14 @@ jobs:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
 
+      - name: Scan Dockerfile
+        uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
+        with:
+          image-id: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+
       - name: Test Flask
         uses: ./.github/actions/test-container
         with:
@@ -127,6 +135,14 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
+
+      - name: Scan Dockerfile
+        uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
+        with:
+          image-id: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
       - name: Test Flask
         uses: ./.github/actions/test-container
@@ -201,6 +217,14 @@ jobs:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
 
+      - name: Scan Dockerfile
+        uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
+        with:
+          image-id: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+
       - name: Test Django
         uses: ./.github/actions/test-container
         with:
@@ -260,6 +284,14 @@ jobs:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
 
+      - name: Scan Dockerfile
+        uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
+        with:
+          image-id: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+
       - name: Test Django
         uses: ./.github/actions/test-container
         with:
@@ -318,6 +350,14 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           user-image: ${{ env.USER_IMAGE }}
+
+      - name: Scan Dockerfile
+        uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
+        with:
+          image-id: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
       - name: Check AWS CLI
         run: docker run ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }} aws --version
