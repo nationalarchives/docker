@@ -1,6 +1,6 @@
 ARG USER_IMAGE=app
 
-FROM python:3.13.5-slim-bookworm AS root
+FROM python:3.13-slim-bookworm AS root
 
 # ==========================================
 # Label this container image with a semantic
