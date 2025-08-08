@@ -28,7 +28,7 @@ else
 fi
 echo
 
-if [ -f "/app/package.json" ]
+if [ -f ".nvmrc" ]
 then
   . tna-nvm
   npm --version

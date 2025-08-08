@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Formatting runs Prettier, stylelint and eslint if there is a `.nvmrc` file rather than a `package.json` file present
+
 ### Deprecated
 ### Removed
 ### Fixed
