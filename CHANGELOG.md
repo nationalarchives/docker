@@ -9,19 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
-
-- Updated Stylelint to [16.23.1](https://github.com/stylelint/stylelint/releases/tag/16.23.1)
-
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
 
-## [0.13.0](https://github.com/nationalarchives/docker/compare/v0.12.0...v0.13.0) - 2025-08-07
+## [0.13.0](https://github.com/nationalarchives/docker/compare/v0.12.0...v0.13.0) - 2025-08-08
 
 ### Changed
 
 - Updated Poetry to [2.1.4](https://github.com/python-poetry/poetry/releases/tag/2.1.4)
+- Updated Stylelint to [16.23.1](https://github.com/stylelint/stylelint/releases/tag/16.23.1)
 
 ## [0.12.0](https://github.com/nationalarchives/docker/compare/v0.11.1...v0.12.0) - 2025-08-01
 
