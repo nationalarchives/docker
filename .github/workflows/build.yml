@@ -35,7 +35,6 @@ jobs:
       DOCKERFILE_PATH: docker/tna-python
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python
       USER_IMAGE: app
-      DISABLE_WIZ: true  # TODO: Remove this when Wiz fixes the Python version number detection
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,7 +49,6 @@ jobs:
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
         id: build
@@ -125,7 +123,6 @@ jobs:
         with:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           ignore-linting-rules: DL3002
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
         id: build
@@ -191,7 +188,6 @@ jobs:
       DOCKERFILE_PATH: docker/tna-python-django
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python
       USER_IMAGE: root
-      DISABLE_WIZ: true  # TODO: Remove this when Wiz fixes the Python version number detection
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -206,7 +202,6 @@ jobs:
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
         id: build
@@ -273,7 +268,6 @@ jobs:
         with:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           ignore-linting-rules: DL3002
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
         id: build
@@ -340,7 +334,6 @@ jobs:
         with:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           ignore-linting-rules: DL3002,DL3008,SC1091
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Docker image build
         id: build
