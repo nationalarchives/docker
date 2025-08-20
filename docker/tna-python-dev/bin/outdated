@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cd /app || return
 
 if [ -z "$1" ] || [ "$1" == "poetry" ]

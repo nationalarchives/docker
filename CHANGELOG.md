@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.13.1...HEAD)
 
 ### Added
+
+- New `checkformat` option in `dev` image which reports on but doesn't fix linting and formatting issues for use in CI/CD pipelines
+
 ### Changed
 
 - Formatting runs Prettier, stylelint and eslint if there is a `.nvmrc` file rather than a `package.json` file present

@@ -1,20 +1,46 @@
 #!/bin/bash
 
+set -e
+
 cd /app || return
+
+[[ -z $FIX ]] && FIX=true
+
+if [ "$FIX" = true ]
+then
+  echo "Fixing issues..."
+else
+  echo "Reporting issues without fixing..."
+fi
 
 echo "Running isort..."
 if [ -f "/app/.isort.cfg" ]
 then
   echo "Using app config"
-  isort --settings-file /app/.isort.cfg /app --overwrite-in-place
+  if [ "$FIX" = true ]
+  then
+    isort --settings-file /app/.isort.cfg /app --overwrite-in-place
+  else
+    isort --settings-file /app/.isort.cfg /app --diff
+  fi
 else
   echo "Using default config"
-  isort --settings-file /home/app/.isort.cfg /app --overwrite-in-place
+  if [ "$FIX" = true ]
+  then
+    isort --settings-file /home/app/.isort.cfg /app --overwrite-in-place
+  else
+    isort --settings-file /home/app/.isort.cfg /app --diff
+  fi
 fi
 echo
 
 echo "Running black..."
-black -t py39 -t py310 -t py311 -t py312 -t py313 /app
+if [ "$FIX" = true ]
+then
+  black -t py39 -t py310 -t py311 -t py312 -t py313 /app
+else
+  black -t py39 -t py310 -t py311 -t py312 -t py313 --check /app
+fi
 echo
 
 echo "Running flake8..."
@@ -34,7 +60,12 @@ then
   npm --version
 
   echo "Running prettier..."
-  npx --yes prettier@3.6.2 --write --list-different /app
+  if [ "$FIX" = true ]
+  then
+    npx --yes prettier@3.6.2 --write --list-different /app
+  else
+    npx --yes prettier@3.6.2 --list-different /app
+  fi
   echo
 
   echo "Running stylelint..."
@@ -42,46 +73,101 @@ then
   if [ -f "/app/.stylelintrc" ]
   then
     echo "Using app config (.stylelintrc)"
-    stylelint --config /app/.stylelintrc --fix "/app/**/*.{css,scss}"
+    if [ "$FIX" = true ]
+    then
+      stylelint --config /app/.stylelintrc --fix "/app/**/*.{css,scss}"
+    else
+      stylelint --config /app/.stylelintrc "/app/**/*.{css,scss}"
+    fi
   elif [ -f "/app/stylelint.config.js" ]
   then
     echo "Using app config (stylelint.config.js)"
-    stylelint --config /app/stylelint.config.js --fix "/app/**/*.{css,scss}"
+    if [ "$FIX" = true ]
+    then
+      stylelint --config /app/stylelint.config.js --fix "/app/**/*.{css,scss}"
+    else
+      stylelint --config /app/stylelint.config.js "/app/**/*.{css,scss}"
+    fi
   elif [ -f "/app/.stylelintrc.js" ]
   then
     echo "Using app config (.stylelintrc.js)"
-    stylelint --config /app/.stylelintrc.js --fix "/app/**/*.{css,scss}"
+    if [ "$FIX" = true ]
+    then
+      stylelint --config /app/.stylelintrc.js --fix "/app/**/*.{css,scss}"
+    else
+      stylelint --config /app/.stylelintrc.js "/app/**/*.{css,scss}"
+    fi
   elif [ -f "/app/stylelint.config.mjs" ]
   then
     echo "Using app config (stylelint.config.mjs)"
-    stylelint --config /app/stylelint.config.mjs --fix "/app/**/*.{css,scss}"
+    if [ "$FIX" = true ]
+    then
+      stylelint --config /app/stylelint.config.mjs --fix "/app/**/*.{css,scss}"
+    else
+      stylelint --config /app/stylelint.config.mjs "/app/**/*.{css,scss}"
+    fi
   elif [ -f "/app/.stylelintrc.mjs" ]
   then
     echo "Using app config (.stylelintrc.mjs)"
-    stylelint --config /app/.stylelintrc.mjs --fix "/app/**/*.{css,scss}"
+    if [ "$FIX" = true ]
+    then
+      stylelint --config /app/.stylelintrc.mjs --fix "/app/**/*.{css,scss}"
+    else
+      stylelint --config /app/.stylelintrc.mjs "/app/**/*.{css,scss}"
+    fi
   elif [ -f "/app/stylelint.config.cjs" ]
   then
     echo "Using app config (stylelint.config.cjs)"
-    stylelint --config /app/stylelint.config.cjs --fix "/app/**/*.{css,scss}"
+    if [ "$FIX" = true ]
+    then
+      stylelint --config /app/stylelint.config.cjs --fix "/app/**/*.{css,scss}"
+    else
+      stylelint --config /app/stylelint.config.cjs "/app/**/*.{css,scss}"
+    fi
   elif [ -f "/app/.stylelintrc.cjs" ]
   then
     echo "Using app config (.stylelintrc.cjs)"
-    stylelint --config /app/.stylelintrc.cjs --fix "/app/**/*.{css,scss}"
+    if [ "$FIX" = true ]
+    then
+      stylelint --config /app/.stylelintrc.cjs --fix "/app/**/*.{css,scss}"
+    else
+      stylelint --config /app/.stylelintrc.cjs "/app/**/*.{css,scss}"
+    fi
   elif [ -f "/app/.stylelintrc.json" ]
   then
     echo "Using app config (.stylelintrc.json)"
-    stylelint --config /app/.stylelintrc.json --fix "/app/**/*.{css,scss}"
+    if [ "$FIX" = true ]
+    then
+      stylelint --config /app/.stylelintrc.json --fix "/app/**/*.{css,scss}"
+    else
+      stylelint --config /app/.stylelintrc.json "/app/**/*.{css,scss}"
+    fi
   elif [ -f "/app/.stylelintrc.yml" ]
   then
     echo "Using app config (.stylelintrc.yml)"
-    stylelint --config /app/.stylelintrc.yml --fix "/app/**/*.{css,scss}"
+    if [ "$FIX" = true ]
+    then
+      stylelint --config /app/.stylelintrc.yml --fix "/app/**/*.{css,scss}"
+    else
+      stylelint --config /app/.stylelintrc.yml "/app/**/*.{css,scss}"
+    fi
   elif [ -f "/app/.stylelintrc.yaml" ]
   then
     echo "Using app config (.stylelintrc.yaml)"
-    stylelint --config /app/.stylelintrc.yaml --fix "/app/**/*.{css,scss}"
+    if [ "$FIX" = true ]
+    then
+      stylelint --config /app/.stylelintrc.yaml --fix "/app/**/*.{css,scss}"
+    else
+      stylelint --config /app/.stylelintrc.yaml "/app/**/*.{css,scss}"
+    fi
   else
     echo "Using default config"
-    stylelint --config /home/app/.stylelintrc --fix "/app/**/*.{css,scss}"
+    if [ "$FIX" = true ]
+    then
+      stylelint --config /home/app/.stylelintrc --fix "/app/**/*.{css,scss}"
+    else
+      stylelint --config /home/app/.stylelintrc "/app/**/*.{css,scss}"
+    fi
   fi
   echo
 
@@ -90,30 +176,65 @@ then
   if [ -f "/app/.eslintrc.js" ]
   then
     echo "Using app config (.eslintrc.js)"
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.js --fix "/app"
+    if [ "$FIX" = true ]
+    then
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.js --fix "/app"
+    else
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.js "/app"
+    fi
   elif [ -f "/app/.eslintrc.mjs" ]
   then
     echo "Using app config (.eslintrc.mjs)"
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.mjs --fix "/app"
+    if [ "$FIX" = true ]
+    then
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.mjs --fix "/app"
+    else
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.mjs "/app"
+    fi
   elif [ -f "/app/.eslintrc.cjs" ]
   then
     echo "Using app config (.eslintrc.cjs)"
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.cjs --fix "/app"
+    if [ "$FIX" = true ]
+    then
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.cjs --fix "/app"
+    else
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.cjs "/app"
+    fi
   elif [ -f "/app/eslintrc.config.js" ]
   then
     echo "Using app config (eslintrc.config.js)"
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.js --fix "/app"
+    if [ "$FIX" = true ]
+    then
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.js --fix "/app"
+    else
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.js "/app"
+    fi
   elif [ -f "/app/eslintrc.config.mjs" ]
   then
     echo "Using app config (eslintrc.config.mjs)"
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.mjs --fix "/app"
+    if [ "$FIX" = true ]
+    then
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.mjs --fix "/app"
+    else
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.mjs "/app"
+    fi
   elif [ -f "/app/eslintrc.config.cjs" ]
   then
     echo "Using app config (eslintrc.config.cjs)"
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.cjs --fix "/app"
+    if [ "$FIX" = true ]
+    then
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.cjs --fix "/app"
+    else
+      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.cjs "/app"
+    fi
   else
     echo "Using default config"
-    npx --yes "eslint@$ESLINT_VERSION" -c /home/app/.eslintrc.js --fix "/app"
+    if [ "$FIX" = true ]
+    then
+      npx --yes "eslint@$ESLINT_VERSION" -c /home/app/.eslintrc.js --fix "/app"
+    else
+      npx --yes "eslint@$ESLINT_VERSION" -c /home/app/.eslintrc.js "/app"
+    fi
   fi
   echo
 fi
