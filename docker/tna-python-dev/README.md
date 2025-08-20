@@ -34,6 +34,10 @@ Run `help` from within the container to see a list of available commands.
 | `stylelint` | `.stylelintrc` file in the project root           | https://stylelint.io/user-guide/configure/                                                              |
 | `eslint`    | `.eslintrc.js` file in the project root           | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files              |
 
+#### `checkformat`
+
+Runs the same tests as `format` but doesn't fix issues. Can be used in CI/CD pipelines to check formatting.
+
 ### `outdated`
 
 1. Shows outdated Poetry dependencies
