@@ -105,7 +105,7 @@ RUN set -eux; \
     \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u12 curl=7.88.1-10+deb12u12 build-essential=12.9 libmagic-dev=1:5.44-3 libsqlite3-0=3.40.1-2+deb12u2; \
+    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u14 curl=7.88.1-10+deb12u14 build-essential=12.9 libmagic-dev=1:5.44-3 libsqlite3-0=3.40.1-2+deb12u2; \
     \
     apt-get clean; \
     apt-get autoremove -y --purge; \

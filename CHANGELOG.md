@@ -24,9 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Formatting runs Prettier, stylelint and eslint if there is a `.nvmrc` file rather than a `package.json` file present
 
-### Fixed
+### Security
 
 - Updated `libsqlite3-0` to fix [CVE-2025-6965](https://nvd.nist.gov/vuln/detail/CVE-2025-6965)
+- Updated `curl` and `libcurl4` to their latest respective versions
 
 ## [0.13.1](https://github.com/nationalarchives/docker/compare/v0.13.0...v0.13.1) - 2025-08-08
 
