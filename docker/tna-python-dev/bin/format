@@ -69,7 +69,7 @@ then
   echo
 
   echo "Running stylelint..."
-  npm install -g stylelint@16.23.1 stylelint-config-standard-scss@15.0.1 stylelint-selector-bem-pattern@4.0.1 stylelint-order@7.0.0
+  npm install -g stylelint@16.24.0 stylelint-config-standard-scss@15.0.1 stylelint-selector-bem-pattern@4.0.1 stylelint-order@7.0.0
   if [ -f "/app/.stylelintrc" ]
   then
     echo "Using app config (.stylelintrc)"
