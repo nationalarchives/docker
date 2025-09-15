@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated Stylelint to [16.24.0](https://github.com/stylelint/stylelint/releases/tag/16.24.0)
+- Updated Poetry to [2.2.0](https://github.com/python-poetry/poetry/releases/tag/2.2.0)
 
 ### Deprecated
 ### Removed
