@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Poetry to [2.2.0](https://github.com/python-poetry/poetry/releases/tag/2.2.0)
 - Updated stylelint-config-standard-scss to [16.0.0](https://github.com/stylelint-scss/stylelint-config-standard-scss/releases/tag/v16.0.0)
 - Don't throw an error with stylelint if no files are found [`--allow-empty-input`](https://stylelint.io/user-guide/options/#allowemptyinput)
+- Updated Black to [25.9.0](https://github.com/psf/black/releases/tag/25.9.0)
 
 ### Deprecated
 ### Removed
