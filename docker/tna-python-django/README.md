@@ -46,10 +46,8 @@ For more information, see [how to deploy with WSGI](https://docs.djangoproject.c
 
 Run the database migrations.
 
-When `$RUNTIME` is set to `develop`, the database migrations are applied as part of the image startup process.
-
-To apply the migrations manually in production, you can run the `migrate` command inside the container image:
+To apply the migrations manually, you can run the `migrate` command inside the container image:
 
 ```sh
-docker run -it $MY_APPLICATION_DOCKER_IMAGE migrate
+docker exec $MY_APPLICATION_DOCKER_IMAGE migrate
 ```
