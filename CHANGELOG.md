@@ -5,9 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.14.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.15.0...HEAD)
 
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [0.15.0](https://github.com/nationalarchives/docker/compare/v0.14.0...v0.15.0) - 2025-10-06
+
 ### Changed
 
 - Updated Stylelint to [16.25.0](https://github.com/stylelint/stylelint/releases/tag/16.25.0)
@@ -18,11 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Uvicorn to [0.37.0](https://github.com/encode/uvicorn/releases/tag/0.37.0)
 - Updated Uvicorn Worker to [0.4.0](https://github.com/Kludex/uvicorn-worker/releases/tag/0.4.0)
 - Updated isort to [6.1.0](https://github.com/PyCQA/isort/releases/tag/6.1.0)
-
-### Deprecated
-### Removed
-### Fixed
-### Security
 
 ## [0.14.0](https://github.com/nationalarchives/docker/compare/v0.13.1...v0.14.0) - 2025-08-08
 
