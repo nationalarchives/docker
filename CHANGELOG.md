@@ -10,11 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changed
 
-- Updated Stylelint to [16.24.0](https://github.com/stylelint/stylelint/releases/tag/16.24.0)
-- Updated Poetry to [2.2.0](https://github.com/python-poetry/poetry/releases/tag/2.2.0)
+- Updated Stylelint to [16.25.0](https://github.com/stylelint/stylelint/releases/tag/16.25.0)
+- Updated Poetry to [2.2.1](https://github.com/python-poetry/poetry/releases/tag/2.2.1)
 - Updated stylelint-config-standard-scss to [16.0.0](https://github.com/stylelint-scss/stylelint-config-standard-scss/releases/tag/v16.0.0)
 - Don't throw an error with stylelint if no files are found [`--allow-empty-input`](https://stylelint.io/user-guide/options/#allowemptyinput)
 - Updated Black to [25.9.0](https://github.com/psf/black/releases/tag/25.9.0)
+- Updated Uvicorn to [0.37.0](https://github.com/encode/uvicorn/releases/tag/0.37.0)
+- Updated Uvicorn Worker to [0.4.0](https://github.com/Kludex/uvicorn-worker/releases/tag/0.4.0)
+- Updated isort to [6.1.0](https://github.com/PyCQA/isort/releases/tag/6.1.0)
 
 ### Deprecated
 ### Removed

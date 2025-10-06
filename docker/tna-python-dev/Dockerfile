@@ -78,6 +78,6 @@ COPY --chown=app lib/* /home/app/
 # Install the tools required for linting and
 # fixing Python
 # ==========================================
-RUN python -m pip install --no-cache-dir --quiet black==25.9.0 flake8==7.1.1 isort==6.0.1
+RUN python -m pip install --no-cache-dir --quiet black==25.9.0 flake8==7.1.1 isort==6.1.0
 
 CMD ["dev"]
