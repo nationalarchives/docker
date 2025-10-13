@@ -60,6 +60,10 @@ ENV PIP_NO_CACHE_DIR=true \
 
 # ==========================================
 # Define the versions of packages to install
+# at build - these are safe because:
+#   "You can't override or set an
+#    environment variable at build-time"
+# https://docs.docker.com/build/building/variables/
 # ==========================================
 ENV POETRY_VERSION=2.2.1 \
     NVM_VERSION=0.40.3 \
