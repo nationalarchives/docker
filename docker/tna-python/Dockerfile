@@ -20,11 +20,10 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
 # All TNA containers SHOULD expose identical
 # ports which will then be mapped to another
 # port on the host system - we use a default
-# of port 8080 for all our applications, but
-# this can be overridden if necessary
+# of port 8080 for all our applications
 # ==========================================
 ENV PORT=8080
-EXPOSE $PORT
+EXPOSE 8080
 
 # ==========================================
 # To aid consistency Dockerised applications
