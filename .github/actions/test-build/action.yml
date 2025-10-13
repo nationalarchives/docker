@@ -53,7 +53,7 @@ runs:
           BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.tag }}
           TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-path }}/Dockerfile
-        push: true
+        push: false
         load: true
         tags: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
         provenance: false
