@@ -21,10 +21,6 @@ runs:
     - name: Prepare image tag
       id: generate-tags
       run: |
-        IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${{ inputs.image-name }}
-        # Change all uppercase to lowercase
-        IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-        echo "IMAGE_ID=$IMAGE_ID" >> "$GITHUB_ENV"
         # Strip git ref prefix from version
         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
         # Strip "v" prefix from tag name and add the commit count as a build number
@@ -32,11 +28,10 @@ runs:
         VERSION_PART_MAJOR=$(echo "$VERSION" | awk -F'.' '{print $1}')
         VERSION_PART_MINOR=$(echo "$VERSION" | awk -F'.' '{print $2}')
         [ "$VERSION" == "main" ] && VERSION=preview
-        echo "IMAGE_ID:           $IMAGE_ID"
+        echo "IMAGE_ID:           ${{ inputs.image-name }}"
         echo "VERSION:            $VERSION"
         echo "VERSION_PART_MAJOR: $VERSION_PART_MAJOR"
         echo "VERSION_PART_MINOR: $VERSION_PART_MINOR"
-        echo "image-id=$IMAGE_ID" >> "$GITHUB_OUTPUT"
         echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
         echo "major-version=$VERSION_PART_MAJOR" >> "$GITHUB_OUTPUT"
         echo "minor-version=$VERSION_PART_MINOR" >> "$GITHUB_OUTPUT"
@@ -55,12 +50,10 @@ runs:
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-path }}/Dockerfile
         push: false
         load: true
-        tags: ${{ steps.generate-tags.outputs.image-id }}:${{ steps.generate-tags.outputs.tag }}
+        tags: ${{ inputs.image-name }}:${{ steps.generate-tags.outputs.tag }}
         provenance: false
 
 outputs:
-  image-id:
-    value: ${{ steps.generate-tags.outputs.image-id }}
   tag:
     description: "The generated tag"
     value: ${{ steps.generate-tags.outputs.tag }}
