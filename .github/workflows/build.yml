@@ -33,7 +33,6 @@ jobs:
     env:
       IMAGE_NAME: tna-python
       DOCKERFILE_PATH: docker/tna-python
-      BASE_IMAGE: ghcr.io/nationalarchives/tna-python
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -54,8 +53,12 @@ jobs:
         uses: ./.github/actions/test-build
         with:
           image-name: ${{ env.IMAGE_NAME }}
-          base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+
+      - name: DEBUG
+        run: |
+          echo "Image ID: ${{ steps.build.outputs.image-id }}"
+          echo "Tag:      ${{ steps.build.outputs.tag }}"
 
       - name: Scan Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
@@ -70,7 +73,7 @@ jobs:
         with:
           application-repository: nationalarchives/flask-application-template
           service: app
-          image: ${{ env.IMAGE_NAME }}
+          image: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
 
@@ -79,7 +82,7 @@ jobs:
         with:
           application-repository: nationalarchives/fastapi-application-template
           service: app
-          image: ${{ env.IMAGE_NAME }}
+          image: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
 
@@ -90,7 +93,6 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
-          base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -129,12 +131,17 @@ jobs:
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
+      - name: DEBUG
+        run: |
+          echo "Image ID: ${{ steps.build.outputs.image-id }}"
+          echo "Tag:      ${{ steps.build.outputs.tag }}"
+
       - name: Test Flask
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/flask-application-template
           service: app
-          image: ${{ env.IMAGE_NAME }}
+          image: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
 
@@ -143,7 +150,7 @@ jobs:
         with:
           application-repository: nationalarchives/fastapi-application-template
           service: app
-          image: ${{ env.IMAGE_NAME }}
+          image: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
 
@@ -210,7 +217,7 @@ jobs:
         with:
           application-repository: nationalarchives/django-application-template
           service: app
-          image: ${{ env.IMAGE_NAME }}
+          image: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
 
@@ -265,7 +272,7 @@ jobs:
         with:
           application-repository: nationalarchives/django-application-template
           service: app
-          image: ${{ env.IMAGE_NAME }}
+          image: ${{ steps.build.outputs.image-id }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
 
