@@ -10,10 +10,6 @@ inputs:
   base-image:
     required: false
     type: string
-  user-image:
-    required: false
-    type: string
-    default: app
 
 runs:
   using: "composite"

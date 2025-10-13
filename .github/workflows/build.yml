@@ -57,8 +57,9 @@ jobs:
 
       - name: DEBUG
         run: |
-          echo "Image ID: ${{ steps.build.outputs.image-id }}"
+          echo "Image ID: ${{ env.IMAGE_NAME }}"
           echo "Tag:      ${{ steps.build.outputs.tag }}"
+          docker image ls ${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
 
       - name: Scan Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
@@ -89,7 +90,7 @@ jobs:
       - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
-          image-id: ${{ steps.build.outputs.image-id }}
+          image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
@@ -99,7 +100,7 @@ jobs:
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
         with:
-          image-id: ${{ steps.build.outputs.image-id }}
+          image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -157,7 +158,7 @@ jobs:
       - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
-          image-id: ${{ steps.build.outputs.image-id }}
+          image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
@@ -168,7 +169,7 @@ jobs:
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
         with:
-          image-id: ${{ steps.build.outputs.image-id }}
+          image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -224,7 +225,7 @@ jobs:
       - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
-          image-id: ${{ steps.build.outputs.image-id }}
+          image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
@@ -235,7 +236,7 @@ jobs:
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
         with:
-          image-id: ${{ steps.build.outputs.image-id }}
+          image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -279,7 +280,7 @@ jobs:
       - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
-          image-id: ${{ steps.build.outputs.image-id }}
+          image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
@@ -290,7 +291,7 @@ jobs:
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
         with:
-          image-id: ${{ steps.build.outputs.image-id }}
+          image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -331,7 +332,7 @@ jobs:
   #         dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
   #     - name: Check AWS CLI
-  #       run: docker run ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }} aws --version
+  #       run: docker run ${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }} aws --version
 
   #     # - uses: actions/setup-node@v4
   #     # - uses: actions/setup-python@v5
@@ -359,7 +360,7 @@ jobs:
   #     #     echo "print( 'test'  )  " >> tests/test.py
 
   #     #     # Run the dev container
-  #     #     docker run -v ./tests:/app/tests --name test_container -it -d ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}
+  #     #     docker run -v ./tests:/app/tests --name test_container -it -d ${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
 
   #     #     # Wait for everything to be installed
   #     #     echo "Sleeping..."
@@ -413,7 +414,7 @@ jobs:
   #     - name: Build and push multi-platform Docker images
   #       uses: ./.github/actions/push
   #       with:
-  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-id: ${{ env.IMAGE_NAME }}
   #         image-tag: ${{ steps.build.outputs.tag }}
   #         major-version: ${{ steps.build.outputs.major-version }}
   #         minor-version: ${{ steps.build.outputs.minor-version }}
@@ -424,6 +425,6 @@ jobs:
   #     - name: Scan Docker image
   #       uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
   #       with:
-  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-id: ${{ env.IMAGE_NAME }}
   #         image-tag: ${{ steps.build.outputs.tag }}
   #         wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
