@@ -8,12 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.15.0...HEAD)
 
 ### Added
+
+- If the build argument `DEBUG` is set to `true` in Django projects, the Django debug toolbar is installed
+
 ### Changed
 
+- `tna-python-dev` is now a drop-in replacement for `tna-python`, `tna-python-root`, `tna-python-django` and `tna-python-django-root` to run and develop your application localy with the addition of the development scripts and features
 - Updated isort to [7.0.0](https://github.com/PyCQA/isort/releases/tag/7.0.0)
+- Refactored stack of `tna-build` scripts for all new images which allows greater inheritance
 
 ### Deprecated
+
+- `tna-python-root` image deprecated in favour of the updated `tna-python-dev`
+
 ### Removed
+
+- `migrate` script removed from `tna-python-django`
+- `RUNTIME` environment variable removed
+
 ### Fixed
 ### Security
 
