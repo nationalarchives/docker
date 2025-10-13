@@ -59,7 +59,7 @@ ENV PIP_NO_CACHE_DIR=true \
     PIP_DISABLE_PIP_VERSION_CHECK=on
 
 # ==========================================
-# Define the versions of Poetry and nvm
+# Define the versions of packages to install
 # ==========================================
 ENV POETRY_VERSION=2.2.1 \
     NVM_VERSION=0.40.3 \
