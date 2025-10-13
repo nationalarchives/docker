@@ -24,7 +24,7 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
 # this can be overridden if necessary
 # ==========================================
 ENV PORT=8080
-EXPOSE "${PORT}/tcp"
+EXPOSE $PORT
 
 # ==========================================
 # To aid consistency Dockerised applications
