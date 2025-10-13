@@ -100,7 +100,7 @@ jobs:
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
         with:
-          image-id: ${{ env.IMAGE_NAME }}
+          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -169,7 +169,7 @@ jobs:
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
         with:
-          image-id: ${{ env.IMAGE_NAME }}
+          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -236,7 +236,7 @@ jobs:
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
         with:
-          image-id: ${{ env.IMAGE_NAME }}
+          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -291,7 +291,7 @@ jobs:
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
         with:
-          image-id: ${{ env.IMAGE_NAME }}
+          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -425,6 +425,6 @@ jobs:
   #     - name: Scan Docker image
   #       uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
   #       with:
-  #         image-id: ${{ env.IMAGE_NAME }}
+  #         image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
   #         image-tag: ${{ steps.build.outputs.tag }}
   #         wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
