@@ -29,7 +29,7 @@ runs:
     - name: Start application
       run: |
         cd ${{ inputs.application-repository }}
-        yq '(.services.${{ inputs.service }}.build.args.IMAGE|="ghcr.io/${{ github.repository_owner }}/${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        yq '(.services.${{ inputs.service }}.build.args.IMAGE|="${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         yq '(.services.${{ inputs.service }}.build.args.IMAGE_TAG|="${{ inputs.image-tag }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         # yq 'del(.services.${{ inputs.service }}.volumes)' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         cat docker-compose.yml
