@@ -112,7 +112,7 @@ jobs:
     env:
       IMAGE_NAME: tna-python-dev
       DOCKERFILE_PATH: docker/tna-python
-      BASE_IMAGE: tna-python
+      BASE_IMAGE: ghcr.io/${{ github.repository_owner }}/tna-python
       DISABLE_WIZ: true
     steps:
       - name: Checkout
@@ -181,7 +181,7 @@ jobs:
     env:
       IMAGE_NAME: tna-python-django
       DOCKERFILE_PATH: docker/tna-python-django
-      BASE_IMAGE: tna-python
+      BASE_IMAGE: ghcr.io/${{ github.repository_owner }}/tna-python
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -248,7 +248,7 @@ jobs:
     env:
       IMAGE_NAME: tna-python-django-dev
       DOCKERFILE_PATH: docker/tna-python-django
-      BASE_IMAGE: tna-python-dev
+      BASE_IMAGE: ghcr.io/${{ github.repository_owner }}/tna-python-dev
       DISABLE_WIZ: true
     steps:
       - name: Checkout
@@ -303,7 +303,7 @@ jobs:
   #   env:
   #     IMAGE_NAME: tna-python-dev
   #     DOCKERFILE_PATH: docker/tna-python-dev
-  #     BASE_IMAGE: tna-python-root
+  #     BASE_IMAGE: ghcr.io/${{ github.repository_owner }}/tna-python-root
   #     DISABLE_WIZ: true
   #   steps:
   #     - name: Checkout
