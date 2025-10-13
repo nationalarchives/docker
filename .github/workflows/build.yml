@@ -103,6 +103,7 @@ jobs:
 
   python-dev:
     name: Python Dev
+    needs: python
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
@@ -126,14 +127,6 @@ jobs:
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-
-      - name: Scan Dockerfile
-        uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
-        with:
-          image-id: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
       - name: Test Flask
@@ -265,14 +258,6 @@ jobs:
         with:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-
-      - name: Scan Dockerfile
-        uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
-        with:
-          image-id: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
       - name: Test Django
