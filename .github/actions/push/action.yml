@@ -55,7 +55,6 @@ runs:
           BASE_IMAGE_TAG=${{ inputs.image-tag }}
           TNA_DOCKER_IMAGE_VERSION=${{ inputs.image-tag }}
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-path }}/Dockerfile
-          USER_IMAGE=${{ inputs.user-image }}
         push: true
         tags: ${{ inputs.image-id }}:${{ inputs.image-tag }}
         provenance: false
@@ -77,7 +76,6 @@ runs:
           BASE_IMAGE_TAG=${{ inputs.image-tag }}
           TNA_DOCKER_IMAGE_VERSION=${{ inputs.image-tag }}
           TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-path }}/Dockerfile
-          USER_IMAGE=${{ inputs.user-image }}
         push: true
         tags: ${{ inputs.image-id }}:${{ inputs.major-version }},${{ inputs.image-id }}:${{ inputs.major-version }}.${{ inputs.minor-version }},${{ inputs.image-id }}:latest
         provenance: false

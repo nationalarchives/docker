@@ -1,0 +1,62 @@
+#!/bin/bash
+
+set -e
+
+echo "Running tna-run for Python dev...";
+
+# Get the application
+APPLICATION=$1
+
+# Error if no application is passed
+if [ -z "$APPLICATION" ]
+then
+  echo -e "Error: application not specified in tna-run\n";
+  echo "PARAMETERS"
+  echo "  application          the Python package you want to run"
+  echo "                       Example: tna-run my_app:app";
+  exit 1
+fi
+
+# Make sure any mounted scripts in /home/app/.local/bin/tasks are executable
+if [ -d "/home/app/.local/bin/tasks" ]
+then
+  chmod +x -fR /home/app/.local/bin/tasks
+fi
+
+# If there is an $NPM_DEVELOP_COMMAND and we are running a development environment, run the development command now
+if [ -n "$NPM_DEVELOP_COMMAND" ]
+then
+  tna-node "$NPM_DEVELOP_COMMAND"
+fi
+
+# Set defaults for environment variables if they are not set
+[[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
+[[ -z $WORKERS ]] && WORKERS=3
+[[ -z $THREADS ]] && THREADS=1
+[[ -z $TIMEOUT ]] && TIMEOUT=600
+[[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=5
+
+# Try using the Django development server if the application uses Django
+if poetry show django > /dev/null 2>&1;
+then
+  echo "Django found, starting development server..."
+  poetry run python /app/manage.py runserver "0.0.0.0:$PORT"
+fi
+
+# Try using the Flask development server if the application uses Flask
+if poetry show flask > /dev/null 2>&1;
+then
+  echo "Flask found, starting development server..."
+  poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port "$PORT"
+fi
+
+# Use a uvicorn server if the application uses FastAPI
+if poetry show fastapi > /dev/null 2>&1;
+then
+  echo "FastAPI found, starting development server..."
+  poetry run uvicorn "$APPLICATION" --workers "$WORKERS" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host 0.0.0.0 --port "$PORT" --reload
+fi
+
+# Fall back to using Gunicorn
+echo "No framework found, using Gunicorn to serve development application..."
+poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --bind "0.0.0.0:$PORT" --worker-class="$WORKER_CLASS" --reload

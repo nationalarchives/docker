@@ -26,21 +26,21 @@ Any other alphanumeric string is considered a valid environment name but won't h
 
 Each environment has some default values but all can be overwritten:
 
-| Variable               | Description                                                               | Production default       | Develop default          | Other envs               |
-| ---------------------- | ------------------------------------------------------------------------- | ------------------------ | ------------------------ | ------------------------ |
-| `SECRET_KEY`           | A random key used to secure client session data                           | _none_                   | _none_                   | _none_                   |
-| `WORKERS`              | Number of worker processes[^1]                                            | `(cpu * 2) + 1`          | `3`                      | `(cpu * 2) + 1`          |
-| `THREADS`              | Number of threads[^2]                                                     | `(cpu * 2) + 1`          | `3`                      | `(cpu * 2) + 1`          |
-| `LOG_LEVEL`            | The log level to stream to the console[^3]                                | `warn`                   | `debug`                  | `info`                   |
-| `NODE_ENV`             | The node environment[^4]                                                  | Mirrors `RUNTIME`        | Mirrors `RUNTIME`        | Mirrors `RUNTIME`        |
-| `NPM_BUILD_COMMAND`    | The npm script from `package.json` to run to build static assets          | _none_                   | _none_                   | _none_                   |
-| `NPM_DEVELOP_COMMAND`  | The npm script from `package.json` to run in development environments     | _ignored_                | _none_                   | _ignored_                |
-| `TIMEOUT`              | The number of seconds before a request is terminated[^5]                  | `30`                     | `600`                    | `30`                     |
-| `KEEP_ALIVE`           | The number of seconds to wait for requests on a keep-alive connection[^6] | `30`                     | `5`                      | `5`                      |
-| `SSL_KEY_FILE`         | The location of the SSL key                                               | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  |
-| `SSL_CERTIFICATE_FILE` | The location of the SSL certificate                                       | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` |
-| `ALLOW_INSECURE`       | If `true`, allow containers above dev to use HTTP rather than HTTPS.      | `false`                  | _ignored_                | `false`                  |
-| `PORT`                 | Set the port used by the container (only used outside of AWS)             | `8080`                   | `8080`                   | `8080`                   |
+| Variable               | Description                                                               | `tna-python` default     | `tna-python-dev` default |
+| ---------------------- | ------------------------------------------------------------------------- | ------------------------ | ------------------------ |
+| `SECRET_KEY`           | A random key used to secure client session data                           | _none_                   | _none_                   |
+| `WORKERS`              | Number of worker processes[^1]                                            | `(cpu * 2) + 1`          | `3`                      |
+| `THREADS`              | Number of threads[^2]                                                     | `(cpu * 2) + 1`          | `3`                      |
+| `LOG_LEVEL`            | The log level to stream to the console[^3]                                | `warn`                   | `debug`                  |
+| `NODE_ENV`             | The node environment[^4]                                                  | Mirrors `RUNTIME`        | Mirrors `RUNTIME`        |
+| `NPM_BUILD_COMMAND`    | The npm script from `package.json` to run to build static assets          | _none_                   | _none_                   |
+| `NPM_DEVELOP_COMMAND`  | The npm script from `package.json` to run in development environments     | _ignored_                | _none_                   |
+| `TIMEOUT`              | The number of seconds before a request is terminated[^5]                  | `30`                     | `600`                    |
+| `KEEP_ALIVE`           | The number of seconds to wait for requests on a keep-alive connection[^6] | `30`                     | `5`                      |
+| `SSL_KEY_FILE`         | The location of the SSL key                                               | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  |
+| `SSL_CERTIFICATE_FILE` | The location of the SSL certificate                                       | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` |
+| `ALLOW_INSECURE`       | If `true`, allow containers above dev to use HTTP rather than HTTPS.      | `false`                  | _ignored_                |
+| `PORT`                 | Set the port used by the container (only used outside of AWS)             | `8080`                   | `8080`                   |
 
 [^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 

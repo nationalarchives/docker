@@ -1,6 +1,4 @@
-ARG USER_IMAGE=app
-
-FROM python:3.13-slim-bookworm AS root
+FROM python:3.13-slim-bookworm
 
 # ==========================================
 # Label this container image with a semantic
@@ -19,32 +17,25 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
     org.opencontainers.image.licenses=MIT
 
 # ==========================================
-# All TNA containers should expose identical
+# All TNA containers SHOULD expose identical
 # ports which will then be mapped to another
-# port on the host system - we use port 8080
-# for all our applications
+# port on the host system - we use a default
+# of port 8080 for all our applications, but
+# this can be overridden if necessary
 # ==========================================
-EXPOSE 8080/tcp
+ENV PORT=8080
+EXPOSE "$PORT/tcp"
 
 # ==========================================
 # To aid consistency Dockerised applications
 # should expose an unauthenticated URI which
 # can be used as a healthcheck by Docker and
 # other container orchestrators to check the
-# live-ness of an application - this idea is
+# alive-ness of an application which idea is
 # based on a GOV.UK proposal:
 # https://github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
-HEALTHCHECK --interval=15s CMD curl --fail http://localhost:8080/healthcheck/live/ || exit 1
-
-# ==========================================
-# The default runtime option is "production"
-# with the only other option being "develop"
-# which ensures all our production instances
-# will act in a similar manner, and have the
-# same setup and configuration
-# ==========================================
-ENV RUNTIME=production
+HEALTHCHECK CMD curl --fail "http://localhost:$PORT/healthcheck/live/" || exit 1
 
 # ==========================================
 # Set Python up in a consistent manner, with
@@ -100,13 +91,10 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # being installed later on
 # ==========================================
 RUN set -eux; \
-    \
     export DEBIAN_FRONTEND=noninteractive; \
-    \
     apt-get update; \
     apt-get -y upgrade; \
     apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u14 curl=7.88.1-10+deb12u14 build-essential=12.9 libmagic-dev=1:5.44-3 libsqlite3-0=3.40.1-2+deb12u2; \
-    \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
@@ -147,7 +135,6 @@ ENV NVM_DIR="$HOME/.nvm"
 # and JavaScript
 # ==========================================
 RUN set -eux; \
-    \
     curl -sSL "https://install.python-poetry.org" | python -; \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
@@ -164,9 +151,6 @@ WORKDIR /app
 # ==========================================
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
-
-
-FROM root AS app
 # ==========================================
 # Now we have finished installing everything
 # at a system level, change the current user
@@ -175,12 +159,6 @@ FROM root AS app
 # permissions
 # ==========================================
 USER app
-
-
-
-# wiz-scan ignore-block
-# hadolint ignore=DL3006
-FROM "$USER_IMAGE"
 
 # ==========================================
 # Install the latest LTS version of Node.js,

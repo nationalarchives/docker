@@ -12,10 +12,9 @@ jobs:
         image-name:
           [
             tna-python,
-            tna-python-root,
-            tna-python-django,
-            tna-python-django-root,
             tna-python-dev,
+            tna-python-django,
+            tna-python-django-dev,
           ]
     steps:
       - name: Prepare image tag

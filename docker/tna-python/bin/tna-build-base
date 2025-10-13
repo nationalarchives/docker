@@ -1,0 +1,39 @@
+#!/bin/bash
+
+set -e
+
+echo "Running tna-build for base Python...";
+
+if [ ! -f "/app/pyproject.toml" ]
+then
+  echo "pyproject.toml does not exist";
+  exit 1
+fi
+
+if [ ! -f "/app/poetry.lock" ]
+then
+  echo "poetry.lock does not exist";
+  exit 1
+fi
+
+if [ -n "$NPM_BUILD_COMMAND" ]
+then
+  if [ ! -f "/app/package.json" ]
+  then
+    echo "package.json does not exist";
+    exit 1
+  fi
+
+  if [ ! -f "/app/package-lock.json" ]
+  then
+    echo "package-lock.json does not exist";
+    exit 1
+  fi
+
+  tna-node "$NPM_BUILD_COMMAND"
+fi
+
+poetry add gunicorn@23.0.0
+poetry add uvicorn@0.37.0
+poetry add uvicorn-worker@0.4.0
+poetry install --no-root --no-interaction

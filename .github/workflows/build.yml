@@ -34,7 +34,6 @@ jobs:
       IMAGE_NAME: tna-python
       DOCKERFILE_PATH: docker/tna-python
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python
-      USER_IMAGE: app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -57,7 +56,6 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          user-image: ${{ env.USER_IMAGE }}
 
       - name: Scan Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
@@ -94,7 +92,6 @@ jobs:
           minor-version: ${{ steps.build.outputs.minor-version }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Scan Docker image
@@ -104,15 +101,14 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
-  python-root:
-    name: Python (root)
+  python-dev:
+    name: Python dev
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      IMAGE_NAME: tna-python-root
+      IMAGE_NAME: tna-python-dev
       DOCKERFILE_PATH: docker/tna-python
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python
-      USER_IMAGE: root
       DISABLE_WIZ: true
     steps:
       - name: Checkout
@@ -131,7 +127,6 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          user-image: ${{ env.USER_IMAGE }}
 
       - name: Scan Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
@@ -168,7 +163,6 @@ jobs:
           minor-version: ${{ steps.build.outputs.minor-version }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Scan Docker image
@@ -187,7 +181,6 @@ jobs:
       IMAGE_NAME: tna-python-django
       DOCKERFILE_PATH: docker/tna-python-django
       BASE_IMAGE: ghcr.io/nationalarchives/tna-python
-      USER_IMAGE: root
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -210,7 +203,6 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          user-image: ${{ env.USER_IMAGE }}
 
       - name: Scan Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
@@ -238,7 +230,6 @@ jobs:
           minor-version: ${{ steps.build.outputs.minor-version }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Scan Docker image
@@ -248,16 +239,15 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
-  python-django-root:
+  python-django-dev:
     name: Python Django (root)
-    needs: python-root
+    needs: python-dev
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      IMAGE_NAME: tna-python-django-root
+      IMAGE_NAME: tna-python-django-dev
       DOCKERFILE_PATH: docker/tna-python-django
-      BASE_IMAGE: ghcr.io/nationalarchives/tna-python-root
-      USER_IMAGE: root
+      BASE_IMAGE: ghcr.io/nationalarchives/tna-python-dev
       DISABLE_WIZ: true
     steps:
       - name: Checkout
@@ -276,7 +266,6 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          user-image: ${{ env.USER_IMAGE }}
 
       - name: Scan Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
@@ -304,7 +293,6 @@ jobs:
           minor-version: ${{ steps.build.outputs.minor-version }}
           base-image: ${{ env.BASE_IMAGE }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          user-image: ${{ env.USER_IMAGE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Scan Docker image
@@ -314,139 +302,136 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
-  python-dev:
-    name: Python Dev
-    needs: python-root
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      IMAGE_NAME: tna-python-dev
-      DOCKERFILE_PATH: docker/tna-python-dev
-      BASE_IMAGE: ghcr.io/nationalarchives/tna-python-root
-      USER_IMAGE: root
-      DISABLE_WIZ: true
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # python-dev:
+  #   name: Python Dev
+  #   needs: python-root
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 10
+  #   env:
+  #     IMAGE_NAME: tna-python-dev
+  #     DOCKERFILE_PATH: docker/tna-python-dev
+  #     BASE_IMAGE: ghcr.io/nationalarchives/tna-python-root
+  #     DISABLE_WIZ: true
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Lint Dockerfile
-        uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
-        with:
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          ignore-linting-rules: DL3002,DL3008,SC1091
+  #     - name: Lint Dockerfile
+  #       uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
+  #       with:
+  #         dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+  #         ignore-linting-rules: DL3002,DL3008,SC1091
 
-      - name: Test Docker image build
-        id: build
-        uses: ./.github/actions/test-build
-        with:
-          image-name: ${{ env.IMAGE_NAME }}
-          base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          user-image: ${{ env.USER_IMAGE }}
+  #     - name: Test Docker image build
+  #       id: build
+  #       uses: ./.github/actions/test-build
+  #       with:
+  #         image-name: ${{ env.IMAGE_NAME }}
+  #         base-image: ${{ env.BASE_IMAGE }}
+  #         dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
-      - name: Scan Dockerfile
-        uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
-        with:
-          image-id: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+  #     - name: Scan Dockerfile
+  #       uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
+  #       with:
+  #         image-id: ${{ env.IMAGE_NAME }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+  #         dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
-      - name: Check AWS CLI
-        run: docker run ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }} aws --version
+  #     - name: Check AWS CLI
+  #       run: docker run ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }} aws --version
 
-      # - uses: actions/setup-node@v4
-      # - uses: actions/setup-python@v5
-      # - name: Test development formatting
-      #   run: |
-      #     set +e
+  #     # - uses: actions/setup-node@v4
+  #     # - uses: actions/setup-python@v5
+  #     # - name: Test development formatting
+  #     #   run: |
+  #     #     set +e
 
-      #     # Install Python linting and formatting tools
-      #     pip install black flake8 isort
+  #     #     # Install Python linting and formatting tools
+  #     #     pip install black flake8 isort
 
-      #     npm i stylelint-config-standard-scss stylelint-selector-bem-pattern
+  #     #     npm i stylelint-config-standard-scss stylelint-selector-bem-pattern
 
-      #     # Create directories for test files
-      #     mkdir tests
+  #     #     # Create directories for test files
+  #     #     mkdir tests
 
-      #     # Create test files for Prettier
-      #     echo "  const  foo  =  'bar';; const a=foo ;console.log(  a) " > tests/test.js
-      #     echo " *  {    color :  red;text-decoration:underline}  " > tests/test.css
-      #     echo " \$colour : #ff0000; *  {    color :  \$colour;text-decoration:underline}  " > tests/test.scss
-      #     echo "  {    'foo'  :   'bar'} " > tests/test.json
+  #     #     # Create test files for Prettier
+  #     #     echo "  const  foo  =  'bar';; const a=foo ;console.log(  a) " > tests/test.js
+  #     #     echo " *  {    color :  red;text-decoration:underline}  " > tests/test.css
+  #     #     echo " \$colour : #ff0000; *  {    color :  \$colour;text-decoration:underline}  " > tests/test.scss
+  #     #     echo "  {    'foo'  :   'bar'} " > tests/test.json
 
-      #     # Create test files for Python
-      #     echo "import sys  " > tests/test.py
-      #     echo "import datetime  " >> tests/test.py
-      #     echo "print( 'test'  )  " >> tests/test.py
+  #     #     # Create test files for Python
+  #     #     echo "import sys  " > tests/test.py
+  #     #     echo "import datetime  " >> tests/test.py
+  #     #     echo "print( 'test'  )  " >> tests/test.py
 
-      #     # Run the dev container
-      #     docker run -v ./tests:/app/tests --name test_container -it -d ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}
+  #     #     # Run the dev container
+  #     #     docker run -v ./tests:/app/tests --name test_container -it -d ${{ steps.build.outputs.image-id }}:${{ steps.build.outputs.tag }}
 
-      #     # Wait for everything to be installed
-      #     echo "Sleeping..."
-      #     # TODO: Improve this
-      #     sleep 30
+  #     #     # Wait for everything to be installed
+  #     #     echo "Sleeping..."
+  #     #     # TODO: Improve this
+  #     #     sleep 30
 
-      #     # Copy configuration files from container
-      #     docker cp test_container:/home/app/.eslintrc.js .eslintrc.js
-      #     docker cp test_container:/home/app/.flake8 .flake8
-      #     docker cp test_container:/home/app/.isort.cfg .isort.cfg
-      #     docker cp test_container:/home/app/.stylelintrc .stylelintrc
+  #     #     # Copy configuration files from container
+  #     #     docker cp test_container:/home/app/.eslintrc.js .eslintrc.js
+  #     #     docker cp test_container:/home/app/.flake8 .flake8
+  #     #     docker cp test_container:/home/app/.isort.cfg .isort.cfg
+  #     #     docker cp test_container:/home/app/.stylelintrc .stylelintrc
 
-      #     # Check that Prettier finds issues
-      #     echo "Checking Prettier..."
-      #     npx prettier tests --check; [[ "$?" == "1" ]]
-      #     echo "Checking stylelint..."
-      #     npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"; [[ "$?" == "1" ]]
-      #     echo "Checking eslint..."
-      #     npx eslint@8.56.0 -c .eslintrc.js "tests"; [[ "$?" == "1" ]]
+  #     #     # Check that Prettier finds issues
+  #     #     echo "Checking Prettier..."
+  #     #     npx prettier tests --check; [[ "$?" == "1" ]]
+  #     #     echo "Checking stylelint..."
+  #     #     npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"; [[ "$?" == "1" ]]
+  #     #     echo "Checking eslint..."
+  #     #     npx eslint@8.56.0 -c .eslintrc.js "tests"; [[ "$?" == "1" ]]
 
-      #     # Check that issues are found in Python code
-      #     echo "Checking isort..."
-      #     isort --settings-file .isort.cfg --check tests; [[ "$?" == "1" ]]
-      #     echo "Checking black..."
-      #     black --check tests; [[ "$?" == "1" ]]
-      #     echo "Checking flake8..."
-      #     flake8 --config=.flake8 tests; [[ "$?" == "1" ]]
+  #     #     # Check that issues are found in Python code
+  #     #     echo "Checking isort..."
+  #     #     isort --settings-file .isort.cfg --check tests; [[ "$?" == "1" ]]
+  #     #     echo "Checking black..."
+  #     #     black --check tests; [[ "$?" == "1" ]]
+  #     #     echo "Checking flake8..."
+  #     #     flake8 --config=.flake8 tests; [[ "$?" == "1" ]]
 
-      #     set -e
+  #     #     set -e
 
-      #     # Format the code
-      #     echo "Formatting code..."
-      #     docker exec test_container format
+  #     #     # Format the code
+  #     #     echo "Formatting code..."
+  #     #     docker exec test_container format
 
-      #     # Check that Prettier finds no issues
-      #     echo "Checking Prettier..."
-      #     npx prettier tests --check
-      #     echo "Checking stylelint..."
-      #     npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"
-      #     echo "Checking eslint..."
-      #     npx eslint@8.56.0 -c .eslintrc.js "tests"
+  #     #     # Check that Prettier finds no issues
+  #     #     echo "Checking Prettier..."
+  #     #     npx prettier tests --check
+  #     #     echo "Checking stylelint..."
+  #     #     npx stylelint --config .stylelintrc "tests/**/*.{css,scss}"
+  #     #     echo "Checking eslint..."
+  #     #     npx eslint@8.56.0 -c .eslintrc.js "tests"
 
-      #     # Check that no issues are found in Python code
-      #     echo "Checking isort..."
-      #     isort --settings-file .isort.cfg --check tests
-      #     echo "Checking black..."
-      #     black --check tests
-      #     echo "Checking flake8..."
-      #     flake8 --config=.flake8 tests
+  #     #     # Check that no issues are found in Python code
+  #     #     echo "Checking isort..."
+  #     #     isort --settings-file .isort.cfg --check tests
+  #     #     echo "Checking black..."
+  #     #     black --check tests
+  #     #     echo "Checking flake8..."
+  #     #     flake8 --config=.flake8 tests
 
-      - name: Build and push multi-platform Docker images
-        uses: ./.github/actions/push
-        with:
-          image-id: ${{ steps.build.outputs.image-id }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          major-version: ${{ steps.build.outputs.major-version }}
-          minor-version: ${{ steps.build.outputs.minor-version }}
-          base-image: ${{ env.BASE_IMAGE }}
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-          user-image: ${{ env.USER_IMAGE }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Build and push multi-platform Docker images
+  #       uses: ./.github/actions/push
+  #       with:
+  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         major-version: ${{ steps.build.outputs.major-version }}
+  #         minor-version: ${{ steps.build.outputs.minor-version }}
+  #         base-image: ${{ env.BASE_IMAGE }}
+  #         dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scan Docker image
-        uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
-        with:
-          image-id: ${{ steps.build.outputs.image-id }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+  #     - name: Scan Docker image
+  #       uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
+  #       with:
+  #         image-id: ${{ steps.build.outputs.image-id }}
+  #         image-tag: ${{ steps.build.outputs.tag }}
+  #         wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}

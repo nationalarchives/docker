@@ -24,23 +24,30 @@ The National Archives base Docker images are designed to serve as a starting poi
 graph TD;
     debian --> python;
     python --> tna-python;
-    python --> tna-python-root;
+    tna-python --> tna-python-dev;
     tna-python --> tna-python-django;
-    tna-python-root --> tna-python-django-root;
-    tna-python-root --> tna-python-dev;
+    tna-python-dev --> tna-python-django-dev;
 ```
 
 ## Building locally
 
 ```sh
 # Build tna-python
-docker build -t tna-python:local --build-arg USER_IMAGE=app docker/tna-python
+docker build -t tna-python:local docker/tna-python
+
+# Build tna-python-dev
+docker build -t tna-python-dev:local --build-arg BASE_IMAGE=tna-python --build-arg BASE_IMAGE_TAG=local docker/tna-python-dev
 
 # Build tna-python-django
-docker build -t tna-python-django:local --build-arg BASE_IMAGE=tna-python --build-arg BASE_IMAGE_TAG=local --build-arg USER_IMAGE=app docker/tna-python-django
+docker build -t tna-python-django:local --build-arg BASE_IMAGE=tna-python --build-arg BASE_IMAGE_TAG=local docker/tna-python-django
+
+# Build tna-python-django-dev
+docker build -t tna-python-django-dev:local --build-arg BASE_IMAGE=tna-python-dev --build-arg BASE_IMAGE_TAG=local docker/tna-python-django
 
 # Run
 docker run tna-python:local
 # ...or
+docker run tna-python-dev:local
 docker run tna-python-django:local
+docker run tna-python-django-dev:local
 ```

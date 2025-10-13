@@ -42,12 +42,8 @@ For more information, see [how to deploy with WSGI](https://docs.djangoproject.c
 
 1. Run the [Django admin command](https://docs.djangoproject.com/en/5.1/ref/django-admin/) in the context of `manage.py` (e.g. `manage makemigrations`)
 
-### `migrate`
-
-Run the database migrations.
-
-To apply the migrations manually, you can run the `migrate` command inside the container image:
+To apply the database migrations, you can use the `manage` command inside the container image with the management task `migrate`:
 
 ```sh
-docker exec $MY_APPLICATION_DOCKER_IMAGE migrate
+docker exec $MY_APPLICATION_DOCKER_IMAGE manage migrate
 ```

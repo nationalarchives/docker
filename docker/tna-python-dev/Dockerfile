@@ -1,5 +1,5 @@
 # wiz-scan ignore
-ARG BASE_IMAGE=ghcr.io/nationalarchives/tna-python-root
+ARG BASE_IMAGE=ghcr.io/nationalarchives/tna-python
 ARG BASE_IMAGE_TAG=latest
 
 FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG"
@@ -16,11 +16,13 @@ ARG TARGETPLATFORM
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # ==========================================
-# Check for the existance of a file that has
-# been created by the container after it has
-# finished installing and configuring itself
+# Switch back to the root user so we can run
+# commands that need elevated privileges and
+# not encounter permission issues when using
+# files and directories from the host system
+# which are mounted during development
 # ==========================================
-HEALTHCHECK --interval=10s CMD test -f /tmp/up
+USER root
 
 # ==========================================
 # Install and configure Docker, removing all
@@ -34,7 +36,6 @@ RUN apt-get update; \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null; \
     apt-get update; \
     apt-get install -y --no-install-recommends docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin postgresql-client; \
-    \
     apt-get clean; \
     apt-get autoremove -y --purge; \
     rm -rfv /var/lib/apt/lists/*
@@ -59,14 +60,10 @@ RUN gpg --import /home/app/aws-cli-public.key; \
     rm -fR /home/app/awscliv2.zip /home/app/awscliv2.zip.sig /home/app/aws
 
 # ==========================================
-# Copy the development scripts into the user
-# .local/bin/dev/ directory, and prepare the
-# future .local/bin/tasks/ directory, adding
-# it to the path ready for mounted scripts
+# Install the tools required for linting and
+# fixing Python
 # ==========================================
-COPY --chown=app bin /home/app/.local/bin/dev
-RUN chmod +x -R /home/app/.local/bin/dev
-ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
+RUN python -m pip install --no-cache-dir --quiet black==25.9.0 flake8==7.1.1 isort==7.0.0
 
 # ==========================================
 # Copy any configuration files into the main
@@ -75,9 +72,21 @@ ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
 COPY --chown=app lib/* /home/app/
 
 # ==========================================
-# Install the tools required for linting and
-# fixing Python
+# Update the build and run scripts with some
+# development specific versions
 # ==========================================
-RUN python -m pip install --no-cache-dir --quiet black==25.9.0 flake8==7.1.1 isort==7.0.0
+RUN set -eux; \
+    mv /home/app/.local/bin/tna-build /home/app/.local/bin/tna-build-common
+COPY --chown=app bin/tna-build /home/app/.local/bin/tna-build
+COPY --chown=app bin/tna-build-dev /home/app/.local/bin/tna-build-dev
+COPY --chown=app bin/tna-run /home/app/.local/bin/tna-run
 
-CMD ["dev"]
+# ==========================================
+# Copy the development scripts into the user
+# .local/bin/dev/ directory, and prepare the
+# future .local/bin/tasks/ directory, adding
+# it to the path ready for mounted scripts
+# ==========================================
+COPY --chown=app bin/dev /home/app/.local/bin/dev
+RUN chmod +x -R /home/app/.local/bin/dev
+ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"

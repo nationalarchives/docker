@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+echo "Running tna-build for dev...";
+
+poetry install --no-root --with dev || true
+
+if [ -f "/app/package.json" ]
+then
+  . tna-nvm
+  npm install
+fi
