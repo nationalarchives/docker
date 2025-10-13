@@ -24,7 +24,7 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
 # this can be overridden if necessary
 # ==========================================
 ENV PORT=8080
-EXPOSE ${PORT}/tcp
+EXPOSE "${PORT}/tcp"
 
 # ==========================================
 # To aid consistency Dockerised applications
@@ -63,7 +63,10 @@ ENV PIP_NO_CACHE_DIR=true \
 # Define the versions of Poetry and nvm
 # ==========================================
 ENV POETRY_VERSION=2.2.1 \
-    NVM_VERSION=0.40.3
+    NVM_VERSION=0.40.3 \
+    GUNICORN_VERSION=23.0.0 \
+    UVICORN_VERSION=0.37.0 \
+    UVICORN_WORKER_VERSION=0.4.0
 
 # ==========================================
 # Set up the Poetry variables so that we get
