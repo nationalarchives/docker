@@ -41,7 +41,9 @@ RUN apt-get update; \
     rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
-# Set versions for tools we want to install
+# Set versions for tools we want to install,
+# remembering that these must not be used in
+# any runtime scripts
 # ==========================================
 ENV AWS_CLI_VERSION=2.27.45 \
     BLACK_VERSION=25.9.0 \
