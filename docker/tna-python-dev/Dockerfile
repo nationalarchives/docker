@@ -41,12 +41,23 @@ RUN apt-get update; \
     rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
+# Set versions for tools we want to install
+# ==========================================
+ENV AWS_CLI_VERSION=2.27.45 \
+    BLACK_VERSION=25.9.0 \
+    FLAKE8_VERSION=7.1.1 \
+    ISORT_VERSION=7.0.0 \
+    PRETTIER_VERSION=3.6.2 \
+    STYLELINT_VERSION=16.25.0 \
+    STYLELINT_CONFIG_STANDARD_SCSS_VERSION=16.0.0 \
+    STYLELINT_SELECTOR_BEM_PATTERN_VERSION=4.0.1 \
+    STYLELINT_ORDER_VERSION=7.0.0 \
+    ESLINT_VERSION=8.56.0
+
+# ==========================================
 # Install the AWS CLI
 # ==========================================
 COPY lib/aws-cli-public.key /home/app/aws-cli-public.key
-
-ENV AWS_CLI_VERSION=2.27.45
-
 RUN gpg --import /home/app/aws-cli-public.key; \
     AWS_CLI_PLATFORM=none; \
     [[ "$TARGETPLATFORM" == "linux/amd64" ]] && AWS_CLI_PLATFORM=x86_64; \
@@ -63,7 +74,7 @@ RUN gpg --import /home/app/aws-cli-public.key; \
 # Install the tools required for linting and
 # fixing Python
 # ==========================================
-RUN python -m pip install --no-cache-dir --quiet black==25.9.0 flake8==7.1.1 isort==7.0.0
+RUN python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION"
 
 # ==========================================
 # Copy any configuration files into the main

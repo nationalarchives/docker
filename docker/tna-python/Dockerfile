@@ -24,7 +24,7 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
 # this can be overridden if necessary
 # ==========================================
 ENV PORT=8080
-EXPOSE "$PORT/tcp"
+EXPOSE ${PORT}/tcp
 
 # ==========================================
 # To aid consistency Dockerised applications
@@ -60,14 +60,18 @@ ENV PIP_NO_CACHE_DIR=true \
     PIP_DISABLE_PIP_VERSION_CHECK=on
 
 # ==========================================
+# Define the versions of Poetry and nvm
+# ==========================================
+ENV POETRY_VERSION=2.2.1 \
+    NVM_VERSION=0.40.3
+
+# ==========================================
 # Set up the Poetry variables so that we get
 # a consistent experience with using Poetry,
 # which includes where it will be installed,
 # where it installs the project dependencies
-# and what version is used
 # ==========================================
 ENV POETRY_HOME=/home/app/.local \
-    POETRY_VERSION=2.2.1 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=true \
     POETRY_VIRTUALENVS_IN_PROJECT=false
@@ -136,7 +140,7 @@ ENV NVM_DIR="$HOME/.nvm"
 # ==========================================
 RUN set -eux; \
     curl -sSL "https://install.python-poetry.org" | python -; \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash; \
+    curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh" | bash; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
 
 # ==========================================

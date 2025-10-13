@@ -102,7 +102,7 @@ jobs:
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
   python-dev:
-    name: Python dev
+    name: Python Dev
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
@@ -240,7 +240,7 @@ jobs:
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
   python-django-dev:
-    name: Python Django (root)
+    name: Python Django Dev
     needs: python-dev
     runs-on: ubuntu-latest
     timeout-minutes: 10

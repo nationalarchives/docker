@@ -62,14 +62,14 @@ then
   echo "Running prettier..."
   if [ "$FIX" = true ]
   then
-    npx --yes prettier@3.6.2 --write --list-different /app
+    npx --yes "prettier@$PRETTIER_VERSION" --write --list-different /app
   else
-    npx --yes prettier@3.6.2 --list-different /app
+    npx --yes "prettier@$PRETTIER_VERSION" --list-different /app
   fi
   echo
 
   echo "Running stylelint..."
-  npm install -g stylelint@16.25.0 stylelint-config-standard-scss@16.0.0 stylelint-selector-bem-pattern@4.0.1 stylelint-order@7.0.0
+  npm install -g stylelint@$STYLELINT_VERSION stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION stylelint-order@$STYLELINT_ORDER_VERSION
   if [ -f "/app/.stylelintrc" ]
   then
     echo "Using app config (.stylelintrc)"
@@ -172,7 +172,6 @@ then
   echo
 
   echo "Running eslint..."
-  ESLINT_VERSION=8.56.0
   if [ -f "/app/.eslintrc.js" ]
   then
     echo "Using app config (.eslintrc.js)"
