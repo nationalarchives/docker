@@ -68,7 +68,7 @@ ENV PIP_NO_CACHE_DIR=true \
 ENV POETRY_VERSION=2.2.1 \
     NVM_VERSION=0.40.3 \
     GUNICORN_VERSION=23.0.0 \
-    UVICORN_VERSION=0.37.0 \
+    UVICORN_VERSION=0.38.0 \
     UVICORN_WORKER_VERSION=0.4.0
 
 # ==========================================
