@@ -32,7 +32,7 @@ EXPOSE 8080
 # other container orchestrators to check the
 # alive-ness of an application which idea is
 # based on a GOV.UK proposal:
-# https://github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
+# github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
 HEALTHCHECK CMD curl --fail "http://localhost:$PORT/healthcheck/live/" || exit 1
 
@@ -87,7 +87,7 @@ ENV POETRY_HOME=/home/app/.local \
 # executes commands through doesn't just use
 # the final operation in a pipe to determine
 # the success of the entire command
-# https://github.com/hadolint/hadolint/wiki/DL4006
+# > github.com/hadolint/hadolint/wiki/DL4006
 # ==========================================
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
