@@ -95,7 +95,7 @@ COPY --chown=app bin/tna-run /home/app/.local/bin/tna-run
 # ==========================================
 # Set the Node.js environment to development
 # ==========================================
-ENV NODE_ENV=development
+# ENV NODE_ENV=development
 
 # ==========================================
 # Copy the development scripts into the user

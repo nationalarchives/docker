@@ -139,7 +139,7 @@ ENV HOME=/home/app
 # Node.js environment to "production"
 # ==========================================
 ENV NVM_DIR="$HOME/.nvm"
-ENV NODE_ENV=production
+# ENV NODE_ENV=production
 
 # ==========================================
 # Install Poetry in the suggested manner and
