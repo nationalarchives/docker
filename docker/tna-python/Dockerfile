@@ -179,6 +179,7 @@ USER app
 # ==========================================
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
+    nvm install lts/jod; \
     nvm install lts/krypton; \
     nvm alias default lts/krypton
 
