@@ -135,9 +135,11 @@ ENV HOME=/home/app
 
 # ==========================================
 # Specify the directory for nvm to use which
-# is writable by our "app" user
+# is writable by our "app" user, and set the
+# Node.js environment to "production"
 # ==========================================
 ENV NVM_DIR="$HOME/.nvm"
+ENV NODE_ENV=production
 
 # ==========================================
 # Install Poetry in the suggested manner and
@@ -177,8 +179,8 @@ USER app
 # ==========================================
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install lts/jod; \
-    nvm alias default lts/jod
+    nvm install lts/krypton; \
+    nvm alias default lts/krypton
 
 # ==========================================
 # Create a directory for our SSL certificate

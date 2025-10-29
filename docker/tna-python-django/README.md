@@ -8,7 +8,7 @@ This image assumes you have a version of Django added to you project's `pyprojec
 
 ## Environment variables
 
-All environment variables defined in [tna-python](../tna-python/README.md) as well as:
+All environment variables defined in [tna-python](../tna-python/README.md) or [tna-python-dev](../tna-python-dev/README.md) or  as well as:
 
 | Variable                 | Description                          | Default |
 | ------------------------ | ------------------------------------ | ------- |
