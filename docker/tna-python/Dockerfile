@@ -194,7 +194,7 @@ RUN mkdir /home/app/ssl
 # run our application in a consistent manner
 # ==========================================
 # wiz-scan ignore-line
-COPY bin /home/app/.local/bin
+COPY --chown=app bin /home/app/.local/bin
 RUN chmod +x -fR /home/app/.local/bin
 
 # ==========================================

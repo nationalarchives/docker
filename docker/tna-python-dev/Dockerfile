@@ -81,7 +81,7 @@ RUN python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=
 # Copy any configuration files into the main
 # app directory
 # ==========================================
-COPY lib/* /home/app/
+COPY --chown=app lib/* /home/app/
 
 # ==========================================
 # Update the build and run scripts with some
@@ -89,9 +89,9 @@ COPY lib/* /home/app/
 # ==========================================
 RUN set -eux; \
     mv /home/app/.local/bin/tna-build /home/app/.local/bin/tna-build-common
-COPY bin/tna-build /home/app/.local/bin/tna-build
-COPY bin/tna-wsgi /home/app/.local/bin/tna-wsgi
-COPY bin/tna-asgi /home/app/.local/bin/tna-asgi
+COPY --chown=app bin/tna-build /home/app/.local/bin/tna-build
+COPY --chown=app bin/tna-wsgi /home/app/.local/bin/tna-wsgi
+COPY --chown=app bin/tna-asgi /home/app/.local/bin/tna-asgi
 
 # ==========================================
 # Set the Node.js environment to development
@@ -104,6 +104,6 @@ ENV NODE_ENV=development
 # future .local/bin/tasks/ directory, adding
 # it to the path ready for mounted scripts
 # ==========================================
-COPY bin/dev /home/app/.local/bin/dev
+COPY --chown=app bin/dev /home/app/.local/bin/dev
 RUN chmod +x -R /home/app/.local/bin/dev
 ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
