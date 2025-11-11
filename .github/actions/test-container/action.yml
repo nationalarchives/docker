@@ -4,6 +4,10 @@ inputs:
   application-repository:
     required: true
     type: string
+  application-repository-branch:
+    required: false
+    type: string
+    default: main
   service:
     required: true
     type: string

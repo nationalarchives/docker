@@ -73,6 +73,7 @@ jobs:
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/flask-application-template
+          application-repository-branch: docker-refactor
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -82,6 +83,7 @@ jobs:
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/django-application-template
+          application-repository-branch: docker-refactor
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -91,6 +93,7 @@ jobs:
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/fastapi-application-template
+          application-repository-branch: docker-refactor
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -150,6 +153,7 @@ jobs:
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/flask-application-template
+          application-repository-branch: docker-refactor
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -159,6 +163,7 @@ jobs:
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/django-application-template
+          application-repository-branch: docker-refactor
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -168,6 +173,7 @@ jobs:
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/fastapi-application-template
+          application-repository-branch: docker-refactor
           service: app
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
