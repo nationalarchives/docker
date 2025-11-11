@@ -28,7 +28,7 @@ runs:
       uses: actions/checkout@v4
       with:
         repository: ${{ inputs.application-repository }}
-        branch: ${{ inputs.application-repository-branch }}
+        ref: ${{ inputs.application-repository-branch }}
         path: ${{ inputs.application-repository }}
 
     - name: Start application
