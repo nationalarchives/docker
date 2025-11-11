@@ -45,7 +45,7 @@ RUN apt-get update; \
 # want to install to help with development
 # ==========================================
 ENV AWS_CLI_VERSION=2.27.45 \
-    BLACK_VERSION=25.9.0 \
+    BLACK_VERSION=25.11.0 \
     FLAKE8_VERSION=7.1.1 \
     ISORT_VERSION=7.0.0 \
     PRETTIER_VERSION=3.6.2 \

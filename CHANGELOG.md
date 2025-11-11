@@ -9,15 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- If the build argument `DEBUG` is set to `true` in Django projects, the Django debug toolbar is installed
-
 ### Changed
 
-- `tna-python-dev` is now a drop-in replacement for `tna-python`, `tna-python-root`, `tna-python-django` and `tna-python-django-root` to run and develop your application localy with the addition of the development scripts and features
+- `tna-python-dev` is now a drop-in replacement for `tna-python` to run and develop your application localy with the addition of the development scripts and features
 - Updated isort to [7.0.0](https://github.com/PyCQA/isort/releases/tag/7.0.0)
 - Refactored stack of `tna-build` scripts for all new images which allows greater inheritance
 - Updated Uvicorn to [0.38.0](https://github.com/encode/uvicorn/releases/tag/0.38.0)
 - Updated the LTS version of NodeJS from `jod` to `krypton`
+- Updated Black to [25.11.0](https://github.com/psf/black/releases/tag/25.11.0)
 
 ### Deprecated
 
