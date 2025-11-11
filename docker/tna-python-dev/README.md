@@ -1,11 +1,15 @@
 # tna-python-dev
 
-This image extends `tna-python` and can be used for local development ONLY. It adds:
+> ⚠️ Do not use `tna-python-dev` in production
 
-- `docker` - for managing other containers
+This image extends `tna-python` and can be used for local development **ONLY**. It adds:
+
 - `black`, `flake8` and `isort` - for formatting Python code
 - `prettier`, `eslint` and `stylelint` - for formatting JavaScript and CSS
 - scripts for formatting code
+- AWS CLI
+- `django-debug-toolbar`
+- `docker` - for managing other containers
 
 ## Environment variables
 
@@ -17,7 +21,6 @@ All environment variables extended from [tna-python](../tna-python/README.md) bu
 | `THREADS`              | `3`           |
 | `LOG_LEVEL`            | `debug`       |
 | `NODE_ENV`             | `development` |
-| `NPM_BUILD_COMMAND`    | _none_        |
 | `TIMEOUT`              | `600`         |
 | `KEEP_ALIVE`           | `5`           |
 | `SSL_KEY_FILE`         | _ignored_     |
@@ -69,6 +72,19 @@ services:
 
 Run `help` from within the container to see a list of available commands.
 
+### `tna-wsgi` and `tna-asgi`
+
+In the `tna-python-dev` image, both of these commands are replaced by a script that detects the frameworks used and runs their development servers.
+
+This means you don't have to change anything in your `Dockerfile` when switching between `tna-python` and `tna-python-dev`.
+
+The process for these commands is:
+
+1. If `NPM_DEVELOP_COMMAND` has been defined then run `tna-node "$NPM_DEVELOP_COMMAND"` (See [tna-node](../tna-python/README.md#tna-node-command))
+1. If Django is installed, run the Django development server
+   1. Else if Flask is installed, run the Flask development server
+   1. Else if FastAPI is installed, run the FastAPI development server
+
 ### `format`
 
 1. Run `isort`
@@ -102,6 +118,10 @@ Runs the same tests as `format` but doesn't fix issues. Can be used in CI/CD pip
 
 1. Updates Poetry dependencies
 1. Updates npm dependencies
+
+Run `upgrade poetry` to update only Poetry dependencies.
+
+Run `upgrade npm` to update only npm dependencies.
 
 ### `secret-key`
 

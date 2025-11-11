@@ -58,182 +58,183 @@ if [ -f ".nvmrc" ]
 then
   . tna-nvm
   npm --version
+fi
+echo
 
-  echo "Running prettier..."
+echo "Running prettier..."
+if [ "$FIX" = true ]
+then
+  npx --yes "prettier@$PRETTIER_VERSION" --write --list-different /app
+else
+  npx --yes "prettier@$PRETTIER_VERSION" --list-different /app
+fi
+echo
+
+echo "Running stylelint..."
+npm install -g stylelint@$STYLELINT_VERSION stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION stylelint-order@$STYLELINT_ORDER_VERSION
+if [ -f "/app/.stylelintrc" ]
+then
+  echo "Using app config (.stylelintrc)"
   if [ "$FIX" = true ]
   then
-    npx --yes "prettier@$PRETTIER_VERSION" --write --list-different /app
+    stylelint --config /app/.stylelintrc --fix "/app/**/*.{css,scss}" --allow-empty-input
   else
-    npx --yes "prettier@$PRETTIER_VERSION" --list-different /app
+    stylelint --config /app/.stylelintrc "/app/**/*.{css,scss}" --allow-empty-input
   fi
-  echo
-
-  echo "Running stylelint..."
-  npm install -g stylelint@$STYLELINT_VERSION stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION stylelint-order@$STYLELINT_ORDER_VERSION
-  if [ -f "/app/.stylelintrc" ]
+elif [ -f "/app/stylelint.config.js" ]
+then
+  echo "Using app config (stylelint.config.js)"
+  if [ "$FIX" = true ]
   then
-    echo "Using app config (.stylelintrc)"
-    if [ "$FIX" = true ]
-    then
-      stylelint --config /app/.stylelintrc --fix "/app/**/*.{css,scss}" --allow-empty-input
-    else
-      stylelint --config /app/.stylelintrc "/app/**/*.{css,scss}" --allow-empty-input
-    fi
-  elif [ -f "/app/stylelint.config.js" ]
-  then
-    echo "Using app config (stylelint.config.js)"
-    if [ "$FIX" = true ]
-    then
-      stylelint --config /app/stylelint.config.js --fix "/app/**/*.{css,scss}" --allow-empty-input
-    else
-      stylelint --config /app/stylelint.config.js "/app/**/*.{css,scss}" --allow-empty-input
-    fi
-  elif [ -f "/app/.stylelintrc.js" ]
-  then
-    echo "Using app config (.stylelintrc.js)"
-    if [ "$FIX" = true ]
-    then
-      stylelint --config /app/.stylelintrc.js --fix "/app/**/*.{css,scss}" --allow-empty-input
-    else
-      stylelint --config /app/.stylelintrc.js "/app/**/*.{css,scss}" --allow-empty-input
-    fi
-  elif [ -f "/app/stylelint.config.mjs" ]
-  then
-    echo "Using app config (stylelint.config.mjs)"
-    if [ "$FIX" = true ]
-    then
-      stylelint --config /app/stylelint.config.mjs --fix "/app/**/*.{css,scss}" --allow-empty-input
-    else
-      stylelint --config /app/stylelint.config.mjs "/app/**/*.{css,scss}" --allow-empty-input
-    fi
-  elif [ -f "/app/.stylelintrc.mjs" ]
-  then
-    echo "Using app config (.stylelintrc.mjs)"
-    if [ "$FIX" = true ]
-    then
-      stylelint --config /app/.stylelintrc.mjs --fix "/app/**/*.{css,scss}" --allow-empty-input
-    else
-      stylelint --config /app/.stylelintrc.mjs "/app/**/*.{css,scss}" --allow-empty-input
-    fi
-  elif [ -f "/app/stylelint.config.cjs" ]
-  then
-    echo "Using app config (stylelint.config.cjs)"
-    if [ "$FIX" = true ]
-    then
-      stylelint --config /app/stylelint.config.cjs --fix "/app/**/*.{css,scss}" --allow-empty-input
-    else
-      stylelint --config /app/stylelint.config.cjs "/app/**/*.{css,scss}" --allow-empty-input
-    fi
-  elif [ -f "/app/.stylelintrc.cjs" ]
-  then
-    echo "Using app config (.stylelintrc.cjs)"
-    if [ "$FIX" = true ]
-    then
-      stylelint --config /app/.stylelintrc.cjs --fix "/app/**/*.{css,scss}" --allow-empty-input
-    else
-      stylelint --config /app/.stylelintrc.cjs "/app/**/*.{css,scss}" --allow-empty-input
-    fi
-  elif [ -f "/app/.stylelintrc.json" ]
-  then
-    echo "Using app config (.stylelintrc.json)"
-    if [ "$FIX" = true ]
-    then
-      stylelint --config /app/.stylelintrc.json --fix "/app/**/*.{css,scss}" --allow-empty-input
-    else
-      stylelint --config /app/.stylelintrc.json "/app/**/*.{css,scss}" --allow-empty-input
-    fi
-  elif [ -f "/app/.stylelintrc.yml" ]
-  then
-    echo "Using app config (.stylelintrc.yml)"
-    if [ "$FIX" = true ]
-    then
-      stylelint --config /app/.stylelintrc.yml --fix "/app/**/*.{css,scss}" --allow-empty-input
-    else
-      stylelint --config /app/.stylelintrc.yml "/app/**/*.{css,scss}" --allow-empty-input
-    fi
-  elif [ -f "/app/.stylelintrc.yaml" ]
-  then
-    echo "Using app config (.stylelintrc.yaml)"
-    if [ "$FIX" = true ]
-    then
-      stylelint --config /app/.stylelintrc.yaml --fix "/app/**/*.{css,scss}" --allow-empty-input
-    else
-      stylelint --config /app/.stylelintrc.yaml "/app/**/*.{css,scss}" --allow-empty-input
-    fi
+    stylelint --config /app/stylelint.config.js --fix "/app/**/*.{css,scss}" --allow-empty-input
   else
-    echo "Using default config"
-    if [ "$FIX" = true ]
-    then
-      stylelint --config /home/app/.stylelintrc --fix "/app/**/*.{css,scss}" --allow-empty-input
-    else
-      stylelint --config /home/app/.stylelintrc "/app/**/*.{css,scss}" --allow-empty-input
-    fi
+    stylelint --config /app/stylelint.config.js "/app/**/*.{css,scss}" --allow-empty-input
   fi
-  echo
-
-  echo "Running eslint..."
-  if [ -f "/app/.eslintrc.js" ]
+elif [ -f "/app/.stylelintrc.js" ]
+then
+  echo "Using app config (.stylelintrc.js)"
+  if [ "$FIX" = true ]
   then
-    echo "Using app config (.eslintrc.js)"
-    if [ "$FIX" = true ]
-    then
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.js --fix "/app"
-    else
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.js "/app"
-    fi
-  elif [ -f "/app/.eslintrc.mjs" ]
-  then
-    echo "Using app config (.eslintrc.mjs)"
-    if [ "$FIX" = true ]
-    then
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.mjs --fix "/app"
-    else
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.mjs "/app"
-    fi
-  elif [ -f "/app/.eslintrc.cjs" ]
-  then
-    echo "Using app config (.eslintrc.cjs)"
-    if [ "$FIX" = true ]
-    then
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.cjs --fix "/app"
-    else
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.cjs "/app"
-    fi
-  elif [ -f "/app/eslintrc.config.js" ]
-  then
-    echo "Using app config (eslintrc.config.js)"
-    if [ "$FIX" = true ]
-    then
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.js --fix "/app"
-    else
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.js "/app"
-    fi
-  elif [ -f "/app/eslintrc.config.mjs" ]
-  then
-    echo "Using app config (eslintrc.config.mjs)"
-    if [ "$FIX" = true ]
-    then
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.mjs --fix "/app"
-    else
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.mjs "/app"
-    fi
-  elif [ -f "/app/eslintrc.config.cjs" ]
-  then
-    echo "Using app config (eslintrc.config.cjs)"
-    if [ "$FIX" = true ]
-    then
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.cjs --fix "/app"
-    else
-      npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.cjs "/app"
-    fi
+    stylelint --config /app/.stylelintrc.js --fix "/app/**/*.{css,scss}" --allow-empty-input
   else
-    echo "Using default config"
-    if [ "$FIX" = true ]
-    then
-      npx --yes "eslint@$ESLINT_VERSION" -c /home/app/.eslintrc.js --fix "/app"
-    else
-      npx --yes "eslint@$ESLINT_VERSION" -c /home/app/.eslintrc.js "/app"
-    fi
+    stylelint --config /app/.stylelintrc.js "/app/**/*.{css,scss}" --allow-empty-input
   fi
-  echo
+elif [ -f "/app/stylelint.config.mjs" ]
+then
+  echo "Using app config (stylelint.config.mjs)"
+  if [ "$FIX" = true ]
+  then
+    stylelint --config /app/stylelint.config.mjs --fix "/app/**/*.{css,scss}" --allow-empty-input
+  else
+    stylelint --config /app/stylelint.config.mjs "/app/**/*.{css,scss}" --allow-empty-input
+  fi
+elif [ -f "/app/.stylelintrc.mjs" ]
+then
+  echo "Using app config (.stylelintrc.mjs)"
+  if [ "$FIX" = true ]
+  then
+    stylelint --config /app/.stylelintrc.mjs --fix "/app/**/*.{css,scss}" --allow-empty-input
+  else
+    stylelint --config /app/.stylelintrc.mjs "/app/**/*.{css,scss}" --allow-empty-input
+  fi
+elif [ -f "/app/stylelint.config.cjs" ]
+then
+  echo "Using app config (stylelint.config.cjs)"
+  if [ "$FIX" = true ]
+  then
+    stylelint --config /app/stylelint.config.cjs --fix "/app/**/*.{css,scss}" --allow-empty-input
+  else
+    stylelint --config /app/stylelint.config.cjs "/app/**/*.{css,scss}" --allow-empty-input
+  fi
+elif [ -f "/app/.stylelintrc.cjs" ]
+then
+  echo "Using app config (.stylelintrc.cjs)"
+  if [ "$FIX" = true ]
+  then
+    stylelint --config /app/.stylelintrc.cjs --fix "/app/**/*.{css,scss}" --allow-empty-input
+  else
+    stylelint --config /app/.stylelintrc.cjs "/app/**/*.{css,scss}" --allow-empty-input
+  fi
+elif [ -f "/app/.stylelintrc.json" ]
+then
+  echo "Using app config (.stylelintrc.json)"
+  if [ "$FIX" = true ]
+  then
+    stylelint --config /app/.stylelintrc.json --fix "/app/**/*.{css,scss}" --allow-empty-input
+  else
+    stylelint --config /app/.stylelintrc.json "/app/**/*.{css,scss}" --allow-empty-input
+  fi
+elif [ -f "/app/.stylelintrc.yml" ]
+then
+  echo "Using app config (.stylelintrc.yml)"
+  if [ "$FIX" = true ]
+  then
+    stylelint --config /app/.stylelintrc.yml --fix "/app/**/*.{css,scss}" --allow-empty-input
+  else
+    stylelint --config /app/.stylelintrc.yml "/app/**/*.{css,scss}" --allow-empty-input
+  fi
+elif [ -f "/app/.stylelintrc.yaml" ]
+then
+  echo "Using app config (.stylelintrc.yaml)"
+  if [ "$FIX" = true ]
+  then
+    stylelint --config /app/.stylelintrc.yaml --fix "/app/**/*.{css,scss}" --allow-empty-input
+  else
+    stylelint --config /app/.stylelintrc.yaml "/app/**/*.{css,scss}" --allow-empty-input
+  fi
+else
+  echo "Using default config"
+  if [ "$FIX" = true ]
+  then
+    stylelint --config /home/app/.stylelintrc --fix "/app/**/*.{css,scss}" --allow-empty-input
+  else
+    stylelint --config /home/app/.stylelintrc "/app/**/*.{css,scss}" --allow-empty-input
+  fi
 fi
+echo
+
+echo "Running eslint..."
+if [ -f "/app/.eslintrc.js" ]
+then
+  echo "Using app config (.eslintrc.js)"
+  if [ "$FIX" = true ]
+  then
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.js --fix "/app"
+  else
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.js "/app"
+  fi
+elif [ -f "/app/.eslintrc.mjs" ]
+then
+  echo "Using app config (.eslintrc.mjs)"
+  if [ "$FIX" = true ]
+  then
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.mjs --fix "/app"
+  else
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.mjs "/app"
+  fi
+elif [ -f "/app/.eslintrc.cjs" ]
+then
+  echo "Using app config (.eslintrc.cjs)"
+  if [ "$FIX" = true ]
+  then
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.cjs --fix "/app"
+  else
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.cjs "/app"
+  fi
+elif [ -f "/app/eslintrc.config.js" ]
+then
+  echo "Using app config (eslintrc.config.js)"
+  if [ "$FIX" = true ]
+  then
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.js --fix "/app"
+  else
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.js "/app"
+  fi
+elif [ -f "/app/eslintrc.config.mjs" ]
+then
+  echo "Using app config (eslintrc.config.mjs)"
+  if [ "$FIX" = true ]
+  then
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.mjs --fix "/app"
+  else
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.mjs "/app"
+  fi
+elif [ -f "/app/eslintrc.config.cjs" ]
+then
+  echo "Using app config (eslintrc.config.cjs)"
+  if [ "$FIX" = true ]
+  then
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.cjs --fix "/app"
+  else
+    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.cjs "/app"
+  fi
+else
+  echo "Using default config"
+  if [ "$FIX" = true ]
+  then
+    npx --yes "eslint@$ESLINT_VERSION" -c /home/app/.eslintrc.js --fix "/app"
+  else
+    npx --yes "eslint@$ESLINT_VERSION" -c /home/app/.eslintrc.js "/app"
+  fi
+fi
+echo

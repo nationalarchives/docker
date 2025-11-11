@@ -41,7 +41,8 @@ RUN apt-get update; \
     rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
-# Set versions for tools we want to install
+# Set the versions for various tools that we
+# want to install to help with development
 # ==========================================
 ENV AWS_CLI_VERSION=2.27.45 \
     BLACK_VERSION=25.9.0 \
@@ -89,8 +90,8 @@ COPY --chown=app lib/* /home/app/
 RUN set -eux; \
     mv /home/app/.local/bin/tna-build /home/app/.local/bin/tna-build-common
 COPY --chown=app bin/tna-build /home/app/.local/bin/tna-build
-COPY --chown=app bin/tna-build-dev /home/app/.local/bin/tna-build-dev
-COPY --chown=app bin/tna-run /home/app/.local/bin/tna-run
+COPY --chown=app bin/tna-wsgi /home/app/.local/bin/tna-wsgi
+COPY --chown=app bin/tna-asgi /home/app/.local/bin/tna-asgi
 
 # ==========================================
 # Set the Node.js environment to development

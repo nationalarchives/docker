@@ -9,13 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        image-name:
-          [
-            tna-python,
-            tna-python-dev,
-            tna-python-django,
-            tna-python-django-dev,
-          ]
+        image-name: [tna-python, tna-python-dev]
     steps:
       - name: Prepare image tag
         run: |

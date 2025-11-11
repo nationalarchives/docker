@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `RUNTIME` environment variable removed
 
 ### Fixed
+
 ### Security
 
 ## [0.15.0](https://github.com/nationalarchives/docker/compare/v0.14.0...v0.15.0) - 2025-10-06
@@ -120,7 +121,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Support for the `ENVIRONMENT` variable has been dropped in favour of `RUNTIME`
 
-### Removed
 ### Fixed
 
 - Make `ALLOW_INSECURE` case-insensitive

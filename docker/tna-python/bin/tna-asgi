@@ -2,24 +2,8 @@
 
 set -e
 
-echo "Running tna-run for Python...";
-
-# Set flag defaults
-ASYNC=false
-
-# Parse flags
-while getopts ":a" option; do
-  case "${option}" in
-    a)
-      ASYNC=true
-      shift 1
-      ;;
-    ?)
-      echo "Invalid option: -${OPTARG}"
-      exit 1
-      ;;
-  esac
-done
+echo "Running ASGI..."
+echo
 
 # Get the application
 APPLICATION=$1
@@ -27,27 +11,21 @@ APPLICATION=$1
 # Error if no application is passed
 if [ -z "$APPLICATION" ]
 then
-  echo -e "Error: application not specified in tna-run\n";
+  echo -e "Error: application not specified in tna-asgi\n";
   echo "PARAMETERS"
   echo "  application          the Python package you want to run"
-  echo "                       Example: tna-run my_app:app";
+  echo "                       Example: tna-asgi my_app:app";
   exit 1
 fi
 
-# Set up the default number of workers and threads
+# Set up the default number of workers
 DEFAULT_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
-DEFAULT_THREADS=$((DEFAULT_WORKERS * 2))
 
-# Set the worker class
-[[ "$ASYNC" = true ]] && WORKER_CLASS=uvicorn_worker.UvicornWorker || WORKER_CLASS=sync
-
-# Use the number of workers and threads (if provided) else use defaults
+# Use the number of workers (if provided) else use defaults
 [[ -z $WORKERS ]] && WORKERS=$DEFAULT_WORKERS
-[[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS
 
 # Set defaults for environment variables if they are not set
-[[ -z $LOG_LEVEL ]] && LOG_LEVEL=warn
-[[ -z $TIMEOUT ]] && TIMEOUT=30
+[[ -z $LOG_LEVEL ]] && LOG_LEVEL=warning
 [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
 
 # Get the preference for allowing insecure connections to the container (defaults to false)
@@ -75,4 +53,4 @@ fi
 
 # Start the server
 echo "Starting server..."
-poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind "0.0.0.0:$PORT" --worker-class="$WORKER_CLASS" --keyfile="$SSL_KEY_FILE" --certfile="$SSL_CERTIFICATE_FILE"
+poetry run uvicorn "$APPLICATION" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host "0.0.0.0" --port "$PORT" --workers "$WORKERS" --ssl-keyfile "$SSL_KEY_FILE" --ssl-certfile "$SSL_CERTIFICATE_FILE" --ssl-ca-certs "$SSL_CA_CERTIFICATES_FILE"
