@@ -55,7 +55,7 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
-      - name: DEBUG
+      - name: Show image ID and tag
         run: |
           echo "Image ID: ${{ env.IMAGE_NAME }}"
           echo "Tag:      ${{ steps.build.outputs.tag }}"

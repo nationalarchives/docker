@@ -31,7 +31,7 @@ runs:
         ref: ${{ inputs.application-repository-branch }}
         path: ${{ inputs.application-repository }}
 
-    - name: Start application
+    - name: Start application and wait for it to be healthy
       run: |
         cd ${{ inputs.application-repository }}
         yq '(.services.${{ inputs.service }}.build.args.IMAGE|="${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
