@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- You can now include a CA certificate when using SSL
+- `tna-python-dev` includes `django-debug-toolbar` by default
+
 ### Changed
 
 - `tna-python-dev` is now a drop-in replacement for `tna-python` to run and develop your application localy with the addition of the development scripts and features
@@ -17,15 +20,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Uvicorn to [0.38.0](https://github.com/encode/uvicorn/releases/tag/0.38.0)
 - Updated the LTS version of NodeJS from `jod` to `krypton`
 - Updated Black to [25.11.0](https://github.com/psf/black/releases/tag/25.11.0)
+- When using FastAPI, the entry point needs to be a file called `main.py`
+- `NODE_ENV` is hardcoded to `production` in `tna-python`
 
 ### Deprecated
 
-- `tna-python-root` image deprecated in favour of the updated `tna-python-dev`
+- `tna-python-root` image deprecated
+- `tna-python-django` and `tna-python-root` images deprecated - Django projects can now use `tna-python` and `tna-python-dev`
+- `tna-run` script deprecated in favour of `tna-wsgi` and `tna-asgi`
+- `RUNTIME` environment variable deprecated
 
 ### Removed
 
-- `migrate` script removed from `tna-python-django`
-- `RUNTIME` environment variable removed
+- Removed `uvicorn-worker` (Uvicorn worker for Gunicorn) - Uvicorn is now run separately from Gunicorn
 
 ### Fixed
 
