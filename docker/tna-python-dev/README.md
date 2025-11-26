@@ -7,9 +7,7 @@ This image extends `tna-python` and can be used for local development **ONLY**. 
 - `black`, `flake8` and `isort` - for formatting Python code
 - `prettier`, `eslint` and `stylelint` - for formatting JavaScript and CSS
 - scripts for formatting code
-- AWS CLI
 - `django-debug-toolbar`
-- `docker` - for managing other containers
 
 ## Environment variables
 
