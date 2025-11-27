@@ -134,7 +134,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Wiz
-        uses: actions/checkout@v4
+        uses: nationalarchives/ds-docker-actions/.github/actions/setup-wiz@main
+        with:
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
 
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
