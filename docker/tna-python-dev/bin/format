@@ -62,9 +62,9 @@ then
   echo "Running prettier..."
   if [ "$FIX" = true ]
   then
-    npx --yes prettier@3.6.2 --write --list-different /app
+    npx --yes prettier@3.7.1 --write --list-different /app
   else
-    npx --yes prettier@3.6.2 --list-different /app
+    npx --yes prettier@3.7.1 --list-different /app
   fi
   echo
 

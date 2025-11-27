@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated isort to [7.0.0](https://github.com/PyCQA/isort/releases/tag/7.0.0)
+- Updated Prettier to [3.7.1](https://github.com/prettier/prettier/releases/tag/3.7.1)
 
 ### Deprecated
 ### Removed
