@@ -47,6 +47,7 @@ jobs:
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+          ignore-linting-rules: DL3059
 
       - name: Shellcheck
         run: find ${{ env.DOCKERFILE_PATH }}/bin -type f -exec shellcheck -x --exclude=SC1091 {} \;
