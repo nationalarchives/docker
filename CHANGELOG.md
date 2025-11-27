@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Uvicorn to [0.38.0](https://github.com/encode/uvicorn/releases/tag/0.38.0)
 - Updated the LTS version of NodeJS from `jod` to `krypton`
 - Updated Black to [25.11.0](https://github.com/psf/black/releases/tag/25.11.0)
+- Updated Prettier to [3.7.1](https://github.com/prettier/prettier/releases/tag/3.7.1)
 - When using FastAPI, the entry point needs to be a file called `main.py`
 - `NODE_ENV` is hardcoded to `production` in `tna-python`
 
