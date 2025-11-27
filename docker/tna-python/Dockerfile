@@ -1,4 +1,4 @@
-FROM python:3.13-slim-bookworm
+FROM python:3.13-slim-trixie
 
 # ==========================================
 # Label this container image with a semantic
@@ -103,10 +103,16 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u14 curl=7.88.1-10+deb12u14 build-essential=12.9 libmagic-dev=1:5.44-3 libsqlite3-0=3.40.1-2+deb12u2; \
+    apt-get install -y --no-install-recommends curl; \
+    # apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u14 curl=7.88.1-10+deb12u14 build-essential=12.9 libmagic-dev=1:5.44-3 libsqlite3-0=3.40.1-2+deb12u2; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
+
+# ==========================================
+# Upgrade pip to the latest version
+# ==========================================
+RUN pip install --upgrade pip
 
 # ==========================================
 # Create a new system-level nonroot user who
@@ -151,6 +157,14 @@ RUN set -eux; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
 
 # ==========================================
+# Remove curl after we have installed Poetry
+# and nvm and autoremove other packages
+# ==========================================
+RUN apt-get remove --purge curl; \
+    apt-get clean; \
+    apt-get autoremove -y --purge
+
+# ==========================================
 # Change the image current working directory
 # to the new /app directory we just created,
 # ready for our application code
@@ -174,12 +188,11 @@ USER app
 # ==========================================
 # Install the latest LTS version of Node.js,
 # but keeping within the releases code-named
-# "jod" (v22.x)
+# "krypton" (v24.x)
 # ==========================================
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install lts/jod; \
-    nvm install lts/krypton; \
+    nvm install --latest-npm lts/krypton; \
     nvm alias default lts/krypton
 
 # ==========================================
@@ -193,9 +206,7 @@ RUN mkdir /home/app/ssl
 # bash scripts we need in order to build and
 # run our application in a consistent manner
 # ==========================================
-# wiz-scan ignore-line
-COPY --chown=app bin /home/app/.local/bin
-RUN chmod +x -fR /home/app/.local/bin
+COPY bin /home/app/.local/bin
 
 # ==========================================
 # This does nothing but will act as a way to

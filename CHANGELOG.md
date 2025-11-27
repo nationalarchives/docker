@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Changed base image from `python:3.13-slim-bookworm` (Debian 12) to `python:3.13-slim-trixie` (Debian 13)
 - `tna-python-dev` is now a drop-in replacement for `tna-python` to run and develop your application localy with the addition of the development scripts and features
 - Updated isort to [7.0.0](https://github.com/PyCQA/isort/releases/tag/7.0.0)
 - Refactored stack of `tna-build` scripts for all new images which allows greater inheritance
