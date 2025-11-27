@@ -109,9 +109,9 @@ RUN set -eux; \
 	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
-# Upgrade pip to the latest version
+# Upgrade pip to a later version
 # ==========================================
-RUN pip install --upgrade pip
+RUN pip install --upgrade pip==25.3
 
 # ==========================================
 # Create a new system-level nonroot user who
