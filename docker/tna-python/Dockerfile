@@ -23,7 +23,7 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
 # of port 8080 for all our applications
 # ==========================================
 ENV PORT=8080
-EXPOSE 8080
+EXPOSE 8080/tcp
 
 # ==========================================
 # To aid consistency Dockerised applications
