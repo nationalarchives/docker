@@ -48,6 +48,9 @@ jobs:
         with:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
+      - name: Shellcheck
+        run: find ${{ env.DOCKERFILE_PATH }}/bin -type f -exec shellcheck -x --exclude=SC1091 {} \;
+
       - name: Test Docker image build
         id: build
         uses: ./.github/actions/test-build
@@ -135,6 +138,9 @@ jobs:
         with:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           ignore-linting-rules: DL3002
+
+      - name: Shellcheck
+        run: find ${{ env.DOCKERFILE_PATH }}/bin -type f -exec shellcheck -x --exclude=SC1091 {} \;
 
       - name: Test Docker image build
         id: build

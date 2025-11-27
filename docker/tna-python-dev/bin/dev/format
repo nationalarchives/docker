@@ -71,7 +71,7 @@ fi
 echo
 
 echo "Running stylelint..."
-npm install -g stylelint@$STYLELINT_VERSION stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION stylelint-order@$STYLELINT_ORDER_VERSION
+npm install -g "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION"
 if [ -f "/app/.stylelintrc" ]
 then
   echo "Using app config (.stylelintrc)"
