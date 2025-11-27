@@ -123,7 +123,7 @@ jobs:
     timeout-minutes: 15
     env:
       IMAGE_NAME: tna-python-dev
-      DOCKERFILE_PATH: docker/tna-python
+      DOCKERFILE_PATH: docker/tna-python-dev
       BASE_IMAGE: ghcr.io/${{ github.repository_owner }}/tna-python
       DISABLE_WIZ: true
     steps:
