@@ -11,20 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - You can now include a CA certificate when using SSL
 - `tna-python-dev` includes `django-debug-toolbar` by default
+- A new `tna-clean` script is available to allow you to clean up the image before the application is run and increase the security
 
 ### Changed
 
 - Changed base image from `python:3.13-slim-bookworm` (Debian 12) to `python:3.13-slim-trixie` (Debian 13)
 - `tna-python-dev` is now a drop-in replacement for `tna-python` to run and develop your application localy with the addition of the development scripts and features
-- Updated isort to [7.0.0](https://github.com/PyCQA/isort/releases/tag/7.0.0)
-- Refactored stack of `tna-build` scripts for all new images which allows greater inheritance
-- Updated Uvicorn to [0.38.0](https://github.com/encode/uvicorn/releases/tag/0.38.0)
 - Updated the LTS version of NodeJS from `jod` to `krypton`
+- Updated isort to [7.0.0](https://github.com/PyCQA/isort/releases/tag/7.0.0)
+- Updated Uvicorn to [0.38.0](https://github.com/encode/uvicorn/releases/tag/0.38.0)
 - Updated Black to [25.11.0](https://github.com/psf/black/releases/tag/25.11.0)
 - Updated Prettier to [3.7.1](https://github.com/prettier/prettier/releases/tag/3.7.1)
 - Updated Stylelint to [16.26.1](https://github.com/stylelint/stylelint/releases/tag/16.26.1)
 - When using FastAPI, the entry point needs to be a file called `main.py`
-- `NODE_ENV` is hardcoded to `production` in `tna-python`
+- `NODE_ENV` is hardcoded to `production` in `tna-python` and `development` in `tna-python-dev`
 
 ### Deprecated
 
