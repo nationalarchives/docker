@@ -4,10 +4,11 @@
 
 This image extends `tna-python` and can be used for local development **ONLY**. It adds:
 
-- `black`, `flake8` and `isort` - for formatting Python code
-- `prettier`, `eslint` and `stylelint` - for formatting JavaScript and CSS
+- `black`, `flake8` and `isort` for formatting Python code
+- `prettier`, `eslint` and `stylelint` for formatting JavaScript and CSS
 - scripts for formatting code
-- `django-debug-toolbar`
+- `django-debug-toolbar` for debugging Django applications
+- `git`
 
 ## Environment variables
 

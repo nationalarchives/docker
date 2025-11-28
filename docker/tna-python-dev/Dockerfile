@@ -4,7 +4,7 @@ ARG BASE_IMAGE_TAG=latest
 
 FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG"
 
-ARG TARGETPLATFORM
+# ARG TARGETPLATFORM  # linux/amd64 or linux/arm64
 
 # ==========================================
 # Ensure the `/bin/sh -c` interpreter Docker
@@ -25,6 +25,13 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 USER root
 
 # ==========================================
+# Update the package index files and install
+# git, removing any unnecessary packages
+# ==========================================
+RUN apt-get update; \
+    apt-get install -y --no-install-recommends git=1:2.47.3-0+deb13u1
+
+# ==========================================
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
@@ -37,6 +44,11 @@ ENV BLACK_VERSION=25.11.0 \
     STYLELINT_SELECTOR_BEM_PATTERN_VERSION=4.0.1 \
     STYLELINT_ORDER_VERSION=7.0.0 \
     ESLINT_VERSION=8.56.0
+
+# ==========================================
+# Set the Node.js environment to development
+# ==========================================
+ENV NODE_ENV=development
 
 # ==========================================
 # Install the tools required for linting and
@@ -55,15 +67,11 @@ COPY lib/* /home/app/
 # development specific versions
 # ==========================================
 RUN set -eux; \
-    mv /home/app/.local/bin/tna-build /home/app/.local/bin/tna-build-common
-COPY bin/tna-build /home/app/.local/bin/tna-build
-COPY bin/tna-wsgi /home/app/.local/bin/tna-wsgi
+    mv /home/app/.local/bin/tna-build /home/app/.local/bin/tna-build-base
 COPY bin/tna-asgi /home/app/.local/bin/tna-asgi
-
-# ==========================================
-# Set the Node.js environment to development
-# ==========================================
-ENV NODE_ENV=development
+COPY bin/tna-build /home/app/.local/bin/tna-build
+COPY bin/tna-clean /home/app/.local/bin/tna-clean
+COPY bin/tna-wsgi /home/app/.local/bin/tna-wsgi
 
 # ==========================================
 # Copy the development scripts into the user

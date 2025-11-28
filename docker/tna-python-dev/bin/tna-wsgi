@@ -30,6 +30,13 @@ then
   tna-node "$NPM_DEVELOP_COMMAND"
 fi
 
+# Try using the Flask development server if the application uses Flask
+if poetry show flask > /dev/null 2>&1;
+then
+  echo "Flask found, starting development server..."
+  poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port "$PORT"
+fi
+
 # Try using the Django development server if the application uses Django
 if poetry show django > /dev/null 2>&1;
 then
@@ -41,13 +48,6 @@ then
     echo "Django found, but /app/manage.py does not exist. Exiting..."
     exit 1
   fi
-fi
-
-# Try using the Flask development server if the application uses Flask
-if poetry show flask > /dev/null 2>&1;
-then
-  echo "Flask found, starting development server..."
-  poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port "$PORT"
 fi
 
 # Use a uvicorn server if the application uses FastAPI

@@ -13,6 +13,6 @@ poetry add django-debug-toolbar
 if [ -f "/app/package.json" ]
 then
   . tna-nvm
-  npm install --production=false
+  npm install
 fi
 

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+echo "Running tna-clean...";
+
+echo "Removing .nvmrc...";
+rm -f /app/.nvmrc
+
+echo "Removing node_modules...";
+rm -fR /app/node_modules
+
+echo "Removing Node package files...";
+rm -f /app/package.json /app/package-lock.json
+
+echo "Removing npm and nvm from home directory...";
+rm -fR /home/app/.npm /home/app/.nvm

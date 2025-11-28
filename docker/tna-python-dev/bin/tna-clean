@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+echo "Running tna-clean for dev...";
+
+echo "Nothing removed.";
