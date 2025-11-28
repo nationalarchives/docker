@@ -29,7 +29,10 @@ USER root
 # git, removing any unnecessary packages
 # ==========================================
 RUN apt-get update; \
-    apt-get install -y --no-install-recommends git=1:2.47.3-0+deb13u1
+    apt-get install -y --no-install-recommends git=1:2.47.3-0+deb13u1; \
+    apt-get clean; \
+    apt-get autoremove -y --purge; \
+	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
 # Set the versions for various tools that we

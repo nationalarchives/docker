@@ -31,8 +31,6 @@ then
   fi
 
   tna-node "$NPM_BUILD_COMMAND"
-
-  
 fi
 
 poetry add "gunicorn=$TNA_GUNICORN_VERSION"
