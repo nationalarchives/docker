@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated the LTS version of NodeJS from `jod` to `krypton`
 - Updated Black to [25.11.0](https://github.com/psf/black/releases/tag/25.11.0)
 - Updated Prettier to [3.7.1](https://github.com/prettier/prettier/releases/tag/3.7.1)
-- Updated Stylelint to [16.26.0](https://github.com/stylelint/stylelint/releases/tag/16.26.0)
+- Updated Stylelint to [16.26.1](https://github.com/stylelint/stylelint/releases/tag/16.26.1)
 - When using FastAPI, the entry point needs to be a file called `main.py`
 - `NODE_ENV` is hardcoded to `production` in `tna-python`
 
