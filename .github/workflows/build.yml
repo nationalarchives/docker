@@ -35,7 +35,7 @@ jobs:
       DOCKERFILE_PATH: docker/tna-python
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Wiz
         uses: nationalarchives/ds-docker-actions/.github/actions/setup-wiz@main
@@ -132,7 +132,7 @@ jobs:
       # DISABLE_WIZ: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Wiz
         uses: nationalarchives/ds-docker-actions/.github/actions/setup-wiz@main
@@ -230,7 +230,7 @@ jobs:
   #     DISABLE_WIZ: true
   #   steps:
   #     - name: Checkout
-  #       uses: actions/checkout@v4
+  #       uses: actions/checkout@v6
 
   #     - name: Lint Dockerfile
   #       uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
