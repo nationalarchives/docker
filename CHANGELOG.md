@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 - `tna-python-root` image deprecated
-- `tna-python-django` and `tna-python-root` images deprecated - Django projects can now use `tna-python` and `tna-python-dev`
+- `tna-python-django`, `tna-python-django-root` and `tna-python-root` images deprecated - Django projects can now use `tna-python` and `tna-python-dev`
 - `tna-run` script deprecated in favour of `tna-wsgi` and `tna-asgi`
 - `RUNTIME` environment variable deprecated
 
