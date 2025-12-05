@@ -111,7 +111,7 @@ RUN set -eux; \
 # ==========================================
 # Upgrade pip to a later version
 # ==========================================
-RUN pip install --upgrade pip==25.3
+RUN pip install --no-cache-dir --quiet --upgrade pip==25.3
 
 # ==========================================
 # Create a new system-level nonroot user who
