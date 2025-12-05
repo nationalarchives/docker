@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Changed base image from `python:3.13-slim-bookworm` (Debian 12) to `python:3.13-slim-trixie` (Debian 13)
+- Changed base image from `python:3.13-slim-bookworm` (Python 3.13 on Debian 12) to `python:3.14-slim-trixie` (Python 3.14 on Debian 13)
 - `tna-python-dev` is now a drop-in replacement for `tna-python` to run and develop your application localy with the addition of the development scripts and features
 - Updated the LTS version of NodeJS from `jod` to `krypton`
 - Updated isort to [7.0.0](https://github.com/PyCQA/isort/releases/tag/7.0.0)
