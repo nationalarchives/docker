@@ -92,10 +92,3 @@ COPY bin/tna-wsgi /home/app/.local/bin/tna-wsgi
 COPY bin/dev /home/app/.local/bin/dev
 RUN chmod +x -R /home/app/.local/bin/dev
 ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
-
-# ==========================================
-# Create a symlink from /bin/sh to /bin/bash
-# to allow bash features like history in the
-# local development shells
-# ==========================================
-RUN ln -sf /bin/bash /bin/sh
