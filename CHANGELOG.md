@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Stylelint to [16.26.1](https://github.com/stylelint/stylelint/releases/tag/16.26.1)
 - When using FastAPI, the entry point needs to be a file called `main.py`
 - `NODE_ENV` is hardcoded to `production` in `tna-python` and `development` in `tna-python-dev`
+- Running ESLint and matching no files does not produce an error (`--no-error-on-unmatched-pattern`)
 
 ### Deprecated
 

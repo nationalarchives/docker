@@ -179,62 +179,62 @@ then
   echo "Using app config (.eslintrc.js)"
   if [ "$FIX" = true ]
   then
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.js --fix "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.js --no-error-on-unmatched-pattern --fix "/app"
   else
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.js "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.js --no-error-on-unmatched-pattern "/app"
   fi
 elif [ -f "/app/.eslintrc.mjs" ]
 then
   echo "Using app config (.eslintrc.mjs)"
   if [ "$FIX" = true ]
   then
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.mjs --fix "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.mjs --no-error-on-unmatched-pattern --fix "/app"
   else
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.mjs "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.mjs --no-error-on-unmatched-pattern "/app"
   fi
 elif [ -f "/app/.eslintrc.cjs" ]
 then
   echo "Using app config (.eslintrc.cjs)"
   if [ "$FIX" = true ]
   then
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.cjs --fix "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.cjs --no-error-on-unmatched-pattern --fix "/app"
   else
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/.eslintrc.cjs "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.cjs --no-error-on-unmatched-pattern "/app"
   fi
 elif [ -f "/app/eslintrc.config.js" ]
 then
   echo "Using app config (eslintrc.config.js)"
   if [ "$FIX" = true ]
   then
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.js --fix "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.js --no-error-on-unmatched-pattern --fix "/app"
   else
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.js "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.js --no-error-on-unmatched-pattern "/app"
   fi
 elif [ -f "/app/eslintrc.config.mjs" ]
 then
   echo "Using app config (eslintrc.config.mjs)"
   if [ "$FIX" = true ]
   then
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.mjs --fix "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.mjs --no-error-on-unmatched-pattern --fix "/app"
   else
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.mjs "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.mjs --no-error-on-unmatched-pattern "/app"
   fi
 elif [ -f "/app/eslintrc.config.cjs" ]
 then
   echo "Using app config (eslintrc.config.cjs)"
   if [ "$FIX" = true ]
   then
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.cjs --fix "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.cjs --no-error-on-unmatched-pattern --fix "/app"
   else
-    npx --yes "eslint@$ESLINT_VERSION" -c /app/eslintrc.config.cjs "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.cjs --no-error-on-unmatched-pattern "/app"
   fi
 else
   echo "Using default config"
   if [ "$FIX" = true ]
   then
-    npx --yes "eslint@$ESLINT_VERSION" -c /home/app/.eslintrc.js --fix "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /home/app/.eslintrc.js --no-error-on-unmatched-pattern --fix "/app"
   else
-    npx --yes "eslint@$ESLINT_VERSION" -c /home/app/.eslintrc.js "/app"
+    npx --yes "eslint@$ESLINT_VERSION" --config /home/app/.eslintrc.js --no-error-on-unmatched-pattern "/app"
   fi
 fi
 echo
