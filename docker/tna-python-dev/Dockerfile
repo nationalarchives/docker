@@ -7,6 +7,13 @@ FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG"
 # ARG TARGETPLATFORM  # linux/amd64 or linux/arm64
 
 # ==========================================
+# This is already defined in the base image,
+# but we set it again to avoid Wiz reporting
+# errors with a missing healthcheck
+# ==========================================
+HEALTHCHECK CMD curl --fail "http://localhost:$PORT/healthcheck/live/" || exit 1
+
+# ==========================================
 # Ensure the `/bin/sh -c` interpreter Docker
 # executes commands through doesn't just use
 # the final operation in a pipe to determine
