@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.15.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.0.0...HEAD)
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.0.0](https://github.com/nationalarchives/docker/compare/v0.15.0...v1.0.0) - 2025-12-08
 
 ### Added
 
@@ -33,14 +42,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `tna-python-django`, `tna-python-django-root` and `tna-python-root` images deprecated - Django projects can now use `tna-python` and `tna-python-dev`
 - `tna-run` script deprecated in favour of `tna-wsgi` and `tna-asgi`
 - `RUNTIME` environment variable deprecated
+- AWS CLI and Docker removed from `tna-python-dev`
 
 ### Removed
 
 - Removed `uvicorn-worker` (Uvicorn worker for Gunicorn) - Uvicorn is now run separately from Gunicorn
-
-### Fixed
-
-### Security
 
 ## [0.15.0](https://github.com/nationalarchives/docker/compare/v0.14.0...v0.15.0) - 2025-10-06
 
