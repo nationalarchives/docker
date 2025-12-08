@@ -88,7 +88,7 @@ ENV POETRY_HOME=/home/app/.local \
 # the success of the entire command
 # > github.com/hadolint/hadolint/wiki/DL4006
 # ==========================================
-SHELL ["/bin/bash", "-exo", "pipefail", "-c"]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # ==========================================
 # Update the package index files and install
