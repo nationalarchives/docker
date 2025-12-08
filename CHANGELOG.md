@@ -9,10 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Ensure `POETRY_HOME` and `NVM_DIR` are always correctly set for the `app` user
+
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
+
+- Set a fixed `$UID` and `$GID` for the non-root `app` user
 
 ## [1.0.0](https://github.com/nationalarchives/docker/compare/v0.15.0...v1.0.0) - 2025-12-08
 

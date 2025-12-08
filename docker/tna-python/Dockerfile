@@ -71,15 +71,35 @@ ENV POETRY_VERSION=2.2.1 \
     TNA_UVICORN_VERSION=0.38.0
 
 # ==========================================
+# Create a new non-root level "app" user who
+# owns a home directory where we can install
+# our scripts and libraries into
+# ==========================================
+ARG USERNAME=app
+ARG USER_UID=1001
+ARG USER_GID=$USER_UID
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --no-log-init --uid $USER_UID --gid $USER_GID --create-home $USERNAME --shell /bin/bash
+ENV HOME=/home/$USERNAME
+
+# ==========================================
 # Set up the Poetry variables so that we get
 # a consistent experience with using Poetry,
 # which includes where it will be installed,
 # where it installs the project dependencies
 # ==========================================
-ENV POETRY_HOME=/home/app/.local \
+ENV POETRY_HOME=$HOME/.local \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=true \
     POETRY_VIRTUALENVS_IN_PROJECT=false
+    
+# ==========================================
+# Specify the directory for nvm to use which
+# is writable by our "app" user, and set the
+# Node.js environment to "production"
+# ==========================================
+ENV NVM_DIR="$HOME/.nvm"
+ENV NODE_ENV=production
 
 # ==========================================
 # Ensure the `/bin/sh -c` interpreter Docker
@@ -114,36 +134,13 @@ RUN set -eux; \
 RUN pip install --no-cache-dir --quiet --upgrade pip==25.3
 
 # ==========================================
-# Create a new system-level nonroot user who
-# owns a home directory where we can install
-# libraries into (along with our scripts for
-# building and running)
-# ==========================================
-RUN useradd --system --create-home app
-
-# ==========================================
 # Create an "/app" directory in the root dir
 # for the application code and allow the new
 # app user to access it
 # ==========================================
 RUN mkdir -p /app; \
-    chown app:app -R /app; \
+    chown ${USER_UID}:${USER_GID} -R /app; \
     chmod 700 /app
-
-# ==========================================
-# Set $HOME env var to be the home directory
-# of our new app user so we can install libs
-# to that location
-# ==========================================
-ENV HOME=/home/app
-
-# ==========================================
-# Specify the directory for nvm to use which
-# is writable by our "app" user, and set the
-# Node.js environment to "production"
-# ==========================================
-ENV NVM_DIR="$HOME/.nvm"
-ENV NODE_ENV=production
 
 # ==========================================
 # Install Poetry in the suggested manner and
