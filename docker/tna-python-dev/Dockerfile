@@ -45,7 +45,7 @@ RUN apt-get update; \
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
-ENV BLACK_VERSION=25.11.0 \
+ENV BLACK_VERSION=25.12.0 \
     FLAKE8_VERSION=7.1.1 \
     ISORT_VERSION=7.0.0 \
     PRETTIER_VERSION=3.7.4 \

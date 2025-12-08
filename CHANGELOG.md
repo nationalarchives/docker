@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated the LTS version of NodeJS from `jod` to `krypton`
 - Updated isort to [7.0.0](https://github.com/PyCQA/isort/releases/tag/7.0.0)
 - Updated Uvicorn to [0.38.0](https://github.com/encode/uvicorn/releases/tag/0.38.0)
-- Updated Black to [25.11.0](https://github.com/psf/black/releases/tag/25.11.0)
+- Updated Black to [25.12.0](https://github.com/psf/black/releases/tag/25.12.0)
 - Updated Prettier to [3.7.4](https://github.com/prettier/prettier/releases/tag/3.7.4)
 - Updated Stylelint to [16.26.1](https://github.com/stylelint/stylelint/releases/tag/16.26.1)
 - When using FastAPI, the entry point needs to be a file called `main.py`
