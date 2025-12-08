@@ -8,14 +8,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v0.15.0...HEAD)
 
 ### Added
+
+- You can now include a CA certificate when using SSL
+- `tna-python-dev` includes `django-debug-toolbar` by default
+- A new `tna-clean` script is available to allow you to clean up the image before the application is run and increase the security
+
 ### Changed
 
+- Changed base image from `python:3.13-slim-bookworm` (Python 3.13 on Debian 12) to `python:3.14-slim-trixie` (Python 3.14 on Debian 13)
+- `tna-python-dev` is now a drop-in replacement for `tna-python` to run and develop your application localy with the addition of the development scripts and features
+- Updated the LTS version of NodeJS from `jod` to `krypton`
 - Updated isort to [7.0.0](https://github.com/PyCQA/isort/releases/tag/7.0.0)
-- Updated Prettier to [3.7.1](https://github.com/prettier/prettier/releases/tag/3.7.1)
+- Updated Uvicorn to [0.38.0](https://github.com/encode/uvicorn/releases/tag/0.38.0)
+- Updated Black to [25.12.0](https://github.com/psf/black/releases/tag/25.12.0)
+- Updated Prettier to [3.7.4](https://github.com/prettier/prettier/releases/tag/3.7.4)
+- Updated Stylelint to [16.26.1](https://github.com/stylelint/stylelint/releases/tag/16.26.1)
+- When using FastAPI, the entry point needs to be a file called `main.py`
+- `NODE_ENV` is hardcoded to `production` in `tna-python` and `development` in `tna-python-dev`
+- Running ESLint and matching no files does not produce an error (`--no-error-on-unmatched-pattern`)
 
 ### Deprecated
+
+- `tna-python-root` image deprecated
+- `tna-python-django`, `tna-python-django-root` and `tna-python-root` images deprecated - Django projects can now use `tna-python` and `tna-python-dev`
+- `tna-run` script deprecated in favour of `tna-wsgi` and `tna-asgi`
+- `RUNTIME` environment variable deprecated
+
 ### Removed
+
+- Removed `uvicorn-worker` (Uvicorn worker for Gunicorn) - Uvicorn is now run separately from Gunicorn
+
 ### Fixed
+
 ### Security
 
 ## [0.15.0](https://github.com/nationalarchives/docker/compare/v0.14.0...v0.15.0) - 2025-10-06
@@ -107,7 +131,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Support for the `ENVIRONMENT` variable has been dropped in favour of `RUNTIME`
 
-### Removed
 ### Fixed
 
 - Make `ALLOW_INSECURE` case-insensitive

@@ -18,5 +18,5 @@ then
 fi
 
 . tna-nvm
-npm install
+npm install --production=false
 npm run "$1"

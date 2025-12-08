@@ -10,13 +10,10 @@ The National Archives base Docker images are designed to serve as a starting poi
 
 ## Base images
 
-| Image                                           | Dockerfile                                                            | Base image        | User   |
-| ----------------------------------------------- | --------------------------------------------------------------------- | ----------------- | ------ |
-| [`tna-python`](docker/tna-python)               | [`tna-python/Dockerfile`](docker/tna-python/Dockerfile)               | `python`          | `app`  |
-| `tna-python-root`                               | [`tna-python/Dockerfile`](docker/tna-python/Dockerfile)               | `python`          | `root` |
-| [`tna-python-django`](docker/tna-python-django) | [`tna-python-django/Dockerfile`](docker/tna-python-django/Dockerfile) | `tna-python`      | `app`  |
-| `tna-python-django-root`                        | [`tna-python-django/Dockerfile`](docker/tna-python-django/Dockerfile) | `tna-python-root` | `root` |
-| [`tna-python-dev`](docker/tna-python-dev)       | [`tna-python-dev/Dockerfile`](docker/tna-python-dev/Dockerfile)       | `tna-python-root` | `root` |
+| Image                                     | Dockerfile                                                      | Base image   | User   |
+| ----------------------------------------- | --------------------------------------------------------------- | ------------ | ------ |
+| [`tna-python`](docker/tna-python)         | [`tna-python/Dockerfile`](docker/tna-python/Dockerfile)         | `python`     | `app`  |
+| [`tna-python-dev`](docker/tna-python-dev) | [`tna-python-dev/Dockerfile`](docker/tna-python-dev/Dockerfile) | `tna-python` | `root` |
 
 ### Image inheritance
 
@@ -24,23 +21,20 @@ The National Archives base Docker images are designed to serve as a starting poi
 graph TD;
     debian --> python;
     python --> tna-python;
-    python --> tna-python-root;
-    tna-python --> tna-python-django;
-    tna-python-root --> tna-python-django-root;
-    tna-python-root --> tna-python-dev;
+    tna-python --> tna-python-dev;
 ```
 
 ## Building locally
 
 ```sh
 # Build tna-python
-docker build -t tna-python:local --build-arg USER_IMAGE=app docker/tna-python
+docker build -t tna-python:local docker/tna-python
 
-# Build tna-python-django
-docker build -t tna-python-django:local --build-arg BASE_IMAGE=tna-python --build-arg BASE_IMAGE_TAG=local --build-arg USER_IMAGE=app docker/tna-python-django
+# Build tna-python-dev
+docker build -t tna-python-dev:local --build-arg BASE_IMAGE=tna-python --build-arg BASE_IMAGE_TAG=local docker/tna-python-dev
 
 # Run
 docker run tna-python:local
 # ...or
-docker run tna-python-django:local
+docker run tna-python-dev:local
 ```

@@ -15,54 +15,37 @@ This image requires you have the following files in the root of your project:
 
 ## Environment variables
 
-The two default runtime names are:
-
-- `production` - used when deployed on any hosted service such as AWS
-- `develop` - used for local development
-
-These can be used by setting the `RUNTIME` environment variable.
-
-Any other alphanumeric string is considered a valid environment name but won't have predefined settings.
-
 Each environment has some default values but all can be overwritten:
 
-| Variable               | Description                                                               | Production default       | Develop default          | Other envs               |
-| ---------------------- | ------------------------------------------------------------------------- | ------------------------ | ------------------------ | ------------------------ |
-| `SECRET_KEY`           | A random key used to secure client session data                           | _none_                   | _none_                   | _none_                   |
-| `WORKERS`              | Number of worker processes[^1]                                            | `(cpu * 2) + 1`          | `3`                      | `(cpu * 2) + 1`          |
-| `THREADS`              | Number of threads[^2]                                                     | `(cpu * 2) + 1`          | `3`                      | `(cpu * 2) + 1`          |
-| `LOG_LEVEL`            | The log level to stream to the console[^3]                                | `warn`                   | `debug`                  | `info`                   |
-| `NODE_ENV`             | The node environment[^4]                                                  | Mirrors `RUNTIME`        | Mirrors `RUNTIME`        | Mirrors `RUNTIME`        |
-| `NPM_BUILD_COMMAND`    | The npm script from `package.json` to run to build static assets          | _none_                   | _none_                   | _none_                   |
-| `NPM_DEVELOP_COMMAND`  | The npm script from `package.json` to run in development environments     | _ignored_                | _none_                   | _ignored_                |
-| `TIMEOUT`              | The number of seconds before a request is terminated[^5]                  | `30`                     | `600`                    | `30`                     |
-| `KEEP_ALIVE`           | The number of seconds to wait for requests on a keep-alive connection[^6] | `30`                     | `5`                      | `5`                      |
-| `SSL_KEY_FILE`         | The location of the SSL key                                               | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  | `/home/app/ssl/key.pem`  |
-| `SSL_CERTIFICATE_FILE` | The location of the SSL certificate                                       | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` | `/home/app/ssl/cert.pem` |
-| `ALLOW_INSECURE`       | If `true`, allow containers above dev to use HTTP rather than HTTPS.      | `false`                  | _ignored_                | `false`                  |
-| `PORT`                 | Set the port used by the container (only used outside of AWS)             | `8080`                   | `8080`                   | `8080`                   |
+| Variable                   | Description                                                               | Default                                   |
+| -------------------------- | ------------------------------------------------------------------------- | ----------------------------------------- |
+| `SECRET_KEY`               | A random key used to secure client session data                           | _none_                                    |
+| `WORKERS`                  | Number of worker processes[^1]                                            | `(cpu * 2) + 1`                           |
+| `THREADS`                  | Number of threads[^2]                                                     | `$WORKERS * 2` (ignored by `tna-asgi`)    |
+| `LOG_LEVEL`                | The log level to stream to the console[^3][^4]                            | `tna-wsgi`: `warn`, `tna-asgi`: `warning` |
+| `NODE_ENV`                 | The node environment[^5]                                                  | `production`                              |
+| `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run to build static assets          | _none_                                    |
+| `TIMEOUT`                  | The number of seconds before a request is terminated[^6]                  | `30` (ignored by `tna-asgi`)              |
+| `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^7] | `30`                                      |
+| `SSL_KEY_FILE`             | The location of the SSL key                                               | `/home/app/ssl/key.pem`                   |
+| `SSL_CERTIFICATE_FILE`     | The location of the SSL certificate                                       | `/home/app/ssl/cert.pem`                  |
+| `SSL_CA_CERTIFICATES_FILE` | The location of the CA certificates                                       | _none_                                    |
+| `ALLOW_INSECURE`           | If `true`, allow containers above dev to use HTTP rather than HTTPS       | `false`                                   |
+| `PORT`                     | Set the port used by the container (only used outside of AWS)             | `8080`                                    |
 
 [^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 
 [^2]: [Gunicorn docs - How Many Threads?](https://docs.gunicorn.org/en/latest/design.html#how-many-threads)
 
-[^3]: Supported levels are `critical`, `error`, `warn`, `info` and `debug` [Gunicorn docs - log level](https://docs.gunicorn.org/en/latest/settings.html?highlight=log#loglevel)
+[^3]: Supported levels for Gunicorn are `critical`, `error`, `warn`, `info` and `debug` [Gunicorn docs - log level](https://docs.gunicorn.org/en/latest/settings.html?highlight=log#loglevel)
 
-[^4]: [Node.js, the difference between development and production](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production/)
+[^4]: Supported levels for Uvicorn are `critical`, `error`, `warning`, `info`, `debug` and `trace` [Uvicorn docs - logging settings](https://uvicorn.dev/settings/#logging)
 
-[^5]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
+[^5]: [Node.js, the difference between development and production](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production/)
 
-[^6]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
+[^6]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
 
-### Secret key
-
-A secret key (for `SECRET_KEY`) can be generated using:
-
-```sh
-python -c 'import secrets; print(secrets.token_hex())'
-```
-
-Alternatively, using the [`tna-dev` image](https://github.com/nationalarchives/docker/tree/main/docker/tna-python-dev), you can run `secret-key` to generate one.
+[^7]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
 
 ## Commands for the Dockerfile
 
@@ -71,7 +54,7 @@ There are two commands to use within your `Dockerfile`:
 - [`tna-build`](#tna-build)
 - [`tna-node`](#tna-node-command)
 - [`tna-npm`](#tna-npm-command)
-- [`tna-run`](#tna-run)
+- [`tna-wsgi` and `tna-asgi`](#tna-wsgi-and-tna-asgi)
 
 ### `tna-build`
 
@@ -94,37 +77,20 @@ There are two commands to use within your `Dockerfile`:
    - If `.nvmrc` is not defined, use the `default` nvm version
 1. Runs the passed `[command]` as `npm [command]` (e.g. `install @nationalarchives/frontend`)
 
-### `tna-run`
+### `tna-wsgi` and `tna-asgi`
 
-`tna-run` takes one positional parameter which is the application module to be run, for example:
+Both `tna-wsgi` and `tna-asgi` take one positional parameter which is the application module to be run, for example:
 
 ```sh
-tna-run my_app:app
+tna-wsgi my_app:app
+tna-asgi my_app:app
 ```
 
-#### Process
+The process for these commands is:
 
-1. In `tna-python-django`, run all database migrations
-1. If `$RUNTIME` is set to `develop` and `$NPM_DEVELOP_COMMAND` has been defined then run `tna-node "$NPM_DEVELOP_COMMAND"` (See [tna-node](#tna-node))
+1. If `$NPM_BUILD_COMMAND` has been defined then run it to build any resources using [`tna-node [command]`](#tna-node-command)
 1. Calculate the default worker and thread count based on the number of CPU cores
-1. If `$RUNTIME` is set to `develop`:
-   1. If Django is installed, run the Django development server
-   1. Else if Flask is installed, run the Flask development server
-   1. Else if FastAPI is installed, run uvicorn with reloading
-   1. Else run the application through gunicorn with reloading using the async worker if the `-a` flag is passed
-1. Else for any other environment, start `gunicorn` with values appropriate to the environment taking into account any overrides
-
-#### Asynchronous support
-
-For frameworks that require or can use an ASGI rather than a WSGI you can use `tna-run` with a `-a` flag:
-
-```sh
-tna-run -a my_app:app
-```
-
-When working in a development environment (`RUNTIME=production`) and using FastAPI, Uvicorn is used as the ASGI for `tna-run`.
-
-When using FastAPI in production, `tna-run -a` should be explicitly specified so Gunicron can use the Uvicorn worker class.
+1. Start `gunicorn` (`tna-wsgi`) or `uvicorn` (`tna-asgi`) with values appropriate to the environment taking into account any overrides
 
 ## Using Node
 
@@ -136,9 +102,9 @@ To use Node to build your assets you need three files in your project:
 
 ## SSL
 
-On all environments apart from `develop`, an SSL certificate is required.
+The WSGI or ASGI can run behind SSL if you provide the certificates.
 
-Two files need to be mounted to the container in order to run environments outside of development:
+Two files need to be mounted to the container in order to use SSL:
 
 - `/home/app/ssl/key.pem`
 - `/home/app/ssl/cert.pem`
@@ -147,6 +113,6 @@ Ensure the files can be read by the container user.
 
 These locations can be overridden with the `SSL_KEY_FILE` and `SSL_CERTIFICATE_FILE` environment variables.
 
-### Disabling SSL
+Set the `SSL_CA_CERTIFICATES_FILE` environment variable and mount an appropriate CA file to the container to set up the certificate authorities.
 
-Although not recommended, SSL for the containers can be disabled on higher environments by setting `ALLOW_INSECURE` to `true`.
+SSL for the containers can be disabled by setting `ALLOW_INSECURE` to `true`.

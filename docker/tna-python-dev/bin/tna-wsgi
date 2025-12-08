@@ -1,0 +1,67 @@
+#!/bin/bash
+
+set -e
+
+echo "Running development server..."
+echo
+
+# Get the application
+APPLICATION=$1
+
+# Error if no application is passed
+if [ -z "$APPLICATION" ]
+then
+  echo -e "Error: application not specified in tna-wsgi\n";
+  echo "PARAMETERS"
+  echo "  application          the Python package you want to run"
+  echo "                       Example: tna-wsgi my_app:app";
+  exit 1
+fi
+
+# Make sure any mounted scripts in /home/app/.local/bin/tasks are executable
+if [ -d "/home/app/.local/bin/tasks" ]
+then
+  chmod +x -fR /home/app/.local/bin/tasks
+fi
+
+# If there is an $NPM_DEVELOP_COMMAND and we are running a development environment, run the development command now
+if [ -n "$NPM_DEVELOP_COMMAND" ]
+then
+  tna-node "$NPM_DEVELOP_COMMAND"
+fi
+
+# Try using the Flask development server if the application uses Flask
+if poetry show flask > /dev/null 2>&1;
+then
+  echo "Flask found, starting development server..."
+  poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port "$PORT"
+fi
+
+# Try using the Django development server if the application uses Django
+if poetry show django > /dev/null 2>&1;
+then
+  if [ -f "/app/manage.py" ]
+  then
+    echo "Django found, starting development server..."
+    poetry run python /app/manage.py runserver "0.0.0.0:$PORT"
+  else
+    echo "Django found, but /app/manage.py does not exist. Exiting..."
+    exit 1
+  fi
+fi
+
+# Use a uvicorn server if the application uses FastAPI
+if poetry show fastapi > /dev/null 2>&1;
+then
+  if [ -f "/app/main.py" ]
+  then
+    echo "FastAPI found, starting development server..."
+    poetry run fastapi dev --host 0.0.0.0 --port "$PORT"
+  else
+    echo "FastAPI found, but /app/main.py does not exist. Exiting..."
+    exit 1
+  fi
+fi
+
+echo "No suppoorted framework found. Exiting..."
+exit 1

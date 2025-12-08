@@ -10,14 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        image-name:
-          [
-            tna-python,
-            tna-python-root,
-            tna-python-django,
-            tna-python-django-root,
-            tna-python-dev,
-          ]
+        image-name: [tna-python, tna-python-dev]
     env:
       PER_PAGE: 100
     steps:

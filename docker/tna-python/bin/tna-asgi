@@ -1,0 +1,56 @@
+#!/bin/bash
+
+set -e
+
+echo "Running ASGI..."
+echo
+
+# Get the application
+APPLICATION=$1
+
+# Error if no application is passed
+if [ -z "$APPLICATION" ]
+then
+  echo -e "Error: application not specified in tna-asgi\n";
+  echo "PARAMETERS"
+  echo "  application          the Python package you want to run"
+  echo "                       Example: tna-asgi my_app:app";
+  exit 1
+fi
+
+# Set up the default number of workers
+DEFAULT_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
+
+# Use the number of workers (if provided) else use defaults
+[[ -z $WORKERS ]] && WORKERS=$DEFAULT_WORKERS
+
+# Set defaults for environment variables if they are not set
+[[ -z $LOG_LEVEL ]] && LOG_LEVEL=warning
+[[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
+
+# Get the preference for allowing insecure connections to the container (defaults to false)
+[[ -z $ALLOW_INSECURE ]] && ALLOW_INSECURE="false"
+ALLOW_INSECURE=$(echo "$ALLOW_INSECURE" | tr '[:upper:]' '[:lower:]')
+
+# If we are not allowing insecure connections, check for SSL certificates
+if [ "$ALLOW_INSECURE" != "true" ]
+then
+  [[ -z $SSL_KEY_FILE ]] && SSL_KEY_FILE=/home/app/ssl/key.pem
+  [[ -z $SSL_CERTIFICATE_FILE ]] && SSL_CERTIFICATE_FILE=/home/app/ssl/cert.pem
+
+  # Check for SSL certificates
+  if [ ! -f "$SSL_KEY_FILE" ]
+  then
+    echo "$SSL_KEY_FILE does not exist";
+    exit 1
+  fi
+  if [ ! -f "$SSL_CERTIFICATE_FILE" ]
+  then
+    echo "$SSL_CERTIFICATE_FILE does not exist";
+    exit 1
+  fi
+fi
+
+# Start the server
+echo "Starting server..."
+poetry run uvicorn "$APPLICATION" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host "0.0.0.0" --port "$PORT" --workers "$WORKERS" --ssl-keyfile "$SSL_KEY_FILE" --ssl-certfile "$SSL_CERTIFICATE_FILE" --ssl-ca-certs "$SSL_CA_CERTIFICATES_FILE"

@@ -1,6 +1,4 @@
-ARG USER_IMAGE=app
-
-FROM python:3.13-slim-bookworm AS root
+FROM python:3.14-slim-trixie
 
 # ==========================================
 # Label this container image with a semantic
@@ -19,11 +17,12 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
     org.opencontainers.image.licenses=MIT
 
 # ==========================================
-# All TNA containers should expose identical
+# All TNA containers SHOULD expose identical
 # ports which will then be mapped to another
-# port on the host system - we use port 8080
-# for all our applications
+# port on the host system - we use a default
+# of port 8080 for all our applications
 # ==========================================
+ENV PORT=8080
 EXPOSE 8080/tcp
 
 # ==========================================
@@ -31,20 +30,11 @@ EXPOSE 8080/tcp
 # should expose an unauthenticated URI which
 # can be used as a healthcheck by Docker and
 # other container orchestrators to check the
-# live-ness of an application - this idea is
+# alive-ness of an application which idea is
 # based on a GOV.UK proposal:
-# https://github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
+# github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
-HEALTHCHECK --interval=15s CMD curl --fail http://localhost:8080/healthcheck/live/ || exit 1
-
-# ==========================================
-# The default runtime option is "production"
-# with the only other option being "develop"
-# which ensures all our production instances
-# will act in a similar manner, and have the
-# same setup and configuration
-# ==========================================
-ENV RUNTIME=production
+HEALTHCHECK CMD curl --fail "http://localhost:$PORT/healthcheck/live/" || exit 1
 
 # ==========================================
 # Set Python up in a consistent manner, with
@@ -69,14 +59,24 @@ ENV PIP_NO_CACHE_DIR=true \
     PIP_DISABLE_PIP_VERSION_CHECK=on
 
 # ==========================================
+# Define the versions of packages to install
+# at build - these are safe because:
+#   "You can't override or set an
+#    environment variable at build-time"
+# > docs.docker.com/build/building/variables
+# ==========================================
+ENV POETRY_VERSION=2.2.1 \
+    NVM_VERSION=0.40.3 \
+    TNA_GUNICORN_VERSION=23.0.0 \
+    TNA_UVICORN_VERSION=0.38.0
+
+# ==========================================
 # Set up the Poetry variables so that we get
 # a consistent experience with using Poetry,
 # which includes where it will be installed,
 # where it installs the project dependencies
-# and what version is used
 # ==========================================
 ENV POETRY_HOME=/home/app/.local \
-    POETRY_VERSION=2.2.1 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=true \
     POETRY_VIRTUALENVS_IN_PROJECT=false
@@ -86,7 +86,7 @@ ENV POETRY_HOME=/home/app/.local \
 # executes commands through doesn't just use
 # the final operation in a pipe to determine
 # the success of the entire command
-# https://github.com/hadolint/hadolint/wiki/DL4006
+# > github.com/hadolint/hadolint/wiki/DL4006
 # ==========================================
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -100,16 +100,18 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # being installed later on
 # ==========================================
 RUN set -eux; \
-    \
     export DEBIAN_FRONTEND=noninteractive; \
-    \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends libcurl4=7.88.1-10+deb12u14 curl=7.88.1-10+deb12u14 build-essential=12.9 libmagic-dev=1:5.44-3 libsqlite3-0=3.40.1-2+deb12u2; \
-    \
+    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u2; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
+
+# ==========================================
+# Upgrade pip to a later version
+# ==========================================
+RUN pip install --no-cache-dir --quiet --upgrade pip==25.3
 
 # ==========================================
 # Create a new system-level nonroot user who
@@ -137,9 +139,11 @@ ENV HOME=/home/app
 
 # ==========================================
 # Specify the directory for nvm to use which
-# is writable by our "app" user
+# is writable by our "app" user, and set the
+# Node.js environment to "production"
 # ==========================================
 ENV NVM_DIR="$HOME/.nvm"
+ENV NODE_ENV=production
 
 # ==========================================
 # Install Poetry in the suggested manner and
@@ -147,10 +151,17 @@ ENV NVM_DIR="$HOME/.nvm"
 # and JavaScript
 # ==========================================
 RUN set -eux; \
-    \
     curl -sSL "https://install.python-poetry.org" | python -; \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash; \
+    curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh" | bash; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
+
+# ==========================================
+# Remove curl after we have installed Poetry
+# and nvm and autoremove other packages
+# ==========================================
+RUN apt-get remove --purge curl; \
+    apt-get clean; \
+    apt-get autoremove -y --purge
 
 # ==========================================
 # Change the image current working directory
@@ -164,9 +175,6 @@ WORKDIR /app
 # ==========================================
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
-
-
-FROM root AS app
 # ==========================================
 # Now we have finished installing everything
 # at a system level, change the current user
@@ -176,21 +184,15 @@ FROM root AS app
 # ==========================================
 USER app
 
-
-
-# wiz-scan ignore-block
-# hadolint ignore=DL3006
-FROM "$USER_IMAGE"
-
 # ==========================================
 # Install the latest LTS version of Node.js,
 # but keeping within the releases code-named
-# "jod" (v22.x)
+# "krypton" (v24.x)
 # ==========================================
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install lts/jod; \
-    nvm alias default lts/jod
+    nvm install --latest-npm lts/krypton; \
+    nvm alias default lts/krypton
 
 # ==========================================
 # Create a directory for our SSL certificate
@@ -203,9 +205,7 @@ RUN mkdir /home/app/ssl
 # bash scripts we need in order to build and
 # run our application in a consistent manner
 # ==========================================
-# wiz-scan ignore-line
-COPY --chown=app bin /home/app/.local/bin
-RUN chmod +x -fR /home/app/.local/bin
+COPY bin /home/app/.local/bin
 
 # ==========================================
 # This does nothing but will act as a way to

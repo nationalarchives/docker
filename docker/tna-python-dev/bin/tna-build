@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+tna-build-base
+
+echo "Running tna-build for dev...";
+
+poetry install --no-root --with dev || true
+
+poetry add django-debug-toolbar
+
+if [ -f "/app/package.json" ]
+then
+  . tna-nvm
+  npm install
+fi
+

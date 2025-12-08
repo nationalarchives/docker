@@ -2,6 +2,8 @@
 
 set -e
 
+echo "Running tna-build...";
+
 if [ ! -f "/app/pyproject.toml" ]
 then
   echo "pyproject.toml does not exist";
@@ -12,11 +14,6 @@ if [ ! -f "/app/poetry.lock" ]
 then
   echo "poetry.lock does not exist";
   exit 1
-fi
-
-if [ -n "$RUNTIME" ]
-then
-  [[ -z $NODE_ENV ]] && NODE_ENV=$RUNTIME
 fi
 
 if [ -n "$NPM_BUILD_COMMAND" ]
@@ -36,12 +33,6 @@ then
   tna-node "$NPM_BUILD_COMMAND"
 fi
 
-poetry add gunicorn@23.0.0
-poetry add uvicorn@0.37.0
-poetry add uvicorn-worker@0.4.0
+poetry add "gunicorn=$TNA_GUNICORN_VERSION"
+poetry add "uvicorn=$TNA_UVICORN_VERSION"
 poetry install --no-root --no-interaction
-
-if [ "$(id -u)" -eq 0 ]
-then
-  poetry install --no-root --with root || true
-fi
