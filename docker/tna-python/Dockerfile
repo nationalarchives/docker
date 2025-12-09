@@ -77,10 +77,10 @@ ENV POETRY_VERSION=2.2.1 \
 # ==========================================
 ARG USERNAME=app
 ARG USER_UID=1001
-ARG USER_GID=$USER_UID
-RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd --no-log-init --uid $USER_UID --gid $USER_GID --create-home $USERNAME --shell /bin/bash
-ENV HOME=/home/$USERNAME
+ARG USER_GID="$USER_UID"
+RUN groupadd --gid "$USER_GID" "$USERNAME" \
+    && useradd --no-log-init --uid "$USER_UID" --gid "$USER_GID" --create-home "$USERNAME" --shell /bin/bash
+ENV HOME="/home/$USERNAME"
 
 # ==========================================
 # Set up the Poetry variables so that we get
@@ -88,7 +88,7 @@ ENV HOME=/home/$USERNAME
 # which includes where it will be installed,
 # where it installs the project dependencies
 # ==========================================
-ENV POETRY_HOME=$HOME/.local \
+ENV POETRY_HOME="$HOME/.local" \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=true \
     POETRY_VIRTUALENVS_IN_PROJECT=false
@@ -139,7 +139,7 @@ RUN pip install --no-cache-dir --quiet --upgrade pip==25.3
 # app user to access it
 # ==========================================
 RUN mkdir -p /app; \
-    chown ${USER_UID}:${USER_GID} -R /app; \
+    chown "${USER_UID}":"${USER_GID}" -R /app; \
     chmod 700 /app
 
 # ==========================================
