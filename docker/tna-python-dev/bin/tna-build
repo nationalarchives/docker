@@ -9,7 +9,7 @@ echo "Running tna-build for dev...";
 
 poetry install --no-root --with dev || true
 
-# poetry add "django-debug-toolbar=$DJANGO_DEBUG_TOOLBAR_VERSION"
+poetry add "django-debug-toolbar=$DJANGO_DEBUG_TOOLBAR_VERSION"
 
 if [ -f "/app/package.json" ]
 then

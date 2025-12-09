@@ -66,7 +66,7 @@ ENV NODE_ENV=development
 # Install the tools required for linting and
 # fixing Python
 # ==========================================
-RUN python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION" django-debug-toolbar=="$DJANGO_DEBUG_TOOLBAR_VERSION"
+RUN python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION"
 
 # ==========================================
 # Copy any configuration files into the main

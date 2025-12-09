@@ -14,7 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Ensure `POETRY_HOME` and `NVM_DIR` are always correctly set for the `app` user
-- Move installation of Django Debug Toolbar from `tna-build` (dev) to the `Dockerfile` for faster startup
 
 ### Deprecated
 ### Removed
