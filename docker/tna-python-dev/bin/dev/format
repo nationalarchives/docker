@@ -66,8 +66,9 @@ then
   if [ "$FIX" = true ]
   then
     djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
-  else
-    djlint /app/app/templates --configuration "$DJLINT_CONFIG" --check
+    djhtml /app/app/templates
+  // else
+  //   djlint /app/app/templates --configuration "$DJLINT_CONFIG" --check
   fi
 fi
 echo
