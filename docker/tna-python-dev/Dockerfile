@@ -48,13 +48,14 @@ RUN apt-get update; \
 ENV BLACK_VERSION=25.12.0 \
     FLAKE8_VERSION=7.1.1 \
     ISORT_VERSION=7.0.0 \
+    DJLINT_VERSION=1.36.4 \
+    DJANGO_DEBUG_TOOLBAR_VERSION=6.1.0 \
     PRETTIER_VERSION=3.7.4 \
     STYLELINT_VERSION=16.26.1 \
     STYLELINT_CONFIG_STANDARD_SCSS_VERSION=16.0.0 \
     STYLELINT_SELECTOR_BEM_PATTERN_VERSION=4.0.1 \
     STYLELINT_ORDER_VERSION=7.0.0 \
-    ESLINT_VERSION=8.56.0 \
-    DJANGO_DEBUG_TOOLBAR_VERSION=6.1.0
+    ESLINT_VERSION=8.56.0
     
 # ==========================================
 # Set the Node.js environment to development
@@ -65,7 +66,7 @@ ENV NODE_ENV=development
 # Install the tools required for linting and
 # fixing Python
 # ==========================================
-RUN python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION"
+RUN python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION" django-debug-toolbar=="$DJANGO_DEBUG_TOOLBAR_VERSION"
 
 # ==========================================
 # Copy any configuration files into the main

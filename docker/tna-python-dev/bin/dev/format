@@ -54,6 +54,19 @@ else
 fi
 echo
 
+if [ -d "/app/app/templates" ]
+then
+  echo "Running djLint (for Jinja2)..."
+  djlint /app/app/templates --profile=jinja --lint
+  if [ "$FIX" = true ]
+  then
+    djlint /app/app/templates --profile=jinja --reformat
+  else
+    djlint /app/app/templates --profile=jinja --check
+  fi
+fi
+echo
+
 if [ -f ".nvmrc" ]
 then
   . tna-nvm

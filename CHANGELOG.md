@@ -8,9 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.0.0...HEAD)
 
 ### Added
+
+- Added djLint to `tna-python-dev` and run linting and formatting on `format`
+
 ### Changed
 
 - Ensure `POETRY_HOME` and `NVM_DIR` are always correctly set for the `app` user
+- Move installation of Django Debug Toolbar from `tna-build` (dev) to the `Dockerfile` for faster startup
 
 ### Deprecated
 ### Removed
