@@ -169,7 +169,7 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
-      
+
       - name: Test Flask
         uses: ./.github/actions/test-container
         with:
