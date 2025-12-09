@@ -67,8 +67,8 @@ then
   then
     djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
     djhtml /app/app/templates
-  // else
-  //   djlint /app/app/templates --configuration "$DJLINT_CONFIG" --check
+  else
+    djhtml /app/app/templates --check
   fi
 fi
 echo
