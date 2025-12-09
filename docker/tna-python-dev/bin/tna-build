@@ -2,13 +2,14 @@
 
 set -e
 
+# tna-build-base is a renamed tna-build from the base image
 tna-build-base
 
 echo "Running tna-build for dev...";
 
 poetry install --no-root --with dev || true
 
-poetry add django-debug-toolbar
+poetry add "django-debug-toolbar=$DJANGO_DEBUG_TOOLBAR_VERSION"
 
 if [ -f "/app/package.json" ]
 then

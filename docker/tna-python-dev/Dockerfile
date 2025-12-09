@@ -53,8 +53,9 @@ ENV BLACK_VERSION=25.12.0 \
     STYLELINT_CONFIG_STANDARD_SCSS_VERSION=16.0.0 \
     STYLELINT_SELECTOR_BEM_PATTERN_VERSION=4.0.1 \
     STYLELINT_ORDER_VERSION=7.0.0 \
-    ESLINT_VERSION=8.56.0
-
+    ESLINT_VERSION=8.56.0 \
+    DJANGO_DEBUG_TOOLBAR_VERSION=6.1.0
+    
 # ==========================================
 # Set the Node.js environment to development
 # ==========================================

@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 - Set a fixed `$UID` and `$GID` for the non-root `app` user
+- Install a specific version of the Django Debug Toolbar
 
 ## [1.0.0](https://github.com/nationalarchives/docker/compare/v0.15.0...v1.0.0) - 2025-12-08
 
