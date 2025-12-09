@@ -57,12 +57,12 @@ echo
 if [ -d "/app/app/templates" ]
 then
   echo "Running djLint (for Jinja2)..."
-  djlint /app/app/templates --profile=jinja --lint
+  djlint /app/app/templates --lint
   if [ "$FIX" = true ]
   then
-    djlint /app/app/templates --profile=jinja --reformat
+    djlint /app/app/templates --reformat --quiet || true
   else
-    djlint /app/app/templates --profile=jinja --check
+    djlint /app/app/templates --check
   fi
 fi
 echo
