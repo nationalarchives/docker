@@ -33,6 +33,6 @@ then
   tna-node "$NPM_BUILD_COMMAND"
 fi
 
-poetry add "gunicorn=$GUNICORN_VERSION"
-poetry add "uvicorn=$UVICORN_VERSION"
+poetry add "gunicorn=$WSGI_GUNICORN_VERSION"
+poetry add "uvicorn=$ASGI_UVICORN_VERSION"
 poetry install --no-root --no-interaction
