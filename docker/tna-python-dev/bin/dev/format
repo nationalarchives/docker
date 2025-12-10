@@ -73,11 +73,7 @@ then
 fi
 echo
 
-if [ -f ".nvmrc" ]
-then
-  . tna-nvm
-  npm --version
-fi
+. tna-nvm
 echo
 
 echo "Running prettier..."

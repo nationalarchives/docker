@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Ensure `POETRY_HOME` and `NVM_DIR` are always correctly set for the `app` user
+- Removed conditional check for `.nvmrc` in `format` script
 
 ### Deprecated
 ### Removed
