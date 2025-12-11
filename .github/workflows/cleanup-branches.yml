@@ -1,5 +1,8 @@
 name: Clean up feature branches
 
+permissions:
+  contents: read
+  packages: write
 on:
   delete:
 
