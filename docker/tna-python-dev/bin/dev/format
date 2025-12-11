@@ -74,7 +74,6 @@ fi
 echo
 
 . tna-nvm
-echo
 
 echo "Running prettier..."
 if [ "$FIX" = true ]
