@@ -24,12 +24,6 @@ then
     exit 1
   fi
 
-  if [ ! -f "/app/package-lock.json" ]
-  then
-    echo "package-lock.json does not exist";
-    exit 1
-  fi
-
   tna-node "$NPM_BUILD_COMMAND"
 fi
 
