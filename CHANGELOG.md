@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added djLint to `tna-python-dev` and run linting and formatting on `format`
+- Added [djLint](https://github.com/djlint/djLint) and [DjHTML](https://github.com/rtts/djhtml) to `tna-python-dev` and run linting and formatting on `format` for HTML files (assuming Jinja2)
 
 ### Changed
 
