@@ -54,12 +54,8 @@ else
 fi
 echo
 
-if [ -f ".nvmrc" ]
-then
-  . tna-nvm
-  npm --version
-fi
-echo
+. tna-nvm
+npm --version
 
 echo "Running prettier..."
 if [ "$FIX" = true ]

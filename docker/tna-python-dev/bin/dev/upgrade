@@ -10,9 +10,6 @@ then
   then
     echo "Upgrading Poetry dependencies..."
     poetry update
-  else
-    echo "pyproject.toml does not exist"
-    exit 1
   fi
 fi
 
@@ -23,7 +20,5 @@ then
     echo "Upgrading npm dependencies..."
     . tna-nvm
     npm update
-  else
-    echo "package.json does not exist"
   fi
 fi
