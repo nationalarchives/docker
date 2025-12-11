@@ -8,9 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.0.0...HEAD)
 
 ### Added
+
+- Added [djLint](https://github.com/djlint/djLint) and [DjHTML](https://github.com/rtts/djhtml) to `tna-python-dev` and run linting and formatting on `format` for HTML files (assuming Jinja2)
+
 ### Changed
 
 - Ensure `POETRY_HOME` and `NVM_DIR` are always correctly set for the `app` user
+- Removed conditional check for `.nvmrc` in `format` script
 
 ### Deprecated
 ### Removed

@@ -17,20 +17,16 @@ echo "Running isort..."
 if [ -f "/app/.isort.cfg" ]
 then
   echo "Using app config"
-  if [ "$FIX" = true ]
-  then
-    isort --settings-file /app/.isort.cfg /app --overwrite-in-place
-  else
-    isort --settings-file /app/.isort.cfg /app --diff
-  fi
+  ISORT_CONFIG="/app/.isort.cfg"
 else
   echo "Using default config"
-  if [ "$FIX" = true ]
-  then
-    isort --settings-file /home/app/.isort.cfg /app --overwrite-in-place
-  else
-    isort --settings-file /home/app/.isort.cfg /app --diff
-  fi
+  ISORT_CONFIG="/home/app/.isort.cfg"
+fi
+if [ "$FIX" = true ]
+then
+  isort --settings-file "$ISORT_CONFIG" /app --overwrite-in-place
+else
+  isort --settings-file "$ISORT_CONFIG" /app --diff
 fi
 echo
 
@@ -47,15 +43,37 @@ echo "Running flake8..."
 if [ -f "/app/.flake8" ]
 then
   echo "Using app config"
-  flake8 --config=/app/.flake8 /app
+  FLAKE8_CONFIG="/app/.flake8"
 else
   echo "Using default config"
-  flake8 --config=/home/app/.flake8 /app
+  FLAKE8_CONFIG="/home/app/.flake8"
+fi
+flake8 --config="$FLAKE8_CONFIG" /app
+echo
+
+if [ -d "/app/app/templates" ]
+then
+  echo "Running djLint (for Jinja2)..."
+  if [ -f "/app/.djlintrc" ]
+  then
+    echo "Using app config"
+    DJLINT_CONFIG="/app/.djlintrc"
+  else
+    echo "Using default config"
+    DJLINT_CONFIG="/home/app/.djlintrc"
+  fi
+  djlint /app/app/templates --configuration "$DJLINT_CONFIG" --lint
+  if [ "$FIX" = true ]
+  then
+    djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
+    djhtml /app/app/templates --tabwidth 2
+  else
+    djhtml /app/app/templates --tabwidth 2 --check
+  fi
 fi
 echo
 
 . tna-nvm
-npm --version
 
 echo "Running prettier..."
 if [ "$FIX" = true ]
@@ -71,101 +89,52 @@ npm install -g "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$S
 if [ -f "/app/.stylelintrc" ]
 then
   echo "Using app config (.stylelintrc)"
-  if [ "$FIX" = true ]
-  then
-    stylelint --config /app/.stylelintrc --fix "/app/**/*.{css,scss}" --allow-empty-input
-  else
-    stylelint --config /app/.stylelintrc "/app/**/*.{css,scss}" --allow-empty-input
-  fi
+  STYLELINT_CONFIG="/app/.stylelintrc"
 elif [ -f "/app/stylelint.config.js" ]
 then
   echo "Using app config (stylelint.config.js)"
-  if [ "$FIX" = true ]
-  then
-    stylelint --config /app/stylelint.config.js --fix "/app/**/*.{css,scss}" --allow-empty-input
-  else
-    stylelint --config /app/stylelint.config.js "/app/**/*.{css,scss}" --allow-empty-input
-  fi
+  STYLELINT_CONFIG="/app/stylelint.config.js"
 elif [ -f "/app/.stylelintrc.js" ]
 then
   echo "Using app config (.stylelintrc.js)"
-  if [ "$FIX" = true ]
-  then
-    stylelint --config /app/.stylelintrc.js --fix "/app/**/*.{css,scss}" --allow-empty-input
-  else
-    stylelint --config /app/.stylelintrc.js "/app/**/*.{css,scss}" --allow-empty-input
-  fi
+  STYLELINT_CONFIG="/app/.stylelintrc.js"
 elif [ -f "/app/stylelint.config.mjs" ]
 then
   echo "Using app config (stylelint.config.mjs)"
-  if [ "$FIX" = true ]
-  then
-    stylelint --config /app/stylelint.config.mjs --fix "/app/**/*.{css,scss}" --allow-empty-input
-  else
-    stylelint --config /app/stylelint.config.mjs "/app/**/*.{css,scss}" --allow-empty-input
-  fi
+  STYLELINT_CONFIG="/app/stylelint.config.mjs"
 elif [ -f "/app/.stylelintrc.mjs" ]
 then
   echo "Using app config (.stylelintrc.mjs)"
-  if [ "$FIX" = true ]
-  then
-    stylelint --config /app/.stylelintrc.mjs --fix "/app/**/*.{css,scss}" --allow-empty-input
-  else
-    stylelint --config /app/.stylelintrc.mjs "/app/**/*.{css,scss}" --allow-empty-input
-  fi
+  STYLELINT_CONFIG="/app/.stylelintrc.mjs"
 elif [ -f "/app/stylelint.config.cjs" ]
 then
   echo "Using app config (stylelint.config.cjs)"
-  if [ "$FIX" = true ]
-  then
-    stylelint --config /app/stylelint.config.cjs --fix "/app/**/*.{css,scss}" --allow-empty-input
-  else
-    stylelint --config /app/stylelint.config.cjs "/app/**/*.{css,scss}" --allow-empty-input
-  fi
+  STYLELINT_CONFIG="/app/stylelint.config.cjs"
 elif [ -f "/app/.stylelintrc.cjs" ]
 then
   echo "Using app config (.stylelintrc.cjs)"
-  if [ "$FIX" = true ]
-  then
-    stylelint --config /app/.stylelintrc.cjs --fix "/app/**/*.{css,scss}" --allow-empty-input
-  else
-    stylelint --config /app/.stylelintrc.cjs "/app/**/*.{css,scss}" --allow-empty-input
-  fi
+  STYLELINT_CONFIG="/app/.stylelintrc.cjs"
 elif [ -f "/app/.stylelintrc.json" ]
 then
   echo "Using app config (.stylelintrc.json)"
-  if [ "$FIX" = true ]
-  then
-    stylelint --config /app/.stylelintrc.json --fix "/app/**/*.{css,scss}" --allow-empty-input
-  else
-    stylelint --config /app/.stylelintrc.json "/app/**/*.{css,scss}" --allow-empty-input
-  fi
+  STYLELINT_CONFIG="/app/.stylelintrc.json"
 elif [ -f "/app/.stylelintrc.yml" ]
 then
   echo "Using app config (.stylelintrc.yml)"
-  if [ "$FIX" = true ]
-  then
-    stylelint --config /app/.stylelintrc.yml --fix "/app/**/*.{css,scss}" --allow-empty-input
-  else
-    stylelint --config /app/.stylelintrc.yml "/app/**/*.{css,scss}" --allow-empty-input
-  fi
+  STYLELINT_CONFIG="/app/.stylelintrc.yml"
 elif [ -f "/app/.stylelintrc.yaml" ]
 then
   echo "Using app config (.stylelintrc.yaml)"
-  if [ "$FIX" = true ]
-  then
-    stylelint --config /app/.stylelintrc.yaml --fix "/app/**/*.{css,scss}" --allow-empty-input
-  else
-    stylelint --config /app/.stylelintrc.yaml "/app/**/*.{css,scss}" --allow-empty-input
-  fi
+  STYLELINT_CONFIG="/app/.stylelintrc.yaml"
 else
   echo "Using default config"
-  if [ "$FIX" = true ]
-  then
-    stylelint --config /home/app/.stylelintrc --fix "/app/**/*.{css,scss}" --allow-empty-input
-  else
-    stylelint --config /home/app/.stylelintrc "/app/**/*.{css,scss}" --allow-empty-input
-  fi
+  STYLELINT_CONFIG="/home/app/.stylelintrc"
+fi
+if [ "$FIX" = true ]
+then
+  stylelint --config "$STYLELINT_CONFIG" --fix "/app/**/*.{css,scss}" --allow-empty-input
+else
+  stylelint --config "$STYLELINT_CONFIG" "/app/**/*.{css,scss}" --allow-empty-input
 fi
 echo
 
@@ -173,64 +142,35 @@ echo "Running eslint..."
 if [ -f "/app/.eslintrc.js" ]
 then
   echo "Using app config (.eslintrc.js)"
-  if [ "$FIX" = true ]
-  then
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.js --no-error-on-unmatched-pattern --fix "/app"
-  else
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.js --no-error-on-unmatched-pattern "/app"
-  fi
+  ESLINT_CONFIG="/app/.eslintrc.js"
 elif [ -f "/app/.eslintrc.mjs" ]
 then
   echo "Using app config (.eslintrc.mjs)"
-  if [ "$FIX" = true ]
-  then
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.mjs --no-error-on-unmatched-pattern --fix "/app"
-  else
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.mjs --no-error-on-unmatched-pattern "/app"
-  fi
+  ESLINT_CONFIG="/app/.eslintrc.mjs"
 elif [ -f "/app/.eslintrc.cjs" ]
 then
   echo "Using app config (.eslintrc.cjs)"
-  if [ "$FIX" = true ]
-  then
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.cjs --no-error-on-unmatched-pattern --fix "/app"
-  else
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/.eslintrc.cjs --no-error-on-unmatched-pattern "/app"
-  fi
+  ESLINT_CONFIG="/app/.eslintrc.cjs"
 elif [ -f "/app/eslintrc.config.js" ]
 then
   echo "Using app config (eslintrc.config.js)"
-  if [ "$FIX" = true ]
-  then
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.js --no-error-on-unmatched-pattern --fix "/app"
-  else
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.js --no-error-on-unmatched-pattern "/app"
-  fi
+  ESLINT_CONFIG="/app/eslintrc.config.js"
 elif [ -f "/app/eslintrc.config.mjs" ]
 then
   echo "Using app config (eslintrc.config.mjs)"
-  if [ "$FIX" = true ]
-  then
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.mjs --no-error-on-unmatched-pattern --fix "/app"
-  else
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.mjs --no-error-on-unmatched-pattern "/app"
-  fi
+  ESLINT_CONFIG="/app/eslintrc.config.mjs"
 elif [ -f "/app/eslintrc.config.cjs" ]
 then
   echo "Using app config (eslintrc.config.cjs)"
-  if [ "$FIX" = true ]
-  then
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.cjs --no-error-on-unmatched-pattern --fix "/app"
-  else
-    npx --yes "eslint@$ESLINT_VERSION" --config /app/eslintrc.config.cjs --no-error-on-unmatched-pattern "/app"
-  fi
+  ESLINT_CONFIG="/app/eslintrc.config.cjs"
 else
   echo "Using default config"
-  if [ "$FIX" = true ]
-  then
-    npx --yes "eslint@$ESLINT_VERSION" --config /home/app/.eslintrc.js --no-error-on-unmatched-pattern --fix "/app"
-  else
-    npx --yes "eslint@$ESLINT_VERSION" --config /home/app/.eslintrc.js --no-error-on-unmatched-pattern "/app"
-  fi
+  ESLINT_CONFIG="/home/app/.eslintrc.js"
+fi
+if [ "$FIX" = true ]
+then
+  npx --yes "eslint@$ESLINT_VERSION" --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern --fix "/app"
+else
+  npx --yes "eslint@$ESLINT_VERSION" --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern "/app"
 fi
 echo
