@@ -4,22 +4,22 @@ set -e
 
 if [ -z "$1" ]
 then
-  echo -e "Error: script not specified in tna-node\n";
+  echo -e "Error: script not specified in tna-node\n"
   echo "PARAMETERS"
   echo "  script               the Node script you want to run"
-  echo "                       Example: tna-node dev";
+  echo "                       Example: tna-node dev"
   exit 1
 fi
 
 if [ ! -f "/app/package.json" ]
 then
-  echo "package.json does not exist";
+  echo "package.json does not exist"
   exit 1
 fi
 
 if [ ! -f "/app/package-lock.json" ]
 then
-  echo "package-lock.json does not exist";
+  echo "package-lock.json does not exist"
   exit 1
 fi
 

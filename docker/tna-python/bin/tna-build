@@ -2,17 +2,17 @@
 
 set -e
 
-echo "Running tna-build...";
+echo "Running tna-build..."
 
 if [ ! -f "/app/pyproject.toml" ]
 then
-  echo "pyproject.toml does not exist";
+  echo "pyproject.toml does not exist"
   exit 1
 fi
 
 if [ ! -f "/app/poetry.lock" ]
 then
-  echo "poetry.lock does not exist";
+  echo "poetry.lock does not exist"
   exit 1
 fi
 

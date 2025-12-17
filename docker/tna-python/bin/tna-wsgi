@@ -11,10 +11,10 @@ APPLICATION=$1
 # Error if no application is passed
 if [ -z "$APPLICATION" ]
 then
-  echo -e "Error: application not specified in tna-wsgi\n";
+  echo -e "Error: application not specified in tna-wsgi\n"
   echo "PARAMETERS"
   echo "  application          the Python package you want to run"
-  echo "                       Example: tna-wsgi my_app:app";
+  echo "                       Example: tna-wsgi my_app:app"
   exit 1
 fi
 
@@ -44,12 +44,12 @@ then
   # Check for SSL certificates
   if [ ! -f "$SSL_KEY_FILE" ]
   then
-    echo "$SSL_KEY_FILE does not exist";
+    echo "$SSL_KEY_FILE does not exist"
     exit 1
   fi
   if [ ! -f "$SSL_CERTIFICATE_FILE" ]
   then
-    echo "$SSL_CERTIFICATE_FILE does not exist";
+    echo "$SSL_CERTIFICATE_FILE does not exist"
     exit 1
   fi
 fi
