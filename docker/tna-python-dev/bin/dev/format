@@ -51,27 +51,31 @@ fi
 flake8 --config="$FLAKE8_CONFIG" /app
 echo
 
-if [ -d "/app/app/templates" ]
+DISABLE_DJLINT=$(echo "$DISABLE_DJLINT" | tr '[:upper:]' '[:lower:]')
+if [ "$DISABLE_DJLINT" != "true" ]
 then
-  echo "Running djLint (for Jinja2)..."
-  if [ -f "/app/.djlintrc" ]
+  if [ -d "/app/app/templates" ]
   then
-    echo "Using app config"
-    DJLINT_CONFIG="/app/.djlintrc"
-  else
-    echo "Using default config"
-    DJLINT_CONFIG="/home/app/.djlintrc"
+    echo "Running djLint (for Jinja2)..."
+    if [ -f "/app/.djlintrc" ]
+    then
+      echo "Using app config"
+      DJLINT_CONFIG="/app/.djlintrc"
+    else
+      echo "Using default config"
+      DJLINT_CONFIG="/home/app/.djlintrc"
+    fi
+    djlint /app/app/templates --configuration "$DJLINT_CONFIG" --lint
+    if [ "$FIX" = true ]
+    then
+      djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
+      djhtml /app/app/templates --tabwidth 2
+    else
+      djhtml /app/app/templates --tabwidth 2 --check
+    fi
   fi
-  djlint /app/app/templates --configuration "$DJLINT_CONFIG" --lint
-  if [ "$FIX" = true ]
-  then
-    djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
-    djhtml /app/app/templates --tabwidth 2
-  else
-    djhtml /app/app/templates --tabwidth 2 --check
-  fi
+  echo
 fi
-echo
 
 . tna-nvm
 

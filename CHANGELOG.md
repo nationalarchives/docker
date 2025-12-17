@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Don't remove `.nvmrc`, `package.json` and `package-lock.json` on `tna-clean`
+- Allow disabling of djLint when `DISABLE_DJLINT=true`
 
 ### Deprecated
 ### Removed
