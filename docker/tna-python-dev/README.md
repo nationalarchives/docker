@@ -100,6 +100,7 @@ The process for these commands is:
 | `isort`     | `.isort.cfg` file in the project root             | https://pycqa.github.io/isort/docs/configuration/config_files.html#isortcfg-preferred-format            |
 | `black`     | Add `[tool.black]` config to the `pyproject.toml` | https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-via-a-file |
 | `flake8`    | `.flake8` file in the project root                | https://flake8.pycqa.org/en/latest/user/configuration.html#configuration-locations                      |
+| `djlint`    | `.djlintrc` file in the project root              | https://djlint.com/docs/configuration/                                                                  |
 | `prettier`  | `.prettierignore` file in the project root        | https://prettier.io/docs/en/ignore.html                                                                 |
 | `stylelint` | `.stylelintrc` file in the project root           | https://stylelint.io/user-guide/configure/                                                              |
 | `eslint`    | `.eslintrc.js` file in the project root           | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files              |
