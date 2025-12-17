@@ -2,16 +2,15 @@
 
 set -e
 
-echo "Running tna-clean...";
+echo "Running tna-clean..."
 
-echo "Removing .nvmrc...";
-rm -f /app/.nvmrc
-
-echo "Removing node_modules...";
+echo "Removing node_modules..."
 rm -fR /app/node_modules
 
-echo "Removing Node package files...";
-rm -f /app/package.json /app/package-lock.json
-
-echo "Removing npm and nvm from home directory...";
+echo "Removing npm and nvm from home directory..."
 rm -fR /home/app/.npm /home/app/.nvm
+
+echo "Removing TNA scripts..."
+rm -f /home/app/.local/bin/tna-build
+rm -f /home/app/.local/bin/tna-node
+rm -f /home/app/.local/bin/tna-nvm

@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Don't remove `.nvmrc`, `package.json` and `package-lock.json` on `tna-clean`
+
 ### Deprecated
 ### Removed
 ### Fixed
