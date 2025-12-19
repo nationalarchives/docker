@@ -52,7 +52,6 @@ flake8 --config="$FLAKE8_CONFIG" /app
 echo
 
 DISABLE_DJLINT=$(echo "$DISABLE_DJLINT" | tr '[:upper:]' '[:lower:]')
-DISABLE_DJHTML=$(echo "$DISABLE_DJHTML" | tr '[:upper:]' '[:lower:]')
 if [ "$DISABLE_DJLINT" != "true" ]
 then
   if [ -d "/app/app/templates" ]
