@@ -68,8 +68,9 @@ then
     djlint /app/app/templates --configuration "$DJLINT_CONFIG" --lint
     if [ "$FIX" = true ]
     then
-      djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
+      # djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
       # djhtml /app/app/templates --tabwidth 2
+      echo
     else
       # djhtml /app/app/templates --tabwidth 2 --check
       echo
