@@ -70,15 +70,9 @@ then
     if [ "$FIX" = true ]
     then
       djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
-      if [ "$DISABLE_DJHTML" != "true" ]
-      then
-        djhtml /app/app/templates --tabwidth 2
-      fi
+      # djhtml /app/app/templates --tabwidth 2
     else
-      if [ "$DISABLE_DJHTML" != "true" ]
-      then
-        djhtml /app/app/templates --tabwidth 2 --check
-      fi
+      # djhtml /app/app/templates --tabwidth 2 --check
     fi
   fi
   echo

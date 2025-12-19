@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Disabled djHTML
+
 ### Deprecated
 ### Removed
 ### Fixed
@@ -20,7 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Don't remove `.nvmrc`, `package.json` and `package-lock.json` on `tna-clean`
 - Allow disabling of djLint and djHTML when `DISABLE_DJLINT=true`
-- Allow disabling of djHTML when `DISABLE_DJHTML=true`
 
 ## [1.1.0](https://github.com/nationalarchives/docker/compare/v1.0.0...v1.1.0) - 2025-12-15
 
