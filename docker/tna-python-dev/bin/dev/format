@@ -72,6 +72,7 @@ then
       # djhtml /app/app/templates --tabwidth 2
     else
       # djhtml /app/app/templates --tabwidth 2 --check
+      echo
     fi
   fi
   echo
