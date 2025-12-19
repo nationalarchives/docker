@@ -52,6 +52,7 @@ flake8 --config="$FLAKE8_CONFIG" /app
 echo
 
 DISABLE_DJLINT=$(echo "$DISABLE_DJLINT" | tr '[:upper:]' '[:lower:]')
+DISABLE_DJHTML=$(echo "$DISABLE_DJHTML" | tr '[:upper:]' '[:lower:]')
 if [ "$DISABLE_DJLINT" != "true" ]
 then
   if [ -d "/app/app/templates" ]
@@ -69,9 +70,15 @@ then
     if [ "$FIX" = true ]
     then
       djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
-      djhtml /app/app/templates --tabwidth 2
+      if [ "$DISABLE_DJHTML" != "true" ]
+      then
+        djhtml /app/app/templates --tabwidth 2
+      fi
     else
-      djhtml /app/app/templates --tabwidth 2 --check
+      if [ "$DISABLE_DJHTML" != "true" ]
+      then
+        djhtml /app/app/templates --tabwidth 2 --check
+      fi
     fi
   fi
   echo
