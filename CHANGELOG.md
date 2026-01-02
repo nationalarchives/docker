@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated stylelint-order to [7.0.1](https://github.com/hudochenkov/stylelint-order/releases/tag/7.0.1)
+
 ### Deprecated
 ### Removed
 ### Fixed
