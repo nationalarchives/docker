@@ -14,7 +14,9 @@ else
 fi
 echo
 
+echo "Setting up Node.js dependencies..."
 . tna-nvm
+npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "eslint@$ESLINT_VERSION"
 echo
 
 echo "Running isort..."
@@ -90,14 +92,13 @@ else
 fi
 if [ "$FIX" = true ]
 then
-  npx --yes "prettier@$PRETTIER_VERSION" --ignore-path "$PRETTIER_IGNORE" --write --list-different /app
+  prettier --ignore-path "$PRETTIER_IGNORE" --write --list-different /app
 else
-  npx --yes "prettier@$PRETTIER_VERSION" --ignore-path "$PRETTIER_IGNORE" --list-different /app
+  prettier --ignore-path "$PRETTIER_IGNORE" --list-different /app
 fi
 echo
 
 echo "Running stylelint..."
-npm install -g --silent "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION"
 if [ -f "/app/.stylelintrc" ]
 then
   STYLELINT_CONFIG="/app/.stylelintrc"
@@ -181,7 +182,7 @@ else
 fi
 if [ "$FIX" = true ]
 then
-  npx --yes "eslint@$ESLINT_VERSION" --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern --fix "/app"
+  eslint --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern --fix "/app"
 else
-  npx --yes "eslint@$ESLINT_VERSION" --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern "/app"
+  eslint --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern "/app"
 fi

@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Black profile to include Python 3.14
 - Ignored more files as part of the default `.eslintrc.js`
 - Ignored all compiled CSS files (`*.css`) as part of the default `.stylelintrc`
+- Used `npm install` rather than `npx` for formatting dependencies for increased repeat performance
 
 ### Deprecated
 ### Removed
