@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add a default `.prettierrc` which ignores all `*.html` files which is ignored if there is a `.prettierrc` in the project root
+- Add a default `.prettierrc` which ignores all `*.html` files which is only used when there is no `.prettierrc` in the project root
 
 ### Changed
 
