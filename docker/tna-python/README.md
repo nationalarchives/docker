@@ -49,11 +49,12 @@ Each environment has some default values but all can be overwritten:
 
 ## Commands for the Dockerfile
 
-There are two commands to use within your `Dockerfile`:
+Commands available to use within your `Dockerfile`:
 
 - [`tna-build`](#tna-build)
 - [`tna-node`](#tna-node-command)
 - [`tna-npm`](#tna-npm-command)
+- [`tna-clean`](#tna-clean)
 - [`tna-wsgi` and `tna-asgi`](#tna-wsgi-and-tna-asgi)
 
 ### `tna-build`
@@ -76,6 +77,12 @@ There are two commands to use within your `Dockerfile`:
 1. Sets the Node version to that defined in `.nvmrc`
    - If `.nvmrc` is not defined, use the `default` nvm version
 1. Runs the passed `[command]` as `npm [command]` (e.g. `install @nationalarchives/frontend`)
+
+### `tna-clean`
+
+1. Removes `node_modules` directory
+1. Removes npm and nvm
+1. Removes `tna-build`, `tna-node` and `tna-nvm` scripts
 
 ### `tna-wsgi` and `tna-asgi`
 
