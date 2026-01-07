@@ -12,3 +12,5 @@ then
 else
   nvm use default --silent
 fi
+
+npm config set fund=false --location=global

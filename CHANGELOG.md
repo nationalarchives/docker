@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated stylelint-order to [7.0.1](https://github.com/hudochenkov/stylelint-order/releases/tag/7.0.1)
 - Updated Uvicorn to [0.40.0](https://github.com/encode/uvicorn/releases/tag/0.40.0)
 - Made the installation of `stylelint` quiet when running `format`
+- Updated Black profile to include Python 3.14
 
 ### Deprecated
 ### Removed

@@ -12,15 +12,19 @@ then
 else
   echo "Reporting issues without fixing..."
 fi
+echo
+
+. tna-nvm
+echo
 
 echo "Running isort..."
 if [ -f "/app/.isort.cfg" ]
 then
-  echo "Using app config"
   ISORT_CONFIG="/app/.isort.cfg"
+  echo "Using app config ($ISORT_CONFIG)"
 else
-  echo "Using default config"
   ISORT_CONFIG="/home/app/.isort.cfg"
+  echo "Using default config ($ISORT_CONFIG)"
 fi
 if [ "$FIX" = true ]
 then
@@ -33,62 +37,56 @@ echo
 echo "Running black..."
 if [ "$FIX" = true ]
 then
-  black -t py39 -t py310 -t py311 -t py312 -t py313 /app
+  black -t py310 -t py311 -t py312 -t py313 -t py314 /app
 else
-  black -t py39 -t py310 -t py311 -t py312 -t py313 --check /app
+  black -t py310 -t py311 -t py312 -t py313 -t py314 --check /app
 fi
 echo
 
 echo "Running flake8..."
 if [ -f "/app/.flake8" ]
 then
-  echo "Using app config"
   FLAKE8_CONFIG="/app/.flake8"
+  echo "Using app config ($FLAKE8_CONFIG)"
 else
-  echo "Using default config"
   FLAKE8_CONFIG="/home/app/.flake8"
+  echo "Using default config ($FLAKE8_CONFIG)"
 fi
 flake8 --config="$FLAKE8_CONFIG" /app
 echo
 
-DISABLE_DJLINT=$(echo "$DISABLE_DJLINT" | tr '[:upper:]' '[:lower:]')
-if [ "$DISABLE_DJLINT" != "true" ]
+if [ -d "/app/app/templates" ]
 then
-  if [ -d "/app/app/templates" ]
+  echo "Running djLint..."
+  if [ -f "/app/.djlintrc" ]
   then
-    echo "Running djLint (for Jinja2)..."
-    if [ -f "/app/.djlintrc" ]
-    then
-      echo "Using app config"
-      DJLINT_CONFIG="/app/.djlintrc"
-    else
-      echo "Using default config"
-      DJLINT_CONFIG="/home/app/.djlintrc"
-    fi
-    djlint /app/app/templates --configuration "$DJLINT_CONFIG" --lint
-    if [ "$FIX" = true ]
-    then
-      # djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
-      # djhtml /app/app/templates --tabwidth 2
-      echo
-    else
-      # djhtml /app/app/templates --tabwidth 2 --check
-      echo
-    fi
+    DJLINT_CONFIG="/app/.djlintrc"
+    echo "Using app config ($DJLINT_CONFIG)"
+  else
+    DJLINT_CONFIG="/home/app/.djlintrc"
+    echo "Using default config ($DJLINT_CONFIG, Jinja2)"
   fi
+  djlint /app/app/templates --configuration "$DJLINT_CONFIG" --lint --quiet
+  # if [ "$FIX" = true ]
+  # then
+  #   # djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
+  #   # djhtml /app/app/templates --tabwidth 2
+  #   echo
+  # else
+  #   # djhtml /app/app/templates --tabwidth 2 --check
+  #   echo
+  # fi
   echo
 fi
-
-. tna-nvm
 
 echo "Running prettier..."
 if [ -f "/app/.prettierignore" ]
 then
-  echo "Using app config"
   PRETTIER_IGNORE="/app/.prettierignore"
+  echo "Using app config ($PRETTIER_IGNORE)"
 else
-  echo "Using default config"
   PRETTIER_IGNORE="/home/app/.prettierignore"
+  echo "Using default config ($PRETTIER_IGNORE)"
 fi
 if [ "$FIX" = true ]
 then
@@ -99,50 +97,50 @@ fi
 echo
 
 echo "Running stylelint..."
-npm install -g --quiet "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION"
+npm install -g --silent "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION"
 if [ -f "/app/.stylelintrc" ]
 then
-  echo "Using app config (.stylelintrc)"
   STYLELINT_CONFIG="/app/.stylelintrc"
+  echo "Using app config ($STYLELINT_CONFIG)"
 elif [ -f "/app/stylelint.config.js" ]
 then
-  echo "Using app config (stylelint.config.js)"
   STYLELINT_CONFIG="/app/stylelint.config.js"
+  echo "Using app config ($STYLELINT_CONFIG)"
 elif [ -f "/app/.stylelintrc.js" ]
 then
-  echo "Using app config (.stylelintrc.js)"
   STYLELINT_CONFIG="/app/.stylelintrc.js"
+  echo "Using app config ($STYLELINT_CONFIG)"
 elif [ -f "/app/stylelint.config.mjs" ]
 then
-  echo "Using app config (stylelint.config.mjs)"
   STYLELINT_CONFIG="/app/stylelint.config.mjs"
+  echo "Using app config ($STYLELINT_CONFIG)"
 elif [ -f "/app/.stylelintrc.mjs" ]
 then
-  echo "Using app config (.stylelintrc.mjs)"
   STYLELINT_CONFIG="/app/.stylelintrc.mjs"
+  echo "Using app config ($STYLELINT_CONFIG)"
 elif [ -f "/app/stylelint.config.cjs" ]
 then
-  echo "Using app config (stylelint.config.cjs)"
   STYLELINT_CONFIG="/app/stylelint.config.cjs"
+  echo "Using app config ($STYLELINT_CONFIG)"
 elif [ -f "/app/.stylelintrc.cjs" ]
 then
-  echo "Using app config (.stylelintrc.cjs)"
   STYLELINT_CONFIG="/app/.stylelintrc.cjs"
+  echo "Using app config ($STYLELINT_CONFIG)"
 elif [ -f "/app/.stylelintrc.json" ]
 then
-  echo "Using app config (.stylelintrc.json)"
   STYLELINT_CONFIG="/app/.stylelintrc.json"
+  echo "Using app config ($STYLELINT_CONFIG)"
 elif [ -f "/app/.stylelintrc.yml" ]
 then
-  echo "Using app config (.stylelintrc.yml)"
   STYLELINT_CONFIG="/app/.stylelintrc.yml"
+  echo "Using app config ($STYLELINT_CONFIG)"
 elif [ -f "/app/.stylelintrc.yaml" ]
 then
-  echo "Using app config (.stylelintrc.yaml)"
   STYLELINT_CONFIG="/app/.stylelintrc.yaml"
+  echo "Using app config ($STYLELINT_CONFIG)"
 else
-  echo "Using default config"
   STYLELINT_CONFIG="/home/app/.stylelintrc"
+  echo "Using default config ($STYLELINT_CONFIG)"
 fi
 if [ "$FIX" = true ]
 then
@@ -155,31 +153,31 @@ echo
 echo "Running eslint..."
 if [ -f "/app/.eslintrc.js" ]
 then
-  echo "Using app config (.eslintrc.js)"
   ESLINT_CONFIG="/app/.eslintrc.js"
+  echo "Using app config ($ESLINT_CONFIG)"
 elif [ -f "/app/.eslintrc.mjs" ]
 then
-  echo "Using app config (.eslintrc.mjs)"
   ESLINT_CONFIG="/app/.eslintrc.mjs"
+  echo "Using app config ($ESLINT_CONFIG)"
 elif [ -f "/app/.eslintrc.cjs" ]
 then
-  echo "Using app config (.eslintrc.cjs)"
   ESLINT_CONFIG="/app/.eslintrc.cjs"
+  echo "Using app config ($ESLINT_CONFIG)"
 elif [ -f "/app/eslintrc.config.js" ]
 then
-  echo "Using app config (eslintrc.config.js)"
   ESLINT_CONFIG="/app/eslintrc.config.js"
+  echo "Using app config ($ESLINT_CONFIG)"
 elif [ -f "/app/eslintrc.config.mjs" ]
 then
-  echo "Using app config (eslintrc.config.mjs)"
   ESLINT_CONFIG="/app/eslintrc.config.mjs"
+  echo "Using app config ($ESLINT_CONFIG)"
 elif [ -f "/app/eslintrc.config.cjs" ]
 then
-  echo "Using app config (eslintrc.config.cjs)"
   ESLINT_CONFIG="/app/eslintrc.config.cjs"
+  echo "Using app config ($ESLINT_CONFIG)"
 else
-  echo "Using default config"
   ESLINT_CONFIG="/home/app/.eslintrc.js"
+  echo "Using default config ($ESLINT_CONFIG)"
 fi
 if [ "$FIX" = true ]
 then
@@ -187,4 +185,3 @@ then
 else
   npx --yes "eslint@$ESLINT_VERSION" --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern "/app"
 fi
-echo
