@@ -2,8 +2,8 @@
 
 set -e
 
-DEFAULT_SSL_KEY_FILE_LOCATION=/home/app/ssl/key.pem
-DEFAULT_SSL_CERTIFICATE_FILE_LOCATION=/home/app/ssl/cert.pem
+DEFAULT_SSL_KEY_FILE_LOCATION=/home/app/ssl/server.key
+DEFAULT_SSL_CERTIFICATE_FILE_LOCATION=/home/app/ssl/server.crt
 
 [[ -z $SSL_KEY_FILE ]] && SSL_KEY_FILE=$DEFAULT_SSL_KEY_FILE_LOCATION
 [[ -z $SSL_CERTIFICATE_FILE ]] && SSL_CERTIFICATE_FILE=$DEFAULT_SSL_CERTIFICATE_FILE_LOCATION
@@ -11,7 +11,8 @@ DEFAULT_SSL_CERTIFICATE_FILE_LOCATION=/home/app/ssl/cert.pem
 # If the SSL certificate files do not exist, generate self-signed certificates
 if [ ! -f "$SSL_KEY_FILE" ] | [ ! -f "$SSL_CERTIFICATE_FILE" ]
 then
-    echo "SSL certificate and key files do not exist - generating self-signed certificates..."
+    echo "SSL certificate and key files do not exist"
+    echo "Generating a self-signed certificate..."
 
     # Check that the SSL_DOMAIN environment variable is set
     if [ -z "$SSL_DOMAIN" ]
