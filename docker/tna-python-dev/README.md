@@ -12,7 +12,7 @@ This image extends `tna-python` and can be used for local development **ONLY**. 
 
 ## Environment variables
 
-All environment variables extended from [tna-python](../tna-python/README.md) but with different defaults:
+All environment variables extended from [tna-python](../tna-python/README.md) but with some different defaults:
 
 | Variable               | Default       |
 | ---------------------- | ------------- |
@@ -67,6 +67,10 @@ services:
       - ./:/app
 ```
 
+The `Dockerfile` is used to generate the production image and so the default `tna-python:latest` image is used.
+
+`docker-compose.yml` is only used for local development so we are safe to set custom image and versions here.
+
 ## Commands
 
 Run `help` from within the container to see a list of available commands.
@@ -89,6 +93,7 @@ The process for these commands is:
 1. Run `isort`
 1. Run `black`
 1. Run `flake8`
+1. Run `djlint` to check HTML templates for Jinja compliance
 1. Apply `prettier` to all files in the `/app` directory
 1. Run `stylelint` against all SCSS files in the `/app` directory
 1. Run `eslint` against all JavaScript files in the `/app` directory
