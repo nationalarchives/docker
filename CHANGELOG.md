@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.2.3...HEAD)
 
 ### Added
+
+- Add a default `.prettierrc` which ignores all `*.html` files which is ignored if there is a `.prettierrc` in the project root
+
 ### Changed
 
 - Updated stylelint-order to [7.0.1](https://github.com/hudochenkov/stylelint-order/releases/tag/7.0.1)

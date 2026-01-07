@@ -82,11 +82,19 @@ fi
 . tna-nvm
 
 echo "Running prettier..."
+if [ -f "/app/.prettierignore" ]
+then
+  echo "Using app config"
+  PRETTIER_IGNORE="/app/.prettierignore"
+else
+  echo "Using default config"
+  PRETTIER_IGNORE="/home/app/.prettierignore"
+fi
 if [ "$FIX" = true ]
 then
-  npx --yes "prettier@$PRETTIER_VERSION" --write --list-different /app
+  npx --yes "prettier@$PRETTIER_VERSION" --ignore-path "$PRETTIER_IGNORE" --write --list-different /app
 else
-  npx --yes "prettier@$PRETTIER_VERSION" --list-different /app
+  npx --yes "prettier@$PRETTIER_VERSION" --ignore-path "$PRETTIER_IGNORE" --list-different /app
 fi
 echo
 
