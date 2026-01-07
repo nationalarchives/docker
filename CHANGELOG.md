@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Uvicorn to [0.40.0](https://github.com/encode/uvicorn/releases/tag/0.40.0)
 - Made the installation of `stylelint` quiet when running `format`
 - Updated Black profile to include Python 3.14
+- Ignored more files as part of the default `.eslintrc.js`
+- Ignored all compiled CSS files (`*.css`) as part of the default `.stylelintrc`
 
 ### Deprecated
 ### Removed
