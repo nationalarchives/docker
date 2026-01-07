@@ -5,18 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.2.3...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.3.0...HEAD)
 
 ### Added
 ### Changed
-
-- Updated stylelint-order to [7.0.1](https://github.com/hudochenkov/stylelint-order/releases/tag/7.0.1)
-- Updated Uvicorn to [0.40.0](https://github.com/encode/uvicorn/releases/tag/0.40.0)
-
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
+
+## [1.3.0](https://github.com/nationalarchives/docker/compare/v1.2.3...v1.3.0) - 2026-01-07
+
+### Added
+
+- Add a default `.prettierrc` which ignores all `*.html` files which is only used when there is no `.prettierrc` in the project root
+
+### Changed
+
+- Updated stylelint-order to [7.0.1](https://github.com/hudochenkov/stylelint-order/releases/tag/7.0.1)
+- Updated Uvicorn to [0.40.0](https://github.com/encode/uvicorn/releases/tag/0.40.0)
+- Made the installation of `stylelint` quiet when running `format`
+- Updated Black profile to include Python 3.14
+- Ignored more files as part of the default `.eslintrc.js`
+- Ignored all compiled CSS files (`*.css`) as part of the default `.stylelintrc`
+- Used `npm install` rather than `npx` for formatting dependencies for increased repeat performance
 
 ## [1.2.3](https://github.com/nationalarchives/docker/compare/v1.2.2...v1.2.3) - 2025-12-19
 

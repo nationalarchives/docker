@@ -14,5 +14,5 @@
       "preset": "bem"
     }
   },
-  "ignoreFiles": ["/app/node_modules", "/app/**/*.min.css"]
+  "ignoreFiles": ["/app/node_modules", "/app/**/*.css"]
 }

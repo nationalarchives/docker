@@ -20,5 +20,5 @@ module.exports = {
     sourceType: "module",
   },
   rules: {},
-  ignorePatterns: ["/app/node_modules", "/app/*.config.js"],
+  ignorePatterns: ["node_modules", "**/*.config.js", "**/*.min.js"],
 };
