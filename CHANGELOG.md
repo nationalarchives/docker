@@ -9,11 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Disable the ASGI lifespan protocol for Uvicorn when running `tna-asgi`
+
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
-
 
 ## [1.4.1](https://github.com/nationalarchives/docker/compare/v1.4.0...v1.4.1) - 2026-01-07
 
