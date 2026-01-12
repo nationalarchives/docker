@@ -13,6 +13,5 @@
     "plugin/selector-bem-pattern": {
       "preset": "bem"
     }
-  },
-  "ignoreFiles": ["/app/node_modules", "/app/**/*.css"]
+  }
 }

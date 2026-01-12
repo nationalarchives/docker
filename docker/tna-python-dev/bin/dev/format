@@ -143,11 +143,19 @@ else
   STYLELINT_CONFIG="/home/app/.stylelintrc"
   echo "Using default config ($STYLELINT_CONFIG)"
 fi
+if [ -f "/app/.stylelintignore" ]
+then
+  STYLELINT_IGNORE="/app/.stylelintignore"
+  echo "Using app ignore ($STYLELINT_IGNORE)"
+else
+  STYLELINT_IGNORE="/home/app/.stylelintignore"
+  echo "Using default ignore ($STYLELINT_IGNORE)"
+fi
 if [ "$FIX" = true ]
 then
-  stylelint --config "$STYLELINT_CONFIG" --fix "/app/**/*.{css,scss}" --allow-empty-input
+  stylelint --config "$STYLELINT_CONFIG" --ignore-path "$STYLELINT_IGNORE" --fix "/app/**/*.{css,scss}" --allow-empty-input
 else
-  stylelint --config "$STYLELINT_CONFIG" "/app/**/*.{css,scss}" --allow-empty-input
+  stylelint --config "$STYLELINT_CONFIG" --ignore-path "$STYLELINT_IGNORE" "/app/**/*.{css,scss}" --allow-empty-input
 fi
 echo
 

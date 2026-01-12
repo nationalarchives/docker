@@ -40,4 +40,4 @@ fi
 
 # Start the server
 echo "Starting server..."
-poetry run uvicorn "$APPLICATION" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host "0.0.0.0" --port "$PORT" --workers "$WORKERS" --ssl-keyfile "$SSL_KEY_FILE" --ssl-certfile "$SSL_CERTIFICATE_FILE" --ssl-ca-certs "$SSL_CA_CERTIFICATES_FILE"
+poetry run uvicorn "$APPLICATION" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host "0.0.0.0" --port "$PORT" --workers "$WORKERS" --ssl-keyfile "$SSL_KEY_FILE" --ssl-certfile "$SSL_CERTIFICATE_FILE" --ssl-ca-certs "$SSL_CA_CERTIFICATES_FILE" --lifespan off
