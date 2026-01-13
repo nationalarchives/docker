@@ -5,7 +5,7 @@ set -e
 # tna-build-base is a renamed tna-build from the base image
 tna-build-base
 
-echo "Running tna-build for dev...";
+echo "Running tna-build in tna-python-dev...";
 
 poetry install --no-root --with dev || true
 

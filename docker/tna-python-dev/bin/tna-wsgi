@@ -11,10 +11,7 @@ APPLICATION=$1
 # Error if no application is passed
 if [ -z "$APPLICATION" ]
 then
-  echo -e "Error: application not specified in tna-wsgi\n";
-  echo "PARAMETERS"
-  echo "  application          the Python package you want to run"
-  echo "                       Example: tna-wsgi my_app:app";
+  echo -e "Error: application not specified"
   exit 1
 fi
 
@@ -63,5 +60,5 @@ then
   fi
 fi
 
-echo "No suppoorted framework found. Exiting..."
+echo "No supported development framework found. Exiting..."
 exit 1

@@ -110,17 +110,27 @@ To use Node to build your assets you need three files in your project:
 
 ## SSL
 
-The WSGI or ASGI can run behind SSL if you provide the certificates.
+### Self-signed certificates
 
-Two files need to be mounted to the container in order to use SSL:
+Set `SSL_DOMAIN` to create a self-signed SSL certificate for the container on startup.
 
-- `/home/app/ssl/key.pem`
-- `/home/app/ssl/cert.pem`
+The generated certificate will be valid for 10 years.
+
+### Custom certificates
+
+Mount two files in the container to use SSL:
+
+- `/home/app/ssl/server.key`
+- `/home/app/ssl/server.crt`
 
 Ensure the files can be read by the container user.
 
 These locations can be overridden with the `SSL_KEY_FILE` and `SSL_CERTIFICATE_FILE` environment variables.
 
-Set the `SSL_CA_CERTIFICATES_FILE` environment variable and mount an appropriate CA file to the container to set up the certificate authorities.
+#### Custom CA
+
+Mount a CA file in the container (perhaps at `/home/app/ssl/ca.crt`) and set the `SSL_CA_CERTIFICATES_FILE` environment variable to set up the certificate authorities.
+
+### Disabling SSL
 
 SSL for the containers can be disabled by setting `ALLOW_INSECURE` to `true`.

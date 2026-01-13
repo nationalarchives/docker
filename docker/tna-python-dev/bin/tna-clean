@@ -2,4 +2,4 @@
 
 set -e
 
-echo "Nothing removed with tna-clean (development).";
+echo "Nothing removed with tna-clean (using tna-python-dev).";

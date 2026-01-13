@@ -188,3 +188,7 @@ docker compose exec app foo
 foo
 >>> bar
 ```
+
+## SSL
+
+All SSL configuration is ignored in `tna-python-dev` and the plain development HTTP servers for each framework are used instead.

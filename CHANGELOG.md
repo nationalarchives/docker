@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.4.1...HEAD)
 
 ### Added
+
+- In `tna-python`, if `ALLOW_INSECURE=true` and no SSL certificate files exist, a self-signed SSL is created and used on startup
+
 ### Changed
 
 - Disable the ASGI lifespan protocol for Uvicorn when running `tna-asgi`
