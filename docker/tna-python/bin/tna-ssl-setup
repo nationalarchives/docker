@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e
+
+DEFAULT_SSL_KEY_FILE_LOCATION=/home/app/ssl/server.key
+DEFAULT_SSL_CERTIFICATE_FILE_LOCATION=/home/app/ssl/server.crt
+
+[[ -z $SSL_KEY_FILE ]] && SSL_KEY_FILE=$DEFAULT_SSL_KEY_FILE_LOCATION
+[[ -z $SSL_CERTIFICATE_FILE ]] && SSL_CERTIFICATE_FILE=$DEFAULT_SSL_CERTIFICATE_FILE_LOCATION
+
+# If the SSL certificate files do not exist, generate self-signed certificates
+if [ ! -f "$SSL_KEY_FILE" ] | [ ! -f "$SSL_CERTIFICATE_FILE" ]
+then
+    echo "SSL certificate and key files do not exist"
+    echo "Generating a self-signed certificate..."
+
+    # Check that the SSL_DOMAIN environment variable is set
+    if [ -z "$SSL_DOMAIN" ]
+    then
+        echo -e "Error: SSL_DOMAIN environment variable not set - cannot generate self-signed certificates"
+        exit 1
+    fi
+
+    # Use the default paths for the SSL certificate and key files
+    SSL_KEY_FILE=$DEFAULT_SSL_KEY_FILE_LOCATION
+    SSL_CERTIFICATE_FILE=$DEFAULT_SSL_CERTIFICATE_FILE_LOCATION
+
+    # Generate self-signed SSL certificates
+    openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 \
+        -subj "/C=GB/O=The National Archives/CN=$SSL_DOMAIN" \
+        -keyout "$SSL_KEY_FILE" \
+        -out "$SSL_CERTIFICATE_FILE"
+fi

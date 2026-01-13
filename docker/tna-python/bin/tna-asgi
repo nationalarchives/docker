@@ -35,20 +35,7 @@ ALLOW_INSECURE=$(echo "$ALLOW_INSECURE" | tr '[:upper:]' '[:lower:]')
 # If we are not allowing insecure connections, check for SSL certificates
 if [ "$ALLOW_INSECURE" != "true" ]
 then
-  [[ -z $SSL_KEY_FILE ]] && SSL_KEY_FILE=/home/app/ssl/key.pem
-  [[ -z $SSL_CERTIFICATE_FILE ]] && SSL_CERTIFICATE_FILE=/home/app/ssl/cert.pem
-
-  # Check for SSL certificates
-  if [ ! -f "$SSL_KEY_FILE" ]
-  then
-    echo "$SSL_KEY_FILE does not exist"
-    exit 1
-  fi
-  if [ ! -f "$SSL_CERTIFICATE_FILE" ]
-  then
-    echo "$SSL_CERTIFICATE_FILE does not exist"
-    exit 1
-  fi
+  source tna-ssl-setup
 fi
 
 # Start the server
