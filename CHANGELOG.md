@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Stylelint to [17.0.0](https://github.com/stylelint/stylelint/releases/tag/17.0.0)
 - Updated Prettier to [3.8.0](https://github.com/prettier/prettier/releases/tag/3.8.0)
+- Updated stylelint-config-standard-scss to [17.0.0](https://github.com/stylelint-scss/stylelint-config-standard-scss/releases/tag/v17.0.0)
+- Move Node.js dependencies for formatting to the `Dockerfile`
 
 ### Deprecated
 ### Removed

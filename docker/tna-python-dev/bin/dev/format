@@ -14,11 +14,6 @@ else
 fi
 echo
 
-echo "Setting up Node.js dependencies..."
-. tna-nvm
-npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "eslint@$ESLINT_VERSION"
-echo
-
 echo "Running isort..."
 if [ -f "/app/.isort.cfg" ]
 then
@@ -80,6 +75,9 @@ then
   # fi
   echo
 fi
+
+echo "Setting up Node.js..."
+. tna-nvm
 
 echo "Running prettier..."
 if [ -f "/app/.prettierignore" ]

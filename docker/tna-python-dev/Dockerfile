@@ -53,7 +53,7 @@ ENV BLACK_VERSION=25.12.0 \
     DJANGO_DEBUG_TOOLBAR_VERSION=6.1.0 \
     PRETTIER_VERSION=3.8.0 \
     STYLELINT_VERSION=17.0.0 \
-    STYLELINT_CONFIG_STANDARD_SCSS_VERSION=16.0.0 \
+    STYLELINT_CONFIG_STANDARD_SCSS_VERSION=17.0.0 \
     STYLELINT_SELECTOR_BEM_PATTERN_VERSION=4.0.1 \
     STYLELINT_ORDER_VERSION=7.0.1 \
     ESLINT_VERSION=8.56.0
@@ -65,9 +65,10 @@ ENV NODE_ENV=development
 
 # ==========================================
 # Install the tools required for linting and
-# fixing Python
+# fixing Python, HTML, CSS and JavaScript
 # ==========================================
-RUN python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
+RUN python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"; \
+    . tna-nvm && npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "eslint@$ESLINT_VERSION"
 
 # ==========================================
 # Copy any configuration files into the main
