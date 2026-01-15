@@ -67,6 +67,7 @@ ENV NODE_ENV=development
 # Install the tools required for linting and
 # fixing Python, HTML, CSS and JavaScript
 # ==========================================
+# hadolint ignore=SC1091
 RUN python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"; \
     . tna-nvm && npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "eslint@$ESLINT_VERSION"
 
