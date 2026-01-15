@@ -1,8 +1,9 @@
-name: Clean up feature branches
+name: Remove feature images on branch deletion
 
 permissions:
   contents: read
   packages: write
+
 on:
   delete:
 
