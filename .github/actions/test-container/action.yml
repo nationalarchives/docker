@@ -57,12 +57,11 @@ runs:
     - name: Start application and wait for it to be healthy
       run: |
         cd ${{ inputs.application-repository }}
-        cat .env
         yq '(.services.${{ inputs.service }}.build.args.IMAGE|="${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         yq '(.services.${{ inputs.service }}.build.args.IMAGE_TAG|="${{ inputs.image-tag }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
-        # yq 'del(.services.${{ inputs.service }}.volumes)' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        yq '(.services.${{ inputs.service }}.env_file|=".env")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         cat docker-compose.yml
-        docker compose --env-file .env up ${{ inputs.service }} --detach --wait || docker compose logs ${{ inputs.service }}
+        docker compose up ${{ inputs.service }} --detach --wait || docker compose logs ${{ inputs.service }}
       shell: bash
 
     - name: Check user
