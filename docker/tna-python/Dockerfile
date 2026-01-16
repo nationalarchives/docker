@@ -34,7 +34,7 @@ EXPOSE 8080/tcp
 # based on a GOV.UK proposal:
 # github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
-HEALTHCHECK CMD curl --fail "http://localhost:$PORT/healthcheck/live/" || exit 1
+HEALTHCHECK CMD ALLOW_INSECURE=$(echo ${ALLOW_INSECURE:-"false"} | tr '[:upper:]' '[:lower:]') && HEALTHCHECK_PROTOCOL=$(if [ "$ALLOW_INSECURE" = 'true' ]; then echo 'http'; else echo 'https'; fi) && curl --fail --insecure "$HEALTHCHECK_PROTOCOL://localhost:$PORT/healthcheck/live/" || exit 1
 
 # ==========================================
 # Set Python up in a consistent manner, with
