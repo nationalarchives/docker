@@ -205,6 +205,13 @@ RUN mkdir /home/app/ssl
 COPY bin /home/app/.local/bin
 
 # ==========================================
+# Remove some vulnerable and unused packages
+# to reduce the potential attack surface
+# ==========================================
+RUN apt-get remove -y --allow-remove-essential mount util-linux login.defs login:arm64; \
+    apt-get autoremove -y
+
+# ==========================================
 # This does nothing but will act as a way to
 # stop the container from shutting down once
 # it has been booted which then allows us to

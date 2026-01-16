@@ -97,10 +97,3 @@ COPY bin/tna-wsgi /home/app/.local/bin/tna-wsgi
 COPY bin/dev /home/app/.local/bin/dev
 RUN chmod +x -R /home/app/.local/bin/dev
 ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
-
-# ==========================================
-# Remove some vulnerable and unused packages
-# to reduce the potential attack surface
-# ==========================================
-RUN apt remove -y --allow-remove-essential mount util-linux login.defs login:arm64; \
-    apt autoremove -y
