@@ -14,7 +14,7 @@ LABEL version="$TNA_DOCKER_IMAGE_VERSION"
 ARG TNA_DOCKER_IMAGE_SOURCE
 LABEL org.opencontainers.image.description="National Archives base Docker image" \
     org.opencontainers.image.source="$TNA_DOCKER_IMAGE_SOURCE" \
-    org.opencontainers.image.licenses=MIT
+    org.opencontainers.image.licenses="MIT"
 
 # ==========================================
 # Create a container label with the specific
@@ -22,8 +22,8 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
 # the Python version
 # ==========================================
 ENV NODEJS_VERSION=lts/krypton
-LABEL nodejs_version="$NODEJS_VERSION"
-LABEL python_version="$PYTHON_VERSION"
+LABEL uk.gov.nationalarchives.nodejs-version="$NODEJS_VERSION"
+LABEL uk.gov.nationalarchives.python-version="$PYTHON_VERSION"
 
 # ==========================================
 # We usually always use and expose port 8080
