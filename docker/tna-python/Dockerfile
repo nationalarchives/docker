@@ -153,10 +153,12 @@ RUN set -eux; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
 
 # ==========================================
-# Remove curl after we have installed Poetry
-# and nvm and autoremove other packages
+# Remove some vulnerable and unused packages
+# to reduce the potential attack surface, as
+# well as curl, now we have installed Poetry
+# and nvm
 # ==========================================
-RUN apt-get remove --purge curl; \
+RUN apt-get remove --purge -y --allow-remove-essential mount util-linux login.defs login:arm64 curl; \
     apt-get clean; \
     apt-get autoremove -y --purge
 
@@ -203,13 +205,6 @@ RUN mkdir /home/app/ssl
 # run our application in a consistent manner
 # ==========================================
 COPY bin /home/app/.local/bin
-
-# ==========================================
-# Remove some vulnerable and unused packages
-# to reduce the potential attack surface
-# ==========================================
-RUN apt-get remove -y --allow-remove-essential mount util-linux login.defs login:arm64; \
-    apt-get autoremove -y
 
 # ==========================================
 # This does nothing but will act as a way to
