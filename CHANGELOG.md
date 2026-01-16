@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+
+- Healthcheck protocol on `tna-python` changes to HTTPS unless `ALLOW_INSECURE=true`
+
 ### Security
 
 ## [1.5.0](https://github.com/nationalarchives/docker/compare/v1.4.1...v1.5.0) - 2026-01-13
