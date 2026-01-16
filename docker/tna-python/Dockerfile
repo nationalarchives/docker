@@ -34,7 +34,7 @@ EXPOSE 8080/tcp
 # based on a GOV.UK proposal:
 # github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
-HEALTHCHECK CMD ALLOW_INSECURE=$(echo ${ALLOW_INSECURE:-"false"} | tr '[:upper:]' '[:lower:]') && HEALTHCHECK_PROTOCOL=$(if [ "$ALLOW_INSECURE" = 'true' ]; then echo 'http'; else echo 'https'; fi) && curl --fail --insecure "$HEALTHCHECK_PROTOCOL://localhost:$PORT/healthcheck/live/" || exit 1
+HEALTHCHECK CMD ALLOW_INSECURE="$(echo "${ALLOW_INSECURE:-'false'}" | tr '[:upper:]' '[:lower:]')" && HEALTHCHECK_PROTOCOL=$(if [ "$ALLOW_INSECURE" = 'true' ]; then echo 'http'; else echo 'https'; fi) && curl --fail --insecure "$HEALTHCHECK_PROTOCOL://localhost:$PORT/healthcheck/live/" || exit 1
 
 # ==========================================
 # Set Python up in a consistent manner, with
@@ -154,11 +154,9 @@ RUN set -eux; \
 
 # ==========================================
 # Remove some vulnerable and unused packages
-# to reduce the potential attack surface, as
-# well as curl, now we have installed Poetry
-# and nvm
+# to reduce the potential attack surface
 # ==========================================
-RUN apt-get remove --purge -y --allow-remove-essential mount util-linux login.defs login:arm64 curl; \
+RUN apt-get remove --purge -y --allow-remove-essential mount util-linux login.defs login:arm64; \
     apt-get clean; \
     apt-get autoremove -y --purge
 
