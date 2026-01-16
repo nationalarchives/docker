@@ -12,7 +12,7 @@ LABEL version="$TNA_DOCKER_IMAGE_VERSION"
 # uses to display additional information
 # ==========================================
 ARG TNA_DOCKER_IMAGE_SOURCE
-LABEL org.opencontainers.image.description="National Archives base Docker image" \
+LABEL org.opencontainers.image.description="National Archives Python base Docker image" \
     org.opencontainers.image.source="$TNA_DOCKER_IMAGE_SOURCE" \
     org.opencontainers.image.licenses="MIT"
 
