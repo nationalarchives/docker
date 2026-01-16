@@ -86,6 +86,7 @@ jobs:
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
           environment-overrides: |
+            ALLOW_INSECURE=true
             APPLICATION_PROTOCOL=http
 
       - name: Test Django
