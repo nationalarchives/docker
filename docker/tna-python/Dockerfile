@@ -17,12 +17,20 @@ LABEL org.opencontainers.image.description="National Archives base Docker image"
     org.opencontainers.image.licenses=MIT
 
 # ==========================================
-# All TNA containers SHOULD expose identical
-# ports which will then be mapped to another
-# port on the host system - we use a default
-# of port 8080 for all our applications
+# Create a container label with the specific
+# version of Node.js used as well as one for
+# the Python version
 # ==========================================
-ENV PORT=8080
+ENV NODEJS_VERSION=lts/krypton
+LABEL nodejs_version="$NODEJS_VERSION"
+LABEL python_version="$PYTHON_VERSION"
+
+# ==========================================
+# We usually always use and expose port 8080
+# for all our containerised applications but
+# this can be overridden if necessary
+# ==========================================
+ENV APPLICATION_PORT=8080
 EXPOSE 8080/tcp
 
 # ==========================================
@@ -34,7 +42,7 @@ EXPOSE 8080/tcp
 # based on a GOV.UK proposal:
 # github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
-HEALTHCHECK CMD ALLOW_INSECURE="$(echo "${ALLOW_INSECURE:-'false'}" | tr '[:upper:]' '[:lower:]')" && HEALTHCHECK_PROTOCOL=$(if [ "$ALLOW_INSECURE" = 'true' ]; then echo 'http'; else echo 'https'; fi) && curl --fail --insecure "$HEALTHCHECK_PROTOCOL://localhost:$PORT/healthcheck/live/" || exit 1
+HEALTHCHECK CMD curl --fail --insecure "$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')://localhost:$APPLICATION_PORT/healthcheck/live/" || exit 1
 
 # ==========================================
 # Set Python up in a consistent manner, with
@@ -65,7 +73,8 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV POETRY_VERSION=2.2.1 \
+ENV PIP_VERSION=25.3 \
+    POETRY_VERSION=2.2.1 \
     NVM_VERSION=0.40.3 \
     WSGI_GUNICORN_VERSION=23.0.0 \
     ASGI_UVICORN_VERSION=0.40.0
@@ -112,12 +121,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # ==========================================
 # Update the package index files and install
-# specific versions of libcurl4, curl, build
-# essentials (which then enables us to later
-# install Poetry) after which go on to clean
-# and remove all the apt registries to avoid
-# the possibility of additional applications
-# being installed later on
+# specific versions of packages we need, and
+# then remove all the registries
 # ==========================================
 RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
@@ -131,7 +136,7 @@ RUN set -eux; \
 # ==========================================
 # Upgrade pip to a later version
 # ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade pip==25.3
+RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
 
 # ==========================================
 # Create an "/app" directory in the root dir
@@ -180,8 +185,8 @@ USER app
 # ==========================================
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install --latest-npm lts/krypton; \
-    nvm alias default lts/krypton
+    nvm install --latest-npm "$NODEJS_VERSION"; \
+    nvm alias default "$NODEJS_VERSION"
 
 # ==========================================
 # Create a directory for our SSL certificate

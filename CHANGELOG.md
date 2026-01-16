@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.5.0...HEAD)
 
 ### Added
+
+- Container labels added for `nodejs_version` and `python_version`
+
 ### Changed
 
 - Updated Stylelint to [17.0.0](https://github.com/stylelint/stylelint/releases/tag/17.0.0)
@@ -16,10 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Move Node.js dependencies for formatting to the `Dockerfile`
 
 ### Deprecated
+
+- `ALLOW_INSECURE=true` is ignored in favour of `APPLICATION_PROTOCOL=http`
+- `PORT` environment variable removed in favour of `APPLICATION_PORT`
+
 ### Removed
 ### Fixed
 
-- Healthcheck protocol on `tna-python` changes to HTTPS unless `ALLOW_INSECURE=true`
+- Healthcheck for HTTPS applications fixed
 
 ### Security
 

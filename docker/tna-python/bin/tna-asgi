@@ -28,16 +28,20 @@ DEFAULT_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_c
 [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warning
 [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
 
-# Get the preference for allowing insecure connections to the container (defaults to false)
-[[ -z $ALLOW_INSECURE ]] && ALLOW_INSECURE="false"
-ALLOW_INSECURE=$(echo "$ALLOW_INSECURE" | tr '[:upper:]' '[:lower:]')
+# Get the protcol for the application
+APPLICATION_PROTOCOL=$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')
 
-# If we are not allowing insecure connections, check for SSL certificates
-if [ "$ALLOW_INSECURE" != "true" ]
+if [ "$APPLICATION_PROTOCOL" = "https" ]
 then
   source tna-ssl-setup
+  echo "Starting Uvicorn (HTTPS)..."
+  poetry run uvicorn "$APPLICATION" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host "0.0.0.0" --port "$APPLICATION_PORT" --workers "$WORKERS" --ssl-keyfile "$SSL_KEY_FILE" --ssl-certfile "$SSL_CERTIFICATE_FILE" --ssl-ca-certs "$SSL_CA_CERTIFICATES_FILE" --lifespan off
+elif [ "$APPLICATION_PROTOCOL" = "http" ]
+then
+  echo "Starting Uvicorn (HTTP)..."
+  poetry run uvicorn "$APPLICATION" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host "0.0.0.0" --port "$APPLICATION_PORT" --workers "$WORKERS" --lifespan off
+else
+  echo -e "Error: invalid protocol specified in APPLICATION_PROTOCOL environment variable: '$APPLICATION_PROTOCOL'\n"
+  echo "Allowed values are 'http' and 'https'"
+  exit 1
 fi
-
-# Start the server
-echo "Starting server..."
-poetry run uvicorn "$APPLICATION" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host "0.0.0.0" --port "$PORT" --workers "$WORKERS" --ssl-keyfile "$SSL_KEY_FILE" --ssl-certfile "$SSL_CERTIFICATE_FILE" --ssl-ca-certs "$SSL_CA_CERTIFICATES_FILE" --lifespan off

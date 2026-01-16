@@ -27,12 +27,11 @@ Each environment has some default values but all can be overwritten:
 | `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run to build static assets          | _none_                                    |
 | `TIMEOUT`                  | The number of seconds before a request is terminated[^6]                  | `30` (ignored by `tna-asgi`)              |
 | `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^7] | `30`                                      |
-| `ALLOW_INSECURE`           | If `true`, use HTTP rather than HTTPS                                     | `false`                                   |
+| `APPLICATION_PROTOCOL`     | The protocol of the application (`http` or `https`)                       | `https`                                   |
 | `SSL_KEY_FILE`             | The location of the SSL key                                               | `/home/app/ssl/server.key`                |
 | `SSL_CERTIFICATE_FILE`     | The location of the SSL certificate                                       | `/home/app/ssl/server.crt`                |
 | `SSL_CA_CERTIFICATES_FILE` | The location of the CA certificates                                       | _none_                                    |
 | `SSL_DOMAIN`               | Domain for a self-signed SSL if no key or certificate files are provided  | _none_                                    |
-| `PORT`                     | Set the port used by the container (only used outside of AWS)             | `8080`                                    |
 
 [^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 
@@ -133,4 +132,4 @@ Mount a CA file in the container (perhaps at `/home/app/ssl/ca.crt`) and set the
 
 ### Disabling SSL
 
-SSL for the containers can be disabled by setting `ALLOW_INSECURE` to `true`.
+SSL for the containers can be disabled by setting `APPLICATION_PROTOCOL` to `http`.

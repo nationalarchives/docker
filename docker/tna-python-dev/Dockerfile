@@ -8,10 +8,10 @@ FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG"
 
 # ==========================================
 # This is already defined in the base image,
-# but we set it again to avoid Wiz reporting
-# errors with a missing healthcheck
+# but we redefine it here as HTTP because an
+# application might be using HTTPS
 # ==========================================
-HEALTHCHECK CMD curl --fail "http://localhost:$PORT/healthcheck/live/" || exit 1
+HEALTHCHECK CMD curl --fail "http://localhost:$APPLICATION_PORT/healthcheck/live/" || exit 1
 
 # ==========================================
 # Ensure the `/bin/sh -c` interpreter Docker

@@ -31,14 +31,20 @@ DEFAULT_THREADS=$((DEFAULT_WORKERS * 2))
 [[ -z $TIMEOUT ]] && TIMEOUT=30
 [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
 
-# Get the preference for allowing insecure connections to the container (defaults to false)
-[[ -z $ALLOW_INSECURE ]] && ALLOW_INSECURE="false"
-ALLOW_INSECURE=$(echo "$ALLOW_INSECURE" | tr '[:upper:]' '[:lower:]')
+# Get the protcol for the application
+APPLICATION_PROTOCOL=$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')
 
-# If we are not allowing insecure connections, check for SSL certificates
-if [ "$ALLOW_INSECURE" != "true" ]
+if [ "$APPLICATION_PROTOCOL" = "https" ]
 then
   source tna-ssl-setup
+  echo "Starting gunicorn (HTTPS)..."
+  poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT" --keyfile "$SSL_KEY_FILE" --certfile "$SSL_CERTIFICATE_FILE" --ca-certs "$SSL_CA_CERTIFICATES_FILE"
+elif [ "$APPLICATION_PROTOCOL" = "http" ]
+then
+  echo "Starting gunicorn (HTTP)..."
+  poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT"
+else
+  echo -e "Error: invalid protocol specified in APPLICATION_PROTOCOL environment variable: '$APPLICATION_PROTOCOL'\n"
+  echo "Allowed values are 'http' and 'https'"
+  exit 1
 fi
-
-poetry run gunicorn "$APPLICATION" --workers "$WORKERS" --threads "$THREADS" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --keep-alive "$KEEP_ALIVE" --access-logfile - --bind "0.0.0.0:$PORT" --keyfile "$SSL_KEY_FILE" --certfile "$SSL_CERTIFICATE_FILE" --ca-certs "$SSL_CA_CERTIFICATES_FILE"

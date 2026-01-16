@@ -14,19 +14,19 @@ This image extends `tna-python` and can be used for local development **ONLY**. 
 
 All environment variables extended from [tna-python](../tna-python/README.md) but with some different defaults:
 
-| Variable                   | Default       |
-| -------------------------- | ------------- |
-| `WORKERS`                  | `3`           |
-| `THREADS`                  | `3`           |
-| `LOG_LEVEL`                | `debug`       |
-| `NODE_ENV`                 | `development` |
-| `TIMEOUT`                  | `600`         |
-| `KEEP_ALIVE`               | `5`           |
-| `ALLOW_INSECURE`           | _ignored_     |
-| `SSL_KEY_FILE`             | _ignored_     |
-| `SSL_CERTIFICATE_FILE`     | _ignored_     |
-| `SSL_CA_CERTIFICATES_FILE` | _ignored_     |
-| `SSL_DOMAIN`               | _ignored_     |
+| Variable                   | Default                 |
+| -------------------------- | ----------------------- |
+| `WORKERS`                  | `3`                     |
+| `THREADS`                  | `3`                     |
+| `LOG_LEVEL`                | `debug`                 |
+| `NODE_ENV`                 | `development`           |
+| `TIMEOUT`                  | `600`                   |
+| `KEEP_ALIVE`               | `5`                     |
+| `APPLICATION_PROTOCOL`     | _ignored_ (`http` only) |
+| `SSL_KEY_FILE`             | _ignored_               |
+| `SSL_CERTIFICATE_FILE`     | _ignored_               |
+| `SSL_CA_CERTIFICATES_FILE` | _ignored_               |
+| `SSL_DOMAIN`               | _ignored_               |
 
 ### `tna-python-dev` specific
 

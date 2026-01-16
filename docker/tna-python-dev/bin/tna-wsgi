@@ -31,7 +31,7 @@ fi
 if poetry show flask > /dev/null 2>&1;
 then
   echo "Flask found, starting development server..."
-  poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port "$PORT"
+  poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port "$APPLICATION_PORT"
 fi
 
 # Try using the Django development server if the application uses Django
@@ -40,7 +40,7 @@ then
   if [ -f "/app/manage.py" ]
   then
     echo "Django found, starting development server..."
-    poetry run python /app/manage.py runserver "0.0.0.0:$PORT"
+    poetry run python /app/manage.py runserver "0.0.0.0:$APPLICATION_PORT"
   else
     echo "Django found, but /app/manage.py does not exist. Exiting..."
     exit 1
@@ -53,7 +53,7 @@ then
   if [ -f "/app/main.py" ]
   then
     echo "FastAPI found, starting development server..."
-    poetry run fastapi dev --host 0.0.0.0 --port "$PORT"
+    poetry run fastapi dev --host 0.0.0.0 --port "$APPLICATION_PORT"
   else
     echo "FastAPI found, but /app/main.py does not exist. Exiting..."
     exit 1
