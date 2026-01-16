@@ -1,5 +1,7 @@
 name: Build and push Docker images
 
+description: Build and push Docker images to GitHub Container Registry with appropriate tags.
+
 inputs:
   image-id:
     required: true

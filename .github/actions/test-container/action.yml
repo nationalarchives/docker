@@ -1,5 +1,7 @@
 name: Test Docker image
 
+description: Test that a Docker image works as expected in the application context.
+
 inputs:
   application-repository:
     required: true
@@ -9,8 +11,9 @@ inputs:
     type: string
     default: main
   service:
-    required: true
+    required: false
     type: string
+    default: app
   image:
     required: true
     type: string
@@ -19,6 +22,13 @@ inputs:
     type: string
   expected-user:
     required: true
+    type: string
+  application-protocol:
+    required: false
+    type: string
+    default: http
+  environment-overrides:
+    required: false
     type: string
 
 runs:
@@ -31,6 +41,19 @@ runs:
         ref: ${{ inputs.application-repository-branch }}
         path: ${{ inputs.application-repository }}
 
+    - name: Create environment file
+      run: |
+        cd ${{ inputs.application-repository }}
+        touch .env
+      shell: bash
+
+    - name: Populate environment file
+      if: ${{ inputs.environment-overrides != '' }}
+      run: |
+        cd ${{ inputs.application-repository }}
+        echo "${{ inputs.environment-overrides }}" > .env
+      shell: bash
+
     - name: Start application and wait for it to be healthy
       run: |
         cd ${{ inputs.application-repository }}
@@ -38,7 +61,7 @@ runs:
         yq '(.services.${{ inputs.service }}.build.args.IMAGE_TAG|="${{ inputs.image-tag }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         # yq 'del(.services.${{ inputs.service }}.volumes)' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         cat docker-compose.yml
-        docker compose up ${{ inputs.service }} --detach --wait || docker compose logs ${{ inputs.service }}
+        docker compose --env-file .env up ${{ inputs.service }} --detach --wait || docker compose logs ${{ inputs.service }}
       shell: bash
 
     - name: Check user

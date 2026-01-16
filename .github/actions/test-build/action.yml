@@ -1,5 +1,7 @@
 name: Test Docker image build
 
+description: Build a Docker image and generate version tags based on the git ref.
+
 inputs:
   image-name:
     required: true
