@@ -34,7 +34,7 @@ EXPOSE 8080/tcp
 # based on a GOV.UK proposal:
 # github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
-HEALTHCHECK CMD ALLOW_INSECURE=$(echo "${ALLOW_INSECURE:-'false'}" | tr '[:upper:]' '[:lower:]') && HEALTHCHECK_PROTOCOL=$(if [ "$ALLOW_INSECURE" = 'true' ]; then echo 'http'; else echo 'https'; fi) && curl --fail --insecure "$HEALTHCHECK_PROTOCOL://localhost:$PORT/healthcheck/live/" || exit 1
+HEALTHCHECK CMD ALLOW_INSECURE="$(echo "${ALLOW_INSECURE:-'false'}" | tr '[:upper:]' '[:lower:]')" && HEALTHCHECK_PROTOCOL=$(if [ "$ALLOW_INSECURE" = 'true' ]; then echo 'http'; else echo 'https'; fi) && curl --fail --insecure "$HEALTHCHECK_PROTOCOL://localhost:$PORT/healthcheck/live/" || exit 1
 
 # ==========================================
 # Set Python up in a consistent manner, with
@@ -151,14 +151,6 @@ RUN set -eux; \
     curl -sSL "https://install.python-poetry.org" | python -; \
     curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh" | bash; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
-
-# ==========================================
-# Remove curl after we have installed Poetry
-# and nvm and autoremove other packages
-# ==========================================
-RUN apt-get remove --purge curl; \
-    apt-get clean; \
-    apt-get autoremove -y --purge
 
 # ==========================================
 # Change the image current working directory
