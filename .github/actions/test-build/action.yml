@@ -39,8 +39,6 @@ runs:
       uses: docker/build-push-action@v6
       with:
         context: ${{ inputs.dockerfile-path }}
-        labels: |
-          runnumber=${{ github.run_id }}
         build-args: |
           BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.tag }}

@@ -51,7 +51,7 @@ runs:
         context: ${{ inputs.dockerfile-path }}
         platforms: linux/amd64,linux/arm64
         labels: |
-          runnumber=${{ github.run_id }}
+          uk.gov.nationalarchives.runnumber=${{ github.run_id }}
         build-args: |
           BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=${{ inputs.image-tag }}
@@ -72,7 +72,7 @@ runs:
         context: ${{ inputs.dockerfile-path }}
         platforms: linux/amd64,linux/arm64
         labels: |
-          runnumber=${{ github.run_id }}
+          uk.gov.nationalarchives.runnumber=${{ github.run_id }}
         build-args: |
           BASE_IMAGE=${{ inputs.base-image }}
           BASE_IMAGE_TAG=${{ inputs.image-tag }}
