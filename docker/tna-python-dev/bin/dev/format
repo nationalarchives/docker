@@ -78,6 +78,7 @@ fi
 
 echo "Setting up Node.js..."
 . tna-nvm
+echo
 
 echo "Running prettier..."
 if [ -f "/app/.prettierignore" ]
