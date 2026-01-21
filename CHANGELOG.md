@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Poetry to [2.3.1](https://github.com/python-poetry/poetry/releases/tag/2.3.1)
 - Updated Black to [26.1.0](https://github.com/psf/black/releases/tag/26.1.0)
+- Updated Django Debug Toolbar to [6.2.0](https://github.com/django-commons/django-debug-toolbar/releases/tag/6.2.0)
 
 ### Deprecated
 ### Removed
