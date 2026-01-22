@@ -16,4 +16,6 @@ then
   exit 1
 fi
 
+poetry run python -m pip install "gunicorn==$WSGI_GUNICORN_VERSION" "uvicorn==$ASGI_UVICORN_VERSION"
+
 poetry install --no-root --no-interaction
