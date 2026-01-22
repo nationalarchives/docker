@@ -80,15 +80,8 @@ RUN set -eux; \
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install --latest-npm "$NODEJS_VERSION"; \
-    nvm alias default "$NODEJS_VERSION"
-
-# ==========================================
-# Install the tools required for linting and
-# fixing Python, HTML, CSS and JavaScript
-# ==========================================
-# hadolint ignore=SC1091
-RUN . tna-nvm && npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "eslint@$ESLINT_VERSION"; \
-    python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
+    nvm alias default "$NODEJS_VERSION"; \
+    npm config set fund=false --location=global
 
 # ==========================================
 # Copy any configuration files into the main
@@ -109,6 +102,14 @@ COPY bin/tna-clean /home/app/.local/bin/tna-clean
 COPY bin/tna-node /home/app/.local/bin/tna-node
 COPY bin/tna-nvm /home/app/.local/bin/tna-nvm
 COPY bin/tna-wsgi /home/app/.local/bin/tna-wsgi
+
+# ==========================================
+# Install the tools required for linting and
+# fixing Python, HTML, CSS and JavaScript
+# ==========================================
+# hadolint ignore=SC1091
+RUN . tna-nvm && npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "eslint@$ESLINT_VERSION"; \
+    python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
 
 # ==========================================
 # Copy the development scripts into the user
