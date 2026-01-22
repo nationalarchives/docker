@@ -119,12 +119,16 @@ RUN mkdir -p /app; \
 # ==========================================
 # Update the package index, then upgrade all
 # packages and install some packages we need
-# to use to install Poetry
+# to use to install Poetry, finally cleaning
+# up the apt cache, and removing the package
+# index files
 # ==========================================
 RUN set -eux; \
     apt-get update; \
     apt-get -y upgrade; \
     apt-get install -y --no-install-recommends curl="$CURL_VERSION"; \
+    apt-get clean; \
+    apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
@@ -155,17 +159,6 @@ RUN set -eux; \
 # Add the Poetry binary to our path
 # ==========================================
 ENV PATH="$POETRY_HOME/bin:$PATH"
-
-# ==========================================
-# Remove packages that are no longer needed,
-# cleaning up the apt cache and removing the
-# package index files
-# ==========================================
-RUN set -eux; \
-    apt-get remove -y --purge curl; \
-    apt-get clean; \
-    apt-get autoremove -y --purge; \
-	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
 # Change the image current working directory
