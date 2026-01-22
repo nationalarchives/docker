@@ -137,6 +137,11 @@ RUN set -eux; \
 RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
 
 # ==========================================
+# Install the WSGI and ASGI server packages
+# ==========================================
+RUN python -m pip install --no-cache-dir --quiet gunicorn=="$WSGI_GUNICORN_VERSION" uvicorn=="$ASGI_UVICORN_VERSION"
+
+# ==========================================
 # Set up the Poetry variables so that we get
 # a consistent experience with using Poetry,
 # which includes where it will be installed,
