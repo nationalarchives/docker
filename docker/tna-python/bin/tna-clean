@@ -19,5 +19,5 @@ rm -f /home/app/.local/bin/tna-nvm
 if [ -n "$@" ]
 then
   echo "Removing additional files: $@"
-  rm -f "$@"
+  rm -fR "$@"
 fi
