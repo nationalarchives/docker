@@ -8,12 +8,9 @@ tna-build-base
 echo "Running tna-build in tna-python-dev...";
 
 poetry install --no-root --with dev || true
-
 poetry add "django-debug-toolbar=$DJANGO_DEBUG_TOOLBAR_VERSION"
 
-if [ -f "/app/package.json" ]
+if [ -n "$NPM_BUILD_COMMAND" ]
 then
-  . tna-nvm
-  npm install
+  tna-node "$NPM_BUILD_COMMAND"
 fi
-

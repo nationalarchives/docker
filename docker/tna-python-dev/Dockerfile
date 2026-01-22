@@ -36,16 +36,15 @@ USER root
 # git, removing any unnecessary packages
 # ==========================================
 RUN apt-get update; \
-    apt-get install -y --no-install-recommends git=1:2.47.3-0+deb13u1; \
-    apt-get clean; \
-    apt-get autoremove -y --purge; \
+    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u2 git=1:2.47.3-0+deb13u1; \
 	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
-ENV BLACK_VERSION=26.1.0 \
+ENV NVM_VERSION=0.40.3 \
+    BLACK_VERSION=26.1.0 \
     FLAKE8_VERSION=7.1.1 \
     ISORT_VERSION=7.0.0 \
     DJLINT_VERSION=1.36.4 \
@@ -57,11 +56,31 @@ ENV BLACK_VERSION=26.1.0 \
     STYLELINT_SELECTOR_BEM_PATTERN_VERSION=4.0.1 \
     STYLELINT_ORDER_VERSION=7.0.1 \
     ESLINT_VERSION=8.56.0
-    
+
 # ==========================================
-# Set the Node.js environment to development
+# Specify the directory for nvm to use which
+# is writable by our "app" user, and set the
+# Node.js environment to "production"
 # ==========================================
-ENV NODE_ENV=development
+ENV NVM_DIR="$HOME/.nvm"
+ENV NODE_ENV=production
+
+# ==========================================
+# Install nvm (Node Version Manager)
+# ==========================================
+RUN set -eux; \
+    curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh" | bash; \
+    chown app:app -R "$NVM_DIR"
+
+# ==========================================
+# Install the latest LTS version of Node.js,
+# but keeping within the releases code-named
+# "krypton" (v24.x)
+# ==========================================
+# hadolint ignore=SC1091
+RUN . "$NVM_DIR/nvm.sh"; \
+    nvm install --latest-npm "$NODEJS_VERSION"; \
+    nvm alias default "$NODEJS_VERSION"
 
 # ==========================================
 # Install the tools required for linting and
@@ -78,14 +97,17 @@ RUN . tna-nvm && npm install --global --silent --save-exact "prettier@$PRETTIER_
 COPY lib/* /home/app/
 
 # ==========================================
-# Update the build and run scripts with some
-# development specific versions
+# Switch the build and run scripts inherited
+# from tna-python with some development ones
+# and then add other development scripts
 # ==========================================
 RUN set -eux; \
     mv /home/app/.local/bin/tna-build /home/app/.local/bin/tna-build-base
 COPY bin/tna-asgi /home/app/.local/bin/tna-asgi
 COPY bin/tna-build /home/app/.local/bin/tna-build
 COPY bin/tna-clean /home/app/.local/bin/tna-clean
+COPY bin/tna-node /home/app/.local/bin/tna-node
+COPY bin/tna-nvm /home/app/.local/bin/tna-nvm
 COPY bin/tna-wsgi /home/app/.local/bin/tna-wsgi
 
 # ==========================================

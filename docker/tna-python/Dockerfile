@@ -45,6 +45,13 @@ EXPOSE 8080/tcp
 HEALTHCHECK CMD curl --fail --insecure "$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')://localhost:$APPLICATION_PORT/healthcheck/live/" || exit 1
 
 # ==========================================
+# Set Debian to non-interactive to avoid any
+# dialog boxes appearing during installation
+# of packages
+# ==========================================
+ENV DEBIAN_FRONTEND=noninteractive
+
+# ==========================================
 # Set Python up in a consistent manner, with
 # things like ensuring no Python bytecode is
 # written to ephemeral Docker instances, and
@@ -73,11 +80,20 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV PIP_VERSION=25.3 \
+ENV CURL_VERSION=8.14.1-2+deb13u2 \
+    PIP_VERSION=25.3 \
     POETRY_VERSION=2.3.1 \
-    NVM_VERSION=0.40.3 \
     WSGI_GUNICORN_VERSION=23.0.0 \
     ASGI_UVICORN_VERSION=0.40.0
+
+# ==========================================
+# Ensure the `/bin/sh -c` interpreter Docker
+# executes commands through doesn't just use
+# the final operation in a pipe to determine
+# the success of the entire command
+# > github.com/hadolint/hadolint/wiki/DL4006
+# ==========================================
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # ==========================================
 # Create a new non-root level "app" user who
@@ -92,53 +108,6 @@ RUN groupadd --gid "$USER_GID" "$USERNAME" \
 ENV HOME="/home/$USERNAME"
 
 # ==========================================
-# Set up the Poetry variables so that we get
-# a consistent experience with using Poetry,
-# which includes where it will be installed,
-# where it installs the project dependencies
-# ==========================================
-ENV POETRY_HOME="$HOME/.local" \
-    POETRY_NO_INTERACTION=1 \
-    POETRY_VIRTUALENVS_CREATE=true \
-    POETRY_VIRTUALENVS_IN_PROJECT=false
-    
-# ==========================================
-# Specify the directory for nvm to use which
-# is writable by our "app" user, and set the
-# Node.js environment to "production"
-# ==========================================
-ENV NVM_DIR="$HOME/.nvm"
-ENV NODE_ENV=production
-
-# ==========================================
-# Ensure the `/bin/sh -c` interpreter Docker
-# executes commands through doesn't just use
-# the final operation in a pipe to determine
-# the success of the entire command
-# > github.com/hadolint/hadolint/wiki/DL4006
-# ==========================================
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-# ==========================================
-# Update the package index files and install
-# specific versions of packages we need, and
-# then remove all the registries
-# ==========================================
-RUN set -eux; \
-    export DEBIAN_FRONTEND=noninteractive; \
-    apt-get update; \
-    apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u2; \
-    apt-get clean; \
-    apt-get autoremove -y --purge; \
-	rm -rfv /var/lib/apt/lists/*
-
-# ==========================================
-# Upgrade pip to a later version
-# ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
-
-# ==========================================
 # Create an "/app" directory in the root dir
 # for the application code and allow the new
 # app user to access it
@@ -148,14 +117,55 @@ RUN mkdir -p /app; \
     chmod 700 /app
 
 # ==========================================
-# Install Poetry in the suggested manner and
-# nvm so we can build static assets like CSS
-# and JavaScript
+# Update the package index, then upgrade all
+# packages and install some packages we need
+# to use to install Poetry
+# ==========================================
+RUN set -eux; \
+    apt-get update; \
+    apt-get -y upgrade; \
+    apt-get install -y --no-install-recommends curl="$CURL_VERSION"; \
+	rm -rfv /var/lib/apt/lists/*
+
+# ==========================================
+# Upgrade pip to a later version
+# ==========================================
+RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
+
+# ==========================================
+# Set up the Poetry variables so that we get
+# a consistent experience with using Poetry,
+# which includes where it will be installed,
+# where it installs the project dependencies
+# ==========================================
+ENV POETRY_HOME="$HOME/.local" \
+    POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_CREATE=true \
+    POETRY_VIRTUALENVS_IN_PROJECT=false
+
+# ==========================================
+# Install Poetry so we can manage our Python
+# dependencies
 # ==========================================
 RUN set -eux; \
     curl -sSL "https://install.python-poetry.org" | python -; \
-    curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh" | bash; \
-    chown app:app -R "$POETRY_HOME" "$NVM_DIR"
+    chown app:app -R "$POETRY_HOME"
+
+# ==========================================
+# Add the Poetry binary to our path
+# ==========================================
+ENV PATH="$POETRY_HOME/bin:$PATH"
+
+# ==========================================
+# Remove packages that are no longer needed,
+# cleaning up the apt cache and removing the
+# package index files
+# ==========================================
+RUN set -eux; \
+    apt-get remove -y --purge curl; \
+    apt-get clean; \
+    apt-get autoremove -y --purge; \
+	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
 # Change the image current working directory
@@ -165,11 +175,6 @@ RUN set -eux; \
 WORKDIR /app
 
 # ==========================================
-# Add the Poetry binary to our path
-# ==========================================
-ENV PATH="$POETRY_HOME/bin:$PATH"
-
-# ==========================================
 # Now we have finished installing everything
 # at a system level, change the current user
 # to the non-root user we created previously
@@ -177,16 +182,6 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 # permissions
 # ==========================================
 USER app
-
-# ==========================================
-# Install the latest LTS version of Node.js,
-# but keeping within the releases code-named
-# "krypton" (v24.x)
-# ==========================================
-# hadolint ignore=SC1091
-RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install --latest-npm "$NODEJS_VERSION"; \
-    nvm alias default "$NODEJS_VERSION"
 
 # ==========================================
 # Create a directory for our SSL certificate

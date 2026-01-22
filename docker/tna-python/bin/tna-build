@@ -19,8 +19,3 @@ fi
 poetry add "gunicorn=$WSGI_GUNICORN_VERSION"
 poetry add "uvicorn=$ASGI_UVICORN_VERSION"
 poetry install --no-root --no-interaction
-
-if [ -n "$NPM_BUILD_COMMAND" ]
-then
-  tna-node "$NPM_BUILD_COMMAND"
-fi
