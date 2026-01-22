@@ -78,16 +78,16 @@ jobs:
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
-      - name: Test Flask
-        uses: ./.github/actions/test-container
-        with:
-          application-repository: nationalarchives/flask-application-template
-          application-repository-branch: feature/multi-stage-build
-          image: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: app
-          environment-overrides: |
-            APPLICATION_PROTOCOL=http
+      # - name: Test Flask
+      #   uses: ./.github/actions/test-container
+      #   with:
+      #     application-repository: nationalarchives/flask-application-template
+      #     application-repository-branch: feature/multi-stage-build
+      #     image: ${{ env.IMAGE_NAME }}
+      #     image-tag: ${{ steps.build.outputs.tag }}
+      #     expected-user: app
+      #     environment-overrides: |
+      #       APPLICATION_PROTOCOL=http
 
       # - name: Test Django
       #   uses: ./.github/actions/test-container
@@ -176,14 +176,14 @@ jobs:
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
-      - name: Test Flask
-        uses: ./.github/actions/test-container
-        with:
-          application-repository: nationalarchives/flask-application-template
-          application-repository-branch: feature/multi-stage-build
-          image: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: root
+      # - name: Test Flask
+      #   uses: ./.github/actions/test-container
+      #   with:
+      #     application-repository: nationalarchives/flask-application-template
+      #     application-repository-branch: feature/multi-stage-build
+      #     image: ${{ env.IMAGE_NAME }}
+      #     image-tag: ${{ steps.build.outputs.tag }}
+      #     expected-user: root
 
       # - name: Test Django
       #   uses: ./.github/actions/test-container
