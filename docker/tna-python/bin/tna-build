@@ -16,6 +16,7 @@ then
   exit 1
 fi
 
-poetry add "gunicorn=$WSGI_GUNICORN_VERSION"
-poetry add "uvicorn=$ASGI_UVICORN_VERSION"
+python -m pip install --no-cache-dir --quiet gunicorn=="$WSGI_GUNICORN_VERSION"
+python -m pip install --no-cache-dir --quiet uvicorn=="$ASGI_UVICORN_VERSION"
+
 poetry install --no-root --no-interaction
