@@ -80,8 +80,7 @@ RUN set -eux; \
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install --latest-npm "$NODEJS_VERSION"; \
-    nvm alias default "$NODEJS_VERSION"; \
-    npm config set fund=false --location=global
+    nvm alias default "$NODEJS_VERSION"
 
 # ==========================================
 # Copy any configuration files into the main

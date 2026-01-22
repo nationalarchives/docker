@@ -4,3 +4,4 @@ set -e
 
 . "$NVM_DIR/nvm.sh" && true
 
+npm config set fund=false --location=global
