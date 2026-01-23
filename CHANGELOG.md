@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Black to [26.1.0](https://github.com/psf/black/releases/tag/26.1.0)
 - Updated Django Debug Toolbar to [6.2.0](https://github.com/django-commons/django-debug-toolbar/releases/tag/6.2.0)
 - Updated Gunicorn to [24.0.0](https://github.com/benoitc/gunicorn/releases/tag/24.0.0)
+- Updated Prettier to [3.8.1](https://github.com/prettier/prettier/releases/tag/3.8.1)
 
 ### Deprecated
 ### Removed
