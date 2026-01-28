@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.6.0...HEAD)
 
 ### Added
+
+- Installed `libmagic-dev`
+
 ### Changed
 
 - Updated Poetry to [2.3.1](https://github.com/python-poetry/poetry/releases/tag/2.3.1)

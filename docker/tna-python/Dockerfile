@@ -128,7 +128,7 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u2; \
+    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u2 libmagic-dev=1:5.46-5; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
