@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated nvm to [v0.40.4](https://github.com/nvm-sh/nvm/releases/tag/v0.40.4)
 - Updated Stylelint to [17.1.0](https://github.com/stylelint/stylelint/releases/tag/17.1.0)
+- Updated Poetry to [2.3.2](https://github.com/python-poetry/poetry/releases/tag/2.3.2)
 
 ### Deprecated
 ### Removed
