@@ -28,10 +28,10 @@ graph TD;
 
 ```sh
 # Build tna-python
-docker build -t tna-python:local docker/tna-python
+docker build --tag tna-python:local --progress=plain docker/tna-python
 
 # Build tna-python-dev
-docker build -t tna-python-dev:local --build-arg BASE_IMAGE=tna-python --build-arg BASE_IMAGE_TAG=local docker/tna-python-dev
+docker build --tag tna-python-dev:local --build-arg BASE_IMAGE=tna-python --build-arg BASE_IMAGE_TAG=local --progress=plain docker/tna-python-dev
 
 # Run
 docker run tna-python:local
