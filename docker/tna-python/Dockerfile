@@ -73,7 +73,7 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV PIP_VERSION=25.3 \
+ENV PIP_VERSION=26.0 \
     POETRY_VERSION=2.3.2 \
     NVM_VERSION=0.40.4 \
     WSGI_GUNICORN_VERSION=25.0.1 \
