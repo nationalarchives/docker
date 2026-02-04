@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Stylelint to [17.1.1](https://github.com/stylelint/stylelint/releases/tag/17.1.1)
 - Updated Poetry to [2.3.2](https://github.com/python-poetry/poetry/releases/tag/2.3.2)
 - Updated Gunicorn to [25.0.1](https://github.com/benoitc/gunicorn/releases/tag/25.0.1)
+- Replaced the bundled Stylelint configuration with the [Stylelint configuration in TNA Frontend](https://github.com/nationalarchives/tna-frontend/blob/main/stylelint.config.js)
 
 ### Deprecated
 ### Removed

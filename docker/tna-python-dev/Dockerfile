@@ -68,14 +68,16 @@ ENV NODE_ENV=development
 # fixing Python, HTML, CSS and JavaScript
 # ==========================================
 # hadolint ignore=SC1091
-RUN . tna-nvm && npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "eslint@$ESLINT_VERSION"; \
+RUN . tna-nvm && npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "eslint@$ESLINT_VERSION" @nationalarchives/frontend@latest; \
     python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
 
 # ==========================================
 # Copy any configuration files into the main
-# app directory
+# app directory, including the configuration
+# for stylelint from TNA Frontend
 # ==========================================
 COPY lib/* /home/app/
+RUN . tna-nvm && cp "$(npm root -g)/@nationalarchives/frontend/config/stylelint.config.js" /home/app/stylelint.config.js
 
 # ==========================================
 # Update the build and run scripts with some

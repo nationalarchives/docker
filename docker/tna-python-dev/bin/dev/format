@@ -139,7 +139,7 @@ then
   STYLELINT_CONFIG="/app/.stylelintrc.yaml"
   echo "Using app config ($STYLELINT_CONFIG)"
 else
-  STYLELINT_CONFIG="/home/app/.stylelintrc"
+  STYLELINT_CONFIG="/home/app/stylelint.config.js"
   echo "Using default config ($STYLELINT_CONFIG)"
 fi
 if [ -f "/app/.stylelintignore" ]
