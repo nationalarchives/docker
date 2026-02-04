@@ -77,6 +77,7 @@ RUN . tna-nvm && npm install --global --silent --save-exact "prettier@$PRETTIER_
 # for stylelint from TNA Frontend
 # ==========================================
 COPY lib/* /home/app/
+# hadolint ignore=SC1091
 RUN . tna-nvm && cp "$(npm root -g)/@nationalarchives/frontend/config/stylelint.config.js" /home/app/stylelint.config.js
 
 # ==========================================
