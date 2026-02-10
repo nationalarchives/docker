@@ -5,9 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.7.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.8.0...HEAD)
 
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.8.0](https://github.com/nationalarchives/docker/compare/v1.7.0...v1.8.0) - 2026-02-10
+
 ### Changed
 
 - Updated nvm to [v0.40.4](https://github.com/nvm-sh/nvm/releases/tag/v0.40.4)
@@ -16,11 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Gunicorn to [25.0.3](https://github.com/benoitc/gunicorn/releases/tag/25.0.3)
 - Replaced the bundled Stylelint configuration with the [Stylelint configuration in TNA Frontend](https://github.com/nationalarchives/tna-frontend/blob/main/stylelint.config.js)
 - Updated pip to `26.0`
-
-### Deprecated
-### Removed
-### Fixed
-### Security
 
 ## [1.7.0](https://github.com/nationalarchives/docker/compare/v1.6.0...v1.7.0) - 2026-01-28
 
