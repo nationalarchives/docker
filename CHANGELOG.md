@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated Gunicorn to [25.1.0](https://github.com/benoitc/gunicorn/releases/tag/25.1.0)
+
 ### Deprecated
 ### Removed
 ### Fixed
