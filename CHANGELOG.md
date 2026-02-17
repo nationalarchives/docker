@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated Gunicorn to [25.1.0](https://github.com/benoitc/gunicorn/releases/tag/25.1.0)
+- Updated Uvicorn to [0.41.0](https://github.com/encode/uvicorn/releases/tag/0.41.0)
 
 ### Deprecated
 ### Removed

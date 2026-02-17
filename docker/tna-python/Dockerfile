@@ -77,7 +77,7 @@ ENV PIP_VERSION=26.0 \
     POETRY_VERSION=2.3.2 \
     NVM_VERSION=0.40.4 \
     WSGI_GUNICORN_VERSION=25.1.0 \
-    ASGI_UVICORN_VERSION=0.40.0
+    ASGI_UVICORN_VERSION=0.41.0
 
 # ==========================================
 # Create a new non-root level "app" user who
