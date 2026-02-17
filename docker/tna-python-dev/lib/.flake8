@@ -1,5 +1,5 @@
 [flake8]
 ignore = E203, W503, E501
-exclude = venv*,__pycache__,node_modules,migrations
+exclude = venv*,__pycache__,node_modules,migrations,.git
 max-line-length = 88
 max-complexity = 12
