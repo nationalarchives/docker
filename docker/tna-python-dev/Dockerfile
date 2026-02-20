@@ -47,7 +47,7 @@ RUN apt-get update; \
 # ==========================================
 ENV BLACK_VERSION=26.1.0 \
     FLAKE8_VERSION=7.1.1 \
-    ISORT_VERSION=7.0.0 \
+    ISORT_VERSION=8.0.0 \
     DJLINT_VERSION=1.36.4 \
     DJHTML_VERSION=3.0.10 \
     DJANGO_DEBUG_TOOLBAR_VERSION=6.2.0 \

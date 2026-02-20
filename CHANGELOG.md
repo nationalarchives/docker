@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Upgrading Poetry now does so without using cache (`--no-cache`)
+- Updated isort to [8.0.0](https://github.com/PyCQA/isort/releases/tag/8.0.0)
 
 ### Deprecated
 ### Removed
