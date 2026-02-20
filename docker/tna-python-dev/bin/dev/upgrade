@@ -9,7 +9,7 @@ then
   if [ -f "/app/pyproject.toml" ]
   then
     echo "Upgrading Poetry dependencies..."
-    poetry update
+    poetry update --no-cache
   fi
 fi
 
