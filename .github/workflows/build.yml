@@ -71,7 +71,7 @@ jobs:
           docker image ls ${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
 
       - name: Scan Dockerfile
-        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@wiz-build-scan-refactor
         with:
           image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -175,7 +175,7 @@ jobs:
           echo "Tag:      ${{ steps.build.outputs.tag }}"
 
       - name: Scan Dockerfile
-        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@wiz-build-scan-refactor
         with:
           image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
