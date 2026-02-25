@@ -75,7 +75,7 @@ jobs:
         with:
           image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+          dockerfile-directory: ${{ env.DOCKERFILE_PATH }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Scan Docker image
@@ -180,7 +180,7 @@ jobs:
         with:
           image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+          dockerfile-directory: ${{ env.DOCKERFILE_PATH }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Scan Docker image
