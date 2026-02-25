@@ -78,6 +78,13 @@ jobs:
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
+      - name: Scan Docker image
+        uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@wiz-build-scan-refactor
+        with:
+          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+
       - name: Test Flask
         uses: ./.github/actions/test-container
         with:
@@ -118,8 +125,8 @@ jobs:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scan Docker image
-        uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
+      - name: Tag container
+        uses: nationalarchives/ds-docker-actions/.github/actions/tag-container-wiz@wiz-build-scan-refactor
         with:
           image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
@@ -175,6 +182,13 @@ jobs:
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
+      - name: Scan Docker image
+        uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@wiz-build-scan-refactor
+        with:
+          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+
       - name: Test Flask
         uses: ./.github/actions/test-container
         with:
@@ -210,8 +224,8 @@ jobs:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scan Docker image
-        uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
+      - name: Tag container
+        uses: nationalarchives/ds-docker-actions/.github/actions/tag-container-wiz@wiz-build-scan-refactor
         with:
           image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
