@@ -81,7 +81,7 @@ jobs:
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@wiz-build-scan-refactor
         with:
-          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+          image-id: ${{ env.IMAGE_NAME }}/${{ steps.build.outputs.tag }}
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
@@ -185,7 +185,7 @@ jobs:
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@wiz-build-scan-refactor
         with:
-          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+          image-id: ${{ env.IMAGE_NAME }}/${{ steps.build.outputs.tag }}
           image-tag: ${{ steps.build.outputs.tag }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
