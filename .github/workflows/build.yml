@@ -75,14 +75,15 @@ jobs:
         with:
           image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@wiz-build-scan-refactor
         with:
-          image-id: ${{ env.IMAGE_NAME }}/${{ steps.build.outputs.tag }}
+          image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Flask
@@ -179,14 +180,15 @@ jobs:
         with:
           image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Scan Docker image
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@wiz-build-scan-refactor
         with:
-          image-id: ${{ env.IMAGE_NAME }}/${{ steps.build.outputs.tag }}
+          image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Flask
