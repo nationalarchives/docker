@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Upgrading Poetry now does so without using cache (`--no-cache`)
 - Updated isort to [8.0.0](https://github.com/PyCQA/isort/releases/tag/8.0.0)
+- Added `install-format-dependencies` script in `tna-python-dev` to allow re-installation of format script dependencies if a newer version of NodeJS has been released since the image was built
 
 ### Deprecated
 ### Removed

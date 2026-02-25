@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+echo "Setting up Node.js using the default version..."
+. "$NVM_DIR/nvm.sh"
+nvm use default
+npm config set fund=false --location=global
+npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "eslint@$ESLINT_VERSION" @nationalarchives/frontend@latest
