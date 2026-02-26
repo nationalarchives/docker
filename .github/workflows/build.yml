@@ -170,7 +170,8 @@ jobs:
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
+          # DL3002 (https://github.com/hadolint/hadolint/wiki/DL3002) - Root user is already defined in the base image
           ignore-linting-rules: DL3002
 
       - name: Shellcheck
