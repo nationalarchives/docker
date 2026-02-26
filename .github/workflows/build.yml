@@ -123,6 +123,9 @@ jobs:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Pull Docker image
+        run: docker pull ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
+
       - name: Scan container
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@main
         with:
@@ -231,7 +234,10 @@ jobs:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scan Docker image
+      - name: Pull Docker image
+        run: docker pull ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
+
+      - name: Scan container
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@main
         with:
           image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
