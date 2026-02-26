@@ -8,12 +8,12 @@ permissions:
 on:
   workflow_dispatch:
   # ==========================================
-  # Build the preview image every Wednesday at
-  # 3:00 to download updates for packages such
-  # as the latest LTS version of Node.js
+  # Build the preview image every day at 03:00
+  # to download updates such as the latest LTS
+  # version of Node.js
   # ==========================================
   schedule:
-    - cron: "0 3 * * 3"
+    - cron: "0 3 * * *"
   release:
     types:
       - published
@@ -43,15 +43,18 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup Wiz
-        uses: nationalarchives/ds-docker-actions/.github/actions/setup-wiz@main
-        with:
-          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
-          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-install-cli@main
+
+      - name: Add Wiz CLI to .dockerignore
+        run: |
+          echo "" >> .dockerignore
+          echo "wizcli" >> .dockerignore
 
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
+          # DL3059 (https://github.com/hadolint/hadolint/wiki/DL3059) - This is only a suggestion
           ignore-linting-rules: DL3059
 
       - name: Shellcheck
@@ -71,12 +74,14 @@ jobs:
           docker image ls ${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
 
       - name: Scan Dockerfile
-        uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
         with:
           image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
       - name: Test Flask
         uses: ./.github/actions/test-container
@@ -111,18 +116,33 @@ jobs:
       - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
-          image-id: ${{ env.IMAGE_NAME }}
+          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scan Docker image
-        uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
+      - name: Pull Docker image
+        run: docker pull ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
+
+      - name: Scan container
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@main
         with:
           image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+
+      - name: Tag container
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-tag-container@main
+        with:
+          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
   python-dev:
@@ -140,15 +160,18 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup Wiz
-        uses: nationalarchives/ds-docker-actions/.github/actions/setup-wiz@main
-        with:
-          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
-          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-install-cli@main
+
+      - name: Add Wiz CLI to .dockerignore
+        run: |
+          echo "" >> .dockerignore
+          echo "wizcli" >> .dockerignore
 
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
+          # DL3002 (https://github.com/hadolint/hadolint/wiki/DL3002) - Root user is already defined in the base image
           ignore-linting-rules: DL3002
 
       - name: Shellcheck
@@ -168,12 +191,14 @@ jobs:
           echo "Tag:      ${{ steps.build.outputs.tag }}"
 
       - name: Scan Dockerfile
-        uses: nationalarchives/ds-docker-actions/.github/actions/scan-dockerfile@main
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
         with:
           image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
 
       - name: Test Flask
         uses: ./.github/actions/test-container
@@ -202,7 +227,7 @@ jobs:
       - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
-          image-id: ${{ env.IMAGE_NAME }}
+          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
@@ -210,9 +235,24 @@ jobs:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scan Docker image
-        uses: nationalarchives/ds-docker-actions/.github/actions/scan-container@main
+      - name: Pull Docker image
+        run: docker pull ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
+
+      - name: Scan container
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@main
         with:
           image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+
+      - name: Tag container
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-tag-container@main
+        with:
+          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}

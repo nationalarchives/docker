@@ -35,19 +35,12 @@ runs:
         echo "minor-version=$VERSION_PART_MINOR" >> "$GITHUB_OUTPUT"
       shell: bash
 
-    - name: Build images
-      uses: docker/build-push-action@v6
-      with:
-        context: ${{ inputs.dockerfile-path }}
-        build-args: |
-          BASE_IMAGE=${{ inputs.base-image }}
-          BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.tag }}
-          TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}
-          TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-path }}/Dockerfile
-        push: false
-        load: true
-        tags: ${{ inputs.image-name }}:${{ steps.generate-tags.outputs.tag }}
-        provenance: false
+    - name: Build image
+      run: |
+        docker build --tag ${{ inputs.image-name }}:${{ steps.generate-tags.outputs.tag }} --build-arg "BUILD_VERSION=${{ steps.generate-tags.outputs.tag }}" --build-arg "CONTAINER_IMAGE=${{ env.IMAGE_NAME }}" --build-arg "BASE_IMAGE=${{ inputs.base-image }}" --build-arg "BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.tag }}" --build-arg "TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}" --build-arg "TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-path }}/Dockerfile" --platform linux/amd64 --no-cache ${{ inputs.dockerfile-path }}
+        docker inspect ${{ inputs.image-name }}:${{ steps.generate-tags.outputs.tag }}
+        docker images --digests
+      shell: bash
 
 outputs:
   tag:
