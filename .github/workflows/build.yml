@@ -8,12 +8,12 @@ permissions:
 on:
   workflow_dispatch:
   # ==========================================
-  # Build the preview image every Wednesday at
-  # 3:00 to download updates for packages such
-  # as the latest LTS version of Node.js
+  # Build the preview image every day at 03:00
+  # to download updates such as the latest LTS
+  # version of Node.js
   # ==========================================
   schedule:
-    - cron: "0 3 * * 3"
+    - cron: "0 3 * * *"
   release:
     types:
       - published
@@ -43,15 +43,12 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup Wiz
-        uses: nationalarchives/ds-docker-actions/.github/actions/setup-wiz@main
-        with:
-          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
-          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-install-cli@main
 
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
-          dockerfile-path: ${{ env.DOCKERFILE_PATH }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
           ignore-linting-rules: DL3059
 
       - name: Shellcheck
@@ -71,19 +68,23 @@ jobs:
           docker image ls ${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
 
       - name: Scan Dockerfile
-        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@wiz-build-scan-refactor
-        with:
-          image-id: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          dockerfile-directory: ${{ env.DOCKERFILE_PATH }}
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
-
-      - name: Scan Docker image
-        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@wiz-build-scan-refactor
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
         with:
           image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+
+      - name: Scan Docker image
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@main
+        with:
+          image-id: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Flask
@@ -127,10 +128,12 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Tag container
-        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-tag-container@wiz-build-scan-refactor
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-tag-container@main
         with:
           image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
   python-dev:
@@ -148,10 +151,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup Wiz
-        uses: nationalarchives/ds-docker-actions/.github/actions/setup-wiz@main
-        with:
-          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
-          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-install-cli@main
 
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
@@ -176,19 +176,23 @@ jobs:
           echo "Tag:      ${{ steps.build.outputs.tag }}"
 
       - name: Scan Dockerfile
-        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@wiz-build-scan-refactor
-        with:
-          image-id: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          dockerfile-directory: ${{ env.DOCKERFILE_PATH }}
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
-
-      - name: Scan Docker image
-        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@wiz-build-scan-refactor
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
         with:
           image-id: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+
+      - name: Scan Docker image
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@main
+        with:
+          image-id: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
 
       - name: Test Flask
@@ -227,8 +231,10 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Tag container
-        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-tag-container@wiz-build-scan-refactor
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-tag-container@main
         with:
           image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
