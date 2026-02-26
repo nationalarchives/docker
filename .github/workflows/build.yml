@@ -45,6 +45,11 @@ jobs:
       - name: Setup Wiz
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-install-cli@main
 
+      - name: Add Wiz CLI to .dockerignore
+        run: |
+          echo "" >> .dockerignore
+          echo "wizcli" >> .dockerignore
+
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
@@ -156,6 +161,11 @@ jobs:
 
       - name: Setup Wiz
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-install-cli@main
+
+      - name: Add Wiz CLI to .dockerignore
+        run: |
+          echo "" >> .dockerignore
+          echo "wizcli" >> .dockerignore
 
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
