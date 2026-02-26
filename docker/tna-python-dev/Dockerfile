@@ -64,11 +64,21 @@ ENV BLACK_VERSION=26.1.0 \
 ENV NODE_ENV=development
 
 # ==========================================
+# Copy the development scripts into the user
+# .local/bin/dev/ directory, and prepare the
+# future .local/bin/tasks/ directory, adding
+# it to the path ready for mounted scripts
+# ==========================================
+COPY bin/dev /home/app/.local/bin/dev
+RUN chmod +x -R /home/app/.local/bin/dev
+ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
+
+# ==========================================
 # Install the tools required for linting and
 # fixing Python, HTML, CSS and JavaScript
 # ==========================================
 # hadolint ignore=SC1091
-RUN . tna-nvm && npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "eslint@$ESLINT_VERSION" @nationalarchives/frontend@latest; \
+RUN install-format-dependencies; \
     python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
 
 # ==========================================
@@ -90,13 +100,3 @@ COPY bin/tna-asgi /home/app/.local/bin/tna-asgi
 COPY bin/tna-build /home/app/.local/bin/tna-build
 COPY bin/tna-clean /home/app/.local/bin/tna-clean
 COPY bin/tna-wsgi /home/app/.local/bin/tna-wsgi
-
-# ==========================================
-# Copy the development scripts into the user
-# .local/bin/dev/ directory, and prepare the
-# future .local/bin/tasks/ directory, adding
-# it to the path ready for mounted scripts
-# ==========================================
-COPY bin/dev /home/app/.local/bin/dev
-RUN chmod +x -R /home/app/.local/bin/dev
-ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"

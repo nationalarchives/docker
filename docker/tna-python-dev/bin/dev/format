@@ -80,6 +80,7 @@ echo "Setting up Node.js using the default version..."
 . "$NVM_DIR/nvm.sh"
 nvm use default
 npm config set fund=false --location=global
+install-format-dependencies
 echo
 
 echo "Running prettier..."
