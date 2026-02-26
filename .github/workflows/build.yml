@@ -223,7 +223,7 @@ jobs:
       - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
         with:
-          image-id: ${{ env.IMAGE_NAME }}
+          image-id: ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           major-version: ${{ steps.build.outputs.major-version }}
           minor-version: ${{ steps.build.outputs.minor-version }}
