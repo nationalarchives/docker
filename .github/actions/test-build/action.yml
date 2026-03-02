@@ -16,6 +16,20 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Create version tag
+      id: version-tag
+      uses: nationalarchives/ds-docker-actions/.github/actions/get-version-tag@main  # TODO: Could replace the "Prepare image tag" step below?
+
+    - name: Test new image tag
+      run: |
+        VERSION=${{ steps.version-tag.outputs.version-tag }}
+        VERSION_PART_MAJOR=$(echo "$VERSION" | awk -F'.' '{print $1}')
+        VERSION_PART_MINOR=$(echo "$VERSION" | awk -F'.' '{print $2}')
+        echo "VERSION:            $VERSION"
+        echo "VERSION_PART_MAJOR: $VERSION_PART_MAJOR"
+        echo "VERSION_PART_MINOR: $VERSION_PART_MINOR"
+      shell: bash
+
     - name: Prepare image tag
       id: generate-tags
       run: |
