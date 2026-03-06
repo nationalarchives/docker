@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+
+- Removed duplicated NodeJS setup during `format`
+
 ### Security
 
 ## [1.10.0](https://github.com/nationalarchives/docker/compare/v1.9.0...v1.10.0) - 2026-03-02
