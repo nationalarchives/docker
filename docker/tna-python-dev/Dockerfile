@@ -45,7 +45,7 @@ RUN apt-get update; \
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
-ENV BLACK_VERSION=26.1.0 \
+ENV BLACK_VERSION=26.3.0 \
     FLAKE8_VERSION=7.1.1 \
     ISORT_VERSION=8.0.1 \
     DJLINT_VERSION=1.36.4 \

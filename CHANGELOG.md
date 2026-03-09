@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated Black to [26.3.0](https://github.com/psf/black/releases/tag/26.3.0)
+
 ### Deprecated
 ### Removed
 ### Fixed
