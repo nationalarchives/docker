@@ -23,6 +23,13 @@ HEALTHCHECK CMD curl --fail "http://localhost:$APPLICATION_PORT/healthcheck/live
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # ==========================================
+# Expose the application port directly so we
+# can "step around" nginx during development
+# and access the application directly
+# ==========================================
+EXPOSE 8080/tcp
+
+# ==========================================
 # Switch back to the root user so we can run
 # commands that need elevated privileges and
 # not encounter permission issues when using

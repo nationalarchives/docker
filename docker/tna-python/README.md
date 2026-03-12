@@ -19,6 +19,7 @@ Each environment has some default values but all can be overwritten:
 
 | Variable                   | Description                                                               | Default                                   |
 | -------------------------- | ------------------------------------------------------------------------- | ----------------------------------------- |
+| `DOMAIN`                   | Domain to use in nginx and for a self-signed SSL certificates if needed   | `localhost`                               |
 | `SECRET_KEY`               | A random key used to secure client session data                           | _none_                                    |
 | `WORKERS`                  | Number of worker processes[^1]                                            | `(cpu * 2) + 1`                           |
 | `THREADS`                  | Number of threads[^2]                                                     | `$WORKERS * 2` (ignored by `tna-asgi`)    |
@@ -27,11 +28,6 @@ Each environment has some default values but all can be overwritten:
 | `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run to build static assets          | _none_                                    |
 | `TIMEOUT`                  | The number of seconds before a request is terminated[^6]                  | `30` (ignored by `tna-asgi`)              |
 | `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^7] | `30`                                      |
-| `APPLICATION_PROTOCOL`     | The protocol of the application (`http` or `https`)                       | `https`                                   |
-| `SSL_KEY_FILE`             | The location of the SSL key                                               | `/home/app/ssl/server.key`                |
-| `SSL_CERTIFICATE_FILE`     | The location of the SSL certificate                                       | `/home/app/ssl/server.crt`                |
-| `SSL_CA_CERTIFICATES_FILE` | The location of the CA certificates                                       | _none_                                    |
-| `SSL_DOMAIN`               | Domain for a self-signed SSL if no key or certificate files are provided  | _none_                                    |
 
 [^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 
@@ -111,7 +107,7 @@ To use Node to build your assets you need three files in your project:
 
 ### Self-signed certificates
 
-Set `SSL_DOMAIN` to create a self-signed SSL certificate for the container on startup.
+The `DOMAIN` environment variable will be used to create a self-signed SSL certificate for the container on startup.
 
 The generated certificate will be valid for 10 years.
 
@@ -123,8 +119,6 @@ Mount two files in the container to use SSL:
 - `/home/app/ssl/server.crt`
 
 Ensure the files can be read by the container user.
-
-These locations can be overridden with the `SSL_KEY_FILE` and `SSL_CERTIFICATE_FILE` environment variables.
 
 #### Custom CA
 

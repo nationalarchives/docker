@@ -90,8 +90,6 @@ jobs:
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
-          environment-overrides: |
-            APPLICATION_PROTOCOL=http
 
       - name: Test Django
         uses: ./.github/actions/test-container
@@ -100,8 +98,6 @@ jobs:
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
-          environment-overrides: |
-            APPLICATION_PROTOCOL=http
 
       - name: Test FastAPI
         uses: ./.github/actions/test-container
@@ -110,8 +106,6 @@ jobs:
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: app
-          environment-overrides: |
-            APPLICATION_PROTOCOL=http
 
       - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push

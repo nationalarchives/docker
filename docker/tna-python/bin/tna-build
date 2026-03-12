@@ -4,23 +4,30 @@ set -e
 
 echo "Running tna-build..."
 
+# Check that the pyproject.toml and poetry.lock files exist before we try to install dependencies with Poetry
 if [ ! -f "/app/pyproject.toml" ]
 then
   echo "pyproject.toml does not exist"
   exit 1
 fi
-
 if [ ! -f "/app/poetry.lock" ]
 then
   echo "poetry.lock does not exist"
   exit 1
 fi
 
+# Install WSGI and ASGI servers and dependencies for the application using Poetry
 poetry add "gunicorn=$WSGI_GUNICORN_VERSION"
 poetry add "uvicorn=$ASGI_UVICORN_VERSION"
+
+# Install the dependencies for the application using Poetry
 poetry install --no-root --no-interaction
 
+# If set, run the npm build command to build any frontend assets for the application
 if [ -n "$NPM_BUILD_COMMAND" ]
 then
   tna-node "$NPM_BUILD_COMMAND"
 fi
+
+# Prepare nginx configuration
+tna-nginx-prepare

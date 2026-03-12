@@ -22,11 +22,6 @@ All environment variables extended from [tna-python](../tna-python/README.md) bu
 | `NODE_ENV`                 | `development`           |
 | `TIMEOUT`                  | `600`                   |
 | `KEEP_ALIVE`               | `5`                     |
-| `APPLICATION_PROTOCOL`     | _ignored_ (`http` only) |
-| `SSL_KEY_FILE`             | _ignored_               |
-| `SSL_CERTIFICATE_FILE`     | _ignored_               |
-| `SSL_CA_CERTIFICATES_FILE` | _ignored_               |
-| `SSL_DOMAIN`               | _ignored_               |
 
 ### `tna-python-dev` specific
 

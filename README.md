@@ -34,7 +34,7 @@ docker build --tag tna-python:local --progress=plain docker/tna-python
 docker build --tag tna-python-dev:local --build-arg BASE_IMAGE=tna-python --build-arg BASE_IMAGE_TAG=local --progress=plain docker/tna-python-dev
 
 # Run
-docker run tna-python:local
+docker run --rm tna-python:local
 # ...or
-docker run tna-python-dev:local
+docker run --rm tna-python-dev:local
 ```

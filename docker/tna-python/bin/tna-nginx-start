@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+# Create SSL certificates and keys if they don't already exist
+echo "Setting up SSL certificates and keys..."
+source tna-ssl-setup
+
+# Test the nginx configuration and start nginx
+echo "Starting nginx..."
+nginx -t
+nginx

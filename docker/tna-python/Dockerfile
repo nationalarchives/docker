@@ -26,12 +26,25 @@ LABEL uk.gov.nationalarchives.nodejs-version="$NODEJS_VERSION"
 LABEL uk.gov.nationalarchives.python-version="$PYTHON_VERSION"
 
 # ==========================================
-# We usually always use and expose port 8080
-# for all our containerised applications but
-# this can be overridden if necessary
+# Expose ports 80 and 443 to allow the nginx
+# reverse proxy to receive requests
+# ==========================================
+EXPOSE 80/tcp
+EXPOSE 443/tcp
+
+# ==========================================
+# Set the default domain for nginx to use in
+# its configuration, and when generating SSL
+# certificates
+# ==========================================
+ENV DOMAIN=localhost
+
+# ==========================================
+# The default application port is 8080 which
+# can be overridden if necessary, as long as
+# neither ports 80 or 443 are used
 # ==========================================
 ENV APPLICATION_PORT=8080
-EXPOSE 8080/tcp
 
 # ==========================================
 # To aid consistency Dockerised applications
@@ -42,7 +55,7 @@ EXPOSE 8080/tcp
 # based on a GOV.UK proposal:
 # github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
-HEALTHCHECK CMD curl --fail --insecure "$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')://localhost:$APPLICATION_PORT/healthcheck/live/" || exit 1
+HEALTHCHECK CMD curl --fail "http://localhost:$APPLICATION_PORT/healthcheck/ready/" || exit 1
 
 # ==========================================
 # Set Python up in a consistent manner, with
@@ -128,7 +141,7 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u2 libmagic-dev=1:5.46-5; \
+    apt-get install -y --no-install-recommends nginx=1.26.3-3+deb13u2 gettext=0.23.1-2 curl=8.14.1-2+deb13u2 libmagic-dev=1:5.46-5; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
@@ -170,6 +183,14 @@ WORKDIR /app
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
 # ==========================================
+# Copy in the nginx configuration file which
+# will be used as a reverse proxy to forward
+# requests to our Python application
+# ==========================================
+COPY lib/nginx.conf.template /etc/nginx/templates/nginx.conf.template
+RUN chown -R app:app /var/log/nginx /var/lib/nginx /etc/nginx/nginx.conf /etc/nginx/templates/nginx.conf.template
+
+# ==========================================
 # Now we have finished installing everything
 # at a system level, change the current user
 # to the non-root user we created previously
@@ -177,6 +198,11 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 # permissions
 # ==========================================
 USER app
+
+
+RUN touch /home/app/nginx.pid
+
+
 
 # ==========================================
 # Install the latest LTS version of Node.js,

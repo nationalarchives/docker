@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+# Substitute environment variables in the nginx configuration template and write the result to the nginx configuration file
+echo "Preparing nginx configuration for $DOMAIN..."
+envsubst "\$DOMAIN \$APPLICATION_PORT" < /etc/nginx/templates/nginx.conf.template > /etc/nginx/nginx.conf

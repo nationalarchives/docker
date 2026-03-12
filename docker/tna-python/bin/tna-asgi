@@ -18,6 +18,9 @@ then
   exit 1
 fi
 
+# Start nginx in the background to reverse proxy requests to our application
+source tna-nginx-start
+
 # Set up the default number of workers
 DEFAULT_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
 
@@ -28,20 +31,5 @@ DEFAULT_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_c
 [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warning
 [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
 
-# Get the protcol for the application
-APPLICATION_PROTOCOL=$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')
-
-if [ "$APPLICATION_PROTOCOL" = "https" ]
-then
-  source tna-ssl-setup
-  echo "Starting Uvicorn (HTTPS)..."
-  poetry run uvicorn "$APPLICATION" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host "0.0.0.0" --port "$APPLICATION_PORT" --workers "$WORKERS" --ssl-keyfile "$SSL_KEY_FILE" --ssl-certfile "$SSL_CERTIFICATE_FILE" --ssl-ca-certs "$SSL_CA_CERTIFICATES_FILE" --lifespan off
-elif [ "$APPLICATION_PROTOCOL" = "http" ]
-then
-  echo "Starting Uvicorn (HTTP)..."
-  poetry run uvicorn "$APPLICATION" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host "0.0.0.0" --port "$APPLICATION_PORT" --workers "$WORKERS" --lifespan off
-else
-  echo -e "Error: invalid protocol specified in APPLICATION_PROTOCOL environment variable: '$APPLICATION_PROTOCOL'\n"
-  echo "Allowed values are 'http' and 'https'"
-  exit 1
-fi
+echo "Starting Uvicorn..."
+poetry run uvicorn "$APPLICATION" --log-level "$LOG_LEVEL" --timeout-keep-alive "$KEEP_ALIVE" --host "0.0.0.0" --port "$APPLICATION_PORT" --workers "$WORKERS" --lifespan off
