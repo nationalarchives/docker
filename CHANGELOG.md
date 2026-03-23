@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated Black to [26.3.1](https://github.com/psf/black/releases/tag/26.3.1)
+- Enable `--capture-output` and `--enable-stdio-inheritance` on gunicorn
 
 ### Deprecated
 ### Removed
