@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Black to [26.3.1](https://github.com/psf/black/releases/tag/26.3.1)
 - Enable `--capture-output` and `--enable-stdio-inheritance` on gunicorn
+- Updated uvicorn to [0.42.0](https://github.com/encode/uvicorn/releases/tag/0.42.0)
 
 ### Deprecated
 ### Removed
@@ -36,8 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated Gunicorn to [25.1.0](https://github.com/benoitc/gunicorn/releases/tag/25.1.0)
-- Updated Uvicorn to [0.41.0](https://github.com/encode/uvicorn/releases/tag/0.41.0)
+- Updated gunicorn to [25.1.0](https://github.com/benoitc/gunicorn/releases/tag/25.1.0)
+- Updated uvicorn to [0.41.0](https://github.com/encode/uvicorn/releases/tag/0.41.0)
 - Added `.git` directory to flake8 ignore
 
 ## [1.8.1](https://github.com/nationalarchives/docker/compare/v1.8.0...v1.8.1) - 2026-02-10
@@ -53,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated nvm to [v0.40.4](https://github.com/nvm-sh/nvm/releases/tag/v0.40.4)
 - Updated Stylelint to [17.1.1](https://github.com/stylelint/stylelint/releases/tag/17.1.1)
 - Updated Poetry to [2.3.2](https://github.com/python-poetry/poetry/releases/tag/2.3.2)
-- Updated Gunicorn to [25.0.3](https://github.com/benoitc/gunicorn/releases/tag/25.0.3)
+- Updated gunicorn to [25.0.3](https://github.com/benoitc/gunicorn/releases/tag/25.0.3)
 - Replaced the bundled Stylelint configuration with the [Stylelint configuration in TNA Frontend](https://github.com/nationalarchives/tna-frontend/blob/main/stylelint.config.js)
 - Updated pip to `26.0`
 
@@ -68,7 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Poetry to [2.3.1](https://github.com/python-poetry/poetry/releases/tag/2.3.1)
 - Updated Black to [26.1.0](https://github.com/psf/black/releases/tag/26.1.0)
 - Updated Django Debug Toolbar to [6.2.0](https://github.com/django-commons/django-debug-toolbar/releases/tag/6.2.0)
-- Updated Gunicorn to [24.1.1](https://github.com/benoitc/gunicorn/releases/tag/24.1.1)
+- Updated gunicorn to [24.1.1](https://github.com/benoitc/gunicorn/releases/tag/24.1.1)
 - Updated Prettier to [3.8.1](https://github.com/prettier/prettier/releases/tag/3.8.1)
 
 ## [1.6.0](https://github.com/nationalarchives/docker/compare/v1.5.0...v1.6.0) - 2026-01-16
@@ -101,7 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Disable the ASGI lifespan protocol for Uvicorn when running `tna-asgi`
+- Disable the ASGI lifespan protocol for uvicorn when running `tna-asgi`
 
 ## [1.4.1](https://github.com/nationalarchives/docker/compare/v1.4.0...v1.4.1) - 2026-01-07
 
@@ -124,7 +125,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated stylelint-order to [7.0.1](https://github.com/hudochenkov/stylelint-order/releases/tag/7.0.1)
-- Updated Uvicorn to [0.40.0](https://github.com/encode/uvicorn/releases/tag/0.40.0)
+- Updated uvicorn to [0.40.0](https://github.com/encode/uvicorn/releases/tag/0.40.0)
 - Made the installation of `stylelint` quiet when running `format`
 - Updated Black profile to include Python 3.14
 - Ignored more files as part of the default `.eslintrc.js`
@@ -186,7 +187,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `tna-python-dev` is now a drop-in replacement for `tna-python` to run and develop your application localy with the addition of the development scripts and features
 - Updated the LTS version of NodeJS from `jod` to `krypton`
 - Updated isort to [7.0.0](https://github.com/PyCQA/isort/releases/tag/7.0.0)
-- Updated Uvicorn to [0.38.0](https://github.com/encode/uvicorn/releases/tag/0.38.0)
+- Updated uvicorn to [0.38.0](https://github.com/encode/uvicorn/releases/tag/0.38.0)
 - Updated Black to [25.12.0](https://github.com/psf/black/releases/tag/25.12.0)
 - Updated Prettier to [3.7.4](https://github.com/prettier/prettier/releases/tag/3.7.4)
 - Updated Stylelint to [16.26.1](https://github.com/stylelint/stylelint/releases/tag/16.26.1)
@@ -204,7 +205,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Removed `uvicorn-worker` (Uvicorn worker for Gunicorn) - Uvicorn is now run separately from Gunicorn
+- Removed `uvicorn-worker` (uvicorn worker for gunicorn) - uvicorn is now run separately from gunicorn
 
 ## [0.15.0](https://github.com/nationalarchives/docker/compare/v0.14.0...v0.15.0) - 2025-10-06
 
@@ -215,8 +216,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated stylelint-config-standard-scss to [16.0.0](https://github.com/stylelint-scss/stylelint-config-standard-scss/releases/tag/v16.0.0)
 - Don't throw an error with stylelint if no files are found [`--allow-empty-input`](https://stylelint.io/user-guide/options/#allowemptyinput)
 - Updated Black to [25.9.0](https://github.com/psf/black/releases/tag/25.9.0)
-- Updated Uvicorn to [0.37.0](https://github.com/encode/uvicorn/releases/tag/0.37.0)
-- Updated Uvicorn Worker to [0.4.0](https://github.com/Kludex/uvicorn-worker/releases/tag/0.4.0)
+- Updated uvicorn to [0.37.0](https://github.com/encode/uvicorn/releases/tag/0.37.0)
+- Updated uvicorn Worker to [0.4.0](https://github.com/Kludex/uvicorn-worker/releases/tag/0.4.0)
 - Updated isort to [6.1.0](https://github.com/PyCQA/isort/releases/tag/6.1.0)
 
 ## [0.14.0](https://github.com/nationalarchives/docker/compare/v0.13.1...v0.14.0) - 2025-08-08
@@ -269,7 +270,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated Uvicorn to [0.35.0](https://github.com/encode/uvicorn/releases/tag/0.35.0)
+- Updated uvicorn to [0.35.0](https://github.com/encode/uvicorn/releases/tag/0.35.0)
 - Updated Stylelint to [16.21.0](https://github.com/stylelint/stylelint/releases/tag/16.21.0)
 - Updated stylelint-config-standard-scss to [15.0.1](https://github.com/stylelint-scss/stylelint-config-standard-scss/releases/tag/v15.0.1)
 - Updated Prettier to [3.6.2](https://github.com/prettier/prettier/releases/tag/3.6.2)
@@ -319,7 +320,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Stylelint to [16.19.0](https://github.com/stylelint/stylelint/releases/tag/16.19.0)
 - Updated Poetry to [2.1.2](https://github.com/python-poetry/poetry/releases/tag/2.1.2)
 - Only run Django migrations automatically when `$RUNTIME` is set to `develop`
-- Updated Uvicorn to [0.34.2](https://github.com/encode/uvicorn/releases/tag/0.34.2)
+- Updated uvicorn to [0.34.2](https://github.com/encode/uvicorn/releases/tag/0.34.2)
 - Updated stylelint-order to [7.0.0](https://github.com/hudochenkov/stylelint-order/releases/tag/7.0.0)
 - Updated nvm to [v0.40.3](https://github.com/nvm-sh/nvm/releases/tag/v0.40.3)
 
@@ -374,8 +375,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `prettier`, `stylelint` and `stylelint-config-standard-scss` in `tna-python-dev`
 - Updated Poetry to [1.8.5](https://github.com/python-poetry/poetry/releases/tag/1.8.5)
 - Updated Stylelint to [16.12.0](https://github.com/stylelint/stylelint/releases/tag/16.12.0)
-- Updated Uvicorn to [0.34.0](https://github.com/encode/uvicorn/releases/tag/0.34.0)
-- Updated Uvicorn Worker to [0.3.0](https://github.com/Kludex/uvicorn-worker/releases/tag/0.3.0)
+- Updated uvicorn to [0.34.0](https://github.com/encode/uvicorn/releases/tag/0.34.0)
+- Updated uvicorn Worker to [0.3.0](https://github.com/Kludex/uvicorn-worker/releases/tag/0.3.0)
 
 ### Fixed
 
@@ -396,7 +397,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated Uvicorn to [0.32.1](https://github.com/encode/uvicorn/releases/tag/0.32.1)
+- Updated uvicorn to [0.32.1](https://github.com/encode/uvicorn/releases/tag/0.32.1)
 
 ## [0.5.0](https://github.com/nationalarchives/docker/compare/v0.4.0...v0.5.0) - 2024-11-19
 
@@ -452,22 +453,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Python to [3.13](https://www.python.org/downloads/release/python-3130/)
 - Updated Poetry to [1.8.4](https://github.com/python-poetry/poetry/releases/tag/1.8.4)
-- Updated Uvicorn to [0.32.0](https://github.com/encode/uvicorn/releases/tag/0.32.0)
+- Updated uvicorn to [0.32.0](https://github.com/encode/uvicorn/releases/tag/0.32.0)
 
 ## [0.2.11](https://github.com/nationalarchives/docker/compare/v0.2.10...v0.2.11) - 2024-10-11
 
 ### Changed
 
-- Updated Uvicorn to [0.31.1](https://github.com/encode/uvicorn/releases/tag/0.31.1)
+- Updated uvicorn to [0.31.1](https://github.com/encode/uvicorn/releases/tag/0.31.1)
 
 ## [0.2.10](https://github.com/nationalarchives/docker/compare/v0.2.9...v0.2.10) - 2024-09-02
 
 ### Changed
 
 - Install Poetry `dev` group during startup of `tna-python-dev`
-- Updated Uvicorn to [0.30.6](https://github.com/encode/uvicorn/releases/tag/0.30.6)
+- Updated uvicorn to [0.30.6](https://github.com/encode/uvicorn/releases/tag/0.30.6)
 - Updated nvm to [v0.40.1](https://github.com/nvm-sh/nvm/releases/tag/v0.40.1)
-- Updated Gunicorn to [23.0.0](https://github.com/benoitc/gunicorn/releases/tag/23.0.0)
+- Updated gunicorn to [23.0.0](https://github.com/benoitc/gunicorn/releases/tag/23.0.0)
 
 ## [0.2.9](https://github.com/nationalarchives/docker/compare/v0.2.8...v0.2.9) - 2024-07-18
 
@@ -484,8 +485,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated Poetry to [1.8.3](https://github.com/python-poetry/poetry/releases/tag/1.8.3)
-- Updated Gunicorn to [22.0.0](https://github.com/benoitc/gunicorn/releases/tag/22.0.0)
-- Updated Uvicorn to [0.30.1](https://github.com/encode/uvicorn/releases/tag/0.30.1) and switched to [uvicorn-worker](https://github.com/Kludex/uvicorn-worker)
+- Updated gunicorn to [22.0.0](https://github.com/benoitc/gunicorn/releases/tag/22.0.0)
+- Updated uvicorn to [0.30.1](https://github.com/encode/uvicorn/releases/tag/0.30.1) and switched to [uvicorn-worker](https://github.com/Kludex/uvicorn-worker)
 - Make `SECRET_KEY` optional
 - Allow more configuration file types for stylelint and eslint
 
@@ -580,7 +581,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `tna-run` tries to use Django or Flask development servers if `$ENVIRONMENT == develop`, reverting to `gunicorn` if neither are available
-- Updated Gunicorn to [21.2.0](https://github.com/benoitc/gunicorn/releases/tag/21.2.0)
+- Updated gunicorn to [21.2.0](https://github.com/benoitc/gunicorn/releases/tag/21.2.0)
 
 ## [0.1.8](https://github.com/nationalarchives/docker/compare/v0.1.7...v0.1.8) - 2023-08-22
 
