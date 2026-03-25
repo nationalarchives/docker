@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Black to [26.3.1](https://github.com/psf/black/releases/tag/26.3.1)
 - Enable `--capture-output` and `--enable-stdio-inheritance` on gunicorn
 - Updated uvicorn to [0.42.0](https://github.com/encode/uvicorn/releases/tag/0.42.0)
+- Updated gunicorn to [25.2.0](https://github.com/benoitc/gunicorn/releases/tag/25.2.0)
 
 ### Deprecated
 ### Removed
