@@ -76,8 +76,7 @@ ENV PIP_NO_CACHE_DIR=true \
 ENV PIP_VERSION=26.0 \
     POETRY_VERSION=2.3.2 \
     NVM_VERSION=0.40.4 \
-    WSGI_GUNICORN_VERSION=25.2.0 \
-    ASGI_UVICORN_VERSION=0.42.0
+    WSGI_GUNICORN_VERSION=25.2.0
 
 # ==========================================
 # Create a new non-root level "app" user who
