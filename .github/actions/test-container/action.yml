@@ -61,7 +61,7 @@ runs:
         yq '(.services.${{ inputs.service }}.build.args.IMAGE_TAG|="${{ inputs.image-tag }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         yq '(.services.${{ inputs.service }}.env_file|=".env")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         cat docker-compose.yml
-        docker compose up ${{ inputs.service }} --detach --wait || docker compose logs ${{ inputs.service }}
+        (docker compose up ${{ inputs.service }} --detach --wait || (docker compose logs ${{ inputs.service }} && exit 1)) && docker compose logs ${{ inputs.service }}
       shell: bash
 
     - name: Check user
