@@ -3,4 +3,4 @@
 set -e
 
 # Run the application
-WORKER_CLASS="uvicorn.workers.UvicornWorker" tna-wsgi "$@"
+WORKER__CLASS="uvicorn.workers.UvicornWorker" tna-wsgi "$@"
