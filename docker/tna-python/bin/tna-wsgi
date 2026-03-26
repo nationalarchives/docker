@@ -47,6 +47,7 @@ else
   echo "  Timeout: $TIMEOUT"
   echo "  Worker class: $WORKER_CLASS"
   echo "  Application protocol: $APPLICATION_PROTOCOL"
+  echo
 
   if [ "$APPLICATION_PROTOCOL" = "https" ]
   then

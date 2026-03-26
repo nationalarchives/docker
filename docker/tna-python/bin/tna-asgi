@@ -2,7 +2,5 @@
 
 set -e
 
-WORKER_CLASS="uvicorn.workers.UvicornWorker"
-
 # Run the application
-tna-wsgi "$@"
+WORKER_CLASS="uvicorn.workers.UvicornWorker" tna-wsgi "$@"
