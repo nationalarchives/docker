@@ -37,6 +37,17 @@ else
   # Get the protcol for the application
   APPLICATION_PROTOCOL=$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')
 
+  echo "Configuration:"
+  echo "  Application: $APPLICATION"
+  echo "  Workers: $WORKERS"
+  echo "  Worker connections: $WORKER_CONNECTIONS"
+  echo "  Max requests: $MAX_REQUESTS"
+  echo "  Max requests jitter: $MAX_REQUESTS_JITTER"
+  echo "  Log level: $LOG_LEVEL"
+  echo "  Timeout: $TIMEOUT"
+  echo "  Worker class: $WORKER_CLASS"
+  echo "  Application protocol: $APPLICATION_PROTOCOL"
+
   if [ "$APPLICATION_PROTOCOL" = "https" ]
   then
     source tna-ssl-setup

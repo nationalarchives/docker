@@ -2,10 +2,7 @@
 
 set -e
 
-echo "Running ASGI..."
-echo
-
-WORKER_CLASS=uvicorn.workers.UvicornWorker
+WORKER_CLASS="uvicorn.workers.UvicornWorker"
 
 # Run the application
 tna-wsgi "$@"
