@@ -41,11 +41,11 @@ else
   then
     source tna-ssl-setup
     echo "Starting gunicorn ($WORKER_CLASS, $APPLICATION_PROTOCOL)..."
-    poetry run gunicorn "$APPLICATION" --worker-class "$WORKER_CLASS" --workers "$WORKERS" --worker-connections "$WORKER_CONNECTIONS" --max-requests "$MAX_REQUESTS" --max-requests-jitter "$MAX_REQUESTS_JITTER" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT" --keyfile "$SSL_KEY_FILE" --certfile "$SSL_CERTIFICATE_FILE" --ca-certs "$SSL_CA_CERTIFICATES_FILE" --preload-app --capture-output --enable-stdio-inheritance
+    poetry run gunicorn "$APPLICATION" --worker-class "$WORKER_CLASS" --workers "$WORKERS" --worker-connections "$WORKER_CONNECTIONS" --max-requests "$MAX_REQUESTS" --max-requests-jitter "$MAX_REQUESTS_JITTER" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT" --keyfile "$SSL_KEY_FILE" --certfile "$SSL_CERTIFICATE_FILE" --ca-certs "$SSL_CA_CERTIFICATES_FILE" --preload --capture-output --enable-stdio-inheritance
   elif [ "$APPLICATION_PROTOCOL" = "http" ]
   then
     echo "Starting gunicorn ($WORKER_CLASS, $APPLICATION_PROTOCOL)..."
-    poetry run gunicorn "$APPLICATION" --worker-class "$WORKER_CLASS" --workers "$WORKERS" --worker-connections "$WORKER_CONNECTIONS" --max-requests "$MAX_REQUESTS" --max-requests-jitter "$MAX_REQUESTS_JITTER" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT" --preload-app --capture-output --enable-stdio-inheritance
+    poetry run gunicorn "$APPLICATION" --worker-class "$WORKER_CLASS" --workers "$WORKERS" --worker-connections "$WORKER_CONNECTIONS" --max-requests "$MAX_REQUESTS" --max-requests-jitter "$MAX_REQUESTS_JITTER" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT" --preload --capture-output --enable-stdio-inheritance
   else
     echo -e "Error: invalid protocol specified in APPLICATION_PROTOCOL: '$APPLICATION_PROTOCOL'\n"
     echo "Allowed values are 'http' and 'https'"
