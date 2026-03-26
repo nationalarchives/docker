@@ -19,32 +19,36 @@ then
   exit 1
 fi
 
-# Set the number of workers (if provided) else use defaults
-[[ -z $WORKERS ]] && WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
-[[ -z $WORKER_CONNECTIONS ]] && WORKER_CONNECTIONS=1000
-[[ -z $MAX_REQUESTS ]] && MAX_REQUESTS=10000
-[[ -z $MAX_REQUESTS_JITTER ]] && MAX_REQUESTS_JITTER=1000
-
-# Set defaults for environment variables if they are not set
-[[ -z $LOG_LEVEL ]] && LOG_LEVEL=warning
-[[ -z $TIMEOUT ]] && TIMEOUT=30
-
-[[ -z $WORKER_CLASS ]] && WORKER_CLASS=sync
-
-# Get the protcol for the application
-APPLICATION_PROTOCOL=$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')
-
-if [ "$APPLICATION_PROTOCOL" = "https" ]
+# if a gunicorn.conf.py file exists, use it for configuration
+if [ -f "/app/gunicorn.conf.py" ]
 then
-  source tna-ssl-setup
-  echo "Starting gunicorn ($WORKER_CLASS, $APPLICATION_PROTOCOL)..."
-  poetry run gunicorn "$APPLICATION" --worker-class "$WORKER_CLASS" --workers "$WORKERS" --worker-connections "$WORKER_CONNECTIONS" --max-requests "$MAX_REQUESTS" --max-requests-jitter "$MAX_REQUESTS_JITTER" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT" --keyfile "$SSL_KEY_FILE" --certfile "$SSL_CERTIFICATE_FILE" --ca-certs "$SSL_CA_CERTIFICATES_FILE" --preload-app --capture-output --enable-stdio-inheritance
-elif [ "$APPLICATION_PROTOCOL" = "http" ]
-then
-  echo "Starting gunicorn ($WORKER_CLASS, $APPLICATION_PROTOCOL)..."
-  poetry run gunicorn "$APPLICATION" --worker-class "$WORKER_CLASS" --workers "$WORKERS" --worker-connections "$WORKER_CONNECTIONS" --max-requests "$MAX_REQUESTS" --max-requests-jitter "$MAX_REQUESTS_JITTER" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT" --preload-app --capture-output --enable-stdio-inheritance
+  echo "Starting gunicorn (using gunicorn.conf.py)..."
+  poetry run gunicorn "$APPLICATION" --config "/app/gunicorn.conf.py" --capture-output --enable-stdio-inheritance
 else
-  echo -e "Error: invalid protocol specified in APPLICATION_PROTOCOL: '$APPLICATION_PROTOCOL'\n"
-  echo "Allowed values are 'http' and 'https'"
-  exit 1
+  # Set up the configuration for gunicorn based on environment variables or defaults
+  [[ -z $WORKERS ]] && WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
+  [[ -z $WORKER_CONNECTIONS ]] && WORKER_CONNECTIONS=1000
+  [[ -z $MAX_REQUESTS ]] && MAX_REQUESTS=10000
+  [[ -z $MAX_REQUESTS_JITTER ]] && MAX_REQUESTS_JITTER=1000
+  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warning
+  [[ -z $TIMEOUT ]] && TIMEOUT=30
+  [[ -z $WORKER_CLASS ]] && WORKER_CLASS=sync
+
+  # Get the protcol for the application
+  APPLICATION_PROTOCOL=$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')
+
+  if [ "$APPLICATION_PROTOCOL" = "https" ]
+  then
+    source tna-ssl-setup
+    echo "Starting gunicorn ($WORKER_CLASS, $APPLICATION_PROTOCOL)..."
+    poetry run gunicorn "$APPLICATION" --worker-class "$WORKER_CLASS" --workers "$WORKERS" --worker-connections "$WORKER_CONNECTIONS" --max-requests "$MAX_REQUESTS" --max-requests-jitter "$MAX_REQUESTS_JITTER" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT" --keyfile "$SSL_KEY_FILE" --certfile "$SSL_CERTIFICATE_FILE" --ca-certs "$SSL_CA_CERTIFICATES_FILE" --preload-app --capture-output --enable-stdio-inheritance
+  elif [ "$APPLICATION_PROTOCOL" = "http" ]
+  then
+    echo "Starting gunicorn ($WORKER_CLASS, $APPLICATION_PROTOCOL)..."
+    poetry run gunicorn "$APPLICATION" --worker-class "$WORKER_CLASS" --workers "$WORKERS" --worker-connections "$WORKER_CONNECTIONS" --max-requests "$MAX_REQUESTS" --max-requests-jitter "$MAX_REQUESTS_JITTER" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT" --preload-app --capture-output --enable-stdio-inheritance
+  else
+    echo -e "Error: invalid protocol specified in APPLICATION_PROTOCOL: '$APPLICATION_PROTOCOL'\n"
+    echo "Allowed values are 'http' and 'https'"
+    exit 1
+  fi
 fi
