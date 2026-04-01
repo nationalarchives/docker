@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enable `--capture-output` and `--enable-stdio-inheritance` on gunicorn
 - Updated uvicorn to [0.42.0](https://github.com/encode/uvicorn/releases/tag/0.42.0)
 - Updated gunicorn to [25.3.0](https://github.com/benoitc/gunicorn/releases/tag/25.3.0)
+- Updated djHTML to [3.0.11](https://github.com/rtts/djhtml/releases/tag/3.0.11)
 
 ### Deprecated
 ### Removed
