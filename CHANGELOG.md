@@ -5,9 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.10.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.11.0...HEAD)
 
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.11.0](https://github.com/nationalarchives/docker/compare/v1.10.0...v1.11.0) - 2026-04-16
+
 ### Changed
 
 - Updated Black to [26.3.1](https://github.com/psf/black/releases/tag/26.3.1)
@@ -20,13 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Prettier to [3.8.3](https://github.com/prettier/prettier/releases/tag/3.8.3)
 - Set default `LOG_LEVEL` to `DEBUG` in `tna-python-dev`
 
-### Deprecated
-### Removed
 ### Fixed
 
 - Removed duplicated NodeJS setup during `format`
-
-### Security
 
 ## [1.10.0](https://github.com/nationalarchives/docker/compare/v1.9.0...v1.10.0) - 2026-03-02
 
