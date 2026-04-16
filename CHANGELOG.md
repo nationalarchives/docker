@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Django Debug Toolbar to [6.3.0](https://github.com/django-commons/django-debug-toolbar/releases/tag/6.3.0)
 - Updated Poetry to [2.3.4](https://github.com/python-poetry/poetry/releases/tag/2.3.4)
 - Updated Prettier to [3.8.3](https://github.com/prettier/prettier/releases/tag/3.8.3)
+- Set default `LOG_LEVEL` to `DEBUG` in `tna-python-dev`
 
 ### Deprecated
 ### Removed

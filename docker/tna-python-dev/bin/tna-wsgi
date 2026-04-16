@@ -15,6 +15,9 @@ then
   exit 1
 fi
 
+# Set defaults for environment variables if they are not set
+[[ -z $LOG_LEVEL ]] && LOG_LEVEL=debug
+
 # Make sure any mounted scripts in /home/app/.local/bin/tasks are executable
 if [ -d "/home/app/.local/bin/tasks" ]
 then

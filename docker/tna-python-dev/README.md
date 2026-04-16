@@ -16,12 +16,12 @@ All environment variables extended from [tna-python](../tna-python/README.md) bu
 
 | Variable                   | Default                 |
 | -------------------------- | ----------------------- |
-| `WORKERS`                  | `3`                     |
-| `THREADS`                  | `3`                     |
 | `LOG_LEVEL`                | `debug`                 |
 | `NODE_ENV`                 | `development`           |
-| `TIMEOUT`                  | `600`                   |
-| `KEEP_ALIVE`               | `5`                     |
+| `WORKERS`                  | _ignored_               |
+| `THREADS`                  | _ignored_               |
+| `TIMEOUT`                  | _ignored_               |
+| `KEEP_ALIVE`               | _ignored_               |
 | `APPLICATION_PROTOCOL`     | _ignored_ (`http` only) |
 | `SSL_KEY_FILE`             | _ignored_               |
 | `SSL_CERTIFICATE_FILE`     | _ignored_               |
