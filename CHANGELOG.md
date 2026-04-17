@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Set the default `LOG_LEVEL` at the container level rather than `tna-wsgi` and `tna-asgi`
-- Convert `LOG_LEVEL` to lowercase to ensure it always works with Gunicorn and Uvicorn
+- Convert `LOG_LEVEL` to lowercase to ensure it always works with gunicorn and uvicorn
 
 ## [1.11.0](https://github.com/nationalarchives/docker/compare/v1.10.0...v1.11.0) - 2026-04-16
 
