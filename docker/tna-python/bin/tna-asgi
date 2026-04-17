@@ -30,6 +30,9 @@ DEFAULT_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_c
 # Get the protcol for the application
 APPLICATION_PROTOCOL=$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')
 
+# Lowercase LOG_LEVEL
+LOG_LEVEL=$(echo "${LOG_LEVEL}" | tr '[:upper:]' '[:lower:]')
+
 if [ "$APPLICATION_PROTOCOL" = "https" ]
 then
   source tna-ssl-setup
