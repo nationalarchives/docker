@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
-## [1.11.0](https://github.com/nationalarchives/docker/compare/v1.11.0...v1.11.1) - 2026-04-17
+## [1.11.1](https://github.com/nationalarchives/docker/compare/v1.11.0...v1.11.1) - 2026-04-17
 
 ### Fixed
 
