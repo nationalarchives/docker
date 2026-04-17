@@ -46,9 +46,9 @@ HEALTHCHECK CMD curl --fail --insecure "$(echo "${APPLICATION_PROTOCOL:-https}" 
 
 # ==========================================
 # Set the default log level for applications
-# running in production to "WARNING"
+# running in production to "warning"
 # ==========================================
-ENV LOG_LEVEL=WARNING
+ENV LOG_LEVEL=warning
 
 # ==========================================
 # Set Python up in a consistent manner, with

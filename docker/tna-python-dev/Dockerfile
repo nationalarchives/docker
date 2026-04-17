@@ -65,9 +65,9 @@ ENV NODE_ENV=development
 
 # ==========================================
 # Set the default log level for applications
-# running in development to "DEBUG"
+# running in development to "debug"
 # ==========================================
-ENV LOG_LEVEL=DEBUG
+ENV LOG_LEVEL=debug
 
 # ==========================================
 # Copy the development scripts into the user
