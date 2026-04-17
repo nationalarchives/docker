@@ -45,6 +45,12 @@ EXPOSE 8080/tcp
 HEALTHCHECK CMD curl --fail --insecure "$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')://localhost:$APPLICATION_PORT/healthcheck/live/" || exit 1
 
 # ==========================================
+# Set the default log level for applications
+# running in production to "WARNING"
+# ==========================================
+ENV LOG_LEVEL=WARNING
+
+# ==========================================
 # Set Python up in a consistent manner, with
 # things like ensuring no Python bytecode is
 # written to ephemeral Docker instances, and

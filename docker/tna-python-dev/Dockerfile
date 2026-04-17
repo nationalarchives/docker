@@ -64,6 +64,12 @@ ENV BLACK_VERSION=26.3.1 \
 ENV NODE_ENV=development
 
 # ==========================================
+# Set the default log level for applications
+# running in development to "DEBUG"
+# ==========================================
+ENV LOG_LEVEL=DEBUG
+
+# ==========================================
 # Copy the development scripts into the user
 # .local/bin/dev/ directory, and prepare the
 # future .local/bin/tasks/ directory, adding

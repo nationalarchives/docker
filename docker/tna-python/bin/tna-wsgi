@@ -27,7 +27,6 @@ DEFAULT_THREADS=$((DEFAULT_WORKERS * 2))
 [[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS
 
 # Set defaults for environment variables if they are not set
-[[ -z $LOG_LEVEL ]] && LOG_LEVEL=warn
 [[ -z $TIMEOUT ]] && TIMEOUT=30
 [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
 

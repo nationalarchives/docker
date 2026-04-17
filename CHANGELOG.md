@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+
+- Set the default `LOG_LEVEL` at the container level rather than `tna-wsgi` and `tna-asgi`
+
 ### Security
 
 ## [1.11.0](https://github.com/nationalarchives/docker/compare/v1.10.0...v1.11.0) - 2026-04-16

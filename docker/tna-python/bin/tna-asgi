@@ -25,7 +25,6 @@ DEFAULT_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_c
 [[ -z $WORKERS ]] && WORKERS=$DEFAULT_WORKERS
 
 # Set defaults for environment variables if they are not set
-[[ -z $LOG_LEVEL ]] && LOG_LEVEL=warning
 [[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
 
 # Get the protcol for the application
