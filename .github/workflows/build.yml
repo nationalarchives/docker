@@ -41,6 +41,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Setup Wiz
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-install-cli@main
@@ -70,8 +72,10 @@ jobs:
       - name: Show image ID and tag
         run: |
           echo "Image ID: ${{ env.IMAGE_NAME }}"
-          echo "Tag:      ${{ steps.build.outputs.tag }}"
-          docker image ls ${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
+          echo "Tag:      ${STEPS_BUILD_OUTPUTS_TAG}"
+          docker image ls ${{ env.IMAGE_NAME }}:${STEPS_BUILD_OUTPUTS_TAG}
+        env:
+          STEPS_BUILD_OUTPUTS_TAG: ${{ steps.build.outputs.tag }}
 
       - name: Scan Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
@@ -124,7 +128,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull Docker image
-        run: docker pull ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
+        run: docker pull ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${STEPS_BUILD_OUTPUTS_TAG}
+        env:
+          STEPS_BUILD_OUTPUTS_TAG: ${{ steps.build.outputs.tag }}
 
       - name: Scan container
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@main
@@ -158,6 +164,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Setup Wiz
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-install-cli@main
@@ -188,7 +196,9 @@ jobs:
       - name: Show image ID and tag
         run: |
           echo "Image ID: ${{ env.IMAGE_NAME }}"
-          echo "Tag:      ${{ steps.build.outputs.tag }}"
+          echo "Tag:      ${STEPS_BUILD_OUTPUTS_TAG}"
+        env:
+          STEPS_BUILD_OUTPUTS_TAG: ${{ steps.build.outputs.tag }}
 
       - name: Scan Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
@@ -236,7 +246,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull Docker image
-        run: docker pull ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.build.outputs.tag }}
+        run: docker pull ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${STEPS_BUILD_OUTPUTS_TAG}
+        env:
+          STEPS_BUILD_OUTPUTS_TAG: ${{ steps.build.outputs.tag }}
 
       - name: Scan container
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-container@main
