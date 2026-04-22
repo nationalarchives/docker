@@ -48,7 +48,7 @@ runs:
     - name: Build and push image
       uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
       with:
-        context: ${INPUTS_DOCKERFILE_PATH}
+        context: ${{ inputs.dockerfile-path }}
         platforms: linux/amd64,linux/arm64
         labels: |
           uk.gov.nationalarchives.runnumber=${{ github.run_id }}
@@ -60,8 +60,6 @@ runs:
         push: true
         tags: ${{ inputs.image-id }}:${{ inputs.image-tag }}
         provenance: false
-      env:
-        INPUTS_DOCKERFILE_PATH: ${{ inputs.dockerfile-path }}
 
     - name: List manifest
       run: docker buildx imagetools inspect ${INPUTS_IMAGE_ID}:${INPUTS_IMAGE_TAG}
@@ -74,7 +72,7 @@ runs:
       if: startsWith(github.ref, 'refs/tags/')
       uses: docker/build-push-action@bcafcacb16a39f128d818304e6c9c0c18556b85f # v7.1.0
       with:
-        context: ${INPUTS_DOCKERFILE_PATH}
+        context: ${{ inputs.dockerfile-path }}
         platforms: linux/amd64,linux/arm64
         labels: |
           uk.gov.nationalarchives.runnumber=${{ github.run_id }}
@@ -86,5 +84,3 @@ runs:
         push: true
         tags: ${{ inputs.image-id }}:${{ inputs.major-version }},${{ inputs.image-id }}:${{ inputs.major-version }}.${{ inputs.minor-version }},${{ inputs.image-id }}:latest
         provenance: false
-      env:
-        INPUTS_DOCKERFILE_PATH: ${{ inputs.dockerfile-path }}
