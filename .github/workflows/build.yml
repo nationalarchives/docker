@@ -3,7 +3,6 @@ name: Build, test and push
 permissions:
   contents: read
   packages: write
-  security-events: write
 
 on:
   workflow_dispatch:
