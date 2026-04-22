@@ -40,33 +40,48 @@ runs:
         repository: ${{ inputs.application-repository }}
         ref: ${{ inputs.application-repository-branch }}
         path: ${{ inputs.application-repository }}
+        persist-credentials: false
 
     - name: Create environment file
       run: |
-        cd ${{ inputs.application-repository }}
+        cd ${INPUTS_APPLICATION_REPOSITORY}
         touch .env
       shell: bash
+      env:
+        INPUTS_APPLICATION_REPOSITORY: ${{ inputs.application-repository }}
 
     - name: Populate environment file
       if: ${{ inputs.environment-overrides != '' }}
       run: |
-        cd ${{ inputs.application-repository }}
-        echo "${{ inputs.environment-overrides }}" > .env
+        cd ${INPUTS_APPLICATION_REPOSITORY}
+        echo "${INPUTS_ENVIRONMENT_OVERRIDES}" > .env
       shell: bash
+      env:
+        INPUTS_APPLICATION_REPOSITORY: ${{ inputs.application-repository }}
+        INPUTS_ENVIRONMENT_OVERRIDES: ${{ inputs.environment-overrides }}
 
     - name: Start application and wait for it to be healthy
       run: |
-        cd ${{ inputs.application-repository }}
-        yq '(.services.${{ inputs.service }}.build.args.IMAGE|="${{ inputs.image }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
-        yq '(.services.${{ inputs.service }}.build.args.IMAGE_TAG|="${{ inputs.image-tag }}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
-        yq '(.services.${{ inputs.service }}.env_file|=".env")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        cd ${INPUTS_APPLICATION_REPOSITORY}
+        yq '(.services.${INPUTS_SERVICE}.build.args.IMAGE|="${INPUTS_IMAGE}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        yq '(.services.${INPUTS_SERVICE}.build.args.IMAGE_TAG|="${INPUTS_IMAGE_TAG}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        yq '(.services.${INPUTS_SERVICE}.env_file|=".env")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         cat docker-compose.yml
-        docker compose up ${{ inputs.service }} --detach --wait || docker compose logs ${{ inputs.service }}
+        docker compose up ${INPUTS_SERVICE} --detach --wait || docker compose logs ${INPUTS_SERVICE}
       shell: bash
+      env:
+        INPUTS_APPLICATION_REPOSITORY: ${{ inputs.application-repository }}
+        INPUTS_SERVICE: ${{ inputs.service }}
+        INPUTS_IMAGE: ${{ inputs.image }}
+        INPUTS_IMAGE_TAG: ${{ inputs.image-tag }}
 
     - name: Check user
       run: |
-        cd ${{ inputs.application-repository }}
-        docker compose exec ${{ inputs.service }} whoami
-        # docker compose exec ${{ inputs.service }} whoami | grep "${{ inputs.expected-user }}"
+        cd ${INPUTS_APPLICATION_REPOSITORY}
+        docker compose exec ${INPUTS_SERVICE} whoami
+        # docker compose exec ${INPUTS_SERVICE} whoami | grep "${INPUTS_EXPECTED_USER}"
       shell: bash
+      env:
+        INPUTS_APPLICATION_REPOSITORY: ${{ inputs.application-repository }}
+        INPUTS_SERVICE: ${{ inputs.service }}
+        INPUTS_EXPECTED_USER: ${{ inputs.expected-user }}

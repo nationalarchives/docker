@@ -22,25 +22,27 @@ runs:
 
     - name: Test new image tag
       run: |
-        VERSION=${{ steps.version-tag.outputs.version-tag }}
+        VERSION=${STEPS_VERSION_TAG_OUTPUTS_VERSION_TAG}
         VERSION_PART_MAJOR=$(echo "$VERSION" | awk -F'.' '{print $1}')
         VERSION_PART_MINOR=$(echo "$VERSION" | awk -F'.' '{print $2}')
         echo "VERSION:            $VERSION"
         echo "VERSION_PART_MAJOR: $VERSION_PART_MAJOR"
         echo "VERSION_PART_MINOR: $VERSION_PART_MINOR"
       shell: bash
+      env:
+        STEPS_VERSION_TAG_OUTPUTS_VERSION_TAG: ${{ steps.version-tag.outputs.version-tag }}
 
     - name: Prepare image tag
       id: generate-tags
       run: |
         # Strip git ref prefix from version
-        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        VERSION=$(echo "${GITHUB_REF}" | sed -e 's,.*/\(.*\),\1,')
         # Strip "v" prefix from tag name and add the commit count as a build number
-        [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+        [[ "${GITHUB_REF}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
         VERSION_PART_MAJOR=$(echo "$VERSION" | awk -F'.' '{print $1}')
         VERSION_PART_MINOR=$(echo "$VERSION" | awk -F'.' '{print $2}')
         [ "$VERSION" == "main" ] && VERSION=preview
-        echo "IMAGE_ID:           ${{ inputs.image-name }}"
+        echo "IMAGE_ID:           ${INPUTS_IMAGE_NAME}"
         echo "VERSION:            $VERSION"
         echo "VERSION_PART_MAJOR: $VERSION_PART_MAJOR"
         echo "VERSION_PART_MINOR: $VERSION_PART_MINOR"
@@ -48,13 +50,20 @@ runs:
         echo "major-version=$VERSION_PART_MAJOR" >> "$GITHUB_OUTPUT"
         echo "minor-version=$VERSION_PART_MINOR" >> "$GITHUB_OUTPUT"
       shell: bash
+      env:
+        INPUTS_IMAGE_NAME: ${{ inputs.image-name }}
 
     - name: Build image
       run: |
-        docker build --tag ${{ inputs.image-name }}:${{ steps.generate-tags.outputs.tag }} --build-arg "BUILD_VERSION=${{ steps.generate-tags.outputs.tag }}" --build-arg "CONTAINER_IMAGE=${{ env.IMAGE_NAME }}" --build-arg "BASE_IMAGE=${{ inputs.base-image }}" --build-arg "BASE_IMAGE_TAG=${{ steps.generate-tags.outputs.tag }}" --build-arg "TNA_DOCKER_IMAGE_VERSION=${{ steps.generate-tags.outputs.tag }}" --build-arg "TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${{ inputs.dockerfile-path }}/Dockerfile" --platform linux/amd64 --no-cache ${{ inputs.dockerfile-path }}
-        docker inspect ${{ inputs.image-name }}:${{ steps.generate-tags.outputs.tag }}
+        docker build --tag ${INPUTS_IMAGE_NAME}:${STEPS_GENERATE_TAGS_OUTPUTS_TAG} --build-arg "BUILD_VERSION=${STEPS_GENERATE_TAGS_OUTPUTS_TAG}" --build-arg "CONTAINER_IMAGE=${IMAGE_NAME}" --build-arg "BASE_IMAGE=${INPUTS_BASE_IMAGE}" --build-arg "BASE_IMAGE_TAG=${STEPS_GENERATE_TAGS_OUTPUTS_TAG}" --build-arg "TNA_DOCKER_IMAGE_VERSION=${STEPS_GENERATE_TAGS_OUTPUTS_TAG}" --build-arg "TNA_DOCKER_IMAGE_SOURCE=${{ github.server_url	}}/${{ github.repository }}/blob/main/${INPUTS_DOCKERFILE_PATH}/Dockerfile" --platform linux/amd64 --no-cache ${INPUTS_DOCKERFILE_PATH}
+        docker inspect ${INPUTS_IMAGE_NAME}:${STEPS_GENERATE_TAGS_OUTPUTS_TAG}
         docker images --digests
       shell: bash
+      env:
+        INPUTS_IMAGE_NAME: ${{ inputs.image-name }}
+        STEPS_GENERATE_TAGS_OUTPUTS_TAG: ${{ steps.generate-tags.outputs.tag }}
+        INPUTS_BASE_IMAGE: ${{ inputs.base-image }}
+        INPUTS_DOCKERFILE_PATH: ${{ inputs.dockerfile-path }}
 
 outputs:
   tag:
