@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update default isort config to ignore `node_modules`
+- Updated gunicorn to [26.0.0](https://github.com/benoitc/gunicorn/releases/tag/26.0.0)
 
 ### Deprecated
 ### Removed
