@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Poetry to [2.4.0](https://github.com/python-poetry/poetry/releases/tag/2.4.0)
 - Updated Stylelint to [17.11.0](https://github.com/stylelint/stylelint/releases/tag/17.11.0)
 - Updated uvicorn to [0.46.0](https://github.com/encode/uvicorn/releases/tag/0.46.0)
+- Updated stylelint-order to [8.1.1](https://github.com/hudochenkov/stylelint-order/releases/tag/8.1.1)
 
 ### Deprecated
 ### Removed
