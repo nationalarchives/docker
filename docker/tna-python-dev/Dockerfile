@@ -45,9 +45,7 @@ RUN apt-get update; \
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
-ENV BLACK_VERSION=26.3.1 \
-    FLAKE8_VERSION=7.1.1 \
-    ISORT_VERSION=8.0.1 \
+ENV RUFF_VERSION=0.15.12 \
     DJLINT_VERSION=1.36.4 \
     DJHTML_VERSION=3.0.11 \
     DJANGO_DEBUG_TOOLBAR_VERSION=6.3.0 \
@@ -85,7 +83,7 @@ ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
 # ==========================================
 # hadolint ignore=SC1091
 RUN install-format-dependencies; \
-    python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
+    python -m pip install --no-cache-dir --quiet ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
 
 # ==========================================
 # Copy any configuration files into the main
