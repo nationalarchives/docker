@@ -26,10 +26,10 @@ fi
 if [ "$FIX" = true ]
 then
   ruff check /app --fix --config "$RUFF_CONFIG"
-  ruff format /app --fix --config "$RUFF_CONFIG"
+  ruff format /app --config "$RUFF_CONFIG"
 else
   ruff check /app --config "$RUFF_CONFIG"
-  ruff format /app --config "$RUFF_CONFIG"
+  ruff format --check /app --config "$RUFF_CONFIG"
 fi
 echo
 
