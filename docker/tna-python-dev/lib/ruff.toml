@@ -10,7 +10,8 @@ select = [
     "F",
     "B",
     "W",
-    "Q"
+    "Q",
+    "C901"
 ]
 
 [lint.per-file-ignores]
