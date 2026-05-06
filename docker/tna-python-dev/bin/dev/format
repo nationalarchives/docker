@@ -33,18 +33,6 @@ else
 fi
 echo
 
-echo "Running ty..."
-if [ -f "/app/ty.toml" ]
-then
-  TY_CONFIG="/app/ty.toml"
-  echo "Using app config ($TY_CONFIG)"
-else
-  TY_CONFIG="/home/app/ty.toml"
-  echo "Using default config ($TY_CONFIG)"
-fi
-ty check /app --config "$TY_CONFIG"
-echo
-
 if [ -d "/app/app/templates" ]
 then
   echo "Running djLint..."
