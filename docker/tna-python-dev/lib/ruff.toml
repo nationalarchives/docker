@@ -12,12 +12,33 @@ select = [
     "W",
     "Q",
     "I",
-    "C901"
+    "C90",
+    "FAST",
+    "DJ",
+    "FIX",
+    "A",
+    "LOG",
+    "T20",
+    "RET",
+    "SIM",
+    "TD",
+    "N",
+    "PL",
+    "UP",
+    "RUF"
+    #  "TRY"
+]
+allowed-confusables = [
+    "—",
+    "–",
+    "’"
 ]
 
 [lint.per-file-ignores]
 "__init__.py" = [
-    "F401"
+    "E402",
+    "F401",
+    "PLC0415"
 ]
 
 [lint.mccabe]
