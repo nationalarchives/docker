@@ -1,0 +1,22 @@
+extend = "./ruff.toml"
+
+[lint]
+extend-select = [
+    "FAST",
+    "DJ",
+    "FIX",
+    "A",
+    "LOG",
+    "T20",
+    "RET",
+    "SIM",
+    "TD",
+    "N",
+    "PL",
+    "UP",
+    "RUF",
+    "TRY"
+]
+
+[lint.mccabe]
+max-complexity = 12

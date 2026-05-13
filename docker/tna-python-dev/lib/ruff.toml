@@ -1,32 +1,14 @@
-exclude = [
+extend-exclude = [
     "migrations"
 ]
 
 [lint]
-select = [
-    "E4",
-    "E7",
-    "E9",
-    "F",
+extend-select = [
     "B",
     "W",
     "Q",
     "I",
-    "C90",
-    "FAST",
-    "DJ",
-    "FIX",
-    "A",
-    "LOG",
-    "T20",
-    "RET",
-    "SIM",
-    "TD",
-    "N",
-    "PL",
-    "UP",
-    "RUF"
-    #  "TRY"
+    "C90"
 ]
 allowed-confusables = [
     "—",
@@ -42,4 +24,4 @@ allowed-confusables = [
 ]
 
 [lint.mccabe]
-max-complexity = 12
+max-complexity = 20

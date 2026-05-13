@@ -1,3 +1,11 @@
 #!/bin/bash
 
-FIX=false format
+STRICT=false
+
+while getopts "s:" flag; do
+ case $flag in
+   s) STRICT=true ;;
+ esac
+done
+
+STRICT=$STRICT FIX=false format
