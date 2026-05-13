@@ -1,11 +1,10 @@
 #!/bin/bash
 
+PARAM=$1; shift
 STRICT=false
 
-while getopts "s:" flag; do
- case $flag in
-   s) STRICT=true ;;
- esac
-done
+if [[ "$PARAM" == "--strict" ]]; then
+    STRICT=true
+fi
 
 STRICT=$STRICT FIX=false format

@@ -5,11 +5,11 @@ set -e
 [[ -z $FIX ]] && FIX=true
 [[ -z $STRICT ]] && STRICT=false
 
-while getopts "s:" flag; do
- case $flag in
-   s) STRICT=true ;;
- esac
-done
+PARAM=$1; shift
+
+if [[ "$PARAM" == "--strict" ]]; then
+    STRICT=true
+fi
 
 cd /app || return
 
