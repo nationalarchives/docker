@@ -3,15 +3,6 @@
 set -e
 
 [[ -z $FIX ]] && FIX=true
-[[ -z $STRICT ]] && STRICT=false
-
-PARAM=$1; shift
-
-if [[ "$PARAM" == "--strict" ]]; then
-  STRICT=true
-fi
-
-cd /app || return
 
 if [ "$FIX" = true ]
 then
@@ -20,6 +11,13 @@ else
   echo "Reporting issues without fixing..."
 fi
 echo
+
+[[ -z $STRICT ]] && STRICT=false
+if [[ "$1" == "--strict" ]]; then
+  STRICT=true
+fi
+
+cd /app || return
 
 echo "Running ruff..."
 if [ -f "/app/ruff.toml" ]
