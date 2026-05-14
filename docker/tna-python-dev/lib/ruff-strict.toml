@@ -2,20 +2,22 @@ extend = "./ruff.toml"
 
 [lint]
 extend-select = [
-    "FAST",
-    "DJ",
-    "FIX",
     "A",
+    "DJ",
+    "ERA",
+    "FAST",
+    "FIX",
     "LOG",
-    "T20",
-    "RET",
-    "SIM",
-    "TD",
     "N",
     "PL",
-    "UP",
+    "RET",
+    "RSE",
     "RUF",
-    "TRY"
+    "SIM",
+    "T20",
+    "TD",
+    "TRY",
+    "UP"
 ]
 
 [lint.mccabe]

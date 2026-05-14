@@ -4,9 +4,9 @@
 
 This image extends `tna-python` and can be used for local development **ONLY**. It adds:
 
-- `black`, `flake8` and `isort` for formatting Python code
+- `ruff` for formatting and linting Python
 - `prettier`, `eslint` and `stylelint` for formatting JavaScript and CSS
-- scripts for formatting code
+- scripts for formatting
 - `django-debug-toolbar` for debugging Django applications
 - `git`
 
@@ -92,29 +92,91 @@ The process for these commands is:
 
 ### `format`
 
-1. Run `isort`
-1. Run `black`
-1. Run `flake8`
+1. Run `ruff`
 1. Run `djlint` to check HTML templates for Jinja compliance
 1. Apply `prettier` to all files in the `/app` directory
 1. Run `stylelint` against all SCSS files in the `/app` directory
 1. Run `eslint` against all JavaScript files in the `/app` directory
 
-#### How to override the default configurations
+#### Ruff
 
-| Tool        | Overwrite solution                                | More information                                                                                        |
-| ----------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `isort`     | `.isort.cfg` file in the project root             | https://pycqa.github.io/isort/docs/configuration/config_files.html#isortcfg-preferred-format            |
-| `black`     | Add `[tool.black]` config to the `pyproject.toml` | https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-via-a-file |
-| `flake8`    | `.flake8` file in the project root                | https://flake8.pycqa.org/en/latest/user/configuration.html#configuration-locations                      |
-| `djlint`    | `.djlintrc` file in the project root              | https://djlint.com/docs/configuration/                                                                  |
-| `prettier`  | `.prettierignore` file in the project root        | https://prettier.io/docs/en/ignore.html                                                                 |
-| `stylelint` | `.stylelintrc` file in the project root           | https://stylelint.io/user-guide/configure/                                                              |
-| `eslint`    | `.eslintrc.js` file in the project root           | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files              |
+By default, Ruff is only configured to check the following when running `format` and `checkformat`:
+
+| Code             | Purpose                                                                         | Defined by                                                               |
+| ---------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `E4`, `E7`, `E9` | [Subset of pycodestyle errors](https://pypi.org/project/pycodestyle/)           | [Ruff default configuration](https://docs.astral.sh/ruff/configuration/) |
+| `F`              | [Pyflakes](https://pypi.org/project/pyflakes/)                                  | [Ruff default configuration](https://docs.astral.sh/ruff/configuration/) |
+| `W`              | [pycodestyle warnings](https://pypi.org/project/pycodestyle/)                   | [`/home/app/ruff.toml`](./lib/ruff.toml)                                 |
+| `C901`           | [mccabe "Function is too complex"](https://www.flake8rules.com/rules/C901.html) | [`/home/app/ruff.toml`](./lib/ruff.toml)                                 |
+| `B`              | [flake8-bugbear](https://pypi.org/project/flake8-bugbear/)                      | [`/home/app/ruff.toml`](./lib/ruff.toml)                                 |
+| `I`              | [isort](https://pypi.org/project/isort/)                                        | [`/home/app/ruff.toml`](./lib/ruff.toml)                                 |
+| `Q`              | [flake8-quotes](https://pypi.org/project/flake8-quotes/)                        | [`/home/app/ruff.toml`](./lib/ruff.toml)                                 |
+
+Running `format --strict` or `checkformat --strict` will apply some extra rules defined in [`/home/app/ruff-strict.toml`](./lib/ruff-strict.toml):
+
+| Code   | Purpose                                                               |
+| ------ | --------------------------------------------------------------------- |
+| `A`    | [flake8-builtins](https://pypi.org/project/flake8-builtins/)          |
+| `DJ`   | [flake8-django](https://pypi.org/project/flake8-django/)              |
+| `ERA`  | [eradicate](https://pypi.org/project/eradicate/)                      |
+| `FAST` | [fastapi](https://pypi.org/project/fastapi/)                          |
+| `FIX`  | [flake8-fixme](https://github.com/tommilligan/flake8-fixme)           |
+| `LOG`  | [flake8-logging](https://pypi.org/project/flake8-logging/)            |
+| `N`    | [pep8-naming](https://pypi.org/project/pep8-naming/)                  |
+| `PL`   | [pylint](https://pypi.org/project/pylint/)                            |
+| `RET`  | [flake8-return](https://pypi.org/project/flake8-return/)              |
+| `RSE`  | [flake8-raise](https://pypi.org/project/flake8-raise/)                |
+| `RUF`  | [Ruff-specific rules](https://docs.astral.sh/ruff/settings/#lintruff) |
+| `SIM`  | [flake8-simplify](https://pypi.org/project/flake8-simplify/)          |
+| `T20`  | [flake8-print](https://pypi.org/project/flake8-print/)                |
+| `TD`   | [flake8-todos](https://github.com/orsinium-labs/flake8-todos/)        |
+| `TRY`  | [tryceratops](https://pypi.org/project/tryceratops/)                  |
+| `UP`   | [pyupgrade](https://pypi.org/project/pyupgrade/)                      |
+
+##### How to override Ruff configuration
+
+Create a `ruff.toml` file in your project root. If this file exists, the `--strict` parameter will be ignored on `format --strict` and `checkformat --strict`.
+
+```toml
+# Extend the default Ruff configuration
+extend = "/home/app/ruff.toml"
+
+# ...or extend the strict ruleset
+# extend = "/home/app/ruff-strict.toml"
+
+extend-exclude = [
+    # "migrations"  # Exclude the "migrations" directory
+]
+
+[lint]
+ignore = [
+    # Add rules to ignore in your project
+]
+```
+
+##### Ignoring code
+
+Use the `# noqa` annotation from [In-line Ignoring Errorsin Flake8](https://flake8.pycqa.org/en/latest/user/violations.html#in-line-ignoring-errors) to ignore failing lines.
+
+```python
+def my_overly_complex_function():  # noqa: C901
+    pass
+```
+
+#### How to override other default configurations
+
+| Tool        | Overwrite solution                         | More information                                                                           |
+| ----------- | ------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `djlint`    | `.djlintrc` file in the project root       | https://djlint.com/docs/configuration/                                                     |
+| `prettier`  | `.prettierignore` file in the project root | https://prettier.io/docs/en/ignore.html                                                    |
+| `stylelint` | `.stylelintrc` file in the project root    | https://stylelint.io/user-guide/configure/                                                 |
+| `eslint`    | `.eslintrc.js` file in the project root    | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files |
 
 ### `checkformat`
 
 Runs the same tests as `format` but doesn't fix issues. Can be used in CI/CD pipelines to check formatting.
+
+Like `format --strict`, `checkformat --strict` uses an [expanded set of Ruff rules](#ruff).
 
 ### `outdated`
 

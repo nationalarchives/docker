@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.11.1...HEAD)
 
 ### Added
+
+- Added Ruff as a replacement for isort, Flake8 and Black
+
 ### Changed
 
 - Update default isort config to ignore `node_modules`

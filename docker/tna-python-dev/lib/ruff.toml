@@ -1,14 +1,10 @@
-extend-exclude = [
-    "migrations"
-]
-
 [lint]
 extend-select = [
-    "B",
     "W",
-    "Q",
+    "C901",
+    "B",
     "I",
-    "C90"
+    "Q"
 ]
 allowed-confusables = [
     "—",
