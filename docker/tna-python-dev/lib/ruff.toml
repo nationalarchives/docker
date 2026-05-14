@@ -1,0 +1,23 @@
+[lint]
+extend-select = [
+    "W",
+    "C901",
+    "B",
+    "I",
+    "Q"
+]
+allowed-confusables = [
+    "—",
+    "–",
+    "’"
+]
+
+[lint.per-file-ignores]
+"__init__.py" = [
+    "E402",
+    "F401",
+    "PLC0415"
+]
+
+[lint.mccabe]
+max-complexity = 20

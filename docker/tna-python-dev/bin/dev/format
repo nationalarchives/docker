@@ -2,8 +2,6 @@
 
 set -e
 
-cd /app || return
-
 [[ -z $FIX ]] && FIX=true
 
 if [ "$FIX" = true ]
@@ -14,42 +12,39 @@ else
 fi
 echo
 
-echo "Running isort..."
-if [ -f "/app/.isort.cfg" ]
+[[ -z $STRICT ]] && STRICT=false
+if [[ "$1" == "--strict" ]]; then
+  STRICT=true
+fi
+
+cd /app || return
+
+echo "Running ruff..."
+if [ -f "/app/ruff.toml" ]
 then
-  ISORT_CONFIG="/app/.isort.cfg"
-  echo "Using app config ($ISORT_CONFIG)"
+  RUFF_CONFIG="/app/ruff.toml"
+  if [ "$STRICT" = true ]
+  then
+    echo "Using app config ($RUFF_CONFIG - ignoring strict mode)"
+  else
+    echo "Using app config ($RUFF_CONFIG)"
+  fi
+elif [ "$STRICT" = true ]
+then
+  RUFF_CONFIG="/home/app/ruff-strict.toml"
+  echo "Using default strict config ($RUFF_CONFIG)"
 else
-  ISORT_CONFIG="/home/app/.isort.cfg"
-  echo "Using default config ($ISORT_CONFIG)"
+  RUFF_CONFIG="/home/app/ruff.toml"
+  echo "Using default config ($RUFF_CONFIG)"
 fi
 if [ "$FIX" = true ]
 then
-  isort --settings-file "$ISORT_CONFIG" /app --overwrite-in-place
+  ruff check /app --fix --config "$RUFF_CONFIG"
+  ruff format /app --config "$RUFF_CONFIG"
 else
-  isort --settings-file "$ISORT_CONFIG" /app --diff
+  ruff check /app --config "$RUFF_CONFIG"
+  ruff format --check /app --config "$RUFF_CONFIG"
 fi
-echo
-
-echo "Running black..."
-if [ "$FIX" = true ]
-then
-  black -t py310 -t py311 -t py312 -t py313 -t py314 /app
-else
-  black -t py310 -t py311 -t py312 -t py313 -t py314 --check /app
-fi
-echo
-
-echo "Running flake8..."
-if [ -f "/app/.flake8" ]
-then
-  FLAKE8_CONFIG="/app/.flake8"
-  echo "Using app config ($FLAKE8_CONFIG)"
-else
-  FLAKE8_CONFIG="/home/app/.flake8"
-  echo "Using default config ($FLAKE8_CONFIG)"
-fi
-flake8 --config="$FLAKE8_CONFIG" /app
 echo
 
 if [ -d "/app/app/templates" ]

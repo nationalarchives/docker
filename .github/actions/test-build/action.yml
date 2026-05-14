@@ -18,7 +18,7 @@ runs:
   steps:
     - name: Create version tag
       id: version-tag
-      uses: nationalarchives/ds-docker-actions/.github/actions/get-version-tag@main  # TODO: Could replace the "Prepare image tag" step below?
+      uses: nationalarchives/ds-docker-actions/.github/actions/get-version-tag@main # TODO: Could replace the "Prepare image tag" step below?
 
     - name: Test new image tag
       run: |
