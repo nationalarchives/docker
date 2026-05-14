@@ -18,11 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added Ruff as a replacement for isort, Flake8 and Black
+- Added [Ruff](https://docs.astral.sh/ruff/) as a replacement for isort, Flake8 and Black
 
 ### Changed
 
-- Update default isort config to ignore `node_modules`
 - Updated gunicorn to [26.0.0](https://github.com/benoitc/gunicorn/releases/tag/26.0.0)
 - Updated Poetry to [2.4.1](https://github.com/python-poetry/poetry/releases/tag/2.4.1)
 - Updated Stylelint to [17.11.0](https://github.com/stylelint/stylelint/releases/tag/17.11.0)
