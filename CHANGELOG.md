@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.11.1...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.12.0...HEAD)
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.12.0](https://github.com/nationalarchives/docker/compare/v1.11.1...v1.12.0) - 2026-05-14
 
 ### Added
 
@@ -15,15 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update default isort config to ignore `node_modules`
 - Updated gunicorn to [26.0.0](https://github.com/benoitc/gunicorn/releases/tag/26.0.0)
-- Updated Poetry to [2.4.0](https://github.com/python-poetry/poetry/releases/tag/2.4.0)
+- Updated Poetry to [2.4.1](https://github.com/python-poetry/poetry/releases/tag/2.4.1)
 - Updated Stylelint to [17.11.0](https://github.com/stylelint/stylelint/releases/tag/17.11.0)
 - Updated uvicorn to [0.46.0](https://github.com/encode/uvicorn/releases/tag/0.46.0)
 - Updated stylelint-order to [8.1.1](https://github.com/hudochenkov/stylelint-order/releases/tag/8.1.1)
-
-### Deprecated
-### Removed
-### Fixed
-### Security
 
 ## [1.11.1](https://github.com/nationalarchives/docker/compare/v1.11.0...v1.11.1) - 2026-04-17
 
