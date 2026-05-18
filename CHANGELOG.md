@@ -9,10 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated Ruff to [0.15.13](https://github.com/astral-sh/ruff/releases/tag/0.15.13)
+
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
+
+- Updated curl to `8.14.1-2+deb13u3`
 
 ## [1.12.0](https://github.com/nationalarchives/docker/compare/v1.11.1...v1.12.0) - 2026-05-14
 
