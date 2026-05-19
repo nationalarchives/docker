@@ -12,10 +12,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Ruff to [0.15.13](https://github.com/astral-sh/ruff/releases/tag/0.15.13)
 - Set the default Ruff cache location to `/home/app/.ruff_cache`, outside the project root to avoid Prettier trying to check it
+- Changed from a variable version of Node.js `lts/krypton` to a fixed version `24.15.0`
+- Optimised formatting tools install
+- Updated ESLint to [10.4.0](https://github.com/eslint/eslint/releases/tag/v10.4.0)
+- Added [stylelint-order](https://github.com/hudochenkov/stylelint-order)
 
 ### Deprecated
 ### Removed
+
+- Removed support for all ESLint config formats except for `eslint.config.js` and all Stylelint config formats except for `stylelint.config.js`
+
 ### Fixed
+
+- Don't error on Prettier if no matching files are found
+
 ### Security
 
 - Updated curl to `8.14.1-2+deb13u3`
