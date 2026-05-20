@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 - Updated curl to `8.14.1-2+deb13u3`
-- Update `libgnutls30t64` to `3.8.9-3+deb13u2` for [CVE-2026-42010](https://security-tracker.debian.org/tracker/CVE-2026-42010)
+- Update `libgnutls30t64` to `3.8.9-3+deb13u4` for [CVE-2026-42010](https://security-tracker.debian.org/tracker/CVE-2026-42010)
 
 ## [1.12.0](https://github.com/nationalarchives/docker/compare/v1.11.1...v1.12.0) - 2026-05-14
 
