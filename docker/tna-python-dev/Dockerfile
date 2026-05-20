@@ -49,12 +49,7 @@ ENV RUFF_VERSION=0.15.13 \
     DJLINT_VERSION=1.36.4 \
     DJHTML_VERSION=3.0.11 \
     DJANGO_DEBUG_TOOLBAR_VERSION=6.3.0 \
-    PRETTIER_VERSION=3.8.3 \
-    STYLELINT_VERSION=17.11.0 \
-    STYLELINT_CONFIG_STANDARD_SCSS_VERSION=17.0.0 \
-    STYLELINT_ORDER_VERSION=8.1.1 \
-    STYLELINT_SELECTOR_BEM_PATTERN_VERSION=4.0.1 \
-    STYLELINT_ORDER_VERSION=8.1.1
+    PRETTIER_VERSION=3.8.3
 
 # ==========================================
 # Create container labels containing version
@@ -66,10 +61,6 @@ LABEL uk.gov.nationalarchives.djlint-version="$DJLINT_VERSION"
 LABEL uk.gov.nationalarchives.djhtml-version="$DJHTML_VERSION"
 LABEL uk.gov.nationalarchives.django-debug-toolbar-version="$DJANGO_DEBUG_TOOLBAR_VERSION"
 LABEL uk.gov.nationalarchives.prettier-version="$PRETTIER_VERSION"
-LABEL uk.gov.nationalarchives.stylelint-version="$STYLELINT_VERSION"
-LABEL uk.gov.nationalarchives.stylelint-config-standard-scss-version="$STYLELINT_CONFIG_STANDARD_SCSS_VERSION"
-LABEL uk.gov.nationalarchives.stylelint-selector-bem-pattern-version="$STYLELINT_SELECTOR_BEM_PATTERN_VERSION"
-LABEL uk.gov.nationalarchives.stylelint-order-version="$STYLELINT_ORDER_VERSION"
     
 # ==========================================
 # Set the Node.js environment to development
@@ -96,7 +87,7 @@ ENV RUFF_CACHE_DIR=/home/app/.ruff_cache
 RUN . tna-nvm; \
     nvm use default; \
     npm config set fund=false --location=global; \
-    npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" @nationalarchives/eslint-config@latest @nationalarchives/frontend@latest; \
+    npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" @nationalarchives/eslint-config@latest @nationalarchives/stylelint-config@latest; \
     python -m pip install --no-cache-dir --quiet ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
 
 # ==========================================

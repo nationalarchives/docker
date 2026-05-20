@@ -92,12 +92,12 @@ fi
 echo
 
 echo "Running stylelint..."
-if [ -f "/app/stylelint.config.js" ]
+if [ -f "/app/stylelint.config.mjs" ]
 then
-  STYLELINT_CONFIG="/app/stylelint.config.js"
+  STYLELINT_CONFIG="/app/stylelint.config.mjs"
   echo "Using app config ($STYLELINT_CONFIG)"
 else
-  STYLELINT_CONFIG="$(npm root --global)/@nationalarchives/frontend/config/stylelint.config.js"
+  STYLELINT_CONFIG="$(npm root --global)/@nationalarchives/stylelint-config/stylelint.config.mjs"
   echo "Using default config from TNA Frontend ($STYLELINT_CONFIG)"
 fi
 if [ -f "/app/.stylelintignore" ]
