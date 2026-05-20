@@ -5,18 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.12.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.13.0...HEAD)
 
 ### Added
 ### Changed
-
-- Updated Ruff to [0.15.13](https://github.com/astral-sh/ruff/releases/tag/0.15.13)
-- Set the default Ruff cache location to `/home/app/.ruff_cache`, outside the project root to avoid Prettier trying to check it
-- Changed from a variable version of Node.js `lts/krypton` to a fixed version `24.15.0`
-- Optimised formatting tools install
-- Updated ESLint to [10.4.0](https://github.com/eslint/eslint/releases/tag/v10.4.0)
-- Added [stylelint-order](https://github.com/hudochenkov/stylelint-order)
-
 ### Deprecated
 ### Removed
 
@@ -28,7 +20,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Updated curl to `8.14.1-2+deb13u3`
+## [1.13.0](https://github.com/nationalarchives/docker/compare/v1.12.0...v1.13.0) - 2026-05-20
+
+### Changed
+
+- Updated Ruff to [0.15.13](https://github.com/astral-sh/ruff/releases/tag/0.15.13)
+
+### Security
+
+- Updated `curl` to `8.14.1-2+deb13u3`
+- Update `libgnutls30t64` to `3.8.9-3+deb13u4` for [CVE-2026-42010](https://security-tracker.debian.org/tracker/CVE-2026-42010)
 
 ## [1.12.0](https://github.com/nationalarchives/docker/compare/v1.11.1...v1.12.0) - 2026-05-14
 
