@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 
-- Removed support for all ESLint config formats except for `eslint.config.js` and all Stylelint config formats except for `stylelint.config.js`
+- Removed support for all ESLint config formats except for `eslint.config.mjs` and all Stylelint config formats except for `stylelint.config.js`
 
 ### Fixed
 

@@ -54,11 +54,7 @@ ENV RUFF_VERSION=0.15.13 \
     STYLELINT_CONFIG_STANDARD_SCSS_VERSION=17.0.0 \
     STYLELINT_ORDER_VERSION=8.1.1 \
     STYLELINT_SELECTOR_BEM_PATTERN_VERSION=4.0.1 \
-    STYLELINT_ORDER_VERSION=8.1.1 \
-    ESLINT_VERSION=10.4.0 \
-    ESLINTRC_VERSION=3.3.5 \
-    ESLINT_JS_VERSION=10.0.1 \
-    GLOBALS_VERSION=17.6.0
+    STYLELINT_ORDER_VERSION=8.1.1
 
 # ==========================================
 # Create container labels containing version
@@ -74,10 +70,6 @@ LABEL uk.gov.nationalarchives.stylelint-version="$STYLELINT_VERSION"
 LABEL uk.gov.nationalarchives.stylelint-config-standard-scss-version="$STYLELINT_CONFIG_STANDARD_SCSS_VERSION"
 LABEL uk.gov.nationalarchives.stylelint-selector-bem-pattern-version="$STYLELINT_SELECTOR_BEM_PATTERN_VERSION"
 LABEL uk.gov.nationalarchives.stylelint-order-version="$STYLELINT_ORDER_VERSION"
-LABEL uk.gov.nationalarchives.eslint-version="$ESLINT_VERSION"
-LABEL uk.gov.nationalarchives.eslintrc-version="$ESLINTRC_VERSION"
-LABEL uk.gov.nationalarchives.eslint-js-version="$ESLINT_JS_VERSION"
-LABEL uk.gov.nationalarchives.globals-version="$GLOBALS_VERSION"
     
 # ==========================================
 # Set the Node.js environment to development
@@ -104,7 +96,7 @@ ENV RUFF_CACHE_DIR=/home/app/.ruff_cache
 RUN . tna-nvm; \
     nvm use default; \
     npm config set fund=false --location=global; \
-    npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "eslint@$ESLINT_VERSION" "@eslint/eslintrc@$ESLINTRC_VERSION" "@eslint/js@$ESLINT_JS_VERSION" "globals@$GLOBALS_VERSION" @nationalarchives/frontend@latest; \
+    npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "stylelint@$STYLELINT_VERSION" "stylelint-config-standard-scss@$STYLELINT_CONFIG_STANDARD_SCSS_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" "stylelint-selector-bem-pattern@$STYLELINT_SELECTOR_BEM_PATTERN_VERSION" "stylelint-order@$STYLELINT_ORDER_VERSION" @nationalarchives/eslint-config@latest @nationalarchives/frontend@latest; \
     python -m pip install --no-cache-dir --quiet ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
 
 # ==========================================

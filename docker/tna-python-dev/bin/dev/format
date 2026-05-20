@@ -117,12 +117,12 @@ fi
 echo
 
 echo "Running eslint..."
-if [ -f "/app/eslint.config.js" ]
+if [ -f "/app/eslint.config.mjs" ]
 then
-  ESLINT_CONFIG="/app/eslint.config.js"
+  ESLINT_CONFIG="/app/eslint.config.mjs"
   echo "Using app config ($ESLINT_CONFIG)"
 else
-  ESLINT_CONFIG="$(npm root --global)/@nationalarchives/frontend/config/eslint.config.js"
+  ESLINT_CONFIG="$(npm root --global)/@nationalarchives/eslint-config/eslint.config.mjs"
   echo "Using default config from TNA Frontend ($ESLINT_CONFIG)"
 fi
 if [ "$FIX" = true ]
