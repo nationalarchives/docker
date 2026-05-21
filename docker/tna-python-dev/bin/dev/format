@@ -19,6 +19,9 @@ fi
 
 cd /app || return
 
+# ==========================================
+# RUFF
+# ==========================================
 echo "Running ruff..."
 if [ -f "/app/ruff.toml" ]
 then
@@ -47,6 +50,9 @@ else
 fi
 echo
 
+# ==========================================
+# DJLINT
+# ==========================================
 if [ -d "/app/app/templates" ]
 then
   echo "Running djLint..."
@@ -62,18 +68,70 @@ then
   # if [ "$FIX" = true ]
   # then
   #   # djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
-  #   # djhtml /app/app/templates --tabwidth 2
-  #   echo
-  # else
-  #   # djhtml /app/app/templates --tabwidth 2 --check
   #   echo
   # fi
   echo
 fi
 
+# ==========================================
+# SET UP NODE
+# ==========================================
 . tna-nvm
 nvm use default
+NODE_GLOBAL_MODULES="$(npm root --global)"
 
+# ==========================================
+# STYLELINT
+# ==========================================
+echo "Running stylelint..."
+if [ -f "/app/stylelint.config.mjs" ]
+then
+  STYLELINT_CONFIG="/app/stylelint.config.mjs"
+  echo "Using app config ($STYLELINT_CONFIG)"
+else
+  STYLELINT_CONFIG="$NODE_GLOBAL_MODULES/@nationalarchives/stylelint-config/stylelint.config.mjs"
+  echo "Using default config from TNA Frontend ($STYLELINT_CONFIG)"
+fi
+if [ -f "/app/.stylelintignore" ]
+then
+  STYLELINT_IGNORE="/app/.stylelintignore"
+  echo "Using app ignore ($STYLELINT_IGNORE)"
+else
+  STYLELINT_IGNORE="/home/app/.stylelintignore"
+  echo "Using default ignore ($STYLELINT_IGNORE)"
+fi
+STYLELINT_BIN="$NODE_GLOBAL_MODULES/@nationalarchives/stylelint-config/node_modules/stylelint/bin/stylelint.mjs"
+if [ "$FIX" = true ]
+then
+  node "$STYLELINT_BIN" --config "$STYLELINT_CONFIG" --ignore-path "$STYLELINT_IGNORE" --fix "/app/**/*.{css,scss}" --allow-empty-input
+else
+  node "$STYLELINT_BIN" --config "$STYLELINT_CONFIG" --ignore-path "$STYLELINT_IGNORE" "/app/**/*.{css,scss}" --allow-empty-input
+fi
+echo
+
+# ==========================================
+# ESLINT
+# ==========================================
+echo "Running eslint..."
+if [ -f "/app/eslint.config.mjs" ]
+then
+  ESLINT_CONFIG="/app/eslint.config.mjs"
+  echo "Using app config ($ESLINT_CONFIG)"
+else
+  ESLINT_CONFIG="$NODE_GLOBAL_MODULES/@nationalarchives/eslint-config/eslint.config.mjs"
+  echo "Using default config from TNA Frontend ($ESLINT_CONFIG)"
+fi
+ESLINT_BIN="$NODE_GLOBAL_MODULES/@nationalarchives/eslint-config/node_modules/eslint/bin/eslint.js"
+if [ "$FIX" = true ]
+then
+  node "$ESLINT_BIN" --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern --fix "/app"
+else
+  node "$ESLINT_BIN" --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern "/app"
+fi
+
+# ==========================================
+# PRETTIER
+# ==========================================
 echo "Running prettier..."
 if [ -f "/app/.prettierignore" ]
 then
@@ -90,44 +148,3 @@ else
   prettier --ignore-path "$PRETTIER_IGNORE" --list-different --no-error-on-unmatched-pattern /app
 fi
 echo
-
-echo "Running stylelint..."
-if [ -f "/app/stylelint.config.mjs" ]
-then
-  STYLELINT_CONFIG="/app/stylelint.config.mjs"
-  echo "Using app config ($STYLELINT_CONFIG)"
-else
-  STYLELINT_CONFIG="$(npm root --global)/@nationalarchives/stylelint-config/stylelint.config.mjs"
-  echo "Using default config from TNA Frontend ($STYLELINT_CONFIG)"
-fi
-if [ -f "/app/.stylelintignore" ]
-then
-  STYLELINT_IGNORE="/app/.stylelintignore"
-  echo "Using app ignore ($STYLELINT_IGNORE)"
-else
-  STYLELINT_IGNORE="/home/app/.stylelintignore"
-  echo "Using default ignore ($STYLELINT_IGNORE)"
-fi
-if [ "$FIX" = true ]
-then
-  stylelint --config "$STYLELINT_CONFIG" --ignore-path "$STYLELINT_IGNORE" --fix "/app/**/*.{css,scss}" --allow-empty-input
-else
-  stylelint --config "$STYLELINT_CONFIG" --ignore-path "$STYLELINT_IGNORE" "/app/**/*.{css,scss}" --allow-empty-input
-fi
-echo
-
-echo "Running eslint..."
-if [ -f "/app/eslint.config.mjs" ]
-then
-  ESLINT_CONFIG="/app/eslint.config.mjs"
-  echo "Using app config ($ESLINT_CONFIG)"
-else
-  ESLINT_CONFIG="$(npm root --global)/@nationalarchives/eslint-config/eslint.config.mjs"
-  echo "Using default config from TNA Frontend ($ESLINT_CONFIG)"
-fi
-if [ "$FIX" = true ]
-then
-  eslint --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern --fix "/app"
-else
-  eslint --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern "/app"
-fi
