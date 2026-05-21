@@ -78,6 +78,12 @@ RUN chmod +x -R /home/app/.local/bin/dev
 ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
 
 # ==========================================
+# Set the location of the Ruff cache outside
+# the project root
+# ==========================================
+ENV RUFF_CACHE_DIR=/home/app/.ruff_cache
+
+# ==========================================
 # Install the tools required for linting and
 # fixing Python, HTML, CSS and JavaScript
 # ==========================================
