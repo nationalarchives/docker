@@ -47,7 +47,6 @@ RUN apt-get update; \
 # ==========================================
 ENV RUFF_VERSION=0.15.13 \
     DJLINT_VERSION=1.36.4 \
-    DJHTML_VERSION=3.0.11 \
     DJANGO_DEBUG_TOOLBAR_VERSION=6.3.0 \
     PRETTIER_VERSION=3.8.3
 
@@ -58,7 +57,6 @@ ENV RUFF_VERSION=0.15.13 \
 # ==========================================
 LABEL uk.gov.nationalarchives.ruff-version="$RUFF_VERSION"
 LABEL uk.gov.nationalarchives.djlint-version="$DJLINT_VERSION"
-LABEL uk.gov.nationalarchives.djhtml-version="$DJHTML_VERSION"
 LABEL uk.gov.nationalarchives.django-debug-toolbar-version="$DJANGO_DEBUG_TOOLBAR_VERSION"
 LABEL uk.gov.nationalarchives.prettier-version="$PRETTIER_VERSION"
     
@@ -88,7 +86,7 @@ RUN . tna-nvm; \
     nvm use default; \
     npm config set fund=false --location=global; \
     npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" @nationalarchives/eslint-config@latest @nationalarchives/stylelint-config@latest; \
-    python -m pip install --no-cache-dir --quiet ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
+    python -m pip install --no-cache-dir --quiet ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION"
 
 # ==========================================
 # Copy the development scripts into the user
