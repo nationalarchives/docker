@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Added `@nationalarchives/eslint-config` and `@nationalarchives/stylelint-config` to replace config from `@nationalarchives/frontend`
+- Updated Ruff to [0.15.13](https://github.com/astral-sh/ruff/releases/tag/0.15.13)
+- Set the default Ruff cache location to `/home/app/.ruff_cache`, outside the project root to avoid Prettier trying to check it
 
 ### Deprecated
 ### Removed
