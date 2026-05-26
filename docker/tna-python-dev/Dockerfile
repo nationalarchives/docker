@@ -45,7 +45,7 @@ RUN apt-get update; \
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
-ENV RUFF_VERSION=0.15.13 \
+ENV RUFF_VERSION=0.15.14 \
     DJLINT_VERSION=1.36.4 \
     DJHTML_VERSION=3.0.11 \
     DJANGO_DEBUG_TOOLBAR_VERSION=6.3.0 \
