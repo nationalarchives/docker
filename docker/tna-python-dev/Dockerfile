@@ -47,14 +47,18 @@ RUN apt-get update; \
 # ==========================================
 ENV RUFF_VERSION=0.15.13 \
     DJLINT_VERSION=1.36.4 \
-    DJHTML_VERSION=3.0.11 \
     DJANGO_DEBUG_TOOLBAR_VERSION=6.3.0 \
-    PRETTIER_VERSION=3.8.3 \
-    STYLELINT_VERSION=17.11.0 \
-    STYLELINT_CONFIG_STANDARD_SCSS_VERSION=17.0.0 \
-    STYLELINT_SELECTOR_BEM_PATTERN_VERSION=4.0.1 \
-    STYLELINT_ORDER_VERSION=8.1.1 \
-    ESLINT_VERSION=8.56.0
+    PRETTIER_VERSION=3.8.3
+
+# ==========================================
+# Create container labels containing version
+# numbers for the software we have installed
+# in this image
+# ==========================================
+LABEL uk.gov.nationalarchives.ruff-version="$RUFF_VERSION"
+LABEL uk.gov.nationalarchives.djlint-version="$DJLINT_VERSION"
+LABEL uk.gov.nationalarchives.django-debug-toolbar-version="$DJANGO_DEBUG_TOOLBAR_VERSION"
+LABEL uk.gov.nationalarchives.prettier-version="$PRETTIER_VERSION"
     
 # ==========================================
 # Set the Node.js environment to development
@@ -68,16 +72,6 @@ ENV NODE_ENV=development
 ENV LOG_LEVEL=debug
 
 # ==========================================
-# Copy the development scripts into the user
-# .local/bin/dev/ directory, and prepare the
-# future .local/bin/tasks/ directory, adding
-# it to the path ready for mounted scripts
-# ==========================================
-COPY bin/dev /home/app/.local/bin/dev
-RUN chmod +x -R /home/app/.local/bin/dev
-ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
-
-# ==========================================
 # Set the location of the Ruff cache outside
 # the project root
 # ==========================================
@@ -88,17 +82,27 @@ ENV RUFF_CACHE_DIR=/home/app/.ruff_cache
 # fixing Python, HTML, CSS and JavaScript
 # ==========================================
 # hadolint ignore=SC1091
-RUN install-format-dependencies; \
-    python -m pip install --no-cache-dir --quiet ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
+RUN . tna-nvm; \
+    nvm use default; \
+    npm config set fund=false --location=global; \
+    npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" @nationalarchives/eslint-config@latest @nationalarchives/stylelint-config@latest; \
+    python -m pip install --no-cache-dir --quiet ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION"
 
 # ==========================================
-# Copy any configuration files into the main
-# app directory, including the configuration
-# for stylelint from TNA Frontend
+# Copy the development scripts into the user
+# .local/bin/dev/ directory, and prepare the
+# future .local/bin/tasks/ directory, adding
+# it to the path ready for mounted scripts
+# ==========================================
+COPY bin/dev /home/app/.local/bin/dev
+RUN chmod +x -R /home/app/.local/bin/dev
+ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
+
+# ==========================================
+# Copy all configuration files into the main
+# app directory
 # ==========================================
 COPY lib/* /home/app/
-# hadolint ignore=SC1091
-RUN . tna-nvm && cp "$(npm root -g)/@nationalarchives/frontend/config/stylelint.config.js" /home/app/stylelint.config.js
 
 # ==========================================
 # Update the build and run scripts with some

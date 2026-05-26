@@ -165,12 +165,12 @@ def my_overly_complex_function():  # noqa: C901
 
 #### How to override other default configurations
 
-| Tool        | Overwrite solution                         | More information                                                                           |
-| ----------- | ------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| `djlint`    | `.djlintrc` file in the project root       | https://djlint.com/docs/configuration/                                                     |
-| `prettier`  | `.prettierignore` file in the project root | https://prettier.io/docs/en/ignore.html                                                    |
-| `stylelint` | `.stylelintrc` file in the project root    | https://stylelint.io/user-guide/configure/                                                 |
-| `eslint`    | `.eslintrc.js` file in the project root    | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files |
+| Tool        | Overwrite solution                                                | More information                                                                            |
+| ----------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `djlint`    | `.djlintrc` file in the project root                              | https://djlint.com/docs/configuration/                                                      |
+| `prettier`  | `.prettierignore` file in the project root                        | https://prettier.io/docs/en/ignore.html                                                     |
+| `stylelint` | `style.config.mjs` or `.stylelintignore` file in the project root | https://stylelint.io/user-guide/configure/ and https://stylelint.io/user-guide/ignore-code/ |
+| `eslint`    | `eslint.config.mjs` file in the project root                      | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files  |
 
 ### `checkformat`
 

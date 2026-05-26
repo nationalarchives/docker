@@ -19,6 +19,9 @@ fi
 
 cd /app || return
 
+# ==========================================
+# RUFF
+# ==========================================
 echo "Running ruff..."
 if [ -f "/app/ruff.toml" ]
 then
@@ -47,6 +50,9 @@ else
 fi
 echo
 
+# ==========================================
+# DJLINT
+# ==========================================
 if [ -d "/app/app/templates" ]
 then
   echo "Running djLint..."
@@ -62,18 +68,70 @@ then
   # if [ "$FIX" = true ]
   # then
   #   # djlint /app/app/templates --configuration "$DJLINT_CONFIG" --reformat --quiet || true
-  #   # djhtml /app/app/templates --tabwidth 2
-  #   echo
-  # else
-  #   # djhtml /app/app/templates --tabwidth 2 --check
   #   echo
   # fi
   echo
 fi
 
-. install-format-dependencies
+# ==========================================
+# SET UP NODE
+# ==========================================
+. tna-nvm
+nvm use default
+NODE_GLOBAL_MODULES="$(npm root --global)"
+
+# ==========================================
+# STYLELINT
+# ==========================================
+echo "Running stylelint..."
+if [ -f "/app/stylelint.config.mjs" ]
+then
+  STYLELINT_CONFIG="/app/stylelint.config.mjs"
+  echo "Using app config ($STYLELINT_CONFIG)"
+else
+  STYLELINT_CONFIG="$NODE_GLOBAL_MODULES/@nationalarchives/stylelint-config/stylelint.config.mjs"
+  echo "Using default config from TNA Frontend ($STYLELINT_CONFIG)"
+fi
+if [ -f "/app/.stylelintignore" ]
+then
+  STYLELINT_IGNORE="/app/.stylelintignore"
+  echo "Using app ignore ($STYLELINT_IGNORE)"
+else
+  STYLELINT_IGNORE="/home/app/.stylelintignore"
+  echo "Using default ignore ($STYLELINT_IGNORE)"
+fi
+STYLELINT_BIN="$NODE_GLOBAL_MODULES/@nationalarchives/stylelint-config/node_modules/stylelint/bin/stylelint.mjs"
+if [ "$FIX" = true ]
+then
+  node "$STYLELINT_BIN" --config "$STYLELINT_CONFIG" --ignore-path "$STYLELINT_IGNORE" --fix "/app/**/*.{css,scss}" --allow-empty-input
+else
+  node "$STYLELINT_BIN" --config "$STYLELINT_CONFIG" --ignore-path "$STYLELINT_IGNORE" "/app/**/*.{css,scss}" --allow-empty-input
+fi
 echo
 
+# ==========================================
+# ESLINT
+# ==========================================
+echo "Running eslint..."
+if [ -f "/app/eslint.config.mjs" ]
+then
+  ESLINT_CONFIG="/app/eslint.config.mjs"
+  echo "Using app config ($ESLINT_CONFIG)"
+else
+  ESLINT_CONFIG="$NODE_GLOBAL_MODULES/@nationalarchives/eslint-config/eslint.config.mjs"
+  echo "Using default config from TNA Frontend ($ESLINT_CONFIG)"
+fi
+ESLINT_BIN="$NODE_GLOBAL_MODULES/@nationalarchives/eslint-config/node_modules/eslint/bin/eslint.js"
+if [ "$FIX" = true ]
+then
+  node "$ESLINT_BIN" --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern --fix "/app"
+else
+  node "$ESLINT_BIN" --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern "/app"
+fi
+
+# ==========================================
+# PRETTIER
+# ==========================================
 echo "Running prettier..."
 if [ -f "/app/.prettierignore" ]
 then
@@ -85,105 +143,8 @@ else
 fi
 if [ "$FIX" = true ]
 then
-  prettier --ignore-path "$PRETTIER_IGNORE" --write --list-different /app
+  prettier --ignore-path "$PRETTIER_IGNORE" --write --list-different --no-error-on-unmatched-pattern /app
 else
-  prettier --ignore-path "$PRETTIER_IGNORE" --list-different /app
+  prettier --ignore-path "$PRETTIER_IGNORE" --list-different --no-error-on-unmatched-pattern /app
 fi
 echo
-
-echo "Running stylelint..."
-if [ -f "/app/.stylelintrc" ]
-then
-  STYLELINT_CONFIG="/app/.stylelintrc"
-  echo "Using app config ($STYLELINT_CONFIG)"
-elif [ -f "/app/stylelint.config.js" ]
-then
-  STYLELINT_CONFIG="/app/stylelint.config.js"
-  echo "Using app config ($STYLELINT_CONFIG)"
-elif [ -f "/app/.stylelintrc.js" ]
-then
-  STYLELINT_CONFIG="/app/.stylelintrc.js"
-  echo "Using app config ($STYLELINT_CONFIG)"
-elif [ -f "/app/stylelint.config.mjs" ]
-then
-  STYLELINT_CONFIG="/app/stylelint.config.mjs"
-  echo "Using app config ($STYLELINT_CONFIG)"
-elif [ -f "/app/.stylelintrc.mjs" ]
-then
-  STYLELINT_CONFIG="/app/.stylelintrc.mjs"
-  echo "Using app config ($STYLELINT_CONFIG)"
-elif [ -f "/app/stylelint.config.cjs" ]
-then
-  STYLELINT_CONFIG="/app/stylelint.config.cjs"
-  echo "Using app config ($STYLELINT_CONFIG)"
-elif [ -f "/app/.stylelintrc.cjs" ]
-then
-  STYLELINT_CONFIG="/app/.stylelintrc.cjs"
-  echo "Using app config ($STYLELINT_CONFIG)"
-elif [ -f "/app/.stylelintrc.json" ]
-then
-  STYLELINT_CONFIG="/app/.stylelintrc.json"
-  echo "Using app config ($STYLELINT_CONFIG)"
-elif [ -f "/app/.stylelintrc.yml" ]
-then
-  STYLELINT_CONFIG="/app/.stylelintrc.yml"
-  echo "Using app config ($STYLELINT_CONFIG)"
-elif [ -f "/app/.stylelintrc.yaml" ]
-then
-  STYLELINT_CONFIG="/app/.stylelintrc.yaml"
-  echo "Using app config ($STYLELINT_CONFIG)"
-else
-  STYLELINT_CONFIG="/home/app/stylelint.config.js"
-  echo "Using default config ($STYLELINT_CONFIG)"
-fi
-if [ -f "/app/.stylelintignore" ]
-then
-  STYLELINT_IGNORE="/app/.stylelintignore"
-  echo "Using app ignore ($STYLELINT_IGNORE)"
-else
-  STYLELINT_IGNORE="/home/app/.stylelintignore"
-  echo "Using default ignore ($STYLELINT_IGNORE)"
-fi
-if [ "$FIX" = true ]
-then
-  stylelint --config "$STYLELINT_CONFIG" --ignore-path "$STYLELINT_IGNORE" --fix "/app/**/*.{css,scss}" --allow-empty-input
-else
-  stylelint --config "$STYLELINT_CONFIG" --ignore-path "$STYLELINT_IGNORE" "/app/**/*.{css,scss}" --allow-empty-input
-fi
-echo
-
-echo "Running eslint..."
-if [ -f "/app/.eslintrc.js" ]
-then
-  ESLINT_CONFIG="/app/.eslintrc.js"
-  echo "Using app config ($ESLINT_CONFIG)"
-elif [ -f "/app/.eslintrc.mjs" ]
-then
-  ESLINT_CONFIG="/app/.eslintrc.mjs"
-  echo "Using app config ($ESLINT_CONFIG)"
-elif [ -f "/app/.eslintrc.cjs" ]
-then
-  ESLINT_CONFIG="/app/.eslintrc.cjs"
-  echo "Using app config ($ESLINT_CONFIG)"
-elif [ -f "/app/eslintrc.config.js" ]
-then
-  ESLINT_CONFIG="/app/eslintrc.config.js"
-  echo "Using app config ($ESLINT_CONFIG)"
-elif [ -f "/app/eslintrc.config.mjs" ]
-then
-  ESLINT_CONFIG="/app/eslintrc.config.mjs"
-  echo "Using app config ($ESLINT_CONFIG)"
-elif [ -f "/app/eslintrc.config.cjs" ]
-then
-  ESLINT_CONFIG="/app/eslintrc.config.cjs"
-  echo "Using app config ($ESLINT_CONFIG)"
-else
-  ESLINT_CONFIG="/home/app/.eslintrc.js"
-  echo "Using default config ($ESLINT_CONFIG)"
-fi
-if [ "$FIX" = true ]
-then
-  eslint --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern --fix "/app"
-else
-  eslint --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern "/app"
-fi
