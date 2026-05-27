@@ -1,10 +1,10 @@
 [lint]
 extend-select = [
-    "W",
-    "C901",
     "B",
+    "C901",
     "I",
-    "Q"
+    "Q",
+    "W"
 ]
 allowed-confusables = [
     "—",
