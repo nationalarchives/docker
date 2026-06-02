@@ -1,3 +1,5 @@
+# hadolint global ignore=DL3059 # DL3059 is only a suggestion
+
 FROM python:3.14-slim-trixie
 
 # ==========================================
