@@ -23,6 +23,8 @@ cd /app || return
 # RUFF
 # ==========================================
 echo "Running ruff..."
+PYTHON_PACKAGES_DIRECTORY="$(python -c "from sysconfig import get_path; print(get_path(\"platlib\"))")"
+TNA_RUFF_CONFIG_DIRECTORY="$PYTHON_PACKAGES_DIRECTORY/tna_ruff_config"
 if [ -f "/app/ruff.toml" ]
 then
   RUFF_CONFIG="/app/ruff.toml"
@@ -34,10 +36,10 @@ then
   fi
 elif [ "$STRICT" = true ]
 then
-  RUFF_CONFIG="/home/app/ruff-strict.toml"
+  RUFF_CONFIG="$TNA_RUFF_CONFIG_DIRECTORY/ruff-strict.toml"
   echo "Using default strict config ($RUFF_CONFIG)"
 else
-  RUFF_CONFIG="/home/app/ruff.toml"
+  RUFF_CONFIG="$TNA_RUFF_CONFIG_DIRECTORY/ruff.toml"
   echo "Using default config ($RUFF_CONFIG)"
 fi
 if [ "$FIX" = true ]
