@@ -195,7 +195,6 @@ USER app
 # Install Node.js using nvm using the latest
 # npm version and set it as the default
 # ==========================================
-# hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install --latest-npm "$NODEJS_VERSION"; \
     nvm alias default "$NODEJS_VERSION"

@@ -90,7 +90,6 @@ ENV RUFF_CACHE_DIR=/home/app/.ruff_cache
 # Install the tools required for linting and
 # fixing Python, HTML, CSS and JavaScript
 # ==========================================
-# hadolint ignore=SC1091 # We know this file exists
 RUN . tna-nvm; \
     nvm use default; \
     npm config set fund=false --location=global; \
