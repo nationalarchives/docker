@@ -101,6 +101,8 @@ The process for these commands is:
 
 #### Ruff
 
+The two configurations for Ruff are standard and strict. See more details in the global [National Archives Ruff configuration](https://github.com/nationalarchives/ruff-config).
+
 ##### Extending the default Ruff configuration
 
 Create a `ruff.toml` file in your project root. If this file exists, the `--strict` parameter will be ignored on `format --strict` and `checkformat --strict`.
