@@ -1,6 +1,5 @@
 # wiz-scan ignore
 # hadolint global ignore=DL3059 # DL3059 is only a suggestion
-# hadolint global ignore=DL3002 # Root user is already defined in the base image
 
 ARG BASE_IMAGE=ghcr.io/nationalarchives/tna-python
 ARG BASE_IMAGE_TAG=latest
@@ -32,6 +31,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # files and directories from the host system
 # which are mounted during development
 # ==========================================
+# hadolint ignore=DL3002 # This is a development image so we can use the root user
 USER root
 
 # ==========================================
@@ -90,6 +90,7 @@ ENV RUFF_CACHE_DIR=/home/app/.ruff_cache
 # Install the tools required for linting and
 # fixing Python, HTML, CSS and JavaScript
 # ==========================================
+# hadolint ignore=SC1091 # We know this file exists
 RUN . tna-nvm; \
     nvm use default; \
     npm config set fund=false --location=global; \
