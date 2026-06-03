@@ -98,6 +98,16 @@ RUN . tna-nvm; \
     python -m pip install --no-cache-dir --quiet ruff=="$RUFF_VERSION" tna-ruff-config=="$TNA_RUFF_CONFIG_VERSION" djlint=="$DJLINT_VERSION"
 
 # ==========================================
+# In the home directory, create two symbolic
+# links to the Ruff configuration files from
+# the Python packages directory
+# ==========================================
+RUN PYTHON_PACKAGES_DIRECTORY="$(python -c "from sysconfig import get_path; print(get_path(\"platlib\"))")"; \
+    TNA_RUFF_CONFIG_DIRECTORY="$PYTHON_PACKAGES_DIRECTORY/tna_ruff_config"; \
+    ln -s "$TNA_RUFF_CONFIG_DIRECTORY/ruff.toml" /home/app/ruff.toml; \
+    ln -s "$TNA_RUFF_CONFIG_DIRECTORY/ruff-strict.toml" /home/app/ruff-strict.toml
+
+# ==========================================
 # Copy the development scripts into the user
 # .local/bin/dev/ directory, and prepare the
 # future .local/bin/tasks/ directory, adding
