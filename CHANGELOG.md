@@ -9,14 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
-### Deprecated
-### Removed
-### Fixed
-### Security
-
-## [1.14.0](https://github.com/nationalarchives/docker/compare/v1.13.0...v1.14.0) - 2026-06-04
-
-### Changed
 
 - Updated Ruff to [0.15.16](https://github.com/astral-sh/ruff/releases/tag/0.15.16)
 - Updated nvm to [v0.40.5](https://github.com/nvm-sh/nvm/releases/tag/v0.40.5)
