@@ -1,3 +1,5 @@
+# hadolint global ignore=DL3059 # DL3059 is only a suggestion
+
 FROM python:3.14-slim-trixie
 
 # ==========================================
@@ -15,15 +17,6 @@ ARG TNA_DOCKER_IMAGE_SOURCE
 LABEL org.opencontainers.image.description="National Archives Python base Docker image" \
     org.opencontainers.image.source="$TNA_DOCKER_IMAGE_SOURCE" \
     org.opencontainers.image.licenses="MIT"
-
-# ==========================================
-# Create a container label with the specific
-# version of Node.js used as well as one for
-# the Python version
-# ==========================================
-ENV NODEJS_VERSION=lts/krypton
-LABEL uk.gov.nationalarchives.nodejs-version="$NODEJS_VERSION"
-LABEL uk.gov.nationalarchives.python-version="$PYTHON_VERSION"
 
 # ==========================================
 # We usually always use and expose port 8080
@@ -79,11 +72,25 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV PIP_VERSION=26.0 \
+ENV NODEJS_VERSION=24.16.0 \
+    PIP_VERSION=26.1 \
     POETRY_VERSION=2.4.1 \
     NVM_VERSION=0.40.4 \
     WSGI_GUNICORN_VERSION=26.0.0 \
     ASGI_UVICORN_VERSION=0.48.0
+
+# ==========================================
+# Create container labels containing version
+# numbers for the software we have installed
+# in this image
+# ==========================================
+LABEL uk.gov.nationalarchives.python-version="$PYTHON_VERSION"
+LABEL uk.gov.nationalarchives.nodejs-version="$NODEJS_VERSION"
+LABEL uk.gov.nationalarchives.pip-version="$PIP_VERSION"
+LABEL uk.gov.nationalarchives.poetry-version="$POETRY_VERSION"
+LABEL uk.gov.nationalarchives.nvm-version="$NVM_VERSION"
+LABEL uk.gov.nationalarchives.wsgi-gunicorn-version="$WSGI_GUNICORN_VERSION"
+LABEL uk.gov.nationalarchives.asgi-uvicorn-version="$ASGI_UVICORN_VERSION"
 
 # ==========================================
 # Create a new non-root level "app" user who
@@ -185,9 +192,8 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 USER app
 
 # ==========================================
-# Install the latest LTS version of Node.js,
-# but keeping within the releases code-named
-# "krypton" (v24.x)
+# Install Node.js using nvm using the latest
+# npm version and set it as the default
 # ==========================================
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \

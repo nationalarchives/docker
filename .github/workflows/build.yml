@@ -55,8 +55,6 @@ jobs:
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
           dockerfile-path: ${{ env.DOCKERFILE_PATH }}/Dockerfile
-          # DL3059 (https://github.com/hadolint/hadolint/wiki/DL3059) - This is only a suggestion
-          ignore-linting-rules: DL3059
 
       - name: Shellcheck
         run: find ${{ env.DOCKERFILE_PATH }}/bin -type f -exec shellcheck -x --exclude=SC1091 {} \;
