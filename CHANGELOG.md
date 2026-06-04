@@ -5,18 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.13.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.14.0...HEAD)
 
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.14.0](https://github.com/nationalarchives/docker/compare/v1.13.0...v1.14.0) - 2026-06-04
+
 ### Changed
 
 - Added [`@nationalarchives/eslint-config`](https://github.com/nationalarchives/eslint-config) and [`@nationalarchives/stylelint-config`](https://github.com/nationalarchives/stylelint-config) to replace config from `@nationalarchives/frontend`
 - Moved Ruff config to an external package ([`tna-ruff-config`](https://github.com/nationalarchives/ruff-config))
 - Updated Ruff to [0.15.15](https://github.com/astral-sh/ruff/releases/tag/0.15.15)
 - Set the default Ruff cache location to `/home/app/.ruff_cache`, outside the project root to avoid Prettier trying to check it
-- Updated uvicorn to [0.48.0](https://github.com/encode/uvicorn/releases/tag/0.48.0)
+- Updated uvicorn to [0.49.0](https://github.com/encode/uvicorn/releases/tag/0.49.0)
 
-### Deprecated
 ### Removed
 
 - Removed support for all ESLint config formats except for `eslint.config.mjs` and all Stylelint config formats except for `stylelint.config.mjs`
@@ -25,8 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Don't error on Prettier if no matching files are found
-
-### Security
 
 ## [1.13.0](https://github.com/nationalarchives/docker/compare/v1.12.0...v1.13.0) - 2026-05-20
 
