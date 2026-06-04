@@ -6,6 +6,10 @@ permissions:
 
 on:
   workflow_dispatch:
+  push:
+  release:
+    types:
+      - published
   # ==========================================
   # Build the preview image every day at 03:00
   # to download updates such as the latest LTS
@@ -13,20 +17,9 @@ on:
   # ==========================================
   schedule:
     - cron: "0 3 * * *"
-  release:
-    types:
-      - published
-  push:
-    branches:
-      - main
-      - feature/**
-      - fix/**
-    paths:
-      - .github/**
-      - docker/**
 
 concurrency:
-  group: ${{ github.ref }}-publish
+  group: ${{ github.ref }}-build
   cancel-in-progress: true
 
 jobs:
