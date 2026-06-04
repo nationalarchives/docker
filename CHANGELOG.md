@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated Ruff to [0.15.16](https://github.com/astral-sh/ruff/releases/tag/0.15.16)
+
 ### Deprecated
 ### Removed
 ### Fixed
