@@ -49,7 +49,7 @@ RUN apt-get update; \
 # want to install to help with development
 # ==========================================
 ENV RUFF_VERSION=0.15.16 \
-    DJLINT_VERSION=1.38.1 \
+    DJLINT_VERSION=1.38.2 \
     DJANGO_DEBUG_TOOLBAR_VERSION=6.3.0 \
     PRETTIER_VERSION=3.8.3 \
     TNA_RUFF_CONFIG_VERSION=0.1.1 \
