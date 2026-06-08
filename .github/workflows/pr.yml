@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  test:
+  check:
     name: Python
     runs-on: ubuntu-latest
     strategy:
@@ -37,5 +37,17 @@ jobs:
       - name: Shellcheck
         run: find docker/${{ matrix.image }}/bin -type f -exec shellcheck -x --exclude=SC1091 {} \;
 
-      - name: Test Docker image build
-        run: docker build --tag ${{ matrix.image }}:local --build-arg "BASE_IMAGE=tna-python" --build-arg "BASE_IMAGE_TAG=local" --no-cache docker/${{ matrix.image }}
+  test-build:
+    name: Python
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Test tna-python Docker image build
+        run: docker build --tag tna-python:local --build-arg "BASE_IMAGE=tna-python" --build-arg "BASE_IMAGE_TAG=local" --no-cache docker/tna-python
+
+      - name: Test tna-python-dev Docker image build
+        run: docker build --tag tna-python-dev:local --build-arg "BASE_IMAGE=tna-python" --build-arg "BASE_IMAGE_TAG=local" --no-cache docker/tna-python-dev
