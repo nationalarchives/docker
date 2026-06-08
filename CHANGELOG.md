@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+- Added a default 7 day cooldown for new packages in pip, Poetry and npm
+
 ## [1.14.0](https://github.com/nationalarchives/docker/compare/v1.13.0...v1.14.0) - 2026-06-04
 
 ### Changed
