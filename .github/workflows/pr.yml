@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   check:
-    name: Python
+    name: Hadolint and shellcheck
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -47,7 +47,7 @@ jobs:
           persist-credentials: false
 
       - name: Test tna-python Docker image build
-        run: docker build --tag tna-python:local --build-arg "BASE_IMAGE=tna-python" --build-arg "BASE_IMAGE_TAG=local" --no-cache docker/tna-python
+        run: docker build --tag tna-python:local --no-cache docker/tna-python
 
       - name: Test tna-python-dev Docker image build
         run: docker build --tag tna-python-dev:local --build-arg "BASE_IMAGE=tna-python" --build-arg "BASE_IMAGE_TAG=local" --no-cache docker/tna-python-dev
