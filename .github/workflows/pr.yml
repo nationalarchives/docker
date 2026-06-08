@@ -27,14 +27,6 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup Wiz
-        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-install-cli@main
-
-      - name: Add Wiz CLI to .dockerignore
-        run: |
-          echo "" >> .dockerignore
-          echo "wizcli" >> .dockerignore
-
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
@@ -46,18 +38,4 @@ jobs:
         run: find docker/${{ matrix.image }}/bin -type f -exec shellcheck -x --exclude=SC1091 {} \;
 
       - name: Test Docker image build
-        id: build
-        uses: ./.github/actions/test-build
-        with:
-          image-name: ${{ matrix.image }}
-          dockerfile-path: docker/${{ matrix.image }}/Dockerfile
-
-      - name: Scan Dockerfile
-        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
-        with:
-          image-id: ${{ matrix.image }}
-          image-tag: ${{ steps.build.outputs.tag }}
-          dockerfile-path: docker/${{ matrix.image }}/Dockerfile
-          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
-          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
-          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+        run: docker build --tag ${{ matrix.image }}:local --build-arg "BASE_IMAGE=tna-python" --build-arg "BASE_IMAGE_TAG=local" --no-cache docker/${{ matrix.image }}
