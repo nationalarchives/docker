@@ -1,0 +1,62 @@
+name: PR tests
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+concurrency:
+  group: ${{ github.ref }}-pr
+  cancel-in-progress: false
+
+jobs:
+  test:
+    name: Python
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image-name: [tna-python, tna-python-dev]
+        dockerfile-path: [docker/tna-python, docker/tna-python-dev]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Setup Wiz
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-install-cli@main
+
+      - name: Add Wiz CLI to .dockerignore
+        run: |
+          echo "" >> .dockerignore
+          echo "wizcli" >> .dockerignore
+
+      - name: Lint Dockerfile
+        uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
+        with:
+          dockerfile-path: ${{ matrix.dockerfile-path }}/Dockerfile
+
+      - name: Shellcheck
+        run: find ${{ matrix.dockerfile-path }}/bin -type f -exec shellcheck -x --exclude=SC1091 {} \;
+
+      - name: Test Docker image build
+        id: build
+        uses: ./.github/actions/test-build
+        with:
+          image-name: ${{ matrix.image-name }}
+          dockerfile-path: ${{ matrix.dockerfile-path }}
+
+      - name: Scan Dockerfile
+        uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
+        with:
+          image-id: ${{ matrix.image-name }}
+          image-tag: ${{ steps.build.outputs.tag }}
+          dockerfile-path: ${{ matrix.dockerfile-path }}/Dockerfile
+          wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
+          wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
+          wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
