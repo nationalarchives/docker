@@ -10,9 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changed
 
-- Updated Ruff to [0.15.16](https://github.com/astral-sh/ruff/releases/tag/0.15.16)
+- Updated Ruff to [0.15.15](https://github.com/astral-sh/ruff/releases/tag/0.15.15)
 - Updated nvm to [v0.40.5](https://github.com/nvm-sh/nvm/releases/tag/v0.40.5)
-- Updated djLint to [v1.38.2](https://github.com/djlint/djLint/releases/tag/v1.38.2)
 
 ### Deprecated
 ### Removed
