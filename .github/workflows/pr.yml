@@ -20,8 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        image-name: [tna-python, tna-python-dev]
-        dockerfile-path: [docker/tna-python, docker/tna-python-dev]
+        image: [tna-python, tna-python-dev]
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -39,24 +38,26 @@ jobs:
       - name: Lint Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
         with:
-          dockerfile-path: ${{ matrix.dockerfile-path }}/Dockerfile
+          dockerfile-path: docker/${{ matrix.image }}/Dockerfile
+          # DL3002 (https://github.com/hadolint/hadolint/wiki/DL3002) - Root user is already defined in the base image
+          ignore-linting-rules: DL3002
 
       - name: Shellcheck
-        run: find ${{ matrix.dockerfile-path }}/bin -type f -exec shellcheck -x --exclude=SC1091 {} \;
+        run: find docker/${{ matrix.image }}/bin -type f -exec shellcheck -x --exclude=SC1091 {} \;
 
       - name: Test Docker image build
         id: build
         uses: ./.github/actions/test-build
         with:
-          image-name: ${{ matrix.image-name }}
-          dockerfile-path: ${{ matrix.dockerfile-path }}
+          image-name: ${{ matrix.image }}
+          dockerfile-path: docker/${{ matrix.image }}/Dockerfile
 
       - name: Scan Dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
         with:
-          image-id: ${{ matrix.image-name }}
+          image-id: ${{ matrix.image }}
           image-tag: ${{ steps.build.outputs.tag }}
-          dockerfile-path: ${{ matrix.dockerfile-path }}/Dockerfile
+          dockerfile-path: docker/${{ matrix.image }}/Dockerfile
           wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
           wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
