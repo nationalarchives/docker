@@ -95,7 +95,7 @@ RUN . tna-nvm; \
     nvm use default; \
     npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "@nationalarchives/eslint-config@$TNA_ESLINT_CONFIG_VERSION" "@nationalarchives/stylelint-config@$TNA_STYLELINT_CONFIG_VERSION"; \
     python -m pip install --no-cache-dir --quiet ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION"; \
-    python -m pip install --no-cache-dir --quiet --uploaded-prior-to P0D tna-ruff-config=="$TNA_RUFF_CONFIG_VERSION"
+    python -m pip install --no-cache-dir --quiet --uploaded-prior-to=P0D tna-ruff-config=="$TNA_RUFF_CONFIG_VERSION"
 
 # ==========================================
 # In the home directory, create two symbolic

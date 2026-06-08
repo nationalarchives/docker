@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
-- Added a default 7 day cooldown for new packages in pip, Poetry and npm
+- Added a default 7 day cooldown for new packages in pip (`PIP_UPLOADED_PRIOR_TO`), Poetry (`POETRY_SOLVER_MIN_RELEASE_AGE`) and npm (`npm config set min-release-age`)
 
 ## [1.14.0](https://github.com/nationalarchives/docker/compare/v1.13.0...v1.14.0) - 2026-06-04
 
