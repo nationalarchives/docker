@@ -13,4 +13,5 @@ else
   nvm use default --silent
 fi
 
+npm config set min-release-age=7 --location=global
 npm config set fund=false --location=global

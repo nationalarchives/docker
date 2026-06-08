@@ -124,6 +124,15 @@ ENV NVM_DIR="$HOME/.nvm"
 ENV NODE_ENV=production
 
 # ==========================================
+# Set the minimum release age in days of the
+# dependency resolver of Poetry and pip to 7
+# days to act as a cooldown for new releases
+# of packages
+# ==========================================
+ENV POETRY_SOLVER_MIN_RELEASE_AGE=7 \
+    PIP_UPLOADED_PRIOR_TO=P7D
+
+# ==========================================
 # Ensure the `/bin/sh -c` interpreter Docker
 # executes commands through doesn't just use
 # the final operation in a pipe to determine

@@ -1,0 +1,53 @@
+name: PR tests
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+concurrency:
+  group: ${{ github.ref }}-pr
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Hadolint and shellcheck
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: [tna-python, tna-python-dev]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Lint Dockerfile
+        uses: nationalarchives/ds-docker-actions/.github/actions/lint@main
+        with:
+          dockerfile-path: docker/${{ matrix.image }}/Dockerfile
+          # DL3002 (https://github.com/hadolint/hadolint/wiki/DL3002) - Root user is already defined in the base image
+          ignore-linting-rules: DL3002
+
+      - name: Shellcheck
+        run: find docker/${{ matrix.image }}/bin -type f -exec shellcheck -x --exclude=SC1091 {} \;
+
+  test-build:
+    name: Python
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Test tna-python Docker image build
+        run: docker build --tag tna-python:local --no-cache docker/tna-python
+
+      - name: Test tna-python-dev Docker image build
+        run: docker build --tag tna-python-dev:local --build-arg "BASE_IMAGE=tna-python" --build-arg "BASE_IMAGE_TAG=local" --no-cache docker/tna-python-dev

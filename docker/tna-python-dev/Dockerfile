@@ -48,8 +48,8 @@ RUN apt-get update; \
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
-ENV RUFF_VERSION=0.15.16 \
-    DJLINT_VERSION=1.39.0 \
+ENV RUFF_VERSION=0.15.15 \
+    DJLINT_VERSION=1.36.4 \
     DJANGO_DEBUG_TOOLBAR_VERSION=6.3.0 \
     PRETTIER_VERSION=3.8.3 \
     TNA_RUFF_CONFIG_VERSION=0.1.1 \
@@ -93,9 +93,9 @@ ENV RUFF_CACHE_DIR=/home/app/.ruff_cache
 # hadolint ignore=SC1091
 RUN . tna-nvm; \
     nvm use default; \
-    npm config set fund=false --location=global; \
     npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION" "@nationalarchives/eslint-config@$TNA_ESLINT_CONFIG_VERSION" "@nationalarchives/stylelint-config@$TNA_STYLELINT_CONFIG_VERSION"; \
-    python -m pip install --no-cache-dir --quiet ruff=="$RUFF_VERSION" tna-ruff-config=="$TNA_RUFF_CONFIG_VERSION" djlint=="$DJLINT_VERSION"
+    python -m pip install --no-cache-dir --quiet ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION"; \
+    python -m pip install --no-cache-dir --quiet --uploaded-prior-to=P0D tna-ruff-config=="$TNA_RUFF_CONFIG_VERSION"
 
 # ==========================================
 # In the home directory, create two symbolic

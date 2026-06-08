@@ -10,14 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changed
 
-- Updated Ruff to [0.15.16](https://github.com/astral-sh/ruff/releases/tag/0.15.16)
+- Updated Ruff to [0.15.15](https://github.com/astral-sh/ruff/releases/tag/0.15.15)
 - Updated nvm to [v0.40.5](https://github.com/nvm-sh/nvm/releases/tag/v0.40.5)
-- Updated djLint to [v1.39.0](https://github.com/djlint/djLint/releases/tag/v1.39.0)
 
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
+
+- Added a default 7 day cooldown for new packages in pip (`PIP_UPLOADED_PRIOR_TO`), Poetry (`POETRY_SOLVER_MIN_RELEASE_AGE`) and npm (`npm config set min-release-age`)
 
 ## [1.14.0](https://github.com/nationalarchives/docker/compare/v1.13.0...v1.14.0) - 2026-06-04
 
