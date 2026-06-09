@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Ruff to [0.15.15](https://github.com/astral-sh/ruff/releases/tag/0.15.15)
 - Updated nvm to [v0.40.5](https://github.com/nvm-sh/nvm/releases/tag/v0.40.5)
+- Downgraded uvicorn to [0.48.0](https://github.com/encode/uvicorn/releases/tag/0.48.0)
 
 ### Deprecated
 ### Removed
