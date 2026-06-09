@@ -63,11 +63,11 @@ runs:
     - name: Start application and wait for it to be healthy
       run: |
         cd ${INPUTS_APPLICATION_REPOSITORY}
-        yq '(.services.${INPUTS_SERVICE}.build.args.IMAGE|="${INPUTS_IMAGE}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
-        yq '(.services.${INPUTS_SERVICE}.build.args.IMAGE_TAG|="${INPUTS_IMAGE_TAG}")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
-        yq '(.services.${INPUTS_SERVICE}.env_file|=".env")' docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        yq "(.services.${INPUTS_SERVICE}.build.args.IMAGE|=\"${INPUTS_IMAGE}\")" docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        yq "(.services.${INPUTS_SERVICE}.build.args.IMAGE_TAG|=\"${INPUTS_IMAGE_TAG}\")" docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
+        yq "(.services.${INPUTS_SERVICE}.env_file|=\".env\")" docker-compose.yml > tmp.$$.yml && mv tmp.$$.yml docker-compose.yml
         cat docker-compose.yml
-        docker compose up ${INPUTS_SERVICE} --detach --wait || docker compose logs ${INPUTS_SERVICE}
+        docker compose up "${INPUTS_SERVICE}" --detach --wait || docker compose logs "${INPUTS_SERVICE}"
       shell: bash
       env:
         INPUTS_APPLICATION_REPOSITORY: ${{ inputs.application-repository }}
@@ -78,8 +78,8 @@ runs:
     - name: Check user
       run: |
         cd ${INPUTS_APPLICATION_REPOSITORY}
-        docker compose exec ${INPUTS_SERVICE} whoami
-        # docker compose exec ${INPUTS_SERVICE} whoami | grep "${INPUTS_EXPECTED_USER}"
+        docker compose exec "${INPUTS_SERVICE}" whoami
+        # docker compose exec "${INPUTS_SERVICE}" whoami | grep "${INPUTS_EXPECTED_USER}"
       shell: bash
       env:
         INPUTS_APPLICATION_REPOSITORY: ${{ inputs.application-repository }}
