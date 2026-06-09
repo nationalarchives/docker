@@ -37,8 +37,8 @@ jobs:
       - name: Shellcheck
         run: find docker/${{ matrix.image }}/bin -type f -exec shellcheck -x --exclude=SC1091 {} \;
 
-  test-build:
-    name: Python
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
