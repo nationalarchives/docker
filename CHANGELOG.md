@@ -5,21 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.14.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.15.0...HEAD)
 
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.15.0](https://github.com/nationalarchives/docker/compare/v1.14.0...v1.15.0) - 2026-06-04
+
 ### Changed
 
 - Updated Ruff to [0.15.15](https://github.com/astral-sh/ruff/releases/tag/0.15.15)
 - Updated nvm to [v0.40.5](https://github.com/nvm-sh/nvm/releases/tag/v0.40.5)
 - Downgraded uvicorn to [0.48.0](https://github.com/encode/uvicorn/releases/tag/0.48.0)
 
-### Deprecated
-### Removed
-### Fixed
 ### Security
 
 - Added a default 7 day cooldown for new packages in pip (`PIP_UPLOADED_PRIOR_TO`), Poetry (`POETRY_SOLVER_MIN_RELEASE_AGE`) and npm (`npm config set min-release-age`)
+- `python:3.14-slim-trixie` updated with fixes for [CVE-2026-45447](https://security-tracker.debian.org/tracker/CVE-2026-45447)
 
 ## [1.14.0](https://github.com/nationalarchives/docker/compare/v1.13.0...v1.14.0) - 2026-06-04
 
