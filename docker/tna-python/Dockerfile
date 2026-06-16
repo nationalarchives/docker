@@ -130,8 +130,8 @@ ENV NODE_ENV=production
 # of packages excluding packages that we own
 # and publish
 # ==========================================
-ENV COOLDOWN_PERIOD=7 \
-    POETRY_SOLVER_MIN_RELEASE_AGE=$COOLDOWN_PERIOD \
+ENV COOLDOWN_PERIOD=7
+ENV POETRY_SOLVER_MIN_RELEASE_AGE=$COOLDOWN_PERIOD \
     POETRY_SOLVER_MIN_RELEASE_AGE_EXCLUDE="tna-frontend-jinja,tna-utilities,tna-ruff-config" \
     PIP_UPLOADED_PRIOR_TO="P${COOLDOWN_PERIOD}D"
 
