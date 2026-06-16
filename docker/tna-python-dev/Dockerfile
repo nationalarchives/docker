@@ -95,7 +95,7 @@ ENV RUFF_CACHE_DIR=/home/app/.ruff_cache
 # hadolint ignore=SC1091
 RUN . tna-nvm; \
     nvm use default; \
-    npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION"
+    npm install --global --silent --save-exact "prettier@$PRETTIER_VERSION"; \
     npm install --global --silent --save-exact --min-release-age=0 "@nationalarchives/eslint-config@$TNA_ESLINT_CONFIG_VERSION" "@nationalarchives/stylelint-config@$TNA_STYLELINT_CONFIG_VERSION"
 
 # ==========================================
