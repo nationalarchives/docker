@@ -127,10 +127,13 @@ ENV NODE_ENV=production
 # Set the minimum release age in days of the
 # dependency resolver of Poetry and pip to 7
 # days to act as a cooldown for new releases
-# of packages
+# of packages excluding packages that we own
+# and publish
 # ==========================================
-ENV POETRY_SOLVER_MIN_RELEASE_AGE=7 \
-    PIP_UPLOADED_PRIOR_TO=P7D
+ENV COOLDOWN_PERIOD=7
+ENV POETRY_SOLVER_MIN_RELEASE_AGE="$COOLDOWN_PERIOD" \
+    POETRY_SOLVER_MIN_RELEASE_AGE_EXCLUDE="tna-frontend-jinja,tna-utilities,tna-ruff-config" \
+    PIP_UPLOADED_PRIOR_TO="P${COOLDOWN_PERIOD}D"
 
 # ==========================================
 # Ensure the `/bin/sh -c` interpreter Docker
@@ -207,7 +210,10 @@ USER app
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install --latest-npm "$NODEJS_VERSION"; \
-    nvm alias default "$NODEJS_VERSION"
+    nvm alias default "$NODEJS_VERSION"; \
+    nvm use default; \
+    npm config set fund=false --location=global; \
+    npm config set min-release-age="$COOLDOWN_PERIOD" --location=global
 
 # ==========================================
 # Create a directory for our SSL certificate

@@ -8,7 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.15.0...HEAD)
 
 ### Added
+
+- Set a global `COOLDOWN_PERIOD` environment variable for cooldown duration on npm, pip and Poetry
+
 ### Changed
+
+- Added exceptions for `tna-frontend-jinja` and `tna-utilities` from the 7 day cooldown for Poetry and `@nationalarchives/eslint-config` and `@nationalarchives/stylelint-config` for npm
+
 ### Deprecated
 ### Removed
 ### Fixed
