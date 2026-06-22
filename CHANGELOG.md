@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+- Added exception for `@nationalarchives/*` from the npm cooldown
+
 ## [1.16.0](https://github.com/nationalarchives/docker/compare/v1.15.0...v1.16.0) - 2026-06-22
 
 ### Added
@@ -31,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Added exceptions for `tna-frontend-jinja` and `tna-utilities` from the 7 day cooldown for Poetry and `@nationalarchives/eslint-config` and `@nationalarchives/stylelint-config` for npm
+- Added exceptions for `tna-frontend-jinja` and `tna-utilities` from the 7 day cooldown for Poetry
 
 ## [1.15.0](https://github.com/nationalarchives/docker/compare/v1.14.0...v1.15.0) - 2026-06-04
 
