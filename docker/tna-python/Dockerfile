@@ -77,7 +77,7 @@ ENV NODEJS_VERSION=24.16.0 \
     POETRY_VERSION=2.4.1 \
     NVM_VERSION=0.40.5 \
     WSGI_GUNICORN_VERSION=26.0.0 \
-    ASGI_UVICORN_VERSION=0.48.0
+    ASGI_UVICORN_VERSION=0.49.0
 
 # ==========================================
 # Create container labels containing version
