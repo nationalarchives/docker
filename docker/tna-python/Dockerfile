@@ -72,7 +72,7 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV NODEJS_VERSION=24.16.0 \
+ENV NODEJS_VERSION=24.17.0 \
     PIP_VERSION=26.1 \
     POETRY_VERSION=2.4.1 \
     NVM_VERSION=0.40.5 \
@@ -211,9 +211,7 @@ USER app
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install --latest-npm "$NODEJS_VERSION"; \
     nvm alias default "$NODEJS_VERSION"; \
-    nvm use default; \
-    npm config set fund=false --location=global; \
-    npm config set min-release-age="$COOLDOWN_PERIOD" --location=global
+    nvm use default
 
 # ==========================================
 # Create a directory for our SSL certificate
