@@ -68,6 +68,7 @@ jobs:
           STEPS_BUILD_OUTPUTS_TAG: ${{ steps.build.outputs.tag }}
 
       - name: Scan Dockerfile
+        id: wiz-scan-dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
         with:
           image-id: ${{ env.IMAGE_NAME }}
@@ -76,8 +77,10 @@ jobs:
           wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
           wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+        background: true
 
       - name: Test Flask
+        id: test-flask
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/flask-application-template
@@ -86,8 +89,10 @@ jobs:
           expected-user: app
           environment-overrides: |
             APPLICATION_PROTOCOL=http
+        background: true
 
       - name: Test Django
+        id: test-django
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/django-application-template
@@ -96,8 +101,10 @@ jobs:
           expected-user: app
           environment-overrides: |
             APPLICATION_PROTOCOL=http
+        background: true
 
       - name: Test FastAPI
+        id: test-fastapi
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/fastapi-application-template
@@ -106,6 +113,10 @@ jobs:
           expected-user: app
           environment-overrides: |
             APPLICATION_PROTOCOL=http
+        background: true
+
+      - name: Wait for all services to stop
+        wait-all:
 
       - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
@@ -191,6 +202,7 @@ jobs:
           STEPS_BUILD_OUTPUTS_TAG: ${{ steps.build.outputs.tag }}
 
       - name: Scan Dockerfile
+        id: wiz-scan-dockerfile
         uses: nationalarchives/ds-docker-actions/.github/actions/wiz-scan-dockerfile@main
         with:
           image-id: ${{ env.IMAGE_NAME }}
@@ -199,30 +211,40 @@ jobs:
           wiz-client-id: ${{ secrets.WIZ_CLIENT_ID }}
           wiz-client-secret: ${{ secrets.WIZ_CLIENT_SECRET }}
           wiz-project-id: ${{ secrets.WIZ_PROJECT_DIGITALSERVICES }}
+        background: true
 
       - name: Test Flask
+        id: test-flask
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/flask-application-template
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
+        background: true
 
       - name: Test Django
+        id: test-django
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/django-application-template
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
+        background: true
 
       - name: Test FastAPI
+        id: test-fastapi
         uses: ./.github/actions/test-container
         with:
           application-repository: nationalarchives/fastapi-application-template
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
           expected-user: root
+        background: true
+
+      - name: Wait for all services to stop
+        wait-all:
 
       - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
