@@ -153,7 +153,7 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u3 libmagic-dev=1:5.46-5 libgnutls30t64=3.8.9-3+deb13u4; \
+    apt-get install -y --no-install-recommends libssh2-1t64=1.11.1-1+deb13u1 curl=8.14.1-2+deb13u3 libmagic-dev=1:5.46-5 libgnutls30t64=3.8.9-3+deb13u4; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
