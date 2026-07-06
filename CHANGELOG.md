@@ -5,20 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.16.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.17.0...HEAD)
 
 ### Added
 ### Changed
-
-- Update Node to [v24.17.0](https://github.com/nodejs/node/releases/tag/v24.17.0)
-
 ### Deprecated
 ### Removed
+### Fixed
+### Security
+
+## [1.17.0](https://github.com/nationalarchives/docker/compare/v1.16.0...v1.17.0) - 2026-06-29
+
+### Changed
+
+- Updated Node to [v24.17.0](https://github.com/nodejs/node/releases/tag/v24.17.0)
+
 ### Fixed
 
 - Set global Node config for both default and service-specific versions when using `tna-nvm`
 
 ### Security
+
+- Fixed [CVE-2026-55200](https://github.com/advisories/GHSA-r8mh-x5qv-7gg2) by upgrading `libssh2-1t64` to `1.11.1-1+deb13u1`
 
 ## [1.16.0](https://github.com/nationalarchives/docker/compare/v1.15.0...v1.16.0) - 2026-06-22
 
