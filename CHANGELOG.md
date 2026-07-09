@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated djLint to [v1.40.1](https://github.com/djlint/djLint/releases/tag/v1.40.1)
 - Updated Django Debug Toolbar to [7.0.0](https://github.com/django-commons/django-debug-toolbar/releases/tag/7.0.0)
 - Updated Node to [v24.18.0](https://github.com/nodejs/node/releases/tag/v24.18.0)
+- Updated Ruff to [0.15.20](https://github.com/astral-sh/ruff/releases/tag/0.15.20)
 
 ### Deprecated
 ### Removed
