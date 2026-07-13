@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 - Removed all manual package updates as security fixes are now coming from the base Debain image
+- Updated curl to `8.14.1-2+deb13u4`
 
 ## [1.17.0](https://github.com/nationalarchives/docker/compare/v1.16.0...v1.17.0) - 2026-06-29
 
