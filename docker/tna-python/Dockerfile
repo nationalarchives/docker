@@ -214,7 +214,7 @@ COPY lib/* /home/app/
 # Append the package cooldown period setting
 # to the global npm config
 # ==========================================
-RUN echo "min-release-age = $COOLDOWN_PERIOD" >> /home/app/.npmrc
+# RUN echo "min-release-age = $COOLDOWN_PERIOD" >> /home/app/.npmrc
 
 # ==========================================
 # Install Node.js with nvm using the version
