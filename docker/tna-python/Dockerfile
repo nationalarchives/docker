@@ -205,14 +205,29 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 USER app
 
 # ==========================================
-# Install Node.js using nvm using the latest
-# npm version and set it as the default
+# Copy in any configuration files, including
+# the global config for npm
+# ==========================================
+COPY lib/* /home/app/
+
+# ==========================================
+# Install Node.js with nvm using the version
+# we specified, set it as the default one to
+# use, and then update npm
 # ==========================================
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install --latest-npm "$NODEJS_VERSION"; \
+    nvm install "$NODEJS_VERSION"; \
     nvm alias default "$NODEJS_VERSION"; \
-    nvm use default
+    nvm use default; \
+    # ------------------------------------------
+    # This is a temporary patch to ensure we can
+    # use min-release-age-exclude, which is only
+    # supported in npm 11.17.0 and above and the
+    # version of npm that comes with v24.18.0 of
+    # Node.js is just 11.16.0
+    # ------------------------------------------
+    npm install -g npm@11.17.0
 
 # ==========================================
 # Create a directory for our SSL certificate

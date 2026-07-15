@@ -5,9 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.17.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.18.0...HEAD)
 
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.18.0](https://github.com/nationalarchives/docker/compare/v1.17.0...v1.18.0) - 2026-07-15
+
 ### Changed
 
 - Updated djLint to [v1.40.3](https://github.com/djlint/djLint/releases/tag/v1.40.3)
@@ -16,12 +24,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Ruff to [0.15.20](https://github.com/astral-sh/ruff/releases/tag/0.15.20)
 - Updated uvicorn to [0.50.2](https://github.com/encode/uvicorn/releases/tag/0.50.2)
 - Updated Prettier to [3.9.4](https://github.com/prettier/prettier/releases/tag/3.9.4)
+- Moved common npm configuration to `/home/app/.npmrc`
+- Install an explicit version of npm (`11.17.0`) rather than `--latest-npm` to ensure `min-release-age-exclude` is supported
 
-### Deprecated
-### Removed
-### Fixed
 ### Security
 
+- Added exception for `@nationalarchives/*` from the npm cooldown
 - Removed all manual package updates as security fixes are now coming from the base Debain image
 - Updated curl to `8.14.1-2+deb13u4`
 
@@ -56,7 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Added exceptions for `tna-frontend-jinja` and `tna-utilities` from the 7 day cooldown for Poetry and `@nationalarchives/eslint-config` and `@nationalarchives/stylelint-config` for npm
+- Added exceptions for `tna-frontend-jinja` and `tna-utilities` from the 7 day cooldown for Poetry
 
 ## [1.15.0](https://github.com/nationalarchives/docker/compare/v1.14.0...v1.15.0) - 2026-06-04
 
