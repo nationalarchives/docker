@@ -5,9 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.17.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.18.0...HEAD)
 
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.18.0](https://github.com/nationalarchives/docker/compare/v1.17.0...v1.18.0) - 2026-07-15
+
 ### Changed
 
 - Updated djLint to [v1.40.3](https://github.com/djlint/djLint/releases/tag/v1.40.3)
@@ -19,9 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved common npm configuration to `/home/app/.npmrc`
 - Install an explicit version of npm (`11.17.0`) rather than `--latest-npm` to ensure `min-release-age-exclude` is supported
 
-### Deprecated
-### Removed
-### Fixed
 ### Security
 
 - Added exception for `@nationalarchives/*` from the npm cooldown
