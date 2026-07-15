@@ -14,5 +14,5 @@ else
 fi
 
 npm config set min-release-age="$COOLDOWN_PERIOD" --location=global
-npm config set min-release-age-exclude="@nationalarchives/*" --location=global
+npm config set min-release-age-exclude[]="@nationalarchives/*" --location=global
 npm config set fund=false --location=global
