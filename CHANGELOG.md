@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Ruff to [0.15.20](https://github.com/astral-sh/ruff/releases/tag/0.15.20)
 - Updated uvicorn to [0.50.2](https://github.com/encode/uvicorn/releases/tag/0.50.2)
 - Updated Prettier to [3.9.4](https://github.com/prettier/prettier/releases/tag/3.9.4)
+- Moved common npm configuration to `/home/app/.npmrc`
+- Install an explicit version of npm (`11.17.0`) rather than `--latest-npm` to ensure `min-release-age-exclude` is supported
 
 ### Deprecated
 ### Removed

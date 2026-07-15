@@ -220,7 +220,13 @@ RUN . "$NVM_DIR/nvm.sh"; \
     nvm install "$NODEJS_VERSION"; \
     nvm alias default "$NODEJS_VERSION"; \
     nvm use default; \
-    # This is a temporary fix to ensure min-release-age-exclude works, as it is only supported in npm 11.17.0 and above
+    # ==========================================
+    # This is a temporary patch to ensure we can
+    # use min-release-age-exclude, which is only
+    # supported in npm 11.17.0 and above and the
+    # version of npm that comes with v24.18.0 of
+    # Node.js is just 11.16.0
+    # ==========================================
     npm install -g npm@11.17.0
 
 # ==========================================
