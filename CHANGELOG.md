@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated djLint to [v1.40.3](https://github.com/djlint/djLint/releases/tag/v1.40.3)
+- Updated Django Debug Toolbar to [7.0.0](https://github.com/django-commons/django-debug-toolbar/releases/tag/7.0.0)
+- Updated Node to [v24.18.0](https://github.com/nodejs/node/releases/tag/v24.18.0)
+- Updated Ruff to [0.15.20](https://github.com/astral-sh/ruff/releases/tag/0.15.20)
+- Updated uvicorn to [0.50.2](https://github.com/encode/uvicorn/releases/tag/0.50.2)
+- Updated Prettier to [3.9.4](https://github.com/prettier/prettier/releases/tag/3.9.4)
+
 ### Deprecated
 ### Removed
 ### Fixed
@@ -16,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added exception for `@nationalarchives/*` from the npm cooldown
 - Fixed npm version with `NPM_VERSION` environment variable
+- Removed all manual package updates as security fixes are now coming from the base Debain image
+- Updated curl to `8.14.1-2+deb13u4`
 
 ## [1.17.0](https://github.com/nationalarchives/docker/compare/v1.16.0...v1.17.0) - 2026-06-29
 

@@ -72,13 +72,13 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV NODEJS_VERSION=24.17.0 \
+ENV NODEJS_VERSION=24.18.0 \
     NPM_VERSION=12.0.0 \
     PIP_VERSION=26.1 \
     POETRY_VERSION=2.4.1 \
     NVM_VERSION=0.40.5 \
     WSGI_GUNICORN_VERSION=26.0.0 \
-    ASGI_UVICORN_VERSION=0.49.0
+    ASGI_UVICORN_VERSION=0.50.2
 
 # ==========================================
 # Create container labels containing version
@@ -155,7 +155,8 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends libssh2-1t64=1.11.1-1+deb13u1 curl=8.14.1-2+deb13u3 libmagic-dev=1:5.46-5 libgnutls30t64=3.8.9-3+deb13u4; \
+
+    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u4; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
