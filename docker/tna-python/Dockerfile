@@ -73,7 +73,6 @@ ENV PIP_NO_CACHE_DIR=true \
 # > docs.docker.com/build/building/variables
 # ==========================================
 ENV NODEJS_VERSION=24.18.0 \
-    NPM_VERSION=12.0.0 \
     PIP_VERSION=26.1 \
     POETRY_VERSION=2.4.1 \
     NVM_VERSION=0.40.5 \
@@ -87,7 +86,6 @@ ENV NODEJS_VERSION=24.18.0 \
 # ==========================================
 LABEL uk.gov.nationalarchives.python-version="$PYTHON_VERSION"
 LABEL uk.gov.nationalarchives.nodejs-version="$NODEJS_VERSION"
-LABEL uk.gov.nationalarchives.npm-version="$NPM_VERSION"
 LABEL uk.gov.nationalarchives.pip-version="$PIP_VERSION"
 LABEL uk.gov.nationalarchives.poetry-version="$POETRY_VERSION"
 LABEL uk.gov.nationalarchives.nvm-version="$NVM_VERSION"
@@ -215,8 +213,7 @@ USER app
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install "$NODEJS_VERSION"; \
     nvm alias default "$NODEJS_VERSION"; \
-    nvm use default; \
-    npm install -g npm@"$NPM_VERSION"
+    nvm use default
 
 # ==========================================
 # Create a directory for our SSL certificate

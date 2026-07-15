@@ -23,7 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 - Added exception for `@nationalarchives/*` from the npm cooldown
-- Fixed npm version with `NPM_VERSION` environment variable
 - Removed all manual package updates as security fixes are now coming from the base Debain image
 - Updated curl to `8.14.1-2+deb13u4`
 
