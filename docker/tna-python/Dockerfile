@@ -219,7 +219,9 @@ COPY lib/* /home/app/
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install "$NODEJS_VERSION"; \
     nvm alias default "$NODEJS_VERSION"; \
-    nvm use default
+    nvm use default; \
+    # This is a temporary fix to ensure min-release-age-exclude works, as it is only supported in npm 11.17.0 and above
+    npm install -g npm@11.17.0
 
 # ==========================================
 # Create a directory for our SSL certificate
