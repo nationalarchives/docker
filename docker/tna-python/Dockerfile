@@ -223,11 +223,11 @@ RUN . "$NVM_DIR/nvm.sh"; \
     # ------------------------------------------
     # This is a temporary patch to ensure we can
     # use min-release-age-exclude, which is only
-    # supported in npm 11.17.0 and above and the
+    # supported in npm 11.18.0 and above and the
     # version of npm that comes with v24.18.0 of
     # Node.js is just 11.16.0
     # ------------------------------------------
-    npm install -g npm@11.17.0
+    npm install -g npm@11.18.0
 
 # ==========================================
 # Create a directory for our SSL certificate

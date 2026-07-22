@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+- Updated npm to [v11.18.0](https://github.com/npm/cli/releases/tag/v11.18.0) to fix [CVE-2026-59873](https://github.com/advisories/GHSA-23hp-3jrh-7fpw)
+
 ## [1.18.0](https://github.com/nationalarchives/docker/compare/v1.17.0...v1.18.0) - 2026-07-15
 
 ### Changed
