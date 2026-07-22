@@ -7,13 +7,13 @@ permissions:
 on:
   workflow_dispatch:
   push:
+    branches:
   release:
     types:
       - published
   # ==========================================
   # Build the preview image every day at 03:00
-  # to download updates such as the latest LTS
-  # version of Node.js
+  # to check for new security vulnerabilities
   # ==========================================
   schedule:
     - cron: "0 3 * * *"
