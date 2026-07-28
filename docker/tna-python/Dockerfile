@@ -75,9 +75,9 @@ ENV PIP_NO_CACHE_DIR=true \
 ENV NODEJS_VERSION=24.18.0 \
     PIP_VERSION=26.1 \
     POETRY_VERSION=2.4.1 \
-    NVM_VERSION=0.40.5 \
+    NVM_VERSION=0.40.6 \
     WSGI_GUNICORN_VERSION=26.0.0 \
-    ASGI_UVICORN_VERSION=0.50.2
+    ASGI_UVICORN_VERSION=0.51.0
 
 # ==========================================
 # Create container labels containing version

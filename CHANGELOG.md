@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated nvm to [v0.40.6](https://github.com/nvm-sh/nvm/releases/tag/v0.40.6)
+- Updated uvicorn to [0.51.0](https://github.com/encode/uvicorn/releases/tag/0.51.0)
+- Updated Ruff to [0.15.22](https://github.com/astral-sh/ruff/releases/tag/0.15.22)
+- Updated djLint to [v1.42.1](https://github.com/djlint/djLint/releases/tag/v1.42.1)
+- Updated Prettier to [3.9.6](https://github.com/prettier/prettier/releases/tag/3.9.6)
+
 ### Deprecated
 ### Removed
 ### Fixed

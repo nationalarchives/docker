@@ -48,10 +48,10 @@ RUN apt-get update; \
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
-ENV RUFF_VERSION=0.15.20 \
-    DJLINT_VERSION=1.40.3 \
+ENV RUFF_VERSION=0.15.22 \
+    DJLINT_VERSION=1.42.1 \
     DJANGO_DEBUG_TOOLBAR_VERSION=7.0.0 \
-    PRETTIER_VERSION=3.9.4 \
+    PRETTIER_VERSION=3.9.6 \
     TNA_RUFF_CONFIG_VERSION=0.1.2 \
     TNA_ESLINT_CONFIG_VERSION=0.1.8 \
     TNA_STYLELINT_CONFIG_VERSION=0.1.4
