@@ -29,7 +29,7 @@ jobs:
   python:
     name: Python
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       IMAGE_NAME: tna-python
       DOCKERFILE_PATH: docker/tna-python
@@ -148,7 +148,7 @@ jobs:
     name: Python Dev
     needs: python
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       IMAGE_NAME: tna-python-dev
       DOCKERFILE_PATH: docker/tna-python-dev
