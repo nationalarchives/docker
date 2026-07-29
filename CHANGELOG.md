@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Ruff to [0.15.22](https://github.com/astral-sh/ruff/releases/tag/0.15.22)
 - Updated djLint to [v1.42.1](https://github.com/djlint/djLint/releases/tag/v1.42.1)
 - Updated Prettier to [3.9.6](https://github.com/prettier/prettier/releases/tag/3.9.6)
+- Updated tna-ruff-config to [v0.2.0](https://github.com/nationalarchives/ruff-config/releases/tag/v0.2.0)
 
 ### Deprecated
 ### Removed
