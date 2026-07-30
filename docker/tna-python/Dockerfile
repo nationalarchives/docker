@@ -72,7 +72,7 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV NODEJS_VERSION=24.18.0 \
+ENV NODEJS_VERSION=24.18.1 \
     PIP_VERSION=26.1 \
     POETRY_VERSION=2.4.1 \
     NVM_VERSION=0.40.6 \
@@ -224,10 +224,10 @@ RUN . "$NVM_DIR/nvm.sh"; \
     # This is a temporary patch to ensure we can
     # use min-release-age-exclude, which is only
     # supported in npm 11.18.0 and above and the
-    # version of npm that comes with v24.18.0 of
+    # version of npm that comes with v24.18.1 of
     # Node.js is just 11.16.0
     # ------------------------------------------
-    npm install -g npm@11.18.0
+    npm install -g npm@11.19.0
 
 # ==========================================
 # Create a directory for our SSL certificate
