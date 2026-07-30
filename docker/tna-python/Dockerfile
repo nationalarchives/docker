@@ -227,7 +227,7 @@ RUN . "$NVM_DIR/nvm.sh"; \
     # version of npm that comes with v24.18.1 of
     # Node.js is just 11.16.0
     # ------------------------------------------
-    npm install -g npm@11.19.0
+    npm install -g npm@11.18.0
 
 # ==========================================
 # Create a directory for our SSL certificate

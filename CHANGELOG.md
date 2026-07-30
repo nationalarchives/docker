@@ -17,7 +17,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Prettier to [3.9.6](https://github.com/prettier/prettier/releases/tag/3.9.6)
 - Updated tna-ruff-config to [v0.2.0](https://github.com/nationalarchives/ruff-config/releases/tag/v0.2.0)
 - Updated Node to [v24.18.1](https://github.com/nodejs/node/releases/tag/v24.18.1)
-- Updated npm to [v11.19.0](https://github.com/npm/cli/releases/tag/v11.19.0)
 
 ### Deprecated
 ### Removed
