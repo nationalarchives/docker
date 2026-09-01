@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.20.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.20.1...HEAD)
 
 ### Added
 ### Changed
@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 ### Security
+
+## [1.20.1](https://github.com/nationalarchives/docker/compare/v1.20.0...v1.20.1) - 2026-09-01
+
+### Fixed
+
+- Fixed pip installation order under root user
 
 ## [1.20.0](https://github.com/nationalarchives/docker/compare/v1.19.0...v1.20.0) - 2026-09-01
 

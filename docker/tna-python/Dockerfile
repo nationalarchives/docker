@@ -159,6 +159,11 @@ RUN set -eux; \
 	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
+# Upgrade pip to a later version
+# ==========================================
+RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
+
+# ==========================================
 # Create an "/app" directory in the root dir
 # for the application code and allow the new
 # app user to access it
@@ -197,11 +202,6 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 # permissions
 # ==========================================
 USER app
-
-# ==========================================
-# Upgrade pip to a later version
-# ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
 
 # ==========================================
 # Copy in any configuration files, including
