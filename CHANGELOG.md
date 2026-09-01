@@ -10,13 +10,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changed
 
-- Updated nvm to [v0.40.6](https://github.com/nvm-sh/nvm/releases/tag/v0.40.6)
-- Updated uvicorn to [0.51.0](https://github.com/encode/uvicorn/releases/tag/0.51.0)
-- Updated Ruff to [0.15.22](https://github.com/astral-sh/ruff/releases/tag/0.15.22)
-- Updated djLint to [v1.42.1](https://github.com/djlint/djLint/releases/tag/v1.42.1)
+- Updated nvm to [v0.40.7](https://github.com/nvm-sh/nvm/releases/tag/v0.40.7)
+- Updated uvicorn to [0.52.4](https://github.com/encode/uvicorn/releases/tag/0.52.4)
+- Updated Ruff to [0.16.5](https://github.com/astral-sh/ruff/releases/tag/0.16.5)
+- Updated djLint to [v1.44.2](https://github.com/djlint/djLint/releases/tag/v1.44.2)
 - Updated Prettier to [3.9.6](https://github.com/prettier/prettier/releases/tag/3.9.6)
 - Updated tna-ruff-config to [v0.2.0](https://github.com/nationalarchives/ruff-config/releases/tag/v0.2.0)
-- Updated Node to [v24.18.1](https://github.com/nodejs/node/releases/tag/v24.18.1)
+- Updated Node to [v24.20.0](https://github.com/nodejs/node/releases/tag/v24.20.0)
+- Updated pip to [26.2.1](https://pip.pypa.io/en/stable/news/#v26-2-1)
+- Updated Poetry to [2.4.2](https://github.com/python-poetry/poetry/releases/tag/2.4.2)
+- Updated gunicorn to [26.2.0](https://github.com/benoitc/gunicorn/releases/tag/26.2.0)
+- Updated Django Debug Toolbar to [7.1.1](https://github.com/django-commons/django-debug-toolbar/releases/tag/7.1.1)
 
 ### Deprecated
 ### Removed
