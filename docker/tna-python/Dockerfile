@@ -72,12 +72,12 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV NODEJS_VERSION=24.18.1 \
-    PIP_VERSION=26.1 \
+ENV NODEJS_VERSION=24.20.0 \
+    PIP_VERSION=26.2.1 \
     POETRY_VERSION=2.4.1 \
-    NVM_VERSION=0.40.6 \
-    WSGI_GUNICORN_VERSION=26.0.0 \
-    ASGI_UVICORN_VERSION=0.51.0
+    NVM_VERSION=0.40.7 \
+    WSGI_GUNICORN_VERSION=26.2.0 \
+    ASGI_UVICORN_VERSION=0.52.4
 
 # ==========================================
 # Create container labels containing version
@@ -153,16 +153,10 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-
     apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u4; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
-
-# ==========================================
-# Upgrade pip to a later version
-# ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
 
 # ==========================================
 # Create an "/app" directory in the root dir
@@ -205,6 +199,11 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 USER app
 
 # ==========================================
+# Upgrade pip to a later version
+# ==========================================
+RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
+
+# ==========================================
 # Copy in any configuration files, including
 # the global config for npm
 # ==========================================
@@ -219,15 +218,7 @@ COPY lib/* /home/app/
 RUN . "$NVM_DIR/nvm.sh"; \
     nvm install "$NODEJS_VERSION"; \
     nvm alias default "$NODEJS_VERSION"; \
-    nvm use default; \
-    # ------------------------------------------
-    # This is a temporary patch to ensure we can
-    # use min-release-age-exclude, which is only
-    # supported in npm 11.18.0 and above and the
-    # version of npm that comes with v24.18.1 of
-    # Node.js is just 11.16.0
-    # ------------------------------------------
-    npm install -g npm@11.18.0
+    nvm use default
 
 # ==========================================
 # Create a directory for our SSL certificate
