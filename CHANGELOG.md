@@ -5,9 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.19.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.20.0...HEAD)
 
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.20.0](https://github.com/nationalarchives/docker/compare/v1.19.0...v1.20.0) - 2026-09-01
+
 ### Changed
 
 - Updated nvm to [v0.40.7](https://github.com/nvm-sh/nvm/releases/tag/v0.40.7)
@@ -20,11 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated pip to [26.2.1](https://pip.pypa.io/en/stable/news/#v26-2-1)
 - Updated gunicorn to [26.2.0](https://github.com/benoitc/gunicorn/releases/tag/26.2.0)
 - Updated Django Debug Toolbar to [7.1.1](https://github.com/django-commons/django-debug-toolbar/releases/tag/7.1.1)
-
-### Deprecated
-### Removed
-### Fixed
-### Security
 
 ## [1.19.0](https://github.com/nationalarchives/docker/compare/v1.18.0...v1.19.0) - 2026-07-22
 
