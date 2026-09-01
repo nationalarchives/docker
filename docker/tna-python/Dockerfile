@@ -74,7 +74,7 @@ ENV PIP_NO_CACHE_DIR=true \
 # ==========================================
 ENV NODEJS_VERSION=24.20.0 \
     PIP_VERSION=26.2.1 \
-    POETRY_VERSION=2.4.2 \
+    POETRY_VERSION=2.4.1 \
     NVM_VERSION=0.40.7 \
     WSGI_GUNICORN_VERSION=26.2.0 \
     ASGI_UVICORN_VERSION=0.52.4
@@ -159,11 +159,6 @@ RUN set -eux; \
 	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
-# Upgrade pip to a later version
-# ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
-
-# ==========================================
 # Create an "/app" directory in the root dir
 # for the application code and allow the new
 # app user to access it
@@ -202,6 +197,11 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 # permissions
 # ==========================================
 USER app
+
+# ==========================================
+# Upgrade pip to a later version
+# ==========================================
+RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
 
 # ==========================================
 # Copy in any configuration files, including

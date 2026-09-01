@@ -18,7 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated tna-ruff-config to [v0.2.0](https://github.com/nationalarchives/ruff-config/releases/tag/v0.2.0)
 - Updated Node to [v24.20.0](https://github.com/nodejs/node/releases/tag/v24.20.0)
 - Updated pip to [26.2.1](https://pip.pypa.io/en/stable/news/#v26-2-1)
-- Updated Poetry to [2.4.2](https://github.com/python-poetry/poetry/releases/tag/2.4.2)
 - Updated gunicorn to [26.2.0](https://github.com/benoitc/gunicorn/releases/tag/26.2.0)
 - Updated Django Debug Toolbar to [7.1.1](https://github.com/django-commons/django-debug-toolbar/releases/tag/7.1.1)
 
