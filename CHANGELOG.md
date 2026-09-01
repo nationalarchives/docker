@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [1.20.2](https://github.com/nationalarchives/docker/compare/v1.20.0...v1.20.1) - 2026-09-01
+
+### Fixed
+
+- Downgrade Ruff to [0.16.4](https://github.com/astral-sh/ruff/releases/tag/0.16.4)
+
 ## [1.20.1](https://github.com/nationalarchives/docker/compare/v1.20.0...v1.20.1) - 2026-09-01
 
 ### Fixed
