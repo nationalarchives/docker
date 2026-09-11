@@ -24,6 +24,15 @@ HEALTHCHECK CMD curl --fail "http://localhost:$APPLICATION_PORT/healthcheck/live
 # ==========================================
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+
+# Set bash as the default shell for root
+RUN chsh -s /bin/bash root
+
+# Optional: Set environmental variables for a better bash terminal
+ENV SHELL=/bin/bash \
+    TERM=xterm-256color
+
+
 # ==========================================
 # Switch back to the root user so we can run
 # commands that need elevated privileges and
