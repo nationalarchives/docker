@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.20.2...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.21.0...HEAD)
 
 ### Added
 ### Changed
@@ -13,6 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 ### Security
+
+## [1.21.0](https://github.com/nationalarchives/docker/compare/v1.20.2...v1.21.0) - 2026-09-14
+
+### Security
+
+- Updated `perl` to `5.40.1-6+deb13u1` to fix [CVE-2026-8376](https://security-tracker.debian.org/tracker/CVE-2026-8376)
+- Updated `curl` to `8.14.1-2+deb13u5`
+- Updated `libc-bin` to `2.41-12+deb13u4` to fix [CVE-2026-5450](https://security-tracker.debian.org/tracker/CVE-2026-5450)
 
 ## [1.20.2](https://github.com/nationalarchives/docker/compare/v1.20.1...v1.20.2) - 2026-09-01
 
