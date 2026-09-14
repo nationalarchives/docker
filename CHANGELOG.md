@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 - Updated `perl` to `5.40.1-6+deb13u1` to fix [CVE-2026-8376](https://security-tracker.debian.org/tracker/CVE-2026-8376)
+- Updated `curl` to `8.14.1-2+deb13u5`
 
 ## [1.20.2](https://github.com/nationalarchives/docker/compare/v1.20.1...v1.20.2) - 2026-09-01
 
