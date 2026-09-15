@@ -76,7 +76,7 @@ ENV NODEJS_VERSION=24.21.0 \
     PIP_VERSION=26.2.1 \
     POETRY_VERSION=2.4.3 \
     NVM_VERSION=0.40.7 \
-    WSGI_GUNICORN_VERSION=26.2.2 \
+    WSGI_GUNICORN_VERSION=26.2.0 \
     ASGI_UVICORN_VERSION=0.52.4
 
 # ==========================================
