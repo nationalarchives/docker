@@ -161,7 +161,7 @@ RUN set -eux; \
 # ==========================================
 # Upgrade pip to a later version
 # ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade --root-user-action ignore pip=="$PIP_VERSION"
+RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore pip=="$PIP_VERSION"
 
 # ==========================================
 # Create an "/app" directory in the root dir

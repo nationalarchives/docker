@@ -103,8 +103,8 @@ RUN . tna-nvm; \
 # packages that we publish from the cooldown
 # period
 # ==========================================
-RUN python -m pip install --no-cache-dir --quiet --root-user-action ignore ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION" && \
-    python -m pip install --no-cache-dir --quiet --root-user-action ignore --uploaded-prior-to=P0D tna-ruff-config=="$TNA_RUFF_CONFIG_VERSION"
+RUN python -m pip install --no-cache-dir --quiet --root-user-action=ignore ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION" && \
+    python -m pip install --no-cache-dir --quiet --root-user-action=ignore --uploaded-prior-to=P0D tna-ruff-config=="$TNA_RUFF_CONFIG_VERSION"
 
 # ==========================================
 # In the home directory, create two symbolic
