@@ -153,7 +153,7 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u5 libc-bin=2.41-12+deb13u4 perl=5.40.1-6+deb13u1; \
+    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u5 perl=5.40.1-6+deb13u1; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
@@ -161,7 +161,7 @@ RUN set -eux; \
 # ==========================================
 # Upgrade pip to a later version
 # ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
+RUN pip install --no-cache-dir --quiet --upgrade --root-user-action pip=="$PIP_VERSION"
 
 # ==========================================
 # Create an "/app" directory in the root dir
