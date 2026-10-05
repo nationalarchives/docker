@@ -5,21 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.21.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.22.0...HEAD)
 
 ### Added
 ### Changed
-
-- Updated Node to [v24.21.0](https://github.com/nodejs/node/releases/tag/v24.21.0)
-- Updated djLint to [v1.46.1](https://github.com/djlint/djLint/releases/tag/v1.46.1)
-- Updated Poetry to [2.4.3](https://github.com/python-poetry/poetry/releases/tag/2.4.3)
-- Updated Django Debug Toolbar to [8.0.0](https://github.com/django-commons/django-debug-toolbar/releases/tag/8.0.0)
-- Updated Ruff to [0.16.6](https://github.com/astral-sh/ruff/releases/tag/0.16.6)
-
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
+
+## [1.22.0](https://github.com/nationalarchives/docker/compare/v1.21.0...v1.22.0) - 2026-10-05
+
+### Changed
+
+- Updated Node to [v24.21.0](https://github.com/nodejs/node/releases/tag/v24.21.0)
+- Updated djLint to [v1.46.3](https://github.com/djlint/djLint/releases/tag/v1.46.3)
+- Updated Poetry to [2.5.1](https://github.com/python-poetry/poetry/releases/tag/2.5.1)
+- Updated Django Debug Toolbar to [8.0.0](https://github.com/django-commons/django-debug-toolbar/releases/tag/8.0.0)
+- Updated Ruff to [0.16.9](https://github.com/astral-sh/ruff/releases/tag/0.16.9)
+- Updated uvicorn to [0.54.0](https://github.com/encode/uvicorn/releases/tag/0.54.0)
+- Updated nvm to [v0.40.8](https://github.com/nvm-sh/nvm/releases/tag/v0.40.8)
+- Updated Prettier to [3.9.9](https://github.com/prettier/prettier/releases/tag/3.9.9)
 
 ## [1.21.0](https://github.com/nationalarchives/docker/compare/v1.20.2...v1.21.0) - 2026-09-14
 
