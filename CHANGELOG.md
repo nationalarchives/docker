@@ -9,10 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Downgrade djLint to [v1.46.2](https://github.com/djlint/djLint/releases/tag/v1.46.2)
+
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
+
+- Remove explicit install for `libc-bin=2.41-12+deb13u4` as this is now included upstream
 
 ## [1.22.0](https://github.com/nationalarchives/docker/compare/v1.21.0...v1.22.0) - 2026-10-05
 
