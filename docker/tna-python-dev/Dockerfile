@@ -49,12 +49,12 @@ RUN apt-get update; \
 # want to install to help with development
 # ==========================================
 ENV RUFF_VERSION=0.16.9 \
-    DJLINT_VERSION=1.46.2 \
+    DJLINT_VERSION=1.46.4 \
     DJANGO_DEBUG_TOOLBAR_VERSION=8.0.0 \
     PRETTIER_VERSION=3.9.9 \
     TNA_RUFF_CONFIG_VERSION=0.2.0 \
-    TNA_ESLINT_CONFIG_VERSION=0.1.8 \
-    TNA_STYLELINT_CONFIG_VERSION=0.1.4
+    TNA_ESLINT_CONFIG_VERSION=0.1.9 \
+    TNA_STYLELINT_CONFIG_VERSION=0.1.5
 
 # ==========================================
 # Create container labels containing version
