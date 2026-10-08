@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changed
 
-- Downgrade djLint to [v1.46.2](https://github.com/djlint/djLint/releases/tag/v1.46.2)
+- Updated djLint to [v1.46.4](https://github.com/djlint/djLint/releases/tag/v1.46.4)
+- Updated `@nationalarchives/eslint-config` and `@nationalarchives/stylelint-config`
 
 ### Deprecated
 ### Removed
