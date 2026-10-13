@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+
+- djlint no longer errors if there are no files found ([`allow_empty_input`](https://djlint.com/docs/configuration/#allow-empty-input))
+
 ### Security
 
 - Remove explicit install for `libc-bin=2.41-12+deb13u4` as this is now included upstream
