@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.22.0...HEAD)
 
 ### Added
+
+- Added `gcc=4:14.2.0-1` for building packages from source
+
 ### Changed
 
 - Updated Python to [3.15](https://peps.python.org/pep-0790/)
@@ -19,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
-- Remove explicit install for `libc-bin=2.41-12+deb13u4` as this is now included upstream
+- Remove explicit installs for `libc-bin=2.41-12+deb13u4` and `perl=5.40.1-6+deb13u1` as these are now included upstream
 
 ## [1.22.0](https://github.com/nationalarchives/docker/compare/v1.21.0...v1.22.0) - 2026-10-05
 
