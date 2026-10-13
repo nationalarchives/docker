@@ -1,6 +1,6 @@
 # hadolint global ignore=DL3059 # DL3059 is only a suggestion
 
-FROM python:3.14-slim-trixie
+FROM python:3.15-slim-trixie
 
 # ==========================================
 # Label this container image with a semantic

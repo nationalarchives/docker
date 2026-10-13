@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changed
 
+- Updated Python to [3.15](https://peps.python.org/pep-0790/)
 - Updated djLint to [v1.46.4](https://github.com/djlint/djLint/releases/tag/v1.46.4)
 - Updated `@nationalarchives/eslint-config` and `@nationalarchives/stylelint-config`
 
