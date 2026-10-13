@@ -153,23 +153,10 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u5 build-essential=12.12; \
+    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u5; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
-
-# ==========================================
-# TEMPORARY FIX: UPDATE RUST
-# ------------------------------------------
-# A few of our projects require version 1.88
-# or later, and Debian Trixie currently only
-# includes version 1.85; once Debian updates
-# their version beyond 1.88, this fix can be
-# safely removed
-# ------------------------------------------
-# https://packages.debian.org/trixie/rustc
-# ==========================================
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 # ==========================================
 # Upgrade pip to a later version

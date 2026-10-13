@@ -8,15 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.22.0...HEAD)
 
 ### Added
-
-- Added `cargo=1.85.1+dfsg1-1+deb13u1` for building packages from source
-
 ### Changed
 
 - Updated Python to [3.15](https://peps.python.org/pep-0790/)
 - Updated djLint to [v1.46.4](https://github.com/djlint/djLint/releases/tag/v1.46.4)
 - Updated `@nationalarchives/eslint-config` and `@nationalarchives/stylelint-config`
-- Manually install Rust past `1.88` while Debian is still using `1.85.1` so that some project dependencies still build
 
 ### Deprecated
 ### Removed
