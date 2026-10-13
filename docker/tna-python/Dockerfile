@@ -169,7 +169,7 @@ RUN set -eux; \
 # ------------------------------------------
 # https://packages.debian.org/trixie/rustc
 # ==========================================
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 # ==========================================
 # Upgrade pip to a later version
