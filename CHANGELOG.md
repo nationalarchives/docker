@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added `gcc=4:14.2.0-1` for building packages from source
+- Added `cargo=1.85.1+dfsg1-1+deb13u1` for building packages from source
 
 ### Changed
 
