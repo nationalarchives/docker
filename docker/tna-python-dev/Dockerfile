@@ -48,7 +48,7 @@ RUN apt-get update; \
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
-ENV RUFF_VERSION=0.16.9 \
+ENV RUFF_VERSION=0.16.10 \
     DJLINT_VERSION=1.46.4 \
     DJANGO_DEBUG_TOOLBAR_VERSION=8.0.0 \
     PRETTIER_VERSION=3.9.9 \
