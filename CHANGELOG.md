@@ -5,17 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.22.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.23.0...HEAD)
 
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.23.0](https://github.com/nationalarchives/docker/compare/v1.22.0...v1.23.0) - 2026-10-14
+
 ### Changed
 
 - Updated djLint to [v1.46.4](https://github.com/djlint/djLint/releases/tag/v1.46.4)
 - Updated `@nationalarchives/eslint-config` and `@nationalarchives/stylelint-config`
 - Updated Ruff to [0.16.10](https://github.com/astral-sh/ruff/releases/tag/0.16.10)
 
-### Deprecated
-### Removed
 ### Fixed
 
 - djlint no longer errors if there are no files found ([`allow_empty_input`](https://djlint.com/docs/configuration/#allow-empty-input))
