@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.23.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.24.0...HEAD)
 
 ### Added
 ### Changed
@@ -13,6 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 ### Security
+
+## [1.24.0](https://github.com/nationalarchives/docker/compare/v1.23.0...v1.24.0) - 2026-10-21
+
+### Changed
+
+- Updated Ruff to [0.17.0](https://github.com/astral-sh/ruff/releases/tag/0.17.0)
+- Updated Prettier to [3.9.10](https://github.com/prettier/prettier/releases/tag/3.9.10)
+- Updated Node to [v24.22.1](https://github.com/nodejs/node/releases/tag/v24.22.1)
+
+### Security
+
+- Update pip tp [26.2.2](https://github.com/pypa/pip/blob/main/NEWS.rst#2622-2026-10-20) following [eMudhra Intermediate CA Compromise](https://emudhra.we-have-a-problem.com/)
 
 ## [1.23.0](https://github.com/nationalarchives/docker/compare/v1.22.0...v1.23.0) - 2026-10-14
 
