@@ -159,9 +159,11 @@ RUN set -eux; \
 	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
-# Upgrade pip to a later version
+# Upgrade pip to a later version - we ignore
+# the cooldown period here in case an urgent
+# security fix is needed
 # ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore pip=="$PIP_VERSION"
+RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore --uploaded-prior-to=P0D pip=="$PIP_VERSION"
 
 # ==========================================
 # Create an "/app" directory in the root dir
