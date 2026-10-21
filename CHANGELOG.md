@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Update pip tp [26.2.2](https://github.com/pypa/pip/blob/main/NEWS.rst#2622-2026-10-20) following [eMudhra Intermediate CA Compromise](https://emudhra.we-have-a-problem.com/)
+- Update pip tp [26.2.2](https://github.com/pypa/pip/blob/main/NEWS.rst#2622-2026-10-20) and certify to [2026.10.19](https://pypi.org/project/certifi/2026.10.19/) following [eMudhra Intermediate CA Compromise](https://emudhra.we-have-a-problem.com/)
 
 ## [1.23.0](https://github.com/nationalarchives/docker/compare/v1.22.0...v1.23.0) - 2026-10-14
 
