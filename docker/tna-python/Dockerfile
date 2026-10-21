@@ -72,8 +72,9 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV NODEJS_VERSION=24.21.0 \
-    PIP_VERSION=26.2.1 \
+ENV NODEJS_VERSION=24.22.1 \
+    PIP_VERSION=26.2.2 \
+    CERTIFI_VERSION=2026.10.19 \
     POETRY_VERSION=2.5.1 \
     NVM_VERSION=0.40.8 \
     WSGI_GUNICORN_VERSION=26.2.0 \
@@ -153,15 +154,20 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u7 perl=5.40.1-6+deb13u1; \
+    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u7 perl=5.40.1-6+deb13u1 ca-certificates=20250419+deb13u1; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
-# Upgrade pip to a later version
+# Upgrade pip to a later version - we ignore
+# the cooldown period here in case an urgent
+# security fix is needed
 # ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore pip=="$PIP_VERSION"
+# TEMPORARY: Update certifi until it gets an
+# update upstream
+# ==========================================
+RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore --uploaded-prior-to=P0D pip=="$PIP_VERSION" certifi=="$CERTIFI_VERSION"
 
 # ==========================================
 # Create an "/app" directory in the root dir
@@ -179,6 +185,7 @@ RUN mkdir -p /app; \
 # ==========================================
 RUN set -eux; \
     curl -sSL "https://install.python-poetry.org" | python -; \
+    "$POETRY_HOME/venv/bin/python" -m pip install --no-cache-dir --quiet --upgrade --uploaded-prior-to=P0D certifi=="$CERTIFI_VERSION"; \
     curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh" | bash; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
 
