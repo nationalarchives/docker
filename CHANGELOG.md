@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.22.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.25.0...HEAD)
 
 ### Added
 ### Changed
@@ -20,6 +20,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 - Remove explicit installs for `libc-bin=2.41-12+deb13u4` and `perl=5.40.1-6+deb13u1` as these are now included upstream
+
+## [1.25.0](https://github.com/nationalarchives/docker/compare/v1.24.0...v1.25.0) - 2026-10-22
+
+### Security
+
+- Remove 7 day cooldown restriction for pip, poetry and npm - these should be applied on a per-application basis
+
+## [1.24.0](https://github.com/nationalarchives/docker/compare/v1.23.0...v1.24.0) - 2026-10-21
+
+### Changed
+
+- Updated Ruff to [0.17.0](https://github.com/astral-sh/ruff/releases/tag/0.17.0)
+- Updated Prettier to [3.9.10](https://github.com/prettier/prettier/releases/tag/3.9.10)
+- Updated Node to [v24.22.1](https://github.com/nodejs/node/releases/tag/v24.22.1)
+
+### Security
+
+- Update pip to [26.2.2](https://github.com/pypa/pip/blob/main/NEWS.rst#2622-2026-10-20), certify to [2026.10.19](https://pypi.org/project/certifi/2026.10.19/) and `ca-certificates` to [20250419+deb13u1](https://lists.debian.org/debian-security-announce/2026/msg00487.html?pow_referer=) following [eMudhra Intermediate CA Compromise](https://emudhra.we-have-a-problem.com/)
+
+## [1.23.0](https://github.com/nationalarchives/docker/compare/v1.22.0...v1.23.0) - 2026-10-14
+
+### Changed
+
+- Updated djLint to [v1.46.4](https://github.com/djlint/djLint/releases/tag/v1.46.4)
+- Updated `@nationalarchives/eslint-config` and `@nationalarchives/stylelint-config`
+- Updated Ruff to [0.16.10](https://github.com/astral-sh/ruff/releases/tag/0.16.10)
+
+### Fixed
+
+- djlint no longer errors if there are no files found ([`allow_empty_input`](https://djlint.com/docs/configuration/#allow-empty-input))
+
+### Security
+
+- Remove explicit install for `libc-bin=2.41-12+deb13u4` as this is now included upstream
+- Updated `curl` to `8.14.1-2+deb13u7` to fix [CVE-2026-8924](https://security-tracker.debian.org/tracker/CVE-2026-8924) and [CVE-2026-8927](https://security-tracker.debian.org/tracker/CVE-2026-8927)
 
 ## [1.22.0](https://github.com/nationalarchives/docker/compare/v1.21.0...v1.22.0) - 2026-10-05
 
