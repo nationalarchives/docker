@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
-- Remove explicit installs for `libc-bin=2.41-12+deb13u4` and `perl=5.40.1-6+deb13u1` as these are now included upstream
+- Remove explicit install for `perl=5.40.1-6+deb13u1` as these are now included upstream
 
 ## [1.25.0](https://github.com/nationalarchives/docker/compare/v1.24.0...v1.25.0) - 2026-10-22
 
