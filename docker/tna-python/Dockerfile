@@ -129,12 +129,12 @@ ENV NODE_ENV=production
 # dependency resolver of Poetry and pip to 7
 # days to act as a cooldown for new releases
 # of packages excluding packages that we own
-# and publish
+# and publish - npm is set in lib/.npmrc
 # ==========================================
-ENV COOLDOWN_PERIOD=7
-ENV POETRY_SOLVER_MIN_RELEASE_AGE="$COOLDOWN_PERIOD" \
-    POETRY_SOLVER_MIN_RELEASE_AGE_EXCLUDE="tna-frontend-jinja,tna-utilities,tna-ruff-config" \
-    PIP_UPLOADED_PRIOR_TO="P${COOLDOWN_PERIOD}D"
+# ENV COOLDOWN_PERIOD=7
+# ENV POETRY_SOLVER_MIN_RELEASE_AGE="$COOLDOWN_PERIOD" \
+#     POETRY_SOLVER_MIN_RELEASE_AGE_EXCLUDE="tna-frontend-jinja,tna-utilities,tna-ruff-config" \
+#     PIP_UPLOADED_PRIOR_TO="P${COOLDOWN_PERIOD}D"
 
 # ==========================================
 # Ensure the `/bin/sh -c` interpreter Docker
