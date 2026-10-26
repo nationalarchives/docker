@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Updated `brotli` to `1.1.0-2+deb13u1` to fix [CVE-2026-111497](https://security-tracker.debian.org/tracker/CVE-2026-111497)
+- Updated `libbrotli1` to `1.1.0-2+deb13u1` to fix [CVE-2026-111497](https://security-tracker.debian.org/tracker/CVE-2026-111497)
 
 ## [1.26.0](https://github.com/nationalarchives/docker/compare/v1.25.0...v1.26.0) - 2026-10-22
 
