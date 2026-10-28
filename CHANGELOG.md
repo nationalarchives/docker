@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.27.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.28.0...HEAD)
 
 ### Added
 ### Changed
@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 ### Security
+
+## [1.28.0](https://github.com/nationalarchives/docker/compare/v1.27.0...v1.28.0) - 2026-10-28
+
+### Security
+
+- Version bump to use [Python 3.15.2, fixing CVE-2026-115557](https://blog.python.org/2026/10/python-3152-31410-31318-31216-31118/)
 
 ## [1.27.0](https://github.com/nationalarchives/docker/compare/v1.26.0...v1.27.0) - 2026-10-26
 
