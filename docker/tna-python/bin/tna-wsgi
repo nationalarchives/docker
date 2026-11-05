@@ -19,68 +19,63 @@ then
   exit 1
 fi
 
-# if a gunicorn.conf.py file exists, use it for configuration
+GUNICORN_CONF="/home/app/gunicorn.conf.py"
+# Use an application-specific configuration when one is provided
 if [ -f "/app/gunicorn.conf.py" ]
 then
-  echo "Using gunicorn.conf.py for configuration..."
-  poetry run gunicorn "$APPLICATION" --config "/app/gunicorn.conf.py" --capture-output --enable-stdio-inheritance
-  exit 0
+  GUNICORN_CONF="/app/gunicorn.conf.py"
 fi
 
-# Set up the default number of workers and threads
-DEFAULT_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
-DEFAULT_THREADS=$((DEFAULT_WORKERS * 2))
+if [ ! -f $GUNICORN_CONF ]
+then
+  echo "Error: gunicorn config $GUNICORN_CONF not found"
+  exit 1
+fi
 
-# Use the number of workers and threads (if provided) else use defaults
-[[ -z $WORKERS ]] && WORKERS=$DEFAULT_WORKERS
-[[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS
+echo "Using $GUNICORN_CONF for configuration..."
+echo
+poetry run gunicorn --check-config --config "$GUNICORN_CONF" "$APPLICATION"
 
-# Set defaults for environment variables if they are not set
-[[ -z $TIMEOUT ]] && TIMEOUT=30
-[[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
-
-# Get the protcol for the application
-APPLICATION_PROTOCOL=$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')
-
-# Lowercase LOG_LEVEL
-LOG_LEVEL=$(echo "${LOG_LEVEL}" | tr '[:upper:]' '[:lower:]')
-
-if [ "$APPLICATION_PROTOCOL" = "https" ]
-else
-  # Set up the configuration for gunicorn based on environment variables or defaults
-  [[ -z $WORKERS ]] && WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
-  [[ -z $WORKER_CONNECTIONS ]] && WORKER_CONNECTIONS=1000
-  [[ -z $MAX_REQUESTS ]] && MAX_REQUESTS=10000
-  [[ -z $MAX_REQUESTS_JITTER ]] && MAX_REQUESTS_JITTER=1000
-  [[ -z $LOG_LEVEL ]] && LOG_LEVEL=warning
-  [[ -z $TIMEOUT ]] && TIMEOUT=30
-  [[ -z $WORKER_CLASS ]] && WORKER_CLASS=sync
-
-  # Get the protcol for the application
-  APPLICATION_PROTOCOL=$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')
-
-  echo "Configuration:"
-  echo "  Application: $APPLICATION"
-  echo "  Workers: $WORKERS"
-  echo "  Worker connections: $WORKER_CONNECTIONS"
-  echo "  Max requests: $MAX_REQUESTS"
-  echo "  Max requests jitter: $MAX_REQUESTS_JITTER"
-  echo "  Log level: $LOG_LEVEL"
-  echo "  Timeout: $TIMEOUT"
-  echo "  Worker class: $WORKER_CLASS"
-  echo "  Application protocol: $APPLICATION_PROTOCOL"
+CPU_CORES=$(nproc)
+CONFIGURED_WORKERS=$(python3 -c "
+ns = {}
+exec(open('$GUNICORN_CONF').read(), ns)
+print(ns['workers'])
+")
+MEMORY_LIMIT=$(cat /sys/fs/cgroup/memory.max)
+if [ "$MEMORY_LIMIT" = "max" ]
+then
+  MEMORY_LIMIT=$(grep MemTotal /proc/meminfo | awk '{print $2 * 1024}')
+fi
+MEMORY_LIMIT_MB=$((MEMORY_LIMIT / 1024 / 1024))
+ESTIMATED_USAGE=$((CONFIGURED_WORKERS * 100))  # 100MB per worker estimate
+echo "CPU cores:                         $CPU_CORES"
+echo "Configured workers:                ${CONFIGURED_WORKERS}"
+echo "Estimated usage at (100MB/worker): ${ESTIMATED_USAGE}MB"
+echo "Total memory:                      ${MEMORY_LIMIT_MB}MB"
+echo
+if [ $CONFIGURED_WORKERS -gt $((CPU_CORES * 3)) ]; then
+  echo "⚠️  WARNING: Too many workers ($CONFIGURED_WORKERS) for available cores ($CPU_CORES)"
+  echo "    Recommended:"
+  echo "      $((CPU_CORES * 2)) workers for I/O-bound apps"
+  echo "      $(((CPU_CORES * 2) + 1)) workers for CPU-bound apps"
   echo
-
-  if [ "$APPLICATION_PROTOCOL" = "https" ]
-  then
-    source tna-ssl-setup
-    poetry run gunicorn "$APPLICATION" --worker-class "$WORKER_CLASS" --workers "$WORKERS" --worker-connections "$WORKER_CONNECTIONS" --max-requests "$MAX_REQUESTS" --max-requests-jitter "$MAX_REQUESTS_JITTER" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT" --keyfile "$SSL_KEY_FILE" --certfile "$SSL_CERTIFICATE_FILE" --ca-certs "$SSL_CA_CERTIFICATES_FILE" --preload --capture-output --enable-stdio-inheritance
-  elif [ "$APPLICATION_PROTOCOL" = "http" ]
-  then
-    poetry run gunicorn "$APPLICATION" --worker-class "$WORKER_CLASS" --workers "$WORKERS" --worker-connections "$WORKER_CONNECTIONS" --max-requests "$MAX_REQUESTS" --max-requests-jitter "$MAX_REQUESTS_JITTER" --log-level "$LOG_LEVEL" --timeout "$TIMEOUT" --access-logfile - --bind "0.0.0.0:$APPLICATION_PORT" --preload --capture-output --enable-stdio-inheritance
-  else
-    echo -e "Error: invalid protocol specified in APPLICATION_PROTOCOL: '$APPLICATION_PROTOCOL'\n"
-    echo "Allowed values are 'http' and 'https'"
-    exit 1
-  fi
 fi
+if [ $ESTIMATED_USAGE -gt $((MEMORY_LIMIT_MB / 10 * 8)) ]; then  # 80% of total memory
+  echo "⚠️  WARNING: Estimated memory usage may exceed available memory"
+  echo
+fi
+
+APPLICATION_PROTOCOL=$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')
+if [ "$APPLICATION_PROTOCOL" = "https" ]
+then
+  source tna-ssl-setup
+  export SSL_KEY_FILE SSL_CERTIFICATE_FILE
+elif [ "$APPLICATION_PROTOCOL" != "http" ]
+then
+  echo -e "Error: invalid protocol specified in APPLICATION_PROTOCOL: '$APPLICATION_PROTOCOL'\n"
+  echo "Allowed values are 'http' and 'https'"
+  exit 1
+fi
+
+poetry run gunicorn --config "$GUNICORN_CONF" "$APPLICATION"

@@ -2,5 +2,7 @@
 
 set -e
 
-# Run the application
+echo "Setting worker class to UvicornWorker..."
+echo
+
 WORKER_CLASS="uvicorn.workers.UvicornWorker" tna-wsgi "$@"

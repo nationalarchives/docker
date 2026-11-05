@@ -8,7 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.28.0...HEAD)
 
 ### Added
+
+- Added a default Gunicorn configuration with environment-variable settings and support for application-specific overrides
+- Added startup warnings for worker counts that may exceed available CPU or memory
+
 ### Changed
+
+- Installed Uvicorn during `tna-build` and configured `tna-asgi` to use its worker class
+- Set the default Gunicorn keep-alive timeout to 65 seconds
+
 ### Deprecated
 ### Removed
 ### Fixed

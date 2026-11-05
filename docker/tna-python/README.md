@@ -22,11 +22,16 @@ Each environment has some default values but all can be overwritten:
 | `SECRET_KEY`               | A random key used to secure client session data                           | _none_                                 |
 | `WORKERS`                  | Number of worker processes[^1]                                            | `(cpu * 2) + 1`                        |
 | `THREADS`                  | Number of threads[^2]                                                     | `$WORKERS * 2` (ignored by `tna-asgi`) |
+| `WORKER_CLASS`             | Gunicorn worker class                                                     | `sync`                                 |
+| `WORKER_CONNECTIONS`       | Maximum simultaneous clients per worker                                   | `1000`                                 |
+| `MAX_REQUESTS`             | Maximum requests a worker handles before restarting                       | `10000`                                |
+| `MAX_REQUESTS_JITTER`      | Random variation added to the maximum requests                            | `1000`                                 |
 | `LOG_LEVEL`                | The log level to stream to the console[^3][^4]                            | `warning`                              |
 | `NODE_ENV`                 | The node environment[^5]                                                  | `production`                           |
 | `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run to build static assets          | _none_                                 |
 | `TIMEOUT`                  | The number of seconds before a request is terminated[^6]                  | `30` (ignored by `tna-asgi`)           |
-| `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^7] | `30`                                   |
+| `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^7] | `65`                                   |
+| `APPLICATION_PORT`         | Port on which the application listens                                     | `8080`                                 |
 | `APPLICATION_PROTOCOL`     | The protocol of the application (`http` or `https`)                       | `https`                                |
 | `SSL_KEY_FILE`             | The location of the SSL key                                               | `/home/app/ssl/server.key`             |
 | `SSL_CERTIFICATE_FILE`     | The location of the SSL certificate                                       | `/home/app/ssl/server.crt`             |
@@ -98,6 +103,8 @@ The process for these commands is:
 1. If `$NPM_BUILD_COMMAND` has been defined then run it to build any resources using [`tna-node [command]`](#tna-node-command)
 1. Calculate the default worker and thread count based on the number of CPU cores
 1. Start `gunicorn` (`tna-wsgi`) or `uvicorn` (`tna-asgi`) with values appropriate to the environment taking into account any overrides
+
+The default Gunicorn settings are loaded from `/home/app/gunicorn.conf.py`. To provide your own Gunicorn configuration, add `gunicorn.conf.py` to the application root (`/app`); it takes precedence over the default configuration.
 
 ## Using Node
 
