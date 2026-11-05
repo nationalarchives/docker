@@ -21,6 +21,11 @@ All environment variables extended from [tna-python](../tna-python/README.md) bu
 | `NODE_ENV`                 | `development`           |
 | `WORKERS`                  | _ignored_               |
 | `THREADS`                  | _ignored_               |
+| `WORKER_CLASS`             | _ignored_               |
+| `GUNICORN_PROTOCOL`        | _ignored_               |
+| `WORKER_CONNECTIONS`       | _ignored_               |
+| `MAX_REQUESTS`             | _ignored_               |
+| `MAX_REQUESTS_JITTER`      | _ignored_               |
 | `TIMEOUT`                  | _ignored_               |
 | `KEEP_ALIVE`               | _ignored_               |
 | `APPLICATION_PROTOCOL`     | _ignored_ (`http` only) |
@@ -78,26 +83,32 @@ The `Dockerfile` is used to generate the production image and so the default `tn
 
 Run `help` from within the container to see a list of available commands.
 
+### `tna-build`
+
+Runs the `tna-python` build, then installs the Poetry development dependencies and Django Debug Toolbar. If `/app/package.json` exists, it also installs the npm dependencies.
+
 ### `tna-wsgi` and `tna-asgi`
 
 In the `tna-python-dev` image, both of these commands are replaced by a script that detects the frameworks used and runs their development servers.
 
 This means you don't have to change anything in your `Dockerfile` when switching between `tna-python` and `tna-python-dev`.
 
-The process for these commands is:
+The script checks for installed frameworks in this order: Flask, Django, then FastAPI. It runs each framework's development server when found:
 
 1. If `NPM_DEVELOP_COMMAND` has been defined then run `tna-node "$NPM_DEVELOP_COMMAND"` (See [tna-node](../tna-python/README.md#tna-node-command))
-1. If Django is installed, run the Django development server
-   1. Else if Flask is installed, run the Flask development server
-   1. Else if FastAPI is installed, run the FastAPI development server
+1. If Flask is installed, run `flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port "$APPLICATION_PORT"`.
+1. If Django is installed, require `/app/manage.py` and run `python /app/manage.py runserver "0.0.0.0:$APPLICATION_PORT"`.
+1. If FastAPI is installed, require `/app/main.py` and run `fastapi dev --host 0.0.0.0 --port "$APPLICATION_PORT"`.
+
+These commands run sequentially. If the npm script keeps running (as a watcher or development server typically does), the Python development server is not started.
 
 ### `format`
 
-1. Run `ruff` (using [tna-ruff-config](https://github.com/nationalarchives/ruff-config))
-1. Run `djlint` to check HTML templates for Jinja compliance
-1. Run `stylelint` against all SCSS files in the `/app` directory (using [@nationalarchives/stylelint-config](https://github.com/nationalarchives/stylelint-config))
-1. Run `eslint` against all JavaScript files in the `/app` directory (using [@nationalarchives/eslint-config](https://github.com/nationalarchives/eslint-config))
-1. Apply `prettier` to all files in the `/app` directory
+1. Run Ruff checks and formatting using [tna-ruff-config](https://github.com/nationalarchives/ruff-config); `format` applies fixes and `checkformat` only checks.
+1. If `/app/app/templates` exists, run `djlint` to lint its templates for Jinja compliance.
+1. Run `stylelint` on CSS and SCSS files under `/app` using [@nationalarchives/stylelint-config](https://github.com/nationalarchives/stylelint-config); `format` applies fixes.
+1. Run `eslint` on `/app` using [@nationalarchives/eslint-config](https://github.com/nationalarchives/eslint-config); `format` applies fixes.
+1. Run Prettier on `/app`; `format` writes changes and `checkformat` reports files that differ.
 
 #### Ruff
 
@@ -124,9 +135,9 @@ ignore = [
 ]
 ```
 
-##### Supressing errors
+##### Suppressing errors
 
-Use the `# noqa` annotation from [Ruff error suppression](https://docs.astral.sh/ruff/linter/#error-suppression) to ignore failing lines.
+Use the `# noqa` annotation from [Ruff error suppression](https://docs.astral.sh/ruff/linter/#error-suppression) to suppress lint diagnostics on specific lines.
 
 ```python
 def my_overly_complex_function():  # noqa: C901
@@ -140,7 +151,7 @@ def my_overly_complex_function():  # noqa: C901
 | `djlint`    | `.djlintrc` file in the project root                                      | https://djlint.com/docs/configuration/                                                     |
 | `stylelint` | `stylelint.config.mjs` and/or `.stylelintignore` file in the project root | https://stylelint.io/user-guide/configure/, https://stylelint.io/user-guide/ignore-code/   |
 | `eslint`    | `eslint.config.mjs` file in the project root                              | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files |
-| `prettier`  | `.prettierignore` file in the project root                                | https://prettier.io/docs/en/ignore.html                                                    |
+| `prettier`  | `.prettierrc` or `prettier.config.*` for options; `.prettierignore` to exclude files | https://prettier.io/docs/configuration/, https://prettier.io/docs/ignore.html |
 
 ### `checkformat`
 

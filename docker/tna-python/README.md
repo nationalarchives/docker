@@ -5,8 +5,7 @@ This image comes with:
 - A version of Python approved by TNA
 - [Poetry](https://python-poetry.org/) for dependency management
 - [nvm](https://github.com/nvm-sh/nvm) for compiling assets such as CSS and JavaScript
-- [Gunicorn](https://gunicorn.org/) for serving the Python application via a WSGI
-- [Uvicorn](https://www.uvicorn.org/) for serving the Python application via a ASGI
+- [Gunicorn](https://gunicorn.org/) for serving the Python application via a WSGI or ASGI
 
 This image requires you have the following files in the root of your project:
 
@@ -21,22 +20,23 @@ Each environment has some default values but all can be overwritten:
 | -------------------------- | ------------------------------------------------------------------------- | -------------------------------------- |
 | `SECRET_KEY`               | A random key used to secure client session data                           | _none_                                 |
 | `WORKERS`                  | Number of worker processes[^1]                                            | `(cpu * 2) + 1`                        |
-| `THREADS`                  | Number of threads[^2]                                                     | `$WORKERS * 2` (ignored by `tna-asgi`) |
-| `WORKER_CLASS`             | Gunicorn worker class                                                     | `sync`                                 |
-| `WORKER_CONNECTIONS`       | Maximum simultaneous clients per worker                                   | `1000`                                 |
+| `THREADS`                  | Number of threads for threaded worker classes[^2]                         | `1` (ignored if using ASGI)            |
+| `WORKER_CLASS`             | Gunicorn worker class                                                     | `sync` (`asgi` for `tna-asgi`)         |
+| `GUNICORN_PROTOCOL`        | Request protocol handled by Gunicorn                                      | `http` (`http` or `uwsgi`)             |
+| `WORKER_CONNECTIONS`       | Maximum simultaneous clients for worker classes that support this setting | `1000`                                 |
 | `MAX_REQUESTS`             | Maximum requests a worker handles before restarting                       | `10000`                                |
 | `MAX_REQUESTS_JITTER`      | Random variation added to the maximum requests                            | `1000`                                 |
-| `LOG_LEVEL`                | The log level to stream to the console[^3][^4]                            | `warning`                              |
-| `NODE_ENV`                 | The node environment[^5]                                                  | `production`                           |
-| `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run to build static assets          | _none_                                 |
-| `TIMEOUT`                  | The number of seconds before a request is terminated[^6]                  | `30` (ignored by `tna-asgi`)           |
-| `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^7] | `65`                                   |
+| `LOG_LEVEL`                | The log level to stream to the console[^3]                                | `warning`                              |
+| `NODE_ENV`                 | The node environment[^4]                                                  | `production`                           |
+| `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run during `tna-build`              | _none_                                 |
+| `TIMEOUT`                  | Seconds a worker can remain silent before it is restarted[^5]             | `30`                                   |
+| `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^6] | `65`                                   |
 | `APPLICATION_PORT`         | Port on which the application listens                                     | `8080`                                 |
 | `APPLICATION_PROTOCOL`     | The protocol of the application (`http` or `https`)                       | `https`                                |
 | `SSL_KEY_FILE`             | The location of the SSL key                                               | `/home/app/ssl/server.key`             |
 | `SSL_CERTIFICATE_FILE`     | The location of the SSL certificate                                       | `/home/app/ssl/server.crt`             |
 | `SSL_CA_CERTIFICATES_FILE` | The location of the CA certificates                                       | _none_                                 |
-| `SSL_DOMAIN`               | Domain for a self-signed SSL if no key or certificate files are provided  | _none_                                 |
+| `SSL_DOMAIN`               | Domain used to generate a self-signed certificate if an SSL file is missing | _none_                               |
 
 [^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 
@@ -44,13 +44,11 @@ Each environment has some default values but all can be overwritten:
 
 [^3]: Supported levels for Gunicorn are `critical`, `error`, `warning`, `info` and `debug` [Gunicorn docs - log level](https://gunicorn.org/reference/settings/#loglevel)
 
-[^4]: Supported levels for Uvicorn are `critical`, `error`, `warning`, `info`, `debug` and `trace` [Uvicorn docs - logging settings](https://uvicorn.dev/settings/#logging)
+[^4]: [Node.js, the difference between development and production](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production/)
 
-[^5]: [Node.js, the difference between development and production](https://nodejs.dev/en/learn/nodejs-the-difference-between-development-and-production/)
+[^5]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
 
-[^6]: [Gunicorn docs - timeout](https://docs.gunicorn.org/en/stable/settings.html#timeout)
-
-[^7]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
+[^6]: [Gunicorn docs - keepalive](https://docs.gunicorn.org/en/stable/settings.html#keepalive)
 
 ## Commands for the Dockerfile
 
@@ -58,30 +56,23 @@ Commands available to use within your `Dockerfile`:
 
 - [`tna-build`](#tna-build)
 - [`tna-node`](#tna-node-command)
-- [`tna-npm`](#tna-npm-command)
 - [`tna-clean`](#tna-clean)
 - [`tna-wsgi` and `tna-asgi`](#tna-wsgi-and-tna-asgi)
 
 ### `tna-build`
 
 1. Checks for the presence of `pyproject.toml` and `poetry.lock` files
-1. If `$NPM_BUILD_COMMAND` is defined, run `tna-node "$NPM_BUILD_COMMAND"` (See [tna-node](#tna-node-command))
-1. Installs `gunicorn`, `uvicorn`, `uvicorn-worker`
+1. Adds the pinned Gunicorn version to the project with Poetry
 1. Installs `tool.poetry.dependencies` from `pyproject.toml`
    - `tna-python-dev` image also installs `tool.poetry.group.dev.dependencies`
-1. In `tna-python-django`, collect all static assets if `django.contrib.staticfiles` is used
+1. If `$NPM_BUILD_COMMAND` is defined, run `tna-node "$NPM_BUILD_COMMAND"` (see [tna-node](#tna-node-command))
 
 ### `tna-node [command]`
 
-1. Checks for the presence of a `package.json` file
-1. Installs Node dependencies from `package.json` using [tna-npm](#tna-npm-command)
-1. Runs the passed `[command]` as `npm run [command]` (e.g. `build` from in `package.json`) using [tna-npm](#tna-npm-command)
-
-### `tna-npm [command]`
-
-1. Sets the Node version to that defined in `.nvmrc`
-   - If `.nvmrc` is not defined, use the `default` nvm version
-1. Runs the passed `[command]` as `npm [command]` (e.g. `install @nationalarchives/frontend`)
+1. Requires `package.json` and `package-lock.json` in `/app`
+1. Uses the Node version in `.nvmrc`, or the image's default Node version if `.nvmrc` is absent
+1. Runs `npm install --production=false`
+1. Runs the passed script as `npm run [command]` (for example, `tna-node build` runs the `build` script in `package.json`)
 
 ### `tna-clean`
 
@@ -100,25 +91,26 @@ tna-asgi my_app:app
 
 The process for these commands is:
 
-1. If `$NPM_BUILD_COMMAND` has been defined then run it to build any resources using [`tna-node [command]`](#tna-node-command)
-1. Calculate the default worker and thread count based on the number of CPU cores
-1. Start `gunicorn` (`tna-wsgi`) or `uvicorn` (`tna-asgi`) with values appropriate to the environment taking into account any overrides
+1. Validate and load the Gunicorn configuration.
+1. Start Gunicorn with the configured settings and environment-variable overrides.
+
+`tna-asgi` sets `WORKER_CLASS=asgi`; `tna-wsgi` uses `WORKER_CLASS` or defaults to `sync`. `NPM_BUILD_COMMAND` is run by `tna-build`, not by these startup commands.
 
 The default Gunicorn settings are loaded from `/home/app/gunicorn.conf.py`. To provide your own Gunicorn configuration, add `gunicorn.conf.py` to the application root (`/app`); it takes precedence over the default configuration.
 
 ## Using Node
 
-To use Node to build your assets you need three files in your project:
+To use Node to build assets, provide these files in your project:
 
 - `package.json`
 - `package-lock.json`
-- `.nvmrc` containing the version of Node you would like to support (e.g. `lts/iron`)
+- Optionally, `.nvmrc` containing the version of Node to use (for example, `lts/iron`). If omitted, the image's default Node version is used.
 
 ## SSL
 
 ### Self-signed certificates
 
-Set `SSL_DOMAIN` to create a self-signed SSL certificate for the container on startup.
+If either the configured SSL key or certificate file is missing at startup, set `SSL_DOMAIN` to allow a self-signed certificate to be generated. The generated files are written to the default paths (`/home/app/ssl/server.key` and `/home/app/ssl/server.crt`).
 
 The generated certificate will be valid for 10 years.
 
@@ -133,9 +125,9 @@ Ensure the files can be read by the container user.
 
 These locations can be overridden with the `SSL_KEY_FILE` and `SSL_CERTIFICATE_FILE` environment variables.
 
-#### Custom CA
+#### Client certificate authorities
 
-Mount a CA file in the container (perhaps at `/home/app/ssl/ca.crt`) and set the `SSL_CA_CERTIFICATES_FILE` environment variable to set up the certificate authorities.
+To verify client certificates, mount the CA file in the container (for example, at `/home/app/ssl/ca.crt`) and set `SSL_CA_CERTIFICATES_FILE` to its path. Gunicorn uses this file for TLS client-certificate verification.
 
 ### Disabling SSL
 

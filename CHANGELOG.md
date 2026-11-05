@@ -14,11 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Installed Uvicorn during `tna-build` and configured `tna-asgi` to use its worker class
+- Switched from using uvicorn to the native `asgi` gunicorn worker for ASGI applications
 - Set the default Gunicorn keep-alive timeout to 65 seconds
 
 ### Deprecated
 ### Removed
+
+- Removed uvicorn as a dependency and no longer use it for ASGI applications
+
 ### Fixed
 ### Security
 
@@ -61,7 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Update pip to [26.2.2](https://github.com/pypa/pip/blob/main/NEWS.rst#2622-2026-10-20), certify to [2026.10.19](https://pypi.org/project/certifi/2026.10.19/) and `ca-certificates` to [20250419+deb13u1](https://lists.debian.org/debian-security-announce/2026/msg00487.html?pow_referer=) following [eMudhra Intermediate CA Compromise](https://emudhra.we-have-a-problem.com/)
+- Update pip to [26.2.2](https://github.com/pypa/pip/blob/main/NEWS.rst#2622-2026-10-20), certifi to [2026.10.19](https://pypi.org/project/certifi/2026.10.19/) and `ca-certificates` to [20250419+deb13u1](https://lists.debian.org/debian-security-announce/2026/msg00487.html?pow_referer=) following [eMudhra Intermediate CA Compromise](https://emudhra.we-have-a-problem.com/)
 
 ## [1.23.0](https://github.com/nationalarchives/docker/compare/v1.22.0...v1.23.0) - 2026-10-14
 

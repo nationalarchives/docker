@@ -2,7 +2,7 @@
 
 set -e
 
-echo "Setting worker class to UvicornWorker..."
+echo "Setting worker class to ASGI..."
 echo
 
-WORKER_CLASS="uvicorn.workers.UvicornWorker" tna-wsgi "$@"
+WORKER_CLASS="asgi" tna-wsgi "$@"

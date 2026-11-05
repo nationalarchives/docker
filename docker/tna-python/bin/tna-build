@@ -16,7 +16,7 @@ then
   exit 1
 fi
 
-poetry add "gunicorn=$WSGI_GUNICORN_VERSION" "uvicorn[standard]=$ASGI_UVICORN_VERSION"
+poetry add "gunicorn=$WSGI_GUNICORN_VERSION"
 poetry install --no-root --no-interaction
 
 if [ -n "$NPM_BUILD_COMMAND" ]

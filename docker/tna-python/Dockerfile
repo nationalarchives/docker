@@ -77,8 +77,7 @@ ENV NODEJS_VERSION=24.22.1 \
     CERTIFI_VERSION=2026.10.19 \
     POETRY_VERSION=2.5.1 \
     NVM_VERSION=0.40.8 \
-    WSGI_GUNICORN_VERSION=26.2.0 \
-    ASGI_UVICORN_VERSION=0.54.0
+    WSGI_GUNICORN_VERSION=26.2.0
 
 # ==========================================
 # Create container labels containing version
@@ -91,7 +90,6 @@ LABEL uk.gov.nationalarchives.pip-version="$PIP_VERSION"
 LABEL uk.gov.nationalarchives.poetry-version="$POETRY_VERSION"
 LABEL uk.gov.nationalarchives.nvm-version="$NVM_VERSION"
 LABEL uk.gov.nationalarchives.wsgi-gunicorn-version="$WSGI_GUNICORN_VERSION"
-LABEL uk.gov.nationalarchives.asgi-uvicorn-version="$ASGI_UVICORN_VERSION"
 
 # ==========================================
 # Create a new non-root level "app" user who
