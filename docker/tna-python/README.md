@@ -5,7 +5,7 @@ This image comes with:
 - A version of Python approved by TNA
 - [Poetry](https://python-poetry.org/) for dependency management
 - [nvm](https://github.com/nvm-sh/nvm) for compiling assets such as CSS and JavaScript
-- [Gunicorn](https://gunicorn.org/) for serving the Python application via a WSGI or ASGI
+- [Gunicorn](https://gunicorn.org/) for serving the Python application via WSGI or ASGI, added to the project when `tna-build` runs
 
 This image requires you have the following files in the root of your project:
 
@@ -30,7 +30,11 @@ Each environment has some default values but all can be overwritten:
 | `NODE_ENV`                 | The node environment[^4]                                                  | `production`                           |
 | `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run during `tna-build`              | _none_                                 |
 | `TIMEOUT`                  | Seconds a worker can remain silent before it is restarted[^5]             | `30`                                   |
+| `GRACEFUL_TIMEOUT`         | Seconds workers have to finish requests after a restart signal             | `30`                                   |
 | `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^6] | `65`                                   |
+| `HTTP_PROTOCOLS`           | HTTP versions enabled by Gunicorn (for example, `h1` or `h2,h1`)           | `h1`                                   |
+| `ROOT_PATH`                | Root path for ASGI applications mounted below a URL prefix                 | _none_                                 |
+| `PRELOAD_APP`              | Load the application before forking worker processes                       | `false`                                |
 | `APPLICATION_PORT`         | Port on which the application listens                                     | `8080`                                 |
 | `APPLICATION_PROTOCOL`     | The protocol of the application (`http` or `https`)                       | `https`                                |
 | `SSL_KEY_FILE`             | The location of the SSL key                                               | `/home/app/ssl/server.key`             |
@@ -97,6 +101,7 @@ The process for these commands is:
 `tna-asgi` sets `WORKER_CLASS=asgi`; `tna-wsgi` uses `WORKER_CLASS` or defaults to `sync`. `NPM_BUILD_COMMAND` is run by `tna-build`, not by these startup commands.
 
 The default Gunicorn settings are loaded from `/home/app/gunicorn.conf.py`. To provide your own Gunicorn configuration, add `gunicorn.conf.py` to the application root (`/app`); it takes precedence over the default configuration.
+The default configuration uses automatic ASGI event-loop and lifespan detection (`asgi_loop` and `asgi_lifespan` are both `auto`).
 
 ## Using Node
 

@@ -27,7 +27,11 @@ All environment variables extended from [tna-python](../tna-python/README.md) bu
 | `MAX_REQUESTS`             | _ignored_               |
 | `MAX_REQUESTS_JITTER`      | _ignored_               |
 | `TIMEOUT`                  | _ignored_               |
+| `GRACEFUL_TIMEOUT`         | _ignored_               |
 | `KEEP_ALIVE`               | _ignored_               |
+| `HTTP_PROTOCOLS`           | _ignored_               |
+| `ROOT_PATH`                | _ignored_               |
+| `PRELOAD_APP`              | _ignored_               |
 | `APPLICATION_PROTOCOL`     | _ignored_ (`http` only) |
 | `SSL_KEY_FILE`             | _ignored_               |
 | `SSL_CERTIFICATE_FILE`     | _ignored_               |

@@ -9,7 +9,7 @@ worker_connections = int(os.environ.get("WORKER_CONNECTIONS", "1000"))
 max_requests = int(os.environ.get("MAX_REQUESTS", "10000"))
 max_requests_jitter = int(os.environ.get("MAX_REQUESTS_JITTER", "1000"))
 loglevel = os.environ.get("LOG_LEVEL", "warning").lower()
-timeout = int(os.environ.get("TIMEOUT", "120"))
+timeout = int(os.environ.get("TIMEOUT", "30"))
 graceful_timeout = int(os.environ.get("GRACEFUL_TIMEOUT", "30"))
 asgi_loop = "auto"  # Use uvloop if available
 asgi_lifespan = "auto"  # Auto-detect lifespan support
@@ -19,9 +19,11 @@ keepalive = int(
 protocol = os.environ.get(
     "GUNICORN_PROTOCOL", "http"
 )  # http or uwsgi (https://gunicorn.org/uwsgi/)
+http_protocols = os.environ.get("HTTP_PROTOCOLS", "h1")  # h1, h2 or h2,h1
+root_path = os.environ.get("ROOT_PATH", "")  # Used by ASGI applications
 accesslog = "-"
 bind = f"0.0.0.0:{os.environ.get('APPLICATION_PORT', '8080')}"
-preload_app = True
+preload_app = os.environ.get("PRELOAD_APP", "false").lower() == "true"
 capture_output = True
 enable_stdio_inheritance = True
 
