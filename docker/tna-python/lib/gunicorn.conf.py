@@ -1,7 +1,6 @@
 import multiprocessing
 import os
 
-
 cpu_cores = multiprocessing.cpu_count()
 workers = int(os.environ.get("WORKERS", cpu_cores * 2 + 1))
 worker_class = os.environ.get("WORKER_CLASS", "sync")
@@ -11,8 +10,12 @@ max_requests = int(os.environ.get("MAX_REQUESTS", "10000"))
 max_requests_jitter = int(os.environ.get("MAX_REQUESTS_JITTER", "1000"))
 loglevel = os.environ.get("LOG_LEVEL", "warning").lower()
 timeout = int(os.environ.get("TIMEOUT", "30"))
-keepalive = int(os.environ.get("KEEP_ALIVE", "65"))  # Ensure this is larger than Traefik's keep-alive configuration (default is 60s)
-protocol = os.environ.get("GUNICORN_PROTOCOL", "http")  # http or uwsgi (https://gunicorn.org/uwsgi/)
+keepalive = int(
+    os.environ.get("KEEP_ALIVE", "65")
+)  # Ensure this is larger than Traefik's keep-alive configuration (default is 60s)
+protocol = os.environ.get(
+    "GUNICORN_PROTOCOL", "http"
+)  # http or uwsgi (https://gunicorn.org/uwsgi/)
 accesslog = "-"
 bind = f"0.0.0.0:{os.environ.get('APPLICATION_PORT', '8080')}"
 preload_app = True
