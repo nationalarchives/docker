@@ -48,8 +48,8 @@ RUN apt-get update; \
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
-ENV RUFF_VERSION=0.17.0 \
-    DJLINT_VERSION=1.46.6 \
+ENV RUFF_VERSION=0.17.3 \
+    DJLINT_VERSION=1.49.9 \
     DJANGO_DEBUG_TOOLBAR_VERSION=8.0.0 \
     PRETTIER_VERSION=3.9.10 \
     TNA_RUFF_CONFIG_VERSION=0.2.0 \
@@ -103,8 +103,7 @@ RUN . tna-nvm; \
 # packages that we publish from the cooldown
 # period
 # ==========================================
-RUN python -m pip install --no-cache-dir --quiet --root-user-action=ignore ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION" && \
-    python -m pip install --no-cache-dir --quiet --root-user-action=ignore --uploaded-prior-to=P0D tna-ruff-config=="$TNA_RUFF_CONFIG_VERSION"
+RUN python -m pip install --no-cache-dir --quiet --root-user-action=ignore ruff=="$RUFF_VERSION" tna-ruff-config=="$TNA_RUFF_CONFIG_VERSION" djlint=="$DJLINT_VERSION"
 
 # ==========================================
 # In the home directory, create two symbolic

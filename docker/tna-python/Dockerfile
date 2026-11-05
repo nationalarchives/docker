@@ -72,10 +72,10 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV NODEJS_VERSION=24.22.1 \
+ENV NODEJS_VERSION=24.22.2 \
     PIP_VERSION=26.2.2 \
     POETRY_VERSION=2.5.1 \
-    NVM_VERSION=0.40.8 \
+    NVM_VERSION=0.41.0 \
     WSGI_GUNICORN_VERSION=26.2.0
 
 # ==========================================
@@ -122,18 +122,6 @@ ENV NVM_DIR="$HOME/.nvm"
 ENV NODE_ENV=production
 
 # ==========================================
-# Set the minimum release age in days of the
-# dependency resolver of Poetry and pip to 7
-# days to act as a cooldown for new releases
-# of packages excluding packages that we own
-# and publish - npm is set in lib/.npmrc
-# ==========================================
-# ENV COOLDOWN_PERIOD=7
-# ENV POETRY_SOLVER_MIN_RELEASE_AGE="$COOLDOWN_PERIOD" \
-#     POETRY_SOLVER_MIN_RELEASE_AGE_EXCLUDE="tna-frontend-jinja,tna-utilities,tna-ruff-config" \
-#     PIP_UPLOADED_PRIOR_TO="P${COOLDOWN_PERIOD}D"
-
-# ==========================================
 # Ensure the `/bin/sh -c` interpreter Docker
 # executes commands through doesn't just use
 # the final operation in a pipe to determine
@@ -161,7 +149,7 @@ RUN set -eux; \
 # the cooldown period here in case an urgent
 # security fix is needed
 # ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore --uploaded-prior-to=P0D pip=="$PIP_VERSION"
+RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore pip=="$PIP_VERSION"
 
 # ==========================================
 # Create an "/app" directory in the root dir

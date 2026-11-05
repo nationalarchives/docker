@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Updated Ruff to [0.17.3](https://github.com/astral-sh/ruff/releases/tag/0.17.3)
+- Updated Node to [v24.22.2](https://github.com/nodejs/node/releases/tag/v24.22.2)
+- Updated nvm to [0.41.0](https://github.com/nvm-sh/nvm/releases/tag/v0.41.0)
+- Updated djLint to [v1.49.9](https://github.com/djlint/djLint/releases/tag/v1.49.9)
+
 ### Deprecated
 ### Removed
 ### Fixed
@@ -26,7 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Switched from using uvicorn to the native `asgi` gunicorn worker for ASGI applications
 - Set the default Gunicorn keep-alive timeout to 65 seconds
 
-### Deprecated
 ### Removed
 
 - Removed uvicorn as a dependency and no longer use it for ASGI applications
