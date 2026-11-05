@@ -150,12 +150,12 @@ def my_overly_complex_function():  # noqa: C901
 
 #### How to override other default configurations
 
-| Tool        | Overwrite solution                                                        | More information                                                                           |
-| ----------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `djlint`    | `.djlintrc` file in the project root                                      | https://djlint.com/docs/configuration/                                                     |
-| `stylelint` | `stylelint.config.mjs` and/or `.stylelintignore` file in the project root | https://stylelint.io/user-guide/configure/, https://stylelint.io/user-guide/ignore-code/   |
-| `eslint`    | `eslint.config.mjs` file in the project root                              | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files |
-| `prettier`  | `.prettierrc` or `prettier.config.*` for options; `.prettierignore` to exclude files | https://prettier.io/docs/configuration/, https://prettier.io/docs/ignore.html |
+| Tool        | Overwrite solution                                                                   | More information                                                                           |
+| ----------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `djlint`    | `.djlintrc` file in the project root                                                 | https://djlint.com/docs/configuration/                                                     |
+| `stylelint` | `stylelint.config.mjs` and/or `.stylelintignore` file in the project root            | https://stylelint.io/user-guide/configure/, https://stylelint.io/user-guide/ignore-code/   |
+| `eslint`    | `eslint.config.mjs` file in the project root                                         | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files |
+| `prettier`  | `.prettierrc` or `prettier.config.*` for options; `.prettierignore` to exclude files | https://prettier.io/docs/configuration/, https://prettier.io/docs/ignore.html              |
 
 ### `checkformat`
 

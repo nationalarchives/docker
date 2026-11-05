@@ -16,31 +16,31 @@ This image requires you have the following files in the root of your project:
 
 Each environment has some default values but all can be overwritten:
 
-| Variable                   | Description                                                               | Default                                |
-| -------------------------- | ------------------------------------------------------------------------- | -------------------------------------- |
-| `SECRET_KEY`               | A random key used to secure client session data                           | _none_                                 |
-| `WORKERS`                  | Number of worker processes[^1]                                            | `(cpu * 2) + 1`                        |
-| `THREADS`                  | Number of threads for threaded worker classes[^2]                         | `1` (ignored if using ASGI)            |
-| `WORKER_CLASS`             | Gunicorn worker class                                                     | `sync` (`asgi` for `tna-asgi`)         |
-| `GUNICORN_PROTOCOL`        | Request protocol handled by Gunicorn                                      | `http` (`http` or `uwsgi`)             |
-| `WORKER_CONNECTIONS`       | Maximum simultaneous clients for worker classes that support this setting | `1000`                                 |
-| `MAX_REQUESTS`             | Maximum requests a worker handles before restarting                       | `10000`                                |
-| `MAX_REQUESTS_JITTER`      | Random variation added to the maximum requests                            | `1000`                                 |
-| `LOG_LEVEL`                | The log level to stream to the console[^3]                                | `warning`                              |
-| `NODE_ENV`                 | The node environment[^4]                                                  | `production`                           |
-| `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run during `tna-build`              | _none_                                 |
-| `TIMEOUT`                  | Seconds a worker can remain silent before it is restarted[^5]             | `30`                                   |
-| `GRACEFUL_TIMEOUT`         | Seconds workers have to finish requests after a restart signal             | `30`                                   |
-| `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^6] | `65`                                   |
-| `HTTP_PROTOCOLS`           | HTTP versions enabled by Gunicorn (for example, `h1` or `h2,h1`)           | `h1`                                   |
-| `ROOT_PATH`                | Root path for ASGI applications mounted below a URL prefix                 | _none_                                 |
-| `PRELOAD_APP`              | Load the application before forking worker processes                       | `false`                                |
-| `APPLICATION_PORT`         | Port on which the application listens                                     | `8080`                                 |
-| `APPLICATION_PROTOCOL`     | The protocol of the application (`http` or `https`)                       | `https`                                |
-| `SSL_KEY_FILE`             | The location of the SSL key                                               | `/home/app/ssl/server.key`             |
-| `SSL_CERTIFICATE_FILE`     | The location of the SSL certificate                                       | `/home/app/ssl/server.crt`             |
-| `SSL_CA_CERTIFICATES_FILE` | The location of the CA certificates                                       | _none_                                 |
-| `SSL_DOMAIN`               | Domain used to generate a self-signed certificate if an SSL file is missing | _none_                               |
+| Variable                   | Description                                                                 | Default                        |
+| -------------------------- | --------------------------------------------------------------------------- | ------------------------------ |
+| `SECRET_KEY`               | A random key used to secure client session data                             | _none_                         |
+| `WORKERS`                  | Number of worker processes[^1]                                              | `(cpu * 2) + 1`                |
+| `THREADS`                  | Number of threads for threaded worker classes[^2]                           | `1` (ignored if using ASGI)    |
+| `WORKER_CLASS`             | Gunicorn worker class                                                       | `sync` (`asgi` for `tna-asgi`) |
+| `GUNICORN_PROTOCOL`        | Request protocol handled by Gunicorn                                        | `http` (`http` or `uwsgi`)     |
+| `WORKER_CONNECTIONS`       | Maximum simultaneous clients for worker classes that support this setting   | `1000`                         |
+| `MAX_REQUESTS`             | Maximum requests a worker handles before restarting                         | `10000`                        |
+| `MAX_REQUESTS_JITTER`      | Random variation added to the maximum requests                              | `1000`                         |
+| `LOG_LEVEL`                | The log level to stream to the console[^3]                                  | `warning`                      |
+| `NODE_ENV`                 | The node environment[^4]                                                    | `production`                   |
+| `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run during `tna-build`                | _none_                         |
+| `TIMEOUT`                  | Seconds a worker can remain silent before it is restarted[^5]               | `30`                           |
+| `GRACEFUL_TIMEOUT`         | Seconds workers have to finish requests after a restart signal              | `30`                           |
+| `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^6]   | `65`                           |
+| `HTTP_PROTOCOLS`           | HTTP versions enabled by Gunicorn (for example, `h1` or `h2,h1`)            | `h1`                           |
+| `ROOT_PATH`                | Root path for ASGI applications mounted below a URL prefix                  | _none_                         |
+| `PRELOAD_APP`              | Load the application before forking worker processes                        | `false`                        |
+| `APPLICATION_PORT`         | Port on which the application listens                                       | `8080`                         |
+| `APPLICATION_PROTOCOL`     | The protocol of the application (`http` or `https`)                         | `https`                        |
+| `SSL_KEY_FILE`             | The location of the SSL key                                                 | `/home/app/ssl/server.key`     |
+| `SSL_CERTIFICATE_FILE`     | The location of the SSL certificate                                         | `/home/app/ssl/server.crt`     |
+| `SSL_CA_CERTIFICATES_FILE` | The location of the CA certificates                                         | _none_                         |
+| `SSL_DOMAIN`               | Domain used to generate a self-signed certificate if an SSL file is missing | _none_                         |
 
 [^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 
