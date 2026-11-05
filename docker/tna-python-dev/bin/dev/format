@@ -79,6 +79,7 @@ fi
 . tna-nvm
 nvm use default
 NODE_GLOBAL_MODULES="$(npm root --global)"
+echo
 
 # ==========================================
 # STYLELINT
@@ -128,6 +129,7 @@ then
 else
   node "$ESLINT_BIN" --config "$ESLINT_CONFIG" --no-error-on-unmatched-pattern "/app"
 fi
+echo
 
 # ==========================================
 # PRETTIER

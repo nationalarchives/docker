@@ -74,11 +74,9 @@ ENV PIP_NO_CACHE_DIR=true \
 # ==========================================
 ENV NODEJS_VERSION=24.22.1 \
     PIP_VERSION=26.2.2 \
-    CERTIFI_VERSION=2026.10.19 \
     POETRY_VERSION=2.5.1 \
     NVM_VERSION=0.40.8 \
-    WSGI_GUNICORN_VERSION=26.2.0 \
-    ASGI_UVICORN_VERSION=0.54.0
+    WSGI_GUNICORN_VERSION=26.2.0
 
 # ==========================================
 # Create container labels containing version
@@ -91,7 +89,6 @@ LABEL uk.gov.nationalarchives.pip-version="$PIP_VERSION"
 LABEL uk.gov.nationalarchives.poetry-version="$POETRY_VERSION"
 LABEL uk.gov.nationalarchives.nvm-version="$NVM_VERSION"
 LABEL uk.gov.nationalarchives.wsgi-gunicorn-version="$WSGI_GUNICORN_VERSION"
-LABEL uk.gov.nationalarchives.asgi-uvicorn-version="$ASGI_UVICORN_VERSION"
 
 # ==========================================
 # Create a new non-root level "app" user who
@@ -164,10 +161,7 @@ RUN set -eux; \
 # the cooldown period here in case an urgent
 # security fix is needed
 # ==========================================
-# TEMPORARY: Update certifi until it gets an
-# update upstream
-# ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore --uploaded-prior-to=P0D pip=="$PIP_VERSION" certifi=="$CERTIFI_VERSION"
+RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore --uploaded-prior-to=P0D pip=="$PIP_VERSION"
 
 # ==========================================
 # Create an "/app" directory in the root dir
@@ -185,7 +179,6 @@ RUN mkdir -p /app; \
 # ==========================================
 RUN set -eux; \
     curl -sSL "https://install.python-poetry.org" | python -; \
-    "$POETRY_HOME/venv/bin/python" -m pip install --no-cache-dir --quiet --upgrade --uploaded-prior-to=P0D certifi=="$CERTIFI_VERSION"; \
     curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh" | bash; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
 

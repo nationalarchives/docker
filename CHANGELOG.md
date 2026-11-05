@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.28.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.29.0...HEAD)
 
 ### Added
 ### Changed
@@ -13,6 +13,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 ### Security
+
+## [1.29.0](https://github.com/nationalarchives/docker/compare/v1.28.0...v1.29.0) - 2026-11-05
+
+### Added
+
+- Added a default Gunicorn configuration with environment-variable settings and support for application-specific overrides
+- Added startup warnings for worker counts that may exceed available CPU or memory
+
+### Changed
+
+- Switched from using uvicorn to the native `asgi` gunicorn worker for ASGI applications
+- Set the default Gunicorn keep-alive timeout to 65 seconds
+
+### Deprecated
+### Removed
+
+- Removed uvicorn as a dependency and no longer use it for ASGI applications
 
 ## [1.28.0](https://github.com/nationalarchives/docker/compare/v1.27.0...v1.28.0) - 2026-10-28
 
@@ -53,7 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Update pip to [26.2.2](https://github.com/pypa/pip/blob/main/NEWS.rst#2622-2026-10-20), certify to [2026.10.19](https://pypi.org/project/certifi/2026.10.19/) and `ca-certificates` to [20250419+deb13u1](https://lists.debian.org/debian-security-announce/2026/msg00487.html?pow_referer=) following [eMudhra Intermediate CA Compromise](https://emudhra.we-have-a-problem.com/)
+- Update pip to [26.2.2](https://github.com/pypa/pip/blob/main/NEWS.rst#2622-2026-10-20), certifi to [2026.10.19](https://pypi.org/project/certifi/2026.10.19/) and `ca-certificates` to [20250419+deb13u1](https://lists.debian.org/debian-security-announce/2026/msg00487.html?pow_referer=) following [eMudhra Intermediate CA Compromise](https://emudhra.we-have-a-problem.com/)
 
 ## [1.23.0](https://github.com/nationalarchives/docker/compare/v1.22.0...v1.23.0) - 2026-10-14
 

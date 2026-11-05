@@ -47,7 +47,7 @@ then
   fi
 fi
 
-# Use a uvicorn server if the application uses FastAPI
+# Use the FastAPI dev server if the application uses FastAPI
 if poetry show fastapi > /dev/null 2>&1;
 then
   if [ -f "/app/main.py" ]

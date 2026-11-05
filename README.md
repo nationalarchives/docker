@@ -10,10 +10,10 @@ The National Archives base Docker images are designed to serve as a starting poi
 
 ## Base images
 
-| Image                                     | Dockerfile                                                      | Base image   | User   |
-| ----------------------------------------- | --------------------------------------------------------------- | ------------ | ------ |
-| [`tna-python`](docker/tna-python)         | [`tna-python/Dockerfile`](docker/tna-python/Dockerfile)         | `python`     | `app`  |
-| [`tna-python-dev`](docker/tna-python-dev) | [`tna-python-dev/Dockerfile`](docker/tna-python-dev/Dockerfile) | `tna-python` | `root` |
+| Image                                     | Dockerfile                                                      | Base image                | User   |
+| ----------------------------------------- | --------------------------------------------------------------- | ------------------------- | ------ |
+| [`tna-python`](docker/tna-python)         | [`tna-python/Dockerfile`](docker/tna-python/Dockerfile)         | `python:3.15-slim-trixie` | `app`  |
+| [`tna-python-dev`](docker/tna-python-dev) | [`tna-python-dev/Dockerfile`](docker/tna-python-dev/Dockerfile) | `tna-python`              | `root` |
 
 ### Image inheritance
 
@@ -38,3 +38,5 @@ docker run tna-python:local
 # ...or
 docker run tna-python-dev:local
 ```
+
+These base images stay idle by default; they do not start an application.
