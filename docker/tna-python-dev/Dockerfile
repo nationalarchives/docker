@@ -1,4 +1,6 @@
 # wiz-scan ignore
+# hadolint global ignore=DL3059 # DL3059 is only a suggestion
+
 ARG BASE_IMAGE=ghcr.io/nationalarchives/tna-python
 ARG BASE_IMAGE_TAG=latest
 
@@ -29,6 +31,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # files and directories from the host system
 # which are mounted during development
 # ==========================================
+# hadolint ignore=DL3002 # This is a development image so we can use the root user
 USER root
 
 # ==========================================
@@ -45,23 +48,73 @@ RUN apt-get update; \
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
-ENV BLACK_VERSION=26.3.1 \
-    FLAKE8_VERSION=7.1.1 \
-    ISORT_VERSION=8.0.1 \
-    DJLINT_VERSION=1.36.4 \
-    DJHTML_VERSION=3.0.10 \
-    DJANGO_DEBUG_TOOLBAR_VERSION=6.2.0 \
-    PRETTIER_VERSION=3.8.1 \
-    STYLELINT_VERSION=17.1.1 \
-    STYLELINT_CONFIG_STANDARD_SCSS_VERSION=17.0.0 \
-    STYLELINT_SELECTOR_BEM_PATTERN_VERSION=4.0.1 \
-    STYLELINT_ORDER_VERSION=7.0.1 \
-    ESLINT_VERSION=8.56.0
+ENV RUFF_VERSION=0.17.0 \
+    DJLINT_VERSION=1.46.6 \
+    DJANGO_DEBUG_TOOLBAR_VERSION=8.0.0 \
+    PRETTIER_VERSION=3.9.10 \
+    TNA_RUFF_CONFIG_VERSION=0.2.0 \
+    TNA_ESLINT_CONFIG_VERSION=0.1.9 \
+    TNA_STYLELINT_CONFIG_VERSION=0.1.5
+
+# ==========================================
+# Create container labels containing version
+# numbers for the software we have installed
+# in this image
+# ==========================================
+LABEL uk.gov.nationalarchives.ruff-version="$RUFF_VERSION"
+LABEL uk.gov.nationalarchives.djlint-version="$DJLINT_VERSION"
+LABEL uk.gov.nationalarchives.django-debug-toolbar-version="$DJANGO_DEBUG_TOOLBAR_VERSION"
+LABEL uk.gov.nationalarchives.prettier-version="$PRETTIER_VERSION"
+LABEL uk.gov.nationalarchives.tna-ruff-config-version="$TNA_RUFF_CONFIG_VERSION"
+LABEL uk.gov.nationalarchives.tna-eslint-config-version="$TNA_ESLINT_CONFIG_VERSION"
+LABEL uk.gov.nationalarchives.tna-stylelint-config-version="$TNA_STYLELINT_CONFIG_VERSION"
     
 # ==========================================
 # Set the Node.js environment to development
 # ==========================================
 ENV NODE_ENV=development
+
+# ==========================================
+# Set the default log level for applications
+# running in development to "debug"
+# ==========================================
+ENV LOG_LEVEL=debug
+
+# ==========================================
+# Set the location of the Ruff cache outside
+# the project root
+# ==========================================
+ENV RUFF_CACHE_DIR=/home/app/.ruff_cache
+
+# ==========================================
+# Install the tools required for linting and
+# fixing CSS and JavaScript whilst excluding
+# any packages that we publish from adhering
+# to the cooldown period
+# ==========================================
+# hadolint ignore=SC1091
+RUN . tna-nvm; \
+    nvm use default; \
+    npm install --global --silent --save-exact "@nationalarchives/eslint-config@$TNA_ESLINT_CONFIG_VERSION" "@nationalarchives/stylelint-config@$TNA_STYLELINT_CONFIG_VERSION" "prettier@$PRETTIER_VERSION"
+
+# ==========================================
+# Install the tools required for linting and
+# fixing Python and HTML files excluding any
+# packages that we publish from the cooldown
+# period
+# ==========================================
+RUN python -m pip install --no-cache-dir --quiet --root-user-action=ignore ruff=="$RUFF_VERSION" djlint=="$DJLINT_VERSION" && \
+    python -m pip install --no-cache-dir --quiet --root-user-action=ignore --uploaded-prior-to=P0D tna-ruff-config=="$TNA_RUFF_CONFIG_VERSION"
+
+# ==========================================
+# In the home directory, create two symbolic
+# links to the Ruff configuration files from
+# the Python packages directory
+# ==========================================
+RUN PYTHON_PACKAGES_DIRECTORY="$(python -c "from sysconfig import get_path; print(get_path(\"platlib\"))")"; \
+    TNA_RUFF_CONFIG_DIRECTORY="$PYTHON_PACKAGES_DIRECTORY/tna_ruff_config"; \
+    ln -s "$TNA_RUFF_CONFIG_DIRECTORY/ruff.toml" /home/app/ruff.toml; \
+    ln -s "$TNA_RUFF_CONFIG_DIRECTORY/ruff-strict.toml" /home/app/ruff-strict.toml
 
 # ==========================================
 # Copy the development scripts into the user
@@ -74,21 +127,10 @@ RUN chmod +x -R /home/app/.local/bin/dev
 ENV PATH="/home/app/.local/bin/tasks:/home/app/.local/bin/dev:$PATH"
 
 # ==========================================
-# Install the tools required for linting and
-# fixing Python, HTML, CSS and JavaScript
-# ==========================================
-# hadolint ignore=SC1091
-RUN install-format-dependencies; \
-    python -m pip install --no-cache-dir --quiet black=="$BLACK_VERSION" flake8=="$FLAKE8_VERSION" isort=="$ISORT_VERSION" djlint=="$DJLINT_VERSION" djhtml=="$DJHTML_VERSION"
-
-# ==========================================
-# Copy any configuration files into the main
-# app directory, including the configuration
-# for stylelint from TNA Frontend
+# Copy all configuration files into the main
+# app directory
 # ==========================================
 COPY lib/* /home/app/
-# hadolint ignore=SC1091
-RUN . tna-nvm && cp "$(npm root -g)/@nationalarchives/frontend/config/stylelint.config.js" /home/app/stylelint.config.js
 
 # ==========================================
 # Update the build and run scripts with some

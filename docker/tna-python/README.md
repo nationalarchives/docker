@@ -17,27 +17,27 @@ This image requires you have the following files in the root of your project:
 
 Each environment has some default values but all can be overwritten:
 
-| Variable                   | Description                                                               | Default                                   |
-| -------------------------- | ------------------------------------------------------------------------- | ----------------------------------------- |
-| `SECRET_KEY`               | A random key used to secure client session data                           | _none_                                    |
-| `WORKERS`                  | Number of worker processes[^1]                                            | `(cpu * 2) + 1`                           |
-| `THREADS`                  | Number of threads[^2]                                                     | `$WORKERS * 2` (ignored by `tna-asgi`)    |
-| `LOG_LEVEL`                | The log level to stream to the console[^3][^4]                            | `tna-wsgi`: `warn`, `tna-asgi`: `warning` |
-| `NODE_ENV`                 | The node environment[^5]                                                  | `production`                              |
-| `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run to build static assets          | _none_                                    |
-| `TIMEOUT`                  | The number of seconds before a request is terminated[^6]                  | `30` (ignored by `tna-asgi`)              |
-| `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^7] | `30`                                      |
-| `APPLICATION_PROTOCOL`     | The protocol of the application (`http` or `https`)                       | `https`                                   |
-| `SSL_KEY_FILE`             | The location of the SSL key                                               | `/home/app/ssl/server.key`                |
-| `SSL_CERTIFICATE_FILE`     | The location of the SSL certificate                                       | `/home/app/ssl/server.crt`                |
-| `SSL_CA_CERTIFICATES_FILE` | The location of the CA certificates                                       | _none_                                    |
-| `SSL_DOMAIN`               | Domain for a self-signed SSL if no key or certificate files are provided  | _none_                                    |
+| Variable                   | Description                                                               | Default                                |
+| -------------------------- | ------------------------------------------------------------------------- | -------------------------------------- |
+| `SECRET_KEY`               | A random key used to secure client session data                           | _none_                                 |
+| `WORKERS`                  | Number of worker processes[^1]                                            | `(cpu * 2) + 1`                        |
+| `THREADS`                  | Number of threads[^2]                                                     | `$WORKERS * 2` (ignored by `tna-asgi`) |
+| `LOG_LEVEL`                | The log level to stream to the console[^3][^4]                            | `warning`                              |
+| `NODE_ENV`                 | The node environment[^5]                                                  | `production`                           |
+| `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run to build static assets          | _none_                                 |
+| `TIMEOUT`                  | The number of seconds before a request is terminated[^6]                  | `30` (ignored by `tna-asgi`)           |
+| `KEEP_ALIVE`               | The number of seconds to wait for requests on a keep-alive connection[^7] | `30`                                   |
+| `APPLICATION_PROTOCOL`     | The protocol of the application (`http` or `https`)                       | `https`                                |
+| `SSL_KEY_FILE`             | The location of the SSL key                                               | `/home/app/ssl/server.key`             |
+| `SSL_CERTIFICATE_FILE`     | The location of the SSL certificate                                       | `/home/app/ssl/server.crt`             |
+| `SSL_CA_CERTIFICATES_FILE` | The location of the CA certificates                                       | _none_                                 |
+| `SSL_DOMAIN`               | Domain for a self-signed SSL if no key or certificate files are provided  | _none_                                 |
 
 [^1]: [Gunicorn docs - How Many Workers?](https://docs.gunicorn.org/en/latest/design.html#how-many-workers)
 
 [^2]: [Gunicorn docs - How Many Threads?](https://docs.gunicorn.org/en/latest/design.html#how-many-threads)
 
-[^3]: Supported levels for Gunicorn are `critical`, `error`, `warn`, `info` and `debug` [Gunicorn docs - log level](https://docs.gunicorn.org/en/latest/settings.html?highlight=log#loglevel)
+[^3]: Supported levels for Gunicorn are `critical`, `error`, `warning`, `info` and `debug` [Gunicorn docs - log level](https://gunicorn.org/reference/settings/#loglevel)
 
 [^4]: Supported levels for Uvicorn are `critical`, `error`, `warning`, `info`, `debug` and `trace` [Uvicorn docs - logging settings](https://uvicorn.dev/settings/#logging)
 

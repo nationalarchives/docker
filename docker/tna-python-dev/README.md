@@ -4,9 +4,10 @@
 
 This image extends `tna-python` and can be used for local development **ONLY**. It adds:
 
-- `black`, `flake8` and `isort` for formatting Python code
-- `prettier`, `eslint` and `stylelint` for formatting JavaScript and CSS
-- scripts for formatting code
+- `ruff` for formatting and linting Python
+- `stylelint` and `eslint` for linting JavaScript and CSS
+- `prettier` for formatting JavaScript, CSS, JSON, YAML etc.
+- scripts for formatting
 - `django-debug-toolbar` for debugging Django applications
 - `git`
 
@@ -16,12 +17,12 @@ All environment variables extended from [tna-python](../tna-python/README.md) bu
 
 | Variable                   | Default                 |
 | -------------------------- | ----------------------- |
-| `WORKERS`                  | `3`                     |
-| `THREADS`                  | `3`                     |
 | `LOG_LEVEL`                | `debug`                 |
 | `NODE_ENV`                 | `development`           |
-| `TIMEOUT`                  | `600`                   |
-| `KEEP_ALIVE`               | `5`                     |
+| `WORKERS`                  | _ignored_               |
+| `THREADS`                  | _ignored_               |
+| `TIMEOUT`                  | _ignored_               |
+| `KEEP_ALIVE`               | _ignored_               |
 | `APPLICATION_PROTOCOL`     | _ignored_ (`http` only) |
 | `SSL_KEY_FILE`             | _ignored_               |
 | `SSL_CERTIFICATE_FILE`     | _ignored_               |
@@ -92,29 +93,60 @@ The process for these commands is:
 
 ### `format`
 
-1. Run `isort`
-1. Run `black`
-1. Run `flake8`
+1. Run `ruff` (using [tna-ruff-config](https://github.com/nationalarchives/ruff-config))
 1. Run `djlint` to check HTML templates for Jinja compliance
+1. Run `stylelint` against all SCSS files in the `/app` directory (using [@nationalarchives/stylelint-config](https://github.com/nationalarchives/stylelint-config))
+1. Run `eslint` against all JavaScript files in the `/app` directory (using [@nationalarchives/eslint-config](https://github.com/nationalarchives/eslint-config))
 1. Apply `prettier` to all files in the `/app` directory
-1. Run `stylelint` against all SCSS files in the `/app` directory
-1. Run `eslint` against all JavaScript files in the `/app` directory
 
-#### How to override the default configurations
+#### Ruff
 
-| Tool        | Overwrite solution                                | More information                                                                                        |
-| ----------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `isort`     | `.isort.cfg` file in the project root             | https://pycqa.github.io/isort/docs/configuration/config_files.html#isortcfg-preferred-format            |
-| `black`     | Add `[tool.black]` config to the `pyproject.toml` | https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-via-a-file |
-| `flake8`    | `.flake8` file in the project root                | https://flake8.pycqa.org/en/latest/user/configuration.html#configuration-locations                      |
-| `djlint`    | `.djlintrc` file in the project root              | https://djlint.com/docs/configuration/                                                                  |
-| `prettier`  | `.prettierignore` file in the project root        | https://prettier.io/docs/en/ignore.html                                                                 |
-| `stylelint` | `.stylelintrc` file in the project root           | https://stylelint.io/user-guide/configure/                                                              |
-| `eslint`    | `.eslintrc.js` file in the project root           | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files              |
+The two configurations for Ruff are standard and strict. See more details in the global [National Archives Ruff configuration](https://github.com/nationalarchives/ruff-config).
+
+##### Extending the default Ruff configuration
+
+Create a `ruff.toml` file in your project root. If this file exists, the `--strict` parameter will be ignored on `format --strict` and `checkformat --strict`.
+
+```toml
+# Extend the default Ruff configuration
+extend = "/home/app/ruff.toml"
+
+# ...or extend the strict ruleset
+# extend = "/home/app/ruff-strict.toml"
+
+extend-exclude = [
+    # "migrations"  # Exclude the "migrations" directory
+]
+
+[lint]
+ignore = [
+    # Add rules to ignore in your project
+]
+```
+
+##### Supressing errors
+
+Use the `# noqa` annotation from [Ruff error suppression](https://docs.astral.sh/ruff/linter/#error-suppression) to ignore failing lines.
+
+```python
+def my_overly_complex_function():  # noqa: C901
+    pass
+```
+
+#### How to override other default configurations
+
+| Tool        | Overwrite solution                                                        | More information                                                                           |
+| ----------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `djlint`    | `.djlintrc` file in the project root                                      | https://djlint.com/docs/configuration/                                                     |
+| `stylelint` | `stylelint.config.mjs` and/or `.stylelintignore` file in the project root | https://stylelint.io/user-guide/configure/, https://stylelint.io/user-guide/ignore-code/   |
+| `eslint`    | `eslint.config.mjs` file in the project root                              | https://eslint.org/docs/latest/use/configure/configuration-files#using-configuration-files |
+| `prettier`  | `.prettierignore` file in the project root                                | https://prettier.io/docs/en/ignore.html                                                    |
 
 ### `checkformat`
 
 Runs the same tests as `format` but doesn't fix issues. Can be used in CI/CD pipelines to check formatting.
+
+Like `format --strict`, `checkformat --strict` uses an [expanded set of Ruff rules](#ruff).
 
 ### `outdated`
 

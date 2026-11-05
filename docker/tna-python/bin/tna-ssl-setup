@@ -9,7 +9,7 @@ DEFAULT_SSL_CERTIFICATE_FILE_LOCATION=/home/app/ssl/server.crt
 [[ -z $SSL_CERTIFICATE_FILE ]] && SSL_CERTIFICATE_FILE=$DEFAULT_SSL_CERTIFICATE_FILE_LOCATION
 
 # If the SSL certificate files do not exist, generate self-signed certificates
-if [ ! -f "$SSL_KEY_FILE" ] | [ ! -f "$SSL_CERTIFICATE_FILE" ]
+if [ ! -f "$SSL_KEY_FILE" ] || [ ! -f "$SSL_CERTIFICATE_FILE" ]
 then
     echo "SSL certificate and key files do not exist"
     echo "Generating a self-signed certificate..."

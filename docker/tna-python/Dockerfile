@@ -1,4 +1,6 @@
-FROM python:3.14-slim-trixie
+# hadolint global ignore=DL3059 # DL3059 is only a suggestion
+
+FROM python:3.15-slim-trixie
 
 # ==========================================
 # Label this container image with a semantic
@@ -15,15 +17,6 @@ ARG TNA_DOCKER_IMAGE_SOURCE
 LABEL org.opencontainers.image.description="National Archives Python base Docker image" \
     org.opencontainers.image.source="$TNA_DOCKER_IMAGE_SOURCE" \
     org.opencontainers.image.licenses="MIT"
-
-# ==========================================
-# Create a container label with the specific
-# version of Node.js used as well as one for
-# the Python version
-# ==========================================
-ENV NODEJS_VERSION=lts/krypton
-LABEL uk.gov.nationalarchives.nodejs-version="$NODEJS_VERSION"
-LABEL uk.gov.nationalarchives.python-version="$PYTHON_VERSION"
 
 # ==========================================
 # We usually always use and expose port 8080
@@ -43,6 +36,12 @@ EXPOSE 8080/tcp
 # github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
 HEALTHCHECK CMD curl --fail --insecure "$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')://localhost:$APPLICATION_PORT/healthcheck/live/" || exit 1
+
+# ==========================================
+# Set the default log level for applications
+# running in production to "warning"
+# ==========================================
+ENV LOG_LEVEL=warning
 
 # ==========================================
 # Set Python up in a consistent manner, with
@@ -73,10 +72,26 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV PIP_VERSION=26.0 \
-    POETRY_VERSION=2.3.2 \
-    NVM_VERSION=0.40.4 \
-    WSGI_GUNICORN_VERSION=25.2.0
+ENV NODEJS_VERSION=24.22.1 \
+    PIP_VERSION=26.2.2 \
+    CERTIFI_VERSION=2026.10.19 \
+    POETRY_VERSION=2.5.1 \
+    NVM_VERSION=0.40.8 \
+    WSGI_GUNICORN_VERSION=26.2.0 \
+    ASGI_UVICORN_VERSION=0.54.0
+
+# ==========================================
+# Create container labels containing version
+# numbers for the software we have installed
+# in this image
+# ==========================================
+LABEL uk.gov.nationalarchives.python-version="$PYTHON_VERSION"
+LABEL uk.gov.nationalarchives.nodejs-version="$NODEJS_VERSION"
+LABEL uk.gov.nationalarchives.pip-version="$PIP_VERSION"
+LABEL uk.gov.nationalarchives.poetry-version="$POETRY_VERSION"
+LABEL uk.gov.nationalarchives.nvm-version="$NVM_VERSION"
+LABEL uk.gov.nationalarchives.wsgi-gunicorn-version="$WSGI_GUNICORN_VERSION"
+LABEL uk.gov.nationalarchives.asgi-uvicorn-version="$ASGI_UVICORN_VERSION"
 
 # ==========================================
 # Create a new non-root level "app" user who
@@ -110,6 +125,18 @@ ENV NVM_DIR="$HOME/.nvm"
 ENV NODE_ENV=production
 
 # ==========================================
+# Set the minimum release age in days of the
+# dependency resolver of Poetry and pip to 7
+# days to act as a cooldown for new releases
+# of packages excluding packages that we own
+# and publish - npm is set in lib/.npmrc
+# ==========================================
+# ENV COOLDOWN_PERIOD=7
+# ENV POETRY_SOLVER_MIN_RELEASE_AGE="$COOLDOWN_PERIOD" \
+#     POETRY_SOLVER_MIN_RELEASE_AGE_EXCLUDE="tna-frontend-jinja,tna-utilities,tna-ruff-config" \
+#     PIP_UPLOADED_PRIOR_TO="P${COOLDOWN_PERIOD}D"
+
+# ==========================================
 # Ensure the `/bin/sh -c` interpreter Docker
 # executes commands through doesn't just use
 # the final operation in a pipe to determine
@@ -127,15 +154,20 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u2 libmagic-dev=1:5.46-5; \
+    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u7 ca-certificates=20250419+deb13u1 libbrotli1=1.1.0-2+deb13u1; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
 
 # ==========================================
-# Upgrade pip to a later version
+# Upgrade pip to a later version - we ignore
+# the cooldown period here in case an urgent
+# security fix is needed
 # ==========================================
-RUN pip install --no-cache-dir --quiet --upgrade pip=="$PIP_VERSION"
+# TEMPORARY: Update certifi until it gets an
+# update upstream
+# ==========================================
+RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore --uploaded-prior-to=P0D pip=="$PIP_VERSION" certifi=="$CERTIFI_VERSION"
 
 # ==========================================
 # Create an "/app" directory in the root dir
@@ -153,6 +185,7 @@ RUN mkdir -p /app; \
 # ==========================================
 RUN set -eux; \
     curl -sSL "https://install.python-poetry.org" | python -; \
+    "$POETRY_HOME/venv/bin/python" -m pip install --no-cache-dir --quiet --upgrade --uploaded-prior-to=P0D certifi=="$CERTIFI_VERSION"; \
     curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/v$NVM_VERSION/install.sh" | bash; \
     chown app:app -R "$POETRY_HOME" "$NVM_DIR"
 
@@ -178,14 +211,21 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 USER app
 
 # ==========================================
-# Install the latest LTS version of Node.js,
-# but keeping within the releases code-named
-# "krypton" (v24.x)
+# Copy in any configuration files, including
+# the global config for npm
+# ==========================================
+COPY lib/* /home/app/
+
+# ==========================================
+# Install Node.js with nvm using the version
+# we specified, set it as the default one to
+# use, and then update npm
 # ==========================================
 # hadolint ignore=SC1091
 RUN . "$NVM_DIR/nvm.sh"; \
-    nvm install --latest-npm "$NODEJS_VERSION"; \
-    nvm alias default "$NODEJS_VERSION"
+    nvm install "$NODEJS_VERSION"; \
+    nvm alias default "$NODEJS_VERSION"; \
+    nvm use default
 
 # ==========================================
 # Create a directory for our SSL certificate

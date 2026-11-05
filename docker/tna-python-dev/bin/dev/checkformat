@@ -1,3 +1,9 @@
 #!/bin/bash
 
-FIX=false format
+STRICT=false
+
+if [[ "$1" == "--strict" ]]; then
+  STRICT=true
+fi
+
+STRICT=$STRICT FIX=false format

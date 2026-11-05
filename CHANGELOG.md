@@ -5,23 +5,260 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.10.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.28.0...HEAD)
 
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.28.0](https://github.com/nationalarchives/docker/compare/v1.27.0...v1.28.0) - 2026-10-28
+
+### Security
+
+- Version bump to use [Python 3.15.2, fixing CVE-2026-115557](https://blog.python.org/2026/10/python-3152-31410-31318-31216-31118/)
+
+## [1.27.0](https://github.com/nationalarchives/docker/compare/v1.26.0...v1.27.0) - 2026-10-26
+
+### Security
+
+- Updated `libbrotli1` to `1.1.0-2+deb13u1` to fix [CVE-2026-111497](https://security-tracker.debian.org/tracker/CVE-2026-111497)
+
+## [1.26.0](https://github.com/nationalarchives/docker/compare/v1.25.0...v1.26.0) - 2026-10-22
+
+### Changed
+
+- Updated Python to [3.15](https://peps.python.org/pep-0790/)
+- Updated djLint to [v1.46.6](https://github.com/djlint/djLint/releases/tag/v1.46.6)
+
+### Security
+
+- Remove explicit install for `perl=5.40.1-6+deb13u1` as these are now included upstream
+
+## [1.25.0](https://github.com/nationalarchives/docker/compare/v1.24.0...v1.25.0) - 2026-10-22
+
+### Security
+
+- Remove 7 day cooldown restriction for pip, poetry and npm - these should be applied on a per-application basis
+
+## [1.24.0](https://github.com/nationalarchives/docker/compare/v1.23.0...v1.24.0) - 2026-10-21
+
+### Changed
+
+- Updated Ruff to [0.17.0](https://github.com/astral-sh/ruff/releases/tag/0.17.0)
+- Updated Prettier to [3.9.10](https://github.com/prettier/prettier/releases/tag/3.9.10)
+- Updated Node to [v24.22.1](https://github.com/nodejs/node/releases/tag/v24.22.1)
+
+### Security
+
+- Update pip to [26.2.2](https://github.com/pypa/pip/blob/main/NEWS.rst#2622-2026-10-20), certify to [2026.10.19](https://pypi.org/project/certifi/2026.10.19/) and `ca-certificates` to [20250419+deb13u1](https://lists.debian.org/debian-security-announce/2026/msg00487.html?pow_referer=) following [eMudhra Intermediate CA Compromise](https://emudhra.we-have-a-problem.com/)
+
+## [1.23.0](https://github.com/nationalarchives/docker/compare/v1.22.0...v1.23.0) - 2026-10-14
+
+### Changed
+
+- Updated djLint to [v1.46.4](https://github.com/djlint/djLint/releases/tag/v1.46.4)
+- Updated `@nationalarchives/eslint-config` and `@nationalarchives/stylelint-config`
+- Updated Ruff to [0.16.10](https://github.com/astral-sh/ruff/releases/tag/0.16.10)
+
+### Fixed
+
+- djlint no longer errors if there are no files found ([`allow_empty_input`](https://djlint.com/docs/configuration/#allow-empty-input))
+
+### Security
+
+- Remove explicit install for `libc-bin=2.41-12+deb13u4` as this is now included upstream
+- Updated `curl` to `8.14.1-2+deb13u7` to fix [CVE-2026-8924](https://security-tracker.debian.org/tracker/CVE-2026-8924) and [CVE-2026-8927](https://security-tracker.debian.org/tracker/CVE-2026-8927)
+
+## [1.22.0](https://github.com/nationalarchives/docker/compare/v1.21.0...v1.22.0) - 2026-10-05
+
+### Changed
+
+- Updated Node to [v24.21.0](https://github.com/nodejs/node/releases/tag/v24.21.0)
+- Updated djLint to [v1.46.3](https://github.com/djlint/djLint/releases/tag/v1.46.3)
+- Updated Poetry to [2.5.1](https://github.com/python-poetry/poetry/releases/tag/2.5.1)
+- Updated Django Debug Toolbar to [8.0.0](https://github.com/django-commons/django-debug-toolbar/releases/tag/8.0.0)
+- Updated Ruff to [0.16.9](https://github.com/astral-sh/ruff/releases/tag/0.16.9)
+- Updated uvicorn to [0.54.0](https://github.com/encode/uvicorn/releases/tag/0.54.0)
+- Updated nvm to [v0.40.8](https://github.com/nvm-sh/nvm/releases/tag/v0.40.8)
+- Updated Prettier to [3.9.9](https://github.com/prettier/prettier/releases/tag/3.9.9)
+
+## [1.21.0](https://github.com/nationalarchives/docker/compare/v1.20.2...v1.21.0) - 2026-09-14
+
+### Security
+
+- Updated `perl` to `5.40.1-6+deb13u1` to fix [CVE-2026-8376](https://security-tracker.debian.org/tracker/CVE-2026-8376)
+- Updated `curl` to `8.14.1-2+deb13u5`
+- Updated `libc-bin` to `2.41-12+deb13u4` to fix [CVE-2026-5450](https://security-tracker.debian.org/tracker/CVE-2026-5450)
+
+## [1.20.2](https://github.com/nationalarchives/docker/compare/v1.20.1...v1.20.2) - 2026-09-01
+
+### Fixed
+
+- Downgrade Ruff to [0.16.4](https://github.com/astral-sh/ruff/releases/tag/0.16.4)
+
+## [1.20.1](https://github.com/nationalarchives/docker/compare/v1.20.0...v1.20.1) - 2026-09-01
+
+### Fixed
+
+- Fixed pip installation order under root user
+
+## [1.20.0](https://github.com/nationalarchives/docker/compare/v1.19.0...v1.20.0) - 2026-09-01
+
+### Changed
+
+- Updated nvm to [v0.40.7](https://github.com/nvm-sh/nvm/releases/tag/v0.40.7)
+- Updated uvicorn to [0.52.4](https://github.com/encode/uvicorn/releases/tag/0.52.4)
+- Updated Ruff to [0.16.5](https://github.com/astral-sh/ruff/releases/tag/0.16.5)
+- Updated djLint to [v1.44.2](https://github.com/djlint/djLint/releases/tag/v1.44.2)
+- Updated Prettier to [3.9.6](https://github.com/prettier/prettier/releases/tag/3.9.6)
+- Updated tna-ruff-config to [v0.2.0](https://github.com/nationalarchives/ruff-config/releases/tag/v0.2.0)
+- Updated Node to [v24.20.0](https://github.com/nodejs/node/releases/tag/v24.20.0)
+- Updated pip to [26.2.1](https://pip.pypa.io/en/stable/news/#v26-2-1)
+- Updated gunicorn to [26.2.0](https://github.com/benoitc/gunicorn/releases/tag/26.2.0)
+- Updated Django Debug Toolbar to [7.1.1](https://github.com/django-commons/django-debug-toolbar/releases/tag/7.1.1)
+
+## [1.19.0](https://github.com/nationalarchives/docker/compare/v1.18.0...v1.19.0) - 2026-07-22
+
+### Security
+
+- Updated npm to [v11.18.0](https://github.com/npm/cli/releases/tag/v11.18.0) to fix [CVE-2026-59873](https://github.com/advisories/GHSA-23hp-3jrh-7fpw)
+
+## [1.18.0](https://github.com/nationalarchives/docker/compare/v1.17.0...v1.18.0) - 2026-07-15
+
+### Changed
+
+- Updated djLint to [v1.40.3](https://github.com/djlint/djLint/releases/tag/v1.40.3)
+- Updated Django Debug Toolbar to [7.0.0](https://github.com/django-commons/django-debug-toolbar/releases/tag/7.0.0)
+- Updated Node to [v24.18.0](https://github.com/nodejs/node/releases/tag/v24.18.0)
+- Updated Ruff to [0.15.20](https://github.com/astral-sh/ruff/releases/tag/0.15.20)
+- Updated uvicorn to [0.50.2](https://github.com/encode/uvicorn/releases/tag/0.50.2)
+- Updated Prettier to [3.9.4](https://github.com/prettier/prettier/releases/tag/3.9.4)
+- Moved common npm configuration to `/home/app/.npmrc`
+- Install an explicit version of npm (`11.17.0`) rather than `--latest-npm` to ensure `min-release-age-exclude` is supported
+
+### Security
+
+- Added exception for `@nationalarchives/*` from the npm cooldown
+- Removed all manual package updates as security fixes are now coming from the base Debain image
+- Updated curl to `8.14.1-2+deb13u4`
+
+## [1.17.0](https://github.com/nationalarchives/docker/compare/v1.16.0...v1.17.0) - 2026-06-29
+
+### Changed
+
+- Updated Node to [v24.17.0](https://github.com/nodejs/node/releases/tag/v24.17.0)
+
+### Fixed
+
+- Set global Node config for both default and service-specific versions when using `tna-nvm`
+
+### Security
+
+- Fixed [CVE-2026-55200](https://github.com/advisories/GHSA-r8mh-x5qv-7gg2) by upgrading `libssh2-1t64` to `1.11.1-1+deb13u1`
+
+## [1.16.0](https://github.com/nationalarchives/docker/compare/v1.15.0...v1.16.0) - 2026-06-22
+
+### Added
+
+- Set a global `COOLDOWN_PERIOD` environment variable for cooldown duration on npm, pip and Poetry
+
+### Changed
+
+- Updated uvicorn to [0.49.0](https://github.com/encode/uvicorn/releases/tag/0.49.0)
+- Updated djLint to [v1.39.2](https://github.com/djlint/djLint/releases/tag/v1.39.2)
+- Updated Ruff to [0.15.17](https://github.com/astral-sh/ruff/releases/tag/0.15.17)
+- Updated Prettier to [3.8.4](https://github.com/prettier/prettier/releases/tag/3.8.4)
+- Updated `tna-ruff-config`, `@nationalarchives/eslint-config` and `@nationalarchives/stylelint-config`
+- Updated uvicorn to [0.49.0](https://github.com/encode/uvicorn/releases/tag/0.49.0)
+
+### Security
+
+- Added exceptions for `tna-frontend-jinja` and `tna-utilities` from the 7 day cooldown for Poetry
+
+## [1.15.0](https://github.com/nationalarchives/docker/compare/v1.14.0...v1.15.0) - 2026-06-04
+
+### Changed
+
+- Updated Ruff to [0.15.15](https://github.com/astral-sh/ruff/releases/tag/0.15.15)
+- Updated nvm to [v0.40.5](https://github.com/nvm-sh/nvm/releases/tag/v0.40.5)
+- Downgraded uvicorn to [0.48.0](https://github.com/encode/uvicorn/releases/tag/0.48.0)
+
+### Security
+
+- Added a default 7 day cooldown for new packages in pip (`PIP_UPLOADED_PRIOR_TO`), Poetry (`POETRY_SOLVER_MIN_RELEASE_AGE`) and npm (`npm config set min-release-age`)
+- `python:3.14-slim-trixie` updated with fixes for [CVE-2026-45447](https://security-tracker.debian.org/tracker/CVE-2026-45447)
+
+## [1.14.0](https://github.com/nationalarchives/docker/compare/v1.13.0...v1.14.0) - 2026-06-04
+
+### Changed
+
+- Added [`@nationalarchives/eslint-config`](https://github.com/nationalarchives/eslint-config) and [`@nationalarchives/stylelint-config`](https://github.com/nationalarchives/stylelint-config) to replace config from `@nationalarchives/frontend`
+- Moved Ruff config to an external package ([`tna-ruff-config`](https://github.com/nationalarchives/ruff-config))
+- Updated Ruff to [0.15.15](https://github.com/astral-sh/ruff/releases/tag/0.15.15)
+- Set the default Ruff cache location to `/home/app/.ruff_cache`, outside the project root to avoid Prettier trying to check it
+- Updated uvicorn to [0.49.0](https://github.com/encode/uvicorn/releases/tag/0.49.0)
+
+### Removed
+
+- Removed support for all ESLint config formats except for `eslint.config.mjs` and all Stylelint config formats except for `stylelint.config.mjs`
+- Removed djHTML
+
+### Fixed
+
+- Don't error on Prettier if no matching files are found
+
+## [1.13.0](https://github.com/nationalarchives/docker/compare/v1.12.0...v1.13.0) - 2026-05-20
+
+### Changed
+
+- Updated Ruff to [0.15.13](https://github.com/astral-sh/ruff/releases/tag/0.15.13)
+
+### Security
+
+- Updated `curl` to `8.14.1-2+deb13u3`
+- Update `libgnutls30t64` to `3.8.9-3+deb13u4` for [CVE-2026-42010](https://security-tracker.debian.org/tracker/CVE-2026-42010)
+
+## [1.12.0](https://github.com/nationalarchives/docker/compare/v1.11.1...v1.12.0) - 2026-05-14
+
+### Added
+
+- Added [Ruff](https://docs.astral.sh/ruff/) as a replacement for isort, Flake8 and Black
+
+### Changed
+
+- Updated gunicorn to [26.0.0](https://github.com/benoitc/gunicorn/releases/tag/26.0.0)
+- Updated Poetry to [2.4.1](https://github.com/python-poetry/poetry/releases/tag/2.4.1)
+- Updated Stylelint to [17.11.0](https://github.com/stylelint/stylelint/releases/tag/17.11.0)
+- Updated uvicorn to [0.46.0](https://github.com/encode/uvicorn/releases/tag/0.46.0)
+- Updated stylelint-order to [8.1.1](https://github.com/hudochenkov/stylelint-order/releases/tag/8.1.1)
+
+## [1.11.1](https://github.com/nationalarchives/docker/compare/v1.11.0...v1.11.1) - 2026-04-17
+
+### Fixed
+
+- Set the default `LOG_LEVEL` at the container level rather than `tna-wsgi` and `tna-asgi`
+- Convert `LOG_LEVEL` to lowercase to ensure it always works with gunicorn and uvicorn
+
+## [1.11.0](https://github.com/nationalarchives/docker/compare/v1.10.0...v1.11.0) - 2026-04-16
+
 ### Changed
 
 - Updated Black to [26.3.1](https://github.com/psf/black/releases/tag/26.3.1)
 - Enable `--capture-output` and `--enable-stdio-inheritance` on gunicorn
-- Updated uvicorn to [0.42.0](https://github.com/encode/uvicorn/releases/tag/0.42.0)
-- Updated gunicorn to [25.2.0](https://github.com/benoitc/gunicorn/releases/tag/25.2.0)
+- Updated uvicorn to [0.44.0](https://github.com/encode/uvicorn/releases/tag/0.44.0)
+- Updated gunicorn to [25.3.0](https://github.com/benoitc/gunicorn/releases/tag/25.3.0)
+- Updated djHTML to [3.0.11](https://github.com/rtts/djhtml/releases/tag/3.0.11)
+- Updated Django Debug Toolbar to [6.3.0](https://github.com/django-commons/django-debug-toolbar/releases/tag/6.3.0)
+- Updated Poetry to [2.3.4](https://github.com/python-poetry/poetry/releases/tag/2.3.4)
+- Updated Prettier to [3.8.3](https://github.com/prettier/prettier/releases/tag/3.8.3)
+- Set default `LOG_LEVEL` to `DEBUG` in `tna-python-dev`
 
-### Deprecated
-### Removed
 ### Fixed
 
 - Removed duplicated NodeJS setup during `format`
-
-### Security
 
 ## [1.10.0](https://github.com/nationalarchives/docker/compare/v1.9.0...v1.10.0) - 2026-03-02
 

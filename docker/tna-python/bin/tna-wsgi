@@ -24,6 +24,28 @@ if [ -f "/app/gunicorn.conf.py" ]
 then
   echo "Using gunicorn.conf.py for configuration..."
   poetry run gunicorn "$APPLICATION" --config "/app/gunicorn.conf.py" --capture-output --enable-stdio-inheritance
+  exit 0
+fi
+
+# Set up the default number of workers and threads
+DEFAULT_WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
+DEFAULT_THREADS=$((DEFAULT_WORKERS * 2))
+
+# Use the number of workers and threads (if provided) else use defaults
+[[ -z $WORKERS ]] && WORKERS=$DEFAULT_WORKERS
+[[ -z $THREADS ]] && THREADS=$DEFAULT_THREADS
+
+# Set defaults for environment variables if they are not set
+[[ -z $TIMEOUT ]] && TIMEOUT=30
+[[ -z $KEEP_ALIVE ]] && KEEP_ALIVE=30
+
+# Get the protcol for the application
+APPLICATION_PROTOCOL=$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')
+
+# Lowercase LOG_LEVEL
+LOG_LEVEL=$(echo "${LOG_LEVEL}" | tr '[:upper:]' '[:lower:]')
+
+if [ "$APPLICATION_PROTOCOL" = "https" ]
 else
   # Set up the configuration for gunicorn based on environment variables or defaults
   [[ -z $WORKERS ]] && WORKERS=$(python -c "import multiprocessing; print(multiprocessing.cpu_count() * 2 + 1)")
