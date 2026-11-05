@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+
+- Refactor the development server script to improve framework detection for Flask, Django, and FastAPI
+
 ### Security
 
 ## [1.29.0](https://github.com/nationalarchives/docker/compare/v1.28.0...v1.29.0) - 2026-11-05

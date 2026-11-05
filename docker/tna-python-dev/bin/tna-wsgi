@@ -28,14 +28,14 @@ then
 fi
 
 # Try using the Flask development server if the application uses Flask
-if poetry show flask > /dev/null 2>&1;
+if poetry show --top-level | grep -qw "flask";
 then
   echo "Flask found, starting development server..."
   poetry run flask --app "$APPLICATION" run --debug --host 0.0.0.0 --port "$APPLICATION_PORT"
 fi
 
 # Try using the Django development server if the application uses Django
-if poetry show django > /dev/null 2>&1;
+if poetry show --top-level | grep -qw "django";
 then
   if [ -f "/app/manage.py" ]
   then
@@ -48,16 +48,10 @@ then
 fi
 
 # Use the FastAPI dev server if the application uses FastAPI
-if poetry show fastapi > /dev/null 2>&1;
+if poetry show --top-level | grep -qw "fastapi";
 then
-  if [ -f "/app/main.py" ]
-  then
-    echo "FastAPI found, starting development server..."
-    poetry run fastapi dev --host 0.0.0.0 --port "$APPLICATION_PORT"
-  else
-    echo "FastAPI found, but /app/main.py does not exist. Exiting..."
-    exit 1
-  fi
+  echo "FastAPI found, starting development server..."
+  poetry run fastapi dev --host 0.0.0.0 --port "$APPLICATION_PORT"
 fi
 
 echo "No supported development framework found. Exiting..."
