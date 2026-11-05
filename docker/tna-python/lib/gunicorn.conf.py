@@ -9,10 +9,13 @@ worker_connections = int(os.environ.get("WORKER_CONNECTIONS", "1000"))
 max_requests = int(os.environ.get("MAX_REQUESTS", "10000"))
 max_requests_jitter = int(os.environ.get("MAX_REQUESTS_JITTER", "1000"))
 loglevel = os.environ.get("LOG_LEVEL", "warning").lower()
-timeout = int(os.environ.get("TIMEOUT", "30"))
+timeout = int(os.environ.get("TIMEOUT", "120"))
+graceful_timeout = int(os.environ.get("GRACEFUL_TIMEOUT", "30"))
+asgi_loop = "auto"  # Use uvloop if available
+asgi_lifespan = "auto"  # Auto-detect lifespan support
 keepalive = int(
     os.environ.get("KEEP_ALIVE", "65")
-)  # Ensure this is larger than Traefik's keep-alive configuration (default is 60s)
+)  # Ensure this is larger than Traefik's keep-alive configuration (default 60s)
 protocol = os.environ.get(
     "GUNICORN_PROTOCOL", "http"
 )  # http or uwsgi (https://gunicorn.org/uwsgi/)
