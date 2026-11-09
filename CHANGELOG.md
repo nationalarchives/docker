@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.29.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.30.0...HEAD)
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [1.30.0](https://github.com/nationalarchives/docker/compare/v1.29.0...v1.30.0) - 2026-11-09
 
 ### Added
 
@@ -19,13 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated djLint to [v1.49.10](https://github.com/djlint/djLint/releases/tag/v1.49.10)
 - Updated `@nationalarchives/eslint-config` to [v0.2.0](https://github.com/nationalarchives/eslint-config/releases/tag/v0.2.0)
 
-### Deprecated
-### Removed
 ### Fixed
 
 - Refactor the development server script to improve framework detection for Flask, Django, and FastAPI
-
-### Security
 
 ## [1.29.0](https://github.com/nationalarchives/docker/compare/v1.28.0...v1.29.0) - 2026-11-05
 
