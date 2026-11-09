@@ -24,8 +24,8 @@ Each environment has some default values but all can be overwritten:
 | `WORKER_CLASS`             | Gunicorn worker class                                                       | `sync` (`asgi` for `tna-asgi`) |
 | `GUNICORN_PROTOCOL`        | Request protocol handled by Gunicorn                                        | `http` (`http` or `uwsgi`)     |
 | `WORKER_CONNECTIONS`       | Maximum simultaneous clients for worker classes that support this setting   | `1000`                         |
-| `MAX_REQUESTS`             | Maximum requests a worker handles before restarting                         | `10000`                        |
-| `MAX_REQUESTS_JITTER`      | Random variation added to the maximum requests                              | `1000`                         |
+| `MAX_REQUESTS`             | Maximum requests a worker handles before restarting                         | `0`                            |
+| `MAX_REQUESTS_JITTER`      | Random variation added to the maximum requests                              | `0`                            |
 | `LOG_LEVEL`                | The log level to stream to the console[^3]                                  | `warning`                      |
 | `NODE_ENV`                 | The node environment[^4]                                                    | `production`                   |
 | `NPM_BUILD_COMMAND`        | The npm script from `package.json` to run during `tna-build`                | _none_                         |
