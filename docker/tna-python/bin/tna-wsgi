@@ -37,23 +37,16 @@ echo
 poetry run gunicorn --check-config --config "$GUNICORN_CONF" "$APPLICATION"
 
 CPU_CORES=$(nproc)
-CONFIGURED_WORKERS=$(python3 -c "
+CONFIGURED_SETTINGS=$(python3 -c "
+import json
 ns = {}
 exec(open('$GUNICORN_CONF').read(), ns)
-print(ns['workers'])
+print(json.dumps({
+  'workers': ns['workers'],
+  'threads': ns['threads']
+}))
 ")
-MEMORY_LIMIT=$(cat /sys/fs/cgroup/memory.max)
-if [ "$MEMORY_LIMIT" = "max" ]
-then
-  MEMORY_LIMIT=$(grep MemTotal /proc/meminfo | awk '{print $2 * 1024}')
-fi
-MEMORY_LIMIT_MB=$((MEMORY_LIMIT / 1024 / 1024))
-ESTIMATED_USAGE=$((CONFIGURED_WORKERS * 100))  # 100MB per worker estimate
-echo "CPU cores:                         $CPU_CORES"
-echo "Configured workers:                ${CONFIGURED_WORKERS}"
-echo "Estimated usage at (100MB/worker): ${ESTIMATED_USAGE}MB"
-echo "Total memory:                      ${MEMORY_LIMIT_MB}MB"
-echo
+CONFIGURED_WORKERS=$(echo "$CONFIGURED_SETTINGS" | jq -r '.workers')
 if [ $CONFIGURED_WORKERS -gt $((CPU_CORES * 3)) ]; then
   echo "⚠️  WARNING: Too many workers ($CONFIGURED_WORKERS) for available cores ($CPU_CORES)"
   echo "    Recommended:"
@@ -61,6 +54,37 @@ if [ $CONFIGURED_WORKERS -gt $((CPU_CORES * 3)) ]; then
   echo "      $(((CPU_CORES * 2) + 1)) workers for CPU-bound apps"
   echo
 fi
+CONFIGURED_THREADS=$(echo "$CONFIGURED_SETTINGS" | jq -r '.threads')
+MEMORY_LIMIT=$(cat /sys/fs/cgroup/memory.max)
+if [ "$MEMORY_LIMIT" = "max" ]
+then
+  MEMORY_LIMIT=$(grep MemTotal /proc/meminfo | awk '{print $2 * 1024}')
+fi
+MEMORY_LIMIT_MB=$((MEMORY_LIMIT / 1024 / 1024))
+echo "Resource information:"
+echo "  CPU cores:                      ${CPU_CORES}"
+echo "  Available memory:               ${MEMORY_LIMIT_MB}MB"
+echo
+# Estimated values for a single application worker:
+#   Flask: 40-70MB
+#   FastAPI: 80-140MB
+#   Django: 120-180MB
+# 100MB estimate unless specified otherwise
+ESTIMATED_WORKER_MEMORY=${ESTIMATED_WORKER_MEMORY:-100}
+ESTIMATED_USAGE=$((CONFIGURED_WORKERS * ESTIMATED_WORKER_MEMORY))
+echo "Application configuration:"
+echo "  Configured workers:             ${CONFIGURED_WORKERS}"
+if [ "${WORKER_CLASS:-sync}" != "asgi" ] && [ "${CONFIGURED_THREADS:-1}" -gt 1 ]
+then
+  echo "  Configured threads:             ${CONFIGURED_THREADS}"
+  ESTIMATED_USAGE=$((ESTIMATED_USAGE * CONFIGURED_THREADS))
+fi
+echo
+echo "Resource estimation:"
+echo "  Estimated single worker memory: ${ESTIMATED_WORKER_MEMORY}MB"
+echo "  Estimated total usage:          ${ESTIMATED_USAGE}MB"
+echo "  Estimated memory utilisation:   $((ESTIMATED_USAGE * 100 / MEMORY_LIMIT_MB))%"
+echo
 if [ $ESTIMATED_USAGE -gt $((MEMORY_LIMIT_MB / 10 * 8)) ]; then  # 80% of total memory
   echo "⚠️  WARNING: Estimated memory usage may exceed available memory"
   echo

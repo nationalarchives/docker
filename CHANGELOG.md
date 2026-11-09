@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.29.0...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.30.0...HEAD)
 
 ### Added
 ### Changed
@@ -13,6 +13,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 ### Security
+
+## [1.30.0](https://github.com/nationalarchives/docker/compare/v1.29.0...v1.30.0) - 2026-11-09
+
+### Added
+
+- Added jq
+
+### Changed
+
+- Updated Ruff to [0.17.4](https://github.com/astral-sh/ruff/releases/tag/0.17.4)
+- Updated Node to [v24.22.2](https://github.com/nodejs/node/releases/tag/v24.22.2)
+- Updated nvm to [0.41.0](https://github.com/nvm-sh/nvm/releases/tag/v0.41.0)
+- Updated djLint to [v1.49.10](https://github.com/djlint/djLint/releases/tag/v1.49.10)
+- Updated `@nationalarchives/eslint-config` to [v0.2.0](https://github.com/nationalarchives/eslint-config/releases/tag/v0.2.0)
+
+### Fixed
+
+- Refactor the development server script to improve framework detection for Flask, Django, and FastAPI
 
 ## [1.29.0](https://github.com/nationalarchives/docker/compare/v1.28.0...v1.29.0) - 2026-11-05
 
@@ -26,7 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Switched from using uvicorn to the native `asgi` gunicorn worker for ASGI applications
 - Set the default Gunicorn keep-alive timeout to 65 seconds
 
-### Deprecated
 ### Removed
 
 - Removed uvicorn as a dependency and no longer use it for ASGI applications
