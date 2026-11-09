@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.29.0...HEAD)
 
 ### Added
+
+- Added jq
+
 ### Changed
 
 - Updated Ruff to [0.17.3](https://github.com/astral-sh/ruff/releases/tag/0.17.3)

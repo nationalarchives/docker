@@ -139,7 +139,7 @@ RUN set -eux; \
     export DEBIAN_FRONTEND=noninteractive; \
     apt-get update; \
     apt-get -y upgrade; \
-    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u7 ca-certificates=20250419+deb13u1 libbrotli1=1.1.0-2+deb13u1; \
+    apt-get install -y --no-install-recommends curl=8.14.1-2+deb13u7 jq=1.7.1-6+deb13u4 ca-certificates=20250419+deb13u1 libbrotli1=1.1.0-2+deb13u1; \
     apt-get clean; \
     apt-get autoremove -y --purge; \
 	rm -rfv /var/lib/apt/lists/*
