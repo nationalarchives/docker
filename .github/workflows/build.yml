@@ -2,7 +2,6 @@ name: Build, test and push
 
 permissions:
   contents: read
-  packages: write
 
 on:
   workflow_dispatch:
@@ -29,6 +28,9 @@ concurrency:
 jobs:
   python:
     name: Python
+    permissions:
+      contents: read
+      packages: write
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -148,6 +150,9 @@ jobs:
   python-dev:
     name: Python Dev
     needs: python
+    permissions:
+      contents: read
+      packages: write
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
