@@ -16,32 +16,21 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Create version tag
-      id: version-tag
-      uses: nationalarchives/ds-docker-actions/.github/actions/get-version-tag@main # TODO: Could replace the "Prepare image tag" step below?
-
-    - name: Test new image tag
-      run: |
-        VERSION=${STEPS_VERSION_TAG_OUTPUTS_VERSION_TAG}
-        VERSION_PART_MAJOR=$(echo "$VERSION" | awk -F'.' '{print $1}')
-        VERSION_PART_MINOR=$(echo "$VERSION" | awk -F'.' '{print $2}')
-        echo "VERSION:            $VERSION"
-        echo "VERSION_PART_MAJOR: $VERSION_PART_MAJOR"
-        echo "VERSION_PART_MINOR: $VERSION_PART_MINOR"
-      shell: bash
-      env:
-        STEPS_VERSION_TAG_OUTPUTS_VERSION_TAG: ${{ steps.version-tag.outputs.version-tag }}
-
     - name: Prepare image tag
       id: generate-tags
       run: |
         # Strip git ref prefix from version
         VERSION=$(echo "${GITHUB_REF}" | sed -e 's,.*/\(.*\),\1,')
         # Strip "v" prefix from tag name and add the commit count as a build number
-        [[ "${GITHUB_REF}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+        [[ "${GITHUB_REF}" == "refs/tags/"* ]] && VERSION=$(printf '%s' "$VERSION" | sed -e 's/^v//')
         VERSION_PART_MAJOR=$(echo "$VERSION" | awk -F'.' '{print $1}')
         VERSION_PART_MINOR=$(echo "$VERSION" | awk -F'.' '{print $2}')
         [ "$VERSION" == "main" ] && VERSION=preview
+        if [[ ! "$VERSION" =~ ^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$ ]]
+        then
+          echo "Error: generated image tag contains unsupported characters or exceeds 128 characters"
+          exit 1
+        fi
         echo "IMAGE_ID:           ${INPUTS_IMAGE_NAME}"
         echo "VERSION:            $VERSION"
         echo "VERSION_PART_MAJOR: $VERSION_PART_MAJOR"
