@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [1.31.0](https://github.com/nationalarchives/docker/compare/v1.30.0...v1.31.0) - 2026-11-11
+
+### Changed
+
+- Changed `.djlintrc` by removing `preserve_blank_lines` so `max_blank_lines` can control blank-line formatting.
+
 ## [1.30.0](https://github.com/nationalarchives/docker/compare/v1.29.0...v1.30.0) - 2026-11-09
 
 ### Added
