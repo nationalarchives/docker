@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated djLint to [v1.54.0](https://github.com/djlint/djLint/releases/tag/v1.54.0)
 - Updated Ruff to [0.17.6](https://github.com/astral-sh/ruff/releases/tag/0.17.6)
 - Updated gunicorn to [27.0.1](https://github.com/benoitc/gunicorn/releases/tag/27.0.1)
+- Updated Prettier to [3.10.1](https://github.com/prettier/prettier/releases/tag/3.10.1)
 
 ### Deprecated
 ### Removed
