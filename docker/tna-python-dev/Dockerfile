@@ -13,6 +13,7 @@ FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG"
 # but we redefine it here as HTTP because an
 # application might be using HTTPS
 # ==========================================
+# hadolint ignore=DL3025
 HEALTHCHECK CMD curl --fail "http://localhost:$APPLICATION_PORT/healthcheck/live/" || exit 1
 
 # ==========================================
@@ -32,7 +33,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # which are mounted during development
 # ==========================================
 # hadolint ignore=DL3002 # This is a development image so we can use the root user
-USER root
+USER 0
 
 # ==========================================
 # Update the package index files and install
