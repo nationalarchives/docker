@@ -159,7 +159,7 @@ RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore pip==
 # app user to access it
 # ==========================================
 RUN mkdir -p /app; \
-    chown "${USER_UID}":"${USER_GID}" -R /app; \
+    chown "${USER_UID}:${USER_GID}" -R /app; \
     chmod 700 /app
 
 # ==========================================
@@ -192,7 +192,7 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 # level permissions
 # ==========================================
 # hadolint ignore=DL3066
-USER ${USER_UID}:${USER_GID}
+USER "${USER_UID}:${USER_GID}"
 
 # ==========================================
 # Copy in any configuration files, including

@@ -20,6 +20,8 @@ The development image extends the production image with additional tools and con
 - Keep changes focused on the image or scripts involved, and update the related README when behavior or configuration changes.
 - Preserve existing image conventions, including pinned package versions, non-root execution for the production image, and `/app` as the application working directory.
 - Keep CI checks in `.github/workflows/` and `.github/actions/` aligned with changes to image behavior.
+- Dockerfiles and scripts should be checked with ShellCheck for potential issues and best practices.
+- Dockerfiles are also checked with Hadolint for best practices and potential issues.
 
 ## Validation
 
