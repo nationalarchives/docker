@@ -20,7 +20,7 @@ inputs:
   image-tag:
     required: true
     type: string
-  expected-user:
+  expected-uid:
     required: true
     type: string
   application-protocol:
@@ -78,10 +78,11 @@ runs:
     - name: Check user
       run: |
         cd ${INPUTS_APPLICATION_REPOSITORY}
-        docker compose exec "${INPUTS_SERVICE}" whoami
-        # docker compose exec "${INPUTS_SERVICE}" whoami | grep "${INPUTS_EXPECTED_USER}"
+        actual_uid=$(docker compose exec "${INPUTS_SERVICE}" id -u)
+        echo "Container UID: ${actual_uid}"
+        test "${actual_uid}" = "${INPUTS_EXPECTED_UID}"
       shell: bash
       env:
         INPUTS_APPLICATION_REPOSITORY: ${{ inputs.application-repository }}
         INPUTS_SERVICE: ${{ inputs.service }}
-        INPUTS_EXPECTED_USER: ${{ inputs.expected-user }}
+        INPUTS_EXPECTED_UID: ${{ inputs.expected-uid }}

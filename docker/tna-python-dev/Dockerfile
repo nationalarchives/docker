@@ -13,6 +13,7 @@ FROM "$BASE_IMAGE":"$BASE_IMAGE_TAG"
 # but we redefine it here as HTTP because an
 # application might be using HTTPS
 # ==========================================
+# hadolint ignore=DL3025
 HEALTHCHECK CMD curl --fail "http://localhost:$APPLICATION_PORT/healthcheck/live/" || exit 1
 
 # ==========================================
@@ -32,7 +33,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # which are mounted during development
 # ==========================================
 # hadolint ignore=DL3002 # This is a development image so we can use the root user
-USER root
+USER 0
 
 # ==========================================
 # Update the package index files and install
@@ -48,10 +49,10 @@ RUN apt-get update; \
 # Set the versions for various tools that we
 # want to install to help with development
 # ==========================================
-ENV RUFF_VERSION=0.17.4 \
-    DJLINT_VERSION=1.49.10 \
+ENV RUFF_VERSION=0.17.6 \
+    DJLINT_VERSION=1.54.0 \
     DJANGO_DEBUG_TOOLBAR_VERSION=8.0.0 \
-    PRETTIER_VERSION=3.9.10 \
+    PRETTIER_VERSION=3.10.1 \
     TNA_RUFF_CONFIG_VERSION=0.2.0 \
     TNA_ESLINT_CONFIG_VERSION=0.2.0 \
     TNA_STYLELINT_CONFIG_VERSION=0.1.5

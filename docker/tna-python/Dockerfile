@@ -35,6 +35,7 @@ EXPOSE 8080/tcp
 # based on a GOV.UK proposal:
 # github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
+# hadolint ignore=DL3025
 HEALTHCHECK CMD curl --fail --insecure "$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')://localhost:$APPLICATION_PORT/healthcheck/live/" || exit 1
 
 # ==========================================
@@ -72,11 +73,11 @@ ENV PIP_NO_CACHE_DIR=true \
 #    environment variable at build-time"
 # > docs.docker.com/build/building/variables
 # ==========================================
-ENV NODEJS_VERSION=24.22.2 \
+ENV NODEJS_VERSION=24.22.3 \
     PIP_VERSION=26.2.2 \
-    POETRY_VERSION=2.5.1 \
+    POETRY_VERSION=2.5.2 \
     NVM_VERSION=0.41.0 \
-    WSGI_GUNICORN_VERSION=26.2.0
+    WSGI_GUNICORN_VERSION=27.0.1
 
 # ==========================================
 # Create container labels containing version
@@ -95,6 +96,7 @@ LABEL uk.gov.nationalarchives.wsgi-gunicorn-version="$WSGI_GUNICORN_VERSION"
 # owns a home directory where we can install
 # our scripts and libraries into
 # ==========================================
+# hadolint ignore=DL3064
 ARG USERNAME=app
 ARG USER_UID=1001
 ARG USER_GID="$USER_UID"
@@ -157,7 +159,7 @@ RUN pip install --no-cache-dir --quiet --upgrade --root-user-action=ignore pip==
 # app user to access it
 # ==========================================
 RUN mkdir -p /app; \
-    chown "${USER_UID}":"${USER_GID}" -R /app; \
+    chown "${USER_UID}:${USER_GID}" -R /app; \
     chmod 700 /app
 
 # ==========================================
@@ -185,11 +187,12 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 # ==========================================
 # Now we have finished installing everything
 # at a system level, change the current user
-# to the non-root user we created previously
-# to avoid any bad actors gaining root level
-# permissions
+# to the non-root user's numeric UID/GID, to
+# stop any bad actors being able to get root
+# level permissions
 # ==========================================
-USER app
+# hadolint ignore=DL3066
+USER "${USER_UID}:${USER_GID}"
 
 # ==========================================
 # Copy in any configuration files, including

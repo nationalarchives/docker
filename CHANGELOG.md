@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.30.1...HEAD)
+## [Unreleased](https://github.com/nationalarchives/docker/compare/v1.31.0...HEAD)
 
 ### Added
 ### Changed
@@ -13,6 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 ### Security
+
+## [1.31.0](https://github.com/nationalarchives/docker/compare/v1.30.1...v1.31.0) - 2026-11-23
+
+### Changed
+
+- Changed the `app` user to use a numeric UID/GID instead of the default user name
+- Updated Node to [v24.22.3](https://github.com/nodejs/node/releases/tag/v24.22.3)
+- Updated Poetry to [2.5.2](https://github.com/python-poetry/poetry/releases/tag/2.5.2)
+- Updated djLint to [v1.54.0](https://github.com/djlint/djLint/releases/tag/v1.54.0)
+- Updated Ruff to [0.17.6](https://github.com/astral-sh/ruff/releases/tag/0.17.6)
+- Updated gunicorn to [27.0.1](https://github.com/benoitc/gunicorn/releases/tag/27.0.1)
+- Updated Prettier to [3.10.1](https://github.com/prettier/prettier/releases/tag/3.10.1)
 
 ## [1.30.1](https://github.com/nationalarchives/docker/compare/v1.30.0...v1.30.1) - 2026-11-11
 

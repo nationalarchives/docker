@@ -89,7 +89,7 @@ jobs:
           application-repository: nationalarchives/flask-application-template
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: app
+          expected-uid: 1001
           environment-overrides: |
             APPLICATION_PROTOCOL=http
 
@@ -99,7 +99,7 @@ jobs:
           application-repository: nationalarchives/django-application-template
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: app
+          expected-uid: 1001
           environment-overrides: |
             APPLICATION_PROTOCOL=http
 
@@ -109,7 +109,7 @@ jobs:
           application-repository: nationalarchives/fastapi-application-template
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: app
+          expected-uid: 1001
           environment-overrides: |
             APPLICATION_PROTOCOL=http
 
@@ -215,7 +215,7 @@ jobs:
           application-repository: nationalarchives/flask-application-template
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: root
+          expected-uid: 0
 
       - name: Test Django
         uses: ./.github/actions/test-container
@@ -223,7 +223,7 @@ jobs:
           application-repository: nationalarchives/django-application-template
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: root
+          expected-uid: 0
 
       - name: Test FastAPI
         uses: ./.github/actions/test-container
@@ -231,7 +231,7 @@ jobs:
           application-repository: nationalarchives/fastapi-application-template
           image: ${{ env.IMAGE_NAME }}
           image-tag: ${{ steps.build.outputs.tag }}
-          expected-user: root
+          expected-uid: 0
 
       - name: Build and push multi-platform Docker images
         uses: ./.github/actions/push
