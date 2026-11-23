@@ -35,6 +35,7 @@ EXPOSE 8080/tcp
 # based on a GOV.UK proposal:
 # github.com/alphagov/govuk-rfcs/blob/main/rfc-141-application-healthchecks.md
 # ==========================================
+# hadolint ignore=DL3025
 HEALTHCHECK CMD curl --fail --insecure "$(echo "${APPLICATION_PROTOCOL:-https}" | tr '[:upper:]' '[:lower:]')://localhost:$APPLICATION_PORT/healthcheck/live/" || exit 1
 
 # ==========================================
@@ -95,6 +96,7 @@ LABEL uk.gov.nationalarchives.wsgi-gunicorn-version="$WSGI_GUNICORN_VERSION"
 # owns a home directory where we can install
 # our scripts and libraries into
 # ==========================================
+# hadolint ignore=DL3064
 ARG USERNAME=app
 ARG USER_UID=1001
 ARG USER_GID="$USER_UID"
