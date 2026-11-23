@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Node to [v24.22.3](https://github.com/nodejs/node/releases/tag/v24.22.3)
 - Updated Poetry to [2.5.2](https://github.com/python-poetry/poetry/releases/tag/2.5.2)
 - Updated djLint to [v1.54.0](https://github.com/djlint/djLint/releases/tag/v1.54.0)
+- Updated Ruff to [0.17.6](https://github.com/astral-sh/ruff/releases/tag/0.17.6)
 
 ### Deprecated
 ### Removed
