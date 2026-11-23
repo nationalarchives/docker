@@ -75,7 +75,7 @@ ENV PIP_NO_CACHE_DIR=true \
 # ==========================================
 ENV NODEJS_VERSION=24.22.3 \
     PIP_VERSION=26.2.2 \
-    POETRY_VERSION=2.5.1 \
+    POETRY_VERSION=2.5.2 \
     NVM_VERSION=0.41.0 \
     WSGI_GUNICORN_VERSION=26.2.0
 
