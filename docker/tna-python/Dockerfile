@@ -191,6 +191,7 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 # to avoid any bad actors gaining root level
 # permissions
 # ==========================================
+# hadolint ignore=DL3066
 USER app
 
 # ==========================================
