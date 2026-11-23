@@ -77,7 +77,7 @@ ENV NODEJS_VERSION=24.22.3 \
     PIP_VERSION=26.2.2 \
     POETRY_VERSION=2.5.2 \
     NVM_VERSION=0.41.0 \
-    WSGI_GUNICORN_VERSION=26.2.0
+    WSGI_GUNICORN_VERSION=27.0.1
 
 # ==========================================
 # Create container labels containing version
