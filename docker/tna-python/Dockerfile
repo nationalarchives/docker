@@ -187,12 +187,12 @@ ENV PATH="$POETRY_HOME/bin:$PATH"
 # ==========================================
 # Now we have finished installing everything
 # at a system level, change the current user
-# to the non-root user we created previously
-# to avoid any bad actors gaining root level
-# permissions
+# to the non-root user's numeric UID/GID, to
+# stop any bad actors being able to get root
+# level permissions
 # ==========================================
 # hadolint ignore=DL3066
-USER app
+USER ${USER_UID}:${USER_GID}
 
 # ==========================================
 # Copy in any configuration files, including

@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 ### Changed
+
+- Changed the `app` user to use a numeric UID/GID instead of the default user name
+
 ### Deprecated
 ### Removed
 ### Fixed
