@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Changed the `app` user to use a numeric UID/GID instead of the default user name
+- Updated Node to [v24.22.3](https://github.com/nodejs/node/releases/tag/v24.22.3)
 
 ### Deprecated
 ### Removed
